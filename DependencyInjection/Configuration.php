@@ -19,15 +19,12 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('event_sourcing');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addEventStoreSection($rootNode);
+        $this->addRepositoriesSection($rootNode);
 
         return $treeBuilder;
     }
 
-    /**
-     * Add event store section to configuration tree.
-     */
-    private function addEventStoreSection(ArrayNodeDefinition $node): void
+    private function addRepositoriesSection(ArrayNodeDefinition $node): void
     {
         $treeBuilder = new TreeBuilder('repositories');
         $repositoriesNode = $treeBuilder->getRootNode();
