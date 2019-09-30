@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DependencyInjection;
+namespace Xm\SymfonyBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -21,14 +21,14 @@ class XmSymfonyExtension extends Extension
         );
         $loader->load('services.yaml');
 
-        // $config = $this->processConfiguration(
-        //     $this->getConfiguration($configs, $container),
-        //     $configs
-        // );
-        //
-        // if (!empty($config['repositories'])) {
-        //     $this->loadRepositories($config, $container);
-        // }
+        $config = $this->processConfiguration(
+            $this->getConfiguration($configs, $container),
+            $configs
+        );
+
+        if (!empty($config['repositories'])) {
+            $this->loadRepositories($config, $container);
+        }
     }
 
     private function loadRepositories(
@@ -50,7 +50,7 @@ class XmSymfonyExtension extends Extension
                 $container
                     ->setDefinition(
                         $repositoryName,
-                        new ChildDefinition('App\EventSourcing\Aggregate\AggregateRepository')
+                        new ChildDefinition('Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository')
                     )
                     ->setArguments(
                         [
