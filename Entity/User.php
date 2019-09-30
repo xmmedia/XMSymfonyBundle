@@ -83,7 +83,7 @@ class User implements UserInterface, EncoderAwareInterface, EquatableInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\UserToken", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Xm\SymfonyBundle\Entity\UserToken", mappedBy="user")
      */
     private $tokens;
 
