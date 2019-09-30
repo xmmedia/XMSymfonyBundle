@@ -1,11 +1,12 @@
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-        # fetching services directly from the container via $container->get() won't work.
-        # The best practice is to be explicit about your dependencies anyway.
+        autowire: true
+        autoconfigure: true
+        public: false
+
+        bind:
+            $commandBus: '@messenger.bus.commands'
+            $eventBus: '@messenger.bus.events'
 
     Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware: ~
     Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware: ~
@@ -24,6 +25,7 @@ services:
 
     Xm\SymfonyBundle\Security\PasswordEncoder: ~
     Xm\SymfonyBundle\Security\UserChecker: ~
+    Xm\SymfonyBundle\Security\TokenValidator: ~
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory: ~
 
@@ -31,10 +33,22 @@ services:
         abstract: true
         factory: 'Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory:create'
 
+    Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator: ~
+
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
-        tags:
-            - { name: 'prooph_event_store.metadata_enricher' }
+        tags: [ 'prooph_event_store.metadata_enricher' ]
 
     Xm\SymfonyBundle\EventStore\EventStoreMessengerPlugin:
-        tags:
-            - { name: 'prooph_event_store.plugin' }
+        tags: [ 'prooph_event_store.plugin' ]
+
+    Xm\SymfonyBundle\Infrastructure\GraphQl\Type\:
+        resource: '../../Infrastructure/GraphQl/Type/*Type.php'
+        tags: [ 'overblog_graphql.type' ]
+
+    Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver\:
+        resource: '../../Infrastructure/GraphQl/Resolver/*/*Resolver.php'
+        tags: [ 'overblog_graphql.resolver' ]
+
+    Xm\SymfonyBundle\Infrastructure\GraphQl\Mutation\:
+        resource: '../../Infrastructure/GraphQl/Mutation/*/*Mutation.php'
+        tags: [ 'overblog_graphql.mutation' ]
