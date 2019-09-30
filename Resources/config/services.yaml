@@ -7,11 +7,23 @@ services:
         # fetching services directly from the container via $container->get() won't work.
         # The best practice is to be explicit about your dependencies anyway.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: './*'
-        exclude: './{DependencyInjection,Entity,EventSourcing/Aggregate,Infrastructure/Repository}'
+    Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware: ~
+    Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware: ~
+    Xm\SymfonyBundle\Messenger\FailureCatcherMiddleware: ~
+
+    Xm\SymfonyBundle\DataProvider\IssuerProvider: ~
+
+    Xm\SymfonyBundle\Projection\User\UserFinder: ~
+    Xm\SymfonyBundle\Projection\User\UserTokenFinder: ~
+
+    Xm\SymfonyBundle\Infrastructure\Service\ChecksUniqueUsersEmailFromReadModel: ~
+    Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail: '@Xm\SymfonyBundle\Infrastructure\Service\ChecksUniqueUsersEmailFromReadModel'
+
+    Xm\SymfonyBundle\Security\TokenGenerator: ~
+    Xm\SymfonyBundle\Security\TokenGeneratorInterface: '@Xm\SymfonyBundle\Security\TokenGenerator'
+
+    Xm\SymfonyBundle\Security\PasswordEncoder: ~
+    Xm\SymfonyBundle\Security\UserChecker: ~
 
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags:
