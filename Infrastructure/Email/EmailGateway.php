@@ -43,8 +43,11 @@ class EmailGateway implements EmailGatewayInterface
         $this->devEmail = $devEmail;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function send(
-        int $templateId,
+        $templateIdOrAlias,
         Email $to,
         array $templateData
     ): EmailGatewayMessageId {
@@ -61,7 +64,7 @@ class EmailGateway implements EmailGatewayInterface
         $result = $this->client->sendEmailWithTemplate(
             $this->from->withName(),
             $to->withName(),
-            $templateId,
+            $templateIdOrAlias,
             $templateData,
             true,
             null,

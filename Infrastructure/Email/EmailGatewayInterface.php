@@ -9,8 +9,11 @@ use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
 
 interface EmailGatewayInterface
 {
+    /**
+     * @param int|string $templateIdOrAlias
+     */
     public function send(
-        int $templateId,
+        $templateIdOrAlias,
         Email $to,
         array $templateData
     ): EmailGatewayMessageId;

@@ -7,7 +7,6 @@ namespace Xm\SymfonyBundle\Model\User\Handler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Xm\SymfonyBundle\Infrastructure\Email\EmailGatewayInterface;
-use Xm\SymfonyBundle\Infrastructure\Email\EmailTemplate;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\User\Command\InitiatePasswordRecovery;
 use Xm\SymfonyBundle\Model\User\Exception\UserNotFound;
@@ -22,6 +21,9 @@ class InitiatePasswordRecoveryHandler
     /** @var EmailGatewayInterface|\App\Infrastructure\Email\EmailGateway */
     private $emailGateway;
 
+    /** @var string|int */
+    private $templateIdOrAlias;
+
     /** @var RouterInterface|\Symfony\Bundle\FrameworkBundle\Routing\Router */
     private $router;
 
@@ -31,11 +33,13 @@ class InitiatePasswordRecoveryHandler
     public function __construct(
         UserList $userRepo,
         EmailGatewayInterface $emailGateway,
+        $templateIdOrAlias,
         RouterInterface $router,
         TokenGeneratorInterface $tokenGenerator
     ) {
         $this->userRepo = $userRepo;
         $this->emailGateway = $emailGateway;
+        $this->templateIdOrAlias = $templateIdOrAlias;
         $this->router = $router;
         $this->tokenGenerator = $tokenGenerator;
     }
@@ -56,7 +60,7 @@ class InitiatePasswordRecoveryHandler
         );
 
         $messageId = $this->emailGateway->send(
-            EmailTemplate::PASSWORD_RESET,
+            $this->templateIdOrAlias,
             Email::fromString($command->email()->toString()),
             [
                 'resetUrl' => $resetUrl,

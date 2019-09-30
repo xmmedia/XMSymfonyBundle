@@ -56,6 +56,7 @@ class SendActivationHandlerTest extends BaseTestCase
         $handler = new SendActivationHandler(
             $repo,
             $emailGateway,
+            $faker->string(10),
             $router,
             $tokenGenerator
         );
@@ -88,6 +89,7 @@ class SendActivationHandlerTest extends BaseTestCase
         $handler = new SendActivationHandler(
             $repo,
             $emailGateway,
+            $faker->string(10),
             $router,
             $tokenGenerator
         );
@@ -99,7 +101,7 @@ class SendActivationHandlerTest extends BaseTestCase
 class SendActivationHandlerTestEmailGateway implements EmailGatewayInterface
 {
     public function send(
-        int $templateId,
+        $templateIdOrAlias,
         Email $to,
         array $templateData
     ): EmailGatewayMessageId {

@@ -53,6 +53,7 @@ class InitiatePasswordRecoveryHandlerTest extends BaseTestCase
         (new InitiatePasswordRecoveryHandler(
             $repo,
             $emailGateway,
+            $faker->string(10),
             $router,
             $tokenGenerator
         ))(
@@ -83,6 +84,7 @@ class InitiatePasswordRecoveryHandlerTest extends BaseTestCase
         (new InitiatePasswordRecoveryHandler(
             $repo,
             $emailGateway,
+            $faker->string(10),
             $router,
             $tokenGenerator
         ))(
@@ -94,7 +96,7 @@ class InitiatePasswordRecoveryHandlerTest extends BaseTestCase
 class InitiatePasswordRecoveryHandlerTestEmailGateway implements EmailGatewayInterface
 {
     public function send(
-        int $templateId,
+        $templateIdOrAlias,
         Email $to,
         array $templateData
     ): EmailGatewayMessageId {
