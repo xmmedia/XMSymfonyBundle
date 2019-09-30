@@ -25,6 +25,12 @@ services:
     Xm\SymfonyBundle\Security\PasswordEncoder: ~
     Xm\SymfonyBundle\Security\UserChecker: ~
 
+    Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory: ~
+
+    Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository:
+        abstract: true
+        factory: 'Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory:create'
+
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags:
             - { name: 'prooph_event_store.metadata_enricher' }
