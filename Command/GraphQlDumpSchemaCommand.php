@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -21,13 +22,6 @@ final class GraphQlDumpSchemaCommand extends Command
     /** @var UserFinder */
     private $userFinder;
 
-    /**
-     * @var string the email of the user to use for the fake login (typically
-     *             an admin)
-     * @todo-symfony change to super admin user
-     */
-    private $userEmail = 'admin@example.com';
-
     public function __construct(
         TokenStorageInterface $tokenStorage,
         UserFinder $userFinder
@@ -42,12 +36,17 @@ final class GraphQlDumpSchemaCommand extends Command
     {
         $this->setName('app:graphql:dump-schema')
             ->setDescription('Dumps GraphQL schema')
+            ->addArgument(
+                'user-email',
+                InputArgument::REQUIRED,
+                'The user to use for the permission checks in the GraphQL config. Typically an admin user.'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->tokenStorage->setToken($this->token());
+        $this->tokenStorage->setToken($this->token($input->getArgument('user-email')));
 
         $command = $this->getApplication()->find('graphql:dump-schema');
 
@@ -60,17 +59,17 @@ final class GraphQlDumpSchemaCommand extends Command
         return $command->run(new ArrayInput($arguments), $output);
     }
 
-    private function token(): PostAuthenticationGuardToken
+    private function token(string $userEmail): PostAuthenticationGuardToken
     {
         $user = $this->userFinder->findOneByEmail(
-            Email::fromString($this->userEmail)
+            Email::fromString($userEmail)
         );
 
         if (!$user) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'The user with email %s cannot be found.',
-                    $this->userEmail
+                    'The user with email "%s" cannot be found.',
+                    $userEmail
                 )
             );
         }
