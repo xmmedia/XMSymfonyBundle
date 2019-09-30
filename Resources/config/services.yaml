@@ -8,6 +8,11 @@ services:
             $commandBus: '@messenger.bus.commands'
             $eventBus: '@messenger.bus.events'
 
+    Xm\SymfonyBundle\Command\CreateEventStreamCommand: ~
+    Xm\SymfonyBundle\Command\GraphQlDumpSchemaCommand: ~
+    Xm\SymfonyBundle\Command\ProjectionRunCommand: ~
+    Xm\SymfonyBundle\Command\PurgeCloudflareCacheCommand: ~
+
     Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware: ~
     Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware: ~
     Xm\SymfonyBundle\Messenger\FailureCatcherMiddleware: ~
@@ -34,6 +39,7 @@ services:
         factory: 'Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory:create'
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator: ~
+    Xm\SymfonyBundle\EventStore\PersistenceStrategy\StreamStrategy: ~
 
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
