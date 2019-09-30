@@ -5,10 +5,22 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Util;
 
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+use Xm\SymfonyBundle\Model\User\User;
 
 class Assert extends \Webmozart\Assert\Assert
 {
+    public static function passwordLength(string $password): void
+    {
+        self::lengthBetween(
+            $password,
+            User::PASSWORD_MIN_LENGTH,
+            BasePasswordEncoder::MAX_PASSWORD_LENGTH,
+            'The password must length must be between %2$d and %3$d. Got '.\strlen($password)
+        );
+    }
+
     public static function compromisedPassword(string $password, HttpClient $httpClient = null): void
     {
         $endpoint = 'https://api.pwnedpasswords.com/range/%s';
