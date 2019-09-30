@@ -24,6 +24,18 @@ class EmailGateway implements EmailGatewayInterface
     /** @var RouterInterface|\Symfony\Bundle\FrameworkBundle\Routing\Router */
     private $router;
 
+    /** @var string */
+    private $productName;
+
+    /** @var string */
+    private $companyName;
+
+    /** @var string */
+    private $companyAddress;
+
+    /** @var array */
+    private $whitelist;
+
     /** @var string|null */
     private $devEmail;
 
@@ -33,6 +45,10 @@ class EmailGateway implements EmailGatewayInterface
         string $emailFromName,
         string $kernelEnv,
         RouterInterface $router,
+        string $productName,
+        string $companyName,
+        string $companyAddress,
+        array $whitelist,
         ?string $devEmail = null
     ) {
         $this->client = new PostmarkClient($postmarkApiKey);
@@ -40,6 +56,10 @@ class EmailGateway implements EmailGatewayInterface
         $this->from = Email::fromString($emailFrom, $emailFromName);
         $this->router = $router;
 
+        $this->productName = $productName;
+        $this->companyName = $companyName;
+        $this->companyAddress = $companyAddress;
+        $this->whitelist = $whitelist;
         $this->devEmail = $devEmail;
     }
 
@@ -80,12 +100,7 @@ class EmailGateway implements EmailGatewayInterface
 
     private function isWhitelistedAddress(Email $to): bool
     {
-        $whitelist = [
-            // @todo-symfony
-            '/@xmmedia\.com$/',
-        ];
-
-        foreach ($whitelist as $pattern) {
+        foreach ($this->whitelist as $pattern) {
             if (preg_match($pattern, $to->toString())) {
                 return true;
             }
@@ -96,7 +111,6 @@ class EmailGateway implements EmailGatewayInterface
 
     private function setGlobalTemplateData(array $data): array
     {
-        // @todo-symfony
         $default['supportEmail'] = $this->from->email();
         $default['rootUrl'] = $this->router->generate(
             'index',
@@ -108,10 +122,10 @@ class EmailGateway implements EmailGatewayInterface
             [],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
-        $default['productName'] = 'Symfony Starter';
+        $default['productName'] = $this->productName;
         $default['copyrightYear'] = date('Y');
-        $default['companyName'] = 'XM Media Inc.';
-        $default['companyAddress'] = '123 Street, Big City';
+        $default['companyName'] = $this->companyName;
+        $default['companyAddress'] = $this->companyAddress;
 
         return array_merge($default, $data);
     }
