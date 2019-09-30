@@ -1,0 +1,80 @@
+{
+  "name": "xm/symfony-bundle",
+  "description": "Provides classes & services typically used in XM Media Symfony projects.",
+  "type": "symfony-bundle",
+  "homepage": "https://github.com/xmmedia/XMSymfonyBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Darryl Hein",
+      "email": "dhein@xmmedia.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3",
+    "ext-json": "*",
+    "cloudflare/sdk": "^1.1",
+    "doctrine/doctrine-bundle": "^1.11",
+    "doctrine/orm": "~2.5",
+    "egulias/email-validator": "^2.1",
+    "friendsofsymfony/rest-bundle": "^2.5",
+    "marc-mabe/php-enum": "^4.1",
+    "misd/phone-number-bundle": "^1.3",
+    "moneyphp/money": "^3.2",
+    "nesbot/carbon": "^2.24",
+    "overblog/graphql-bundle": "^0.12.3",
+    "prooph/event-store-bus-bridge": "^3.3",
+    "prooph/event-store-symfony-bundle": "^0.6.0",
+    "prooph/pdo-event-store": "^1.11",
+    "ramsey/uuid": "^3.7.3",
+    "ramsey/uuid-doctrine": "^1.5",
+    "symfony/form": "*",
+    "symfony/framework-bundle": "*",
+    "symfony/http-client": "*",
+    "symfony/messenger": "*",
+    "symfony/security-bundle": "*",
+    "symfony/validator": "*",
+    "wildbit/postmark-php": "^2.8"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.13",
+    "fzaninotto/faker": "^1.8",
+    "mockery/mockery": "^1.2",
+    "phpstan/phpstan": "^0.11",
+    "phpstan/phpstan-mockery": "^0.11",
+    "phpstan/phpstan-phpunit": "^0.11",
+    "phpstan/phpstan-symfony": "^0.11",
+    "phpstan/phpstan-webmozart-assert": "^0.11",
+    "phpunit/phpunit": "^8.0",
+    "symfony/debug-pack": "*",
+    "symfony/phpunit-bridge": "*",
+    "symfony/test-pack": "*"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Xm\\SymfonyBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "scripts": {
+    "test": "vendor/bin/simple-phpunit",
+    "test:coverage": "vendor/bin/simple-phpunit --coverage-html coverage",
+    "cs": "php-cs-fixer fix -v --dry-run --config=php_cs.dist",
+    "cs:fix": "php-cs-fixer fix -v --config=php_cs.dist",
+    "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse"
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": true,
+      "require": "4.3.*"
+    }
+  }
+}
