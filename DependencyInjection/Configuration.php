@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -16,15 +16,18 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('event_sourcing');
+        $treeBuilder = new TreeBuilder('xm_symfony');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addRepositoriesSection($rootNode);
+        $rootNode
+            ->children()
+                ->append($this->addRepositoriesSection())
+            ->end();
 
         return $treeBuilder;
     }
 
-    private function addRepositoriesSection(ArrayNodeDefinition $node): void
+    private function addRepositoriesSection(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('repositories');
         $repositoriesNode = $treeBuilder->getRootNode();
@@ -49,16 +52,12 @@ final class Configuration implements ConfigurationInterface
                         ->then($removeFirstCharacter)
                     ->end()
                 ->end()
-                ->scalarNode('stream_name')->defaultValue(null)->end()
+                ->scalarNode('stream_name')->defaultNull()->end()
                 ->scalarNode('store')->defaultValue('default')->end()
-                ->booleanNode('one_stream_per_aggregate')->defaultValue(false)->end()
-                ->booleanNode('disable_identity_map')->defaultValue(false)->end()
+                ->booleanNode('one_stream_per_aggregate')->defaultFalse()->end()
+                ->booleanNode('disable_identity_map')->defaultFalse()->end()
             ->end();
 
-        $node
-            ->fixXmlConfig('repository', 'repositories')
-            ->children()
-                ->append($repositoriesNode)
-            ->end();
+        return $repositoriesNode;
     }
 }
