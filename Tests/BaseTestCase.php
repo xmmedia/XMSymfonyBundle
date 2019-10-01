@@ -12,6 +12,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRoot;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateType;
+use Xm\SymfonyBundle\Model\ValueObject;
 
 class BaseTestCase extends \PHPUnit\Framework\TestCase
 {
@@ -74,6 +75,33 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
             \Webmozart\Assert\Assert::uuid($uuid);
         } catch (\InvalidArgumentException $e) {
             $this->assertTrue(false, sprintf('The "%s" is not a UUID.', $uuid));
+        }
+    }
+
+    protected function assertEqualsOrNull($expected, $actual): void
+    {
+        if (null !== $expected) {
+            $this->assertEquals($expected, $actual);
+        } else {
+            $this->assertNull($actual);
+        }
+    }
+
+    protected function assertSameValueAs(
+        ValueObject $expected,
+        ValueObject $actual
+    ): void {
+        $this->assertTrue($expected->sameValueAs($actual));
+    }
+
+    protected function assertSameValueAsOrNull(
+        ?ValueObject $expected,
+        ?ValueObject $actual
+    ): void {
+        if (null !== $expected) {
+            $this->assertSameValueAs($expected, $actual);
+        } else {
+            $this->assertNull($actual);
         }
     }
 
