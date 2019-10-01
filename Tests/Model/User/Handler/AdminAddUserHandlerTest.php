@@ -15,6 +15,7 @@ use Xm\SymfonyBundle\Model\User\Role;
 use Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail;
 use Xm\SymfonyBundle\Model\User\User;
 use Xm\SymfonyBundle\Model\User\UserId;
+use Xm\SymfonyBundle\Model\User\UserIdInterface;
 use Xm\SymfonyBundle\Model\User\UserList;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 
@@ -92,7 +93,7 @@ class AdminAddUserHandlerTest extends BaseTestCase
 
 class AdminAddUserHandlerUniquenessCheckerNone implements ChecksUniqueUsersEmail
 {
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         return null;
     }
@@ -100,7 +101,7 @@ class AdminAddUserHandlerUniquenessCheckerNone implements ChecksUniqueUsersEmail
 
 class AdminAddUserHandlerUniquenessCheckerDuplicate implements ChecksUniqueUsersEmail
 {
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         return UserId::fromUuid(Uuid::uuid4());
     }

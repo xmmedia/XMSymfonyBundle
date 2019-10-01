@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Infrastructure\Service;
 
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail;
-use Xm\SymfonyBundle\Model\User\UserId;
+use Xm\SymfonyBundle\Model\User\UserIdInterface;
 use Xm\SymfonyBundle\Projection\User\UserFinder;
 
 class ChecksUniqueUsersEmailFromReadModel implements ChecksUniqueUsersEmail
@@ -19,7 +19,7 @@ class ChecksUniqueUsersEmailFromReadModel implements ChecksUniqueUsersEmail
         $this->userFinder = $userFinder;
     }
 
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         if ($user = $this->userFinder->findOneByEmail($email)) {
             return $user->userId();

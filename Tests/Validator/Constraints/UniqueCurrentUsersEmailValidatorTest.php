@@ -16,6 +16,7 @@ use Xm\SymfonyBundle\Entity\User;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail;
 use Xm\SymfonyBundle\Model\User\UserId;
+use Xm\SymfonyBundle\Model\User\UserIdInterface;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Validator\Constraints\UniqueCurrentUsersEmail;
 use Xm\SymfonyBundle\Validator\Constraints\UniqueCurrentUsersEmailValidator;
@@ -133,7 +134,7 @@ class UniqueCurrentUsersEmailValidatorTest extends BaseTestCase
 
 class UniqueCurrentUsersEmailValidatorTestUniquenessCheckerNone implements ChecksUniqueUsersEmail
 {
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         return null;
     }
@@ -149,7 +150,7 @@ class UniqueCurrentUsersEmailValidatorTestUniquenessCheckerDuplicate implements 
         $this->userId = $userId;
     }
 
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         return $this->userId;
     }

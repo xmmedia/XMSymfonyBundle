@@ -9,7 +9,7 @@ use Xm\SymfonyBundle\Model\Auth\Event\UserFailedToLogin;
 use Xm\SymfonyBundle\Model\Auth\Event\UserLoggedIn;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail;
-use Xm\SymfonyBundle\Model\User\UserId;
+use Xm\SymfonyBundle\Model\User\UserIdInterface;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\FakeAr;
 
@@ -144,7 +144,7 @@ class AuthTest extends BaseTestCase
 
 class UserArUniquenessCheckerNoneForSameAsCheck implements ChecksUniqueUsersEmail
 {
-    public function __invoke(Email $email): ?UserId
+    public function __invoke(Email $email): ?UserIdInterface
     {
         return null;
     }
