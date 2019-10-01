@@ -19,7 +19,7 @@ class SendActivationHandler
     /** @var UserList */
     private $userRepo;
 
-    /** @var EmailGatewayInterface|\App\Infrastructure\Email\EmailGateway */
+    /** @var EmailGatewayInterface|\Xm\SymfonyBundle\Infrastructure\Email\EmailGateway */
     private $emailGateway;
 
     /** @var string|int */
@@ -28,7 +28,7 @@ class SendActivationHandler
     /** @var RouterInterface|\Symfony\Bundle\FrameworkBundle\Routing\Router */
     private $router;
 
-    /** @var TokenGeneratorInterface|\App\Security\TokenGenerator */
+    /** @var TokenGeneratorInterface|\Xm\SymfonyBundle\Security\TokenGenerator */
     private $tokenGenerator;
 
     public function __construct(
