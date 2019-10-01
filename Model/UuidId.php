@@ -14,12 +14,12 @@ trait UuidId
 
     public static function fromString(string $id): self
     {
-        return new self(Uuid::fromString($id));
+        return new static(Uuid::fromString($id));
     }
 
     public static function fromUuid(UuidInterface $id): self
     {
-        return new self($id);
+        return new static($id);
     }
 
     protected function __construct(UuidInterface $uuid)
