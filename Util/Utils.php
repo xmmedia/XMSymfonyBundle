@@ -24,12 +24,12 @@ class Utils
             return $var;
         }
 
-        if (\is_object($var) && method_exists($var, '__toString')) {
-            return (string) $var;
-        }
-
         if (\is_object($var) && method_exists($var, 'getValue')) {
             return $var->getValue();
+        }
+
+        if (\is_object($var) && method_exists($var, '__toString')) {
+            return (string) $var;
         }
 
         if (\is_object($var) && method_exists($var, 'toArray')) {
