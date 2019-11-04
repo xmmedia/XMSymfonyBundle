@@ -97,8 +97,10 @@ class InitiatePasswordRecoveryHandlerTestEmailGateway implements EmailGatewayInt
 {
     public function send(
         $templateIdOrAlias,
-        Email $to,
-        array $templateData
+        $to,
+        array $templateData,
+        ?array $attachments = null,
+        ?Email $from = null
     ): EmailGatewayMessageId {
         return EmailGatewayMessageId::fromString(Uuid::uuid4()->toString());
     }
