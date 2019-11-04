@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Infrastructure\Email;
 
+use Postmark\Models\PostmarkAttachment;
 use Postmark\PostmarkClient;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
+use Xm\SymfonyBundle\Util\Assert;
+use Xm\SymfonyBundle\Util\Utils;
 
 class EmailGateway implements EmailGatewayInterface
 {
@@ -68,22 +71,62 @@ class EmailGateway implements EmailGatewayInterface
      */
     public function send(
         $templateIdOrAlias,
-        Email $to,
-        array $templateData
+        $to,
+        array $templateData,
+        ?array $attachments = null,
+        ?Email $from = null
     ): EmailGatewayMessageId {
         $headers = [];
 
-        if (!$this->isProduction() && !$this->isWhitelistedAddress($to)) {
-            $headers['X-Original-To'] = $to->withName();
+        if (!\is_array($to)) {
+            $to = [$to];
+        }
 
-            $to = Email::fromString($this->devEmail);
+        Assert::allIsInstanceOf(
+            $to,
+            Email::class,
+            'All to addresses must be instances of '.Utils::printSafe(
+                Email::class
+            ).'. Got %s'
+        );
+
+        if (!$this->isProduction()) {
+            $headers['X-Original-To'] = implode(
+                ', ',
+                array_map(function (Email $email): string {
+                    return $email->withName();
+                }, $to)
+            );
+
+            $to = $this->removeNonWhiteListedAddresses($to);
+        }
+
+        $toString = implode(
+            ', ',
+            array_map(function (Email $email): string {
+                return $email->withName();
+            }, $to)
+        );
+
+        if (null === $from) {
+            $fromString = $this->from->withName();
+        } else {
+            $fromString = $from->withName();
         }
 
         $templateData = $this->setGlobalTemplateData($templateData);
 
+        Assert::allIsInstanceOf(
+            $attachments,
+            PostmarkAttachment::class,
+            'All attachments must be instances of '.Utils::printSafe(
+                PostmarkAttachment::class
+            )
+        );
+
         $result = $this->client->sendEmailWithTemplate(
-            $this->from->withName(),
-            $to->withName(),
+            $fromString,
+            $toString,
             $templateIdOrAlias,
             $templateData,
             true,
@@ -92,10 +135,26 @@ class EmailGateway implements EmailGatewayInterface
             null,
             null,
             null,
-            $headers
+            $headers,
+            $attachments
         );
 
         return EmailGatewayMessageId::fromString($result->messageId);
+    }
+
+    private function removeNonWhiteListedAddresses(array $to): array
+    {
+        foreach ($to as $key => $toEmail) {
+            if (!$this->isWhitelistedAddress($toEmail)) {
+                unset($to[$key]);
+            }
+        }
+
+        if (empty($to)) {
+            $to = [Email::fromString($this->devEmail)];
+        }
+
+        return $to;
     }
 
     private function isWhitelistedAddress(Email $to): bool
