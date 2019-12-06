@@ -37,7 +37,7 @@ final class CreateEventStreamCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->eventStore->create(
             new Stream(
@@ -47,5 +47,7 @@ final class CreateEventStreamCommand extends Command
         );
 
         $output->writeln('<info>Event stream was created successfully.</info>');
+
+        return 0;
     }
 }
