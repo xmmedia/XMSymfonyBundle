@@ -29,6 +29,10 @@ final class DateTimeType extends ScalarType implements AliasedInterface
             return null;
         }
 
+        if (\is_string($value)) {
+            return $value;
+        }
+
         return $value->format(\DateTimeInterface::RFC3339);
     }
 
