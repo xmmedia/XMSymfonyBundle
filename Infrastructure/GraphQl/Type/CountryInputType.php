@@ -33,9 +33,7 @@ class CountryInputType extends EnumType implements AliasedInterface
             return $value->toString();
         }
 
-        throw new Error(
-            'Cannot serialize Country value as enum: '.Utils::printSafe($value)
-        );
+        throw new Error('Cannot serialize Country value as enum: '.Utils::printSafe($value));
     }
 
     public static function getAliases(): array

@@ -35,14 +35,7 @@ class Assert extends \Webmozart\Assert\Assert
         try {
             $result = $httpClient->request('GET', $url)->getContent();
         } catch (ExceptionInterface $e) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Unable to check for compromised password. HTTP error: %s',
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new \InvalidArgumentException(sprintf('Unable to check for compromised password. HTTP error: %s', $e->getMessage()), 0, $e);
         }
 
         foreach (explode("\r\n", $result) as $line) {
@@ -50,9 +43,7 @@ class Assert extends \Webmozart\Assert\Assert
 
             // reject if in more than 3 breaches
             if ($hashPrefix.$hashSuffix === $hash && 3 <= (int) $count) {
-                throw new \InvalidArgumentException(
-                    'The entered password has been compromised.'
-                );
+                throw new \InvalidArgumentException('The entered password has been compromised.');
             }
         }
     }

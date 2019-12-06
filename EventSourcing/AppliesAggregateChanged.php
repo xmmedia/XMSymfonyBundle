@@ -10,11 +10,7 @@ trait AppliesAggregateChanged
     {
         $handler = $this->determineEventHandlerMethodFor($e);
         if (!method_exists($this, $handler)) {
-            throw new \RuntimeException(sprintf(
-                'Missing event handler method %s for aggregate root %s',
-                $handler,
-                \get_class($this)
-            ));
+            throw new \RuntimeException(sprintf('Missing event handler method %s for aggregate root %s', $handler, \get_class($this)));
         }
 
         $this->{$handler}($e);

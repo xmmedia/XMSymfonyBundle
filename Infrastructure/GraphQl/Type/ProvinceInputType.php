@@ -34,9 +34,7 @@ class ProvinceInputType extends EnumType implements AliasedInterface
             return $value->toString();
         }
 
-        throw new Error(
-            'Cannot serialize Province value as enum: '.Utils::printSafe($value)
-        );
+        throw new Error('Cannot serialize Province value as enum: '.Utils::printSafe($value));
     }
 
     public static function getAliases(): array

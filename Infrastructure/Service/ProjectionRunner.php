@@ -69,26 +69,14 @@ class ProjectionRunner
             if ($state->is(ProjectionStatus::IDLE())) {
                 $this->projector->run($keepRunning);
             } else {
-                throw new \RuntimeException(
-                    sprintf(
-                        'Projection "%s" is not idle. It\'s state is "%s"',
-                        $projectionName,
-                        $state->getValue()
-                    )
-                );
+                throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s"', $projectionName, $state->getValue()));
             }
         } catch (\Prooph\EventStore\Exception\ProjectionNotFound $e) {
             // try running
             // the likely case is the projection has not been initialized
             $this->projector->run($keepRunning);
         } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Projection "%s" is not idle. It\'s state is "%s"',
-                    $projectionName,
-                    'unknown'
-                )
-            );
+            throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s"', $projectionName, 'unknown'));
         }
     }
 
@@ -99,25 +87,19 @@ class ProjectionRunner
         $this->projectionName = $projectionName;
 
         if (!$this->projectionManagerForProjectionsLocator->has($this->projectionName)) {
-            throw new \RuntimeException(
-                sprintf('ProjectionManager for "%s" not found', $this->projectionName)
-            );
+            throw new \RuntimeException(sprintf('ProjectionManager for "%s" not found', $this->projectionName));
         }
         $this->projectionManager = $this->projectionManagerForProjectionsLocator
             ->get($this->projectionName);
 
         if (!$this->projectionsLocator->has($this->projectionName)) {
-            throw new \RuntimeException(
-                sprintf('Projection "%s" not found', $this->projectionName)
-            );
+            throw new \RuntimeException(sprintf('Projection "%s" not found', $this->projectionName));
         }
         /** @var ReadModelProjection $projection */
         $projection = $this->projectionsLocator->get($this->projectionName);
 
         if (!$this->projectionReadModelLocator->has($this->projectionName)) {
-            throw new \RuntimeException(
-                sprintf('ReadModel for "%s" not found', $this->projectionName)
-            );
+            throw new \RuntimeException(sprintf('ReadModel for "%s" not found', $this->projectionName));
         }
         /** @var ReadModel $readModel */
         $readModel = $this->projectionReadModelLocator->get($this->projectionName);

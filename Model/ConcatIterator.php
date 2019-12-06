@@ -38,12 +38,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
                 }
                 $this->count += \count($iterator);
             } else {
-                throw new \InvalidArgumentException(
-                    'Argument '.$i.
-                    ' passed to '.__METHOD__.
-                    ' must be of type ArrayAccess, Countable, and Traversable. '.
-                    \gettype($iterator).' given.'
-                );
+                throw new \InvalidArgumentException('Argument '.$i.' passed to '.__METHOD__.' must be of type ArrayAccess, Countable, and Traversable. '.\gettype($iterator).' given.');
             }
         }
     }

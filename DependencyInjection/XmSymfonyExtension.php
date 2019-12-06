@@ -41,10 +41,7 @@ class XmSymfonyExtension extends Extension
                 $eventStoreId = 'prooph_event_store.'.$repositoryConfig['store'];
 
                 if (!class_exists($repositoryClass)) {
-                    throw new \RuntimeException(sprintf(
-                        'You must configure the class of repository "%s" either by configuring the \'repository_class\' key or by directly using the FQCN as the repository key.',
-                        $repositoryClass
-                    ));
+                    throw new \RuntimeException(sprintf('You must configure the class of repository "%s" either by configuring the \'repository_class\' key or by directly using the FQCN as the repository key.', $repositoryClass));
                 }
 
                 $container

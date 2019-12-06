@@ -66,12 +66,7 @@ final class GraphQlDumpSchemaCommand extends Command
         );
 
         if (!$user) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The user with email "%s" cannot be found.',
-                    $userEmail
-                )
-            );
+            throw new \InvalidArgumentException(sprintf('The user with email "%s" cannot be found.', $userEmail));
         }
 
         return new PostAuthenticationGuardToken(

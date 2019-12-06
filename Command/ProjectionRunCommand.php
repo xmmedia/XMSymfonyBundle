@@ -87,9 +87,7 @@ final class ProjectionRunCommand extends Command
         $sleep = (int) $input->getOption(static::OPTION_SLEEP);
 
         if (!$this->projectionName && !$runAll) {
-            throw new RuntimeException(
-                'A projection name or --all for run all projections are required.'
-            );
+            throw new RuntimeException('A projection name or --all for run all projections are required.');
         }
 
         if ($runAll) {

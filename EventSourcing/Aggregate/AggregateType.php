@@ -22,9 +22,7 @@ class AggregateType
     public static function fromAggregateRoot($eventSourcedAggregateRoot): self
     {
         if (!\is_object($eventSourcedAggregateRoot)) {
-            throw new Exception\AggregateTypeException(
-                sprintf('Aggregate root must be an object but type of %s given', \gettype($eventSourcedAggregateRoot))
-            );
+            throw new Exception\AggregateTypeException(sprintf('Aggregate root must be an object but type of %s given', \gettype($eventSourcedAggregateRoot)));
         }
 
         if ($eventSourcedAggregateRoot instanceof AggregateTypeProvider) {
@@ -109,9 +107,7 @@ class AggregateType
         $otherAggregateType = self::fromAggregateRoot($aggregateRoot);
 
         if (!$this->equals($otherAggregateType)) {
-            throw new Exception\AggregateTypeException(
-                sprintf('Aggregate types must be equal. %s != %s', $this->toString(), $otherAggregateType->toString())
-            );
+            throw new Exception\AggregateTypeException(sprintf('Aggregate types must be equal. %s != %s', $this->toString(), $otherAggregateType->toString()));
         }
     }
 

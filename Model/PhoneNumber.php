@@ -26,12 +26,7 @@ class PhoneNumber implements ValueObject
                 $phoneNumber->setExtension($data['extension']);
             }
         } catch (NumberParseException $e) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The phone number is invalid: %s',
-                    $e->getMessage()
-                )
-            );
+            throw new \InvalidArgumentException(sprintf('The phone number is invalid: %s', $e->getMessage()));
         }
 
         return new self($phoneNumber);
@@ -46,13 +41,7 @@ class PhoneNumber implements ValueObject
                 $util->parse($phoneNumber, self::$defaultRegion)
             );
         } catch (NumberParseException $e) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The phone number "%s" is invalid: %s',
-                    $phoneNumber,
-                    $e->getMessage()
-                )
-            );
+            throw new \InvalidArgumentException(sprintf('The phone number "%s" is invalid: %s', $phoneNumber, $e->getMessage()));
         }
     }
 
@@ -66,9 +55,7 @@ class PhoneNumber implements ValueObject
         $util = PhoneNumberUtil::getInstance();
 
         if (!$util->isValidNumber($phoneNumber)) {
-            throw new \InvalidArgumentException(
-                sprintf('The phone number "%s" is invalid.', $phoneNumber)
-            );
+            throw new \InvalidArgumentException(sprintf('The phone number "%s" is invalid.', $phoneNumber));
         }
 
         $this->phoneNumber = $phoneNumber;

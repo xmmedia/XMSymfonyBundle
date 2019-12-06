@@ -38,10 +38,7 @@ class User extends AggregateRoot implements Entity
         ChecksUniqueUsersEmail $checksUniqueUsersEmail
     ): self {
         if ($duplicateUserId = $checksUniqueUsersEmail($email)) {
-            throw Exception\DuplicateEmail::withEmail(
-                $email,
-                $duplicateUserId
-            );
+            throw Exception\DuplicateEmail::withEmail($email, $duplicateUserId);
         }
 
         // if they're not active, don't allow sending an invite
@@ -74,10 +71,7 @@ class User extends AggregateRoot implements Entity
         ChecksUniqueUsersEmail $checksUniqueUsersEmail
     ): self {
         if ($duplicateUserId = $checksUniqueUsersEmail($email)) {
-            throw Exception\DuplicateEmail::withEmail(
-                $email,
-                $duplicateUserId
-            );
+            throw Exception\DuplicateEmail::withEmail($email, $duplicateUserId);
         }
 
         $self = new self();
@@ -102,10 +96,7 @@ class User extends AggregateRoot implements Entity
     ): void {
         if ($duplicateUserId = $checksUniqueUsersEmail($email)) {
             if (!$this->userId->sameValueAs($duplicateUserId)) {
-                throw Exception\DuplicateEmail::withEmail(
-                    $email,
-                    $duplicateUserId
-                );
+                throw Exception\DuplicateEmail::withEmail($email, $duplicateUserId);
             }
         }
 
@@ -141,9 +132,7 @@ class User extends AggregateRoot implements Entity
     public function activateByAdmin(): void
     {
         if ($this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToActivateWhenAlreadyActive(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToActivateWhenAlreadyActive($this->userId);
         }
 
         $this->recordThat(
@@ -154,9 +143,7 @@ class User extends AggregateRoot implements Entity
     public function deactivateByAdmin(): void
     {
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToDeactivateWhenAlreadyInactive(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToDeactivateWhenAlreadyInactive($this->userId);
         }
 
         $this->recordThat(
@@ -169,9 +156,7 @@ class User extends AggregateRoot implements Entity
         NotificationGatewayId $messageId
     ): void {
         if ($this->verified) {
-            throw Exception\UserAlreadyVerified::triedToSendVerification(
-                $this->userId
-            );
+            throw Exception\UserAlreadyVerified::triedToSendVerification($this->userId);
         }
 
         $this->recordThat(
@@ -186,9 +171,7 @@ class User extends AggregateRoot implements Entity
         }
 
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToVerifyAnInactiveUser(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToVerifyAnInactiveUser($this->userId);
         }
 
         $this->recordThat(
@@ -201,9 +184,7 @@ class User extends AggregateRoot implements Entity
         NotificationGatewayId $messageId
     ): void {
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToRequestPasswordReset(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToRequestPasswordReset($this->userId);
         }
 
         $this->recordThat(
@@ -218,17 +199,12 @@ class User extends AggregateRoot implements Entity
         ChecksUniqueUsersEmail $checksUniqueUsersEmail
     ): void {
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToUpdateProfile(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToUpdateProfile($this->userId);
         }
 
         if ($duplicateUserId = $checksUniqueUsersEmail($email)) {
             if (!$this->userId->sameValueAs($duplicateUserId)) {
-                throw Exception\DuplicateEmail::withEmail(
-                    $email,
-                    $duplicateUserId
-                );
+                throw Exception\DuplicateEmail::withEmail($email, $duplicateUserId);
             }
         }
 
@@ -249,9 +225,7 @@ class User extends AggregateRoot implements Entity
         }
 
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToLogin(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToLogin($this->userId);
         }
 
         $this->recordThat(Event\UserLoggedIn::now($this->userId));
@@ -260,9 +234,7 @@ class User extends AggregateRoot implements Entity
     public function changePassword(string $encodedPassword): void
     {
         if (!$this->active) {
-            throw Exception\InvalidUserActiveStatus::triedToChangePassword(
-                $this->userId
-            );
+            throw Exception\InvalidUserActiveStatus::triedToChangePassword($this->userId);
         }
 
         $this->recordThat(

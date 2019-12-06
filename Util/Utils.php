@@ -36,9 +36,7 @@ class Utils
             return $var->toArray();
         }
 
-        throw new \InvalidArgumentException(
-            sprintf('Can\'t serialize an %s.', self::printSafe($var))
-        );
+        throw new \InvalidArgumentException(sprintf('Can\'t serialize an %s.', self::printSafe($var)));
     }
 
     /**

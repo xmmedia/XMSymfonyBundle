@@ -35,9 +35,7 @@ class AdminUserActivateMutation implements MutationInterface
                 $command = DeactivateUserByAdmin::class;
                 break;
             default:
-                throw new UserError(
-                    sprintf('The "%s" action is invalid.', $action)
-                );
+                throw new UserError(sprintf('The "%s" action is invalid.', $action));
         }
 
         $this->commandBus->dispatch($command::user($userId));
