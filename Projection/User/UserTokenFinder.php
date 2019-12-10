@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Projection\User;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Xm\SymfonyBundle\Entity\UserToken;
 use Xm\SymfonyBundle\Model\User\Token;
 
@@ -17,7 +17,7 @@ use Xm\SymfonyBundle\Model\User\Token;
  */
 class UserTokenFinder extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserToken::class);
     }
