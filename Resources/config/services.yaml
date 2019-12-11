@@ -19,13 +19,6 @@ services:
 
     Xm\SymfonyBundle\DataProvider\IssuerProvider: ~
 
-    Xm\SymfonyBundle\Security\TokenGenerator: ~
-    Xm\SymfonyBundle\Security\TokenGeneratorInterface: '@Xm\SymfonyBundle\Security\TokenGenerator'
-
-    Xm\SymfonyBundle\Security\PasswordEncoder: ~
-    Xm\SymfonyBundle\Security\UserChecker: ~
-    App\Security\TokenValidator: ~
-
     Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory: ~
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository:
