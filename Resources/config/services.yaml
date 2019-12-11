@@ -19,18 +19,12 @@ services:
 
     Xm\SymfonyBundle\DataProvider\IssuerProvider: ~
 
-    Xm\SymfonyBundle\Projection\User\UserFinder: ~
-    Xm\SymfonyBundle\Projection\User\UserTokenFinder: ~
-
-    Xm\SymfonyBundle\Infrastructure\Service\ChecksUniqueUsersEmailFromReadModel: ~
-    Xm\SymfonyBundle\Model\User\Service\ChecksUniqueUsersEmail: '@Xm\SymfonyBundle\Infrastructure\Service\ChecksUniqueUsersEmailFromReadModel'
-
     Xm\SymfonyBundle\Security\TokenGenerator: ~
     Xm\SymfonyBundle\Security\TokenGeneratorInterface: '@Xm\SymfonyBundle\Security\TokenGenerator'
 
     Xm\SymfonyBundle\Security\PasswordEncoder: ~
     Xm\SymfonyBundle\Security\UserChecker: ~
-    Xm\SymfonyBundle\Security\TokenValidator: ~
+    App\Security\TokenValidator: ~
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory: ~
 
@@ -54,7 +48,3 @@ services:
     Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver\:
         resource: '../../Infrastructure/GraphQl/Resolver/*/*Resolver.php'
         tags: [ 'overblog_graphql.resolver' ]
-
-    Xm\SymfonyBundle\Infrastructure\GraphQl\Mutation\:
-        resource: '../../Infrastructure/GraphQl/Mutation/*/*Mutation.php'
-        tags: [ 'overblog_graphql.mutation' ]

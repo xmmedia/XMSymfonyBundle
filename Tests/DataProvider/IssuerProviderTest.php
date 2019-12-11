@@ -12,8 +12,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
-use Xm\SymfonyBundle\Entity\User;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Tests\TestUserEntity as User;
 
 class IssuerProviderTest extends BaseTestCase
 {
