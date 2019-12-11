@@ -28,12 +28,12 @@
     "prooph/pdo-event-store": "^1.11",
     "ramsey/uuid": "^3.7.3",
     "ramsey/uuid-doctrine": "^1.5",
-    "symfony/form": "*",
-    "symfony/framework-bundle": "*",
-    "symfony/http-client": "*",
-    "symfony/messenger": "*",
-    "symfony/security-bundle": "*",
-    "symfony/validator": "*",
+    "symfony/form": "^4.3.8 || ^5.0",
+    "symfony/framework-bundle": "^4.3.8 || ^5.0",
+    "symfony/http-client": "^4.3.8 || ^5.0",
+    "symfony/messenger": "^4.3.8 || ^5.0",
+    "symfony/security-bundle": "^4.3.8 || ^5.0",
+    "symfony/validator": "^4.3.8 || ^5.0",
     "wildbit/postmark-php": "^2.8"
   },
   "require-dev": {
@@ -46,9 +46,9 @@
     "phpstan/phpstan-symfony": "^0.12",
     "phpstan/phpstan-webmozart-assert": "^0.12",
     "phpunit/phpunit": "^8.0",
-    "symfony/debug-pack": "*",
-    "symfony/phpunit-bridge": "*",
-    "symfony/test-pack": "*"
+    "symfony/debug-pack": "^1.0.0",
+    "symfony/phpunit-bridge": "^4.3.8 || ^5.0",
+    "symfony/test-pack": "^1.0.0"
   },
   "config": {
     "sort-packages": true
@@ -67,14 +67,5 @@
     "cs": "php-cs-fixer fix -v --dry-run --config=php_cs.dist",
     "cs:fix": "php-cs-fixer fix -v --config=php_cs.dist",
     "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse"
-  },
-  "conflict": {
-    "symfony/symfony": "*"
-  },
-  "extra": {
-    "symfony": {
-      "allow-contrib": true,
-      "require": "4.4.*"
-    }
   }
 }
