@@ -4,10 +4,6 @@ services:
         autoconfigure: true
         public: false
 
-        bind:
-            $commandBus: '@messenger.bus.commands'
-            $eventBus: '@messenger.bus.events'
-
     Xm\SymfonyBundle\Command\CreateEventStreamCommand: ~
     Xm\SymfonyBundle\Command\GraphQlDumpSchemaCommand: ~
     Xm\SymfonyBundle\Command\ProjectionRunCommand: ~
