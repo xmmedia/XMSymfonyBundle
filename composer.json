@@ -28,12 +28,12 @@
     "prooph/pdo-event-store": "^1.11",
     "ramsey/uuid": "^3.7.3",
     "ramsey/uuid-doctrine": "^1.5",
-    "symfony/form": "^4.3.8 || ^5.0",
-    "symfony/framework-bundle": "^4.3.8 || ^5.0",
-    "symfony/http-client": "^4.3.8 || ^5.0",
-    "symfony/messenger": "^4.3.8 || ^5.0",
-    "symfony/security-bundle": "^4.3.8 || ^5.0",
-    "symfony/validator": "^4.3.8 || ^5.0",
+    "symfony/form": "^4.4",
+    "symfony/framework-bundle": "^4.4",
+    "symfony/http-client": "^4.4",
+    "symfony/messenger": "^4.4",
+    "symfony/security-bundle": "^4.4",
+    "symfony/validator": "^4.4",
     "wildbit/postmark-php": "^2.8"
   },
   "require-dev": {
@@ -47,7 +47,7 @@
     "phpstan/phpstan-webmozart-assert": "^0.12",
     "phpunit/phpunit": "^8.0",
     "symfony/debug-pack": "^1.0.0",
-    "symfony/phpunit-bridge": "^4.3.8 || ^5.0",
+    "symfony/phpunit-bridge": "^4.4",
     "symfony/test-pack": "^1.0.0"
   },
   "config": {
