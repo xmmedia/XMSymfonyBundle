@@ -26,4 +26,3 @@ services:
 
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
-
