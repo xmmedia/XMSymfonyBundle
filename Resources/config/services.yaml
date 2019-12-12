@@ -27,13 +27,3 @@ services:
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
 
-    Xm\SymfonyBundle\EventStore\EventStoreMessengerPlugin:
-        tags: [ 'prooph_event_store.plugin' ]
-
-    Xm\SymfonyBundle\Infrastructure\GraphQl\Type\:
-        resource: '../../Infrastructure/GraphQl/Type/*Type.php'
-        tags: [ 'overblog_graphql.type' ]
-
-    Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver\:
-        resource: '../../Infrastructure/GraphQl/Resolver/*/*Resolver.php'
-        tags: [ 'overblog_graphql.resolver' ]
