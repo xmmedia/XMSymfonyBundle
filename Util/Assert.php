@@ -29,7 +29,7 @@ class Assert extends \Webmozart\Assert\Assert
         }
 
         foreach (explode("\r\n", $result) as $line) {
-            list($hashSuffix, $count) = explode(':', $line);
+            [$hashSuffix, $count] = explode(':', $line);
 
             // reject if in more than 3 breaches
             if ($hashPrefix.$hashSuffix === $hash && 3 <= (int) $count) {
