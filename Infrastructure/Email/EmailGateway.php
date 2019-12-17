@@ -116,13 +116,15 @@ class EmailGateway implements EmailGatewayInterface
 
         $templateData = $this->setGlobalTemplateData($templateData);
 
-        Assert::allIsInstanceOf(
-            $attachments,
-            PostmarkAttachment::class,
-            'All attachments must be instances of '.Utils::printSafe(
-                PostmarkAttachment::class
-            )
-        );
+        if (null !== $attachments) {
+            Assert::allIsInstanceOf(
+                $attachments,
+                PostmarkAttachment::class,
+                'All attachments must be instances of '.Utils::printSafe(
+                    PostmarkAttachment::class
+                )
+            );
+        }
 
         $result = $this->client->sendEmailWithTemplate(
             $fromString,
