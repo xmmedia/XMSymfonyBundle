@@ -9,8 +9,10 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
 class Assert extends \Webmozart\Assert\Assert
 {
-    public static function compromisedPassword(string $password, HttpClient $httpClient = null): void
-    {
+    public static function compromisedPassword(
+        string $password,
+        HttpClient $httpClient = null
+    ): void {
         $endpoint = 'https://api.pwnedpasswords.com/range/%s';
         if (null === $httpClient) {
             $httpClient = HttpClient::create();

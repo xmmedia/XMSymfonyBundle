@@ -17,6 +17,8 @@ trait CanCreateSecurityTrait
      * $user: false = no token storage within container, null = no user.
      *
      * @param UserInterface|bool|null $user
+     *
+     * @return Security|Mockery\MockInterface
      */
     private function createSecurity($user): Security
     {
@@ -36,8 +38,13 @@ trait CanCreateSecurityTrait
         return new Security($container);
     }
 
-    private function createContainer($serviceId, $serviceObject): ContainerInterface
-    {
+    /**
+     * @return ContainerInterface|Mockery\MockInterface
+     */
+    private function createContainer(
+        string $serviceId,
+        object $serviceObject
+    ): ContainerInterface {
         $container = Mockery::mock(ContainerInterface::class);
         $container->shouldReceive('get')
             ->with($serviceId)
