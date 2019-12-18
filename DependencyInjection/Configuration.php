@@ -54,8 +54,6 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('stream_name')->defaultNull()->end()
                 ->scalarNode('store')->defaultValue('default')->end()
-                ->booleanNode('one_stream_per_aggregate')->defaultFalse()->end()
-                ->booleanNode('disable_identity_map')->defaultFalse()->end()
             ->end();
 
         return $repositoriesNode;

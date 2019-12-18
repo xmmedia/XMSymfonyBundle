@@ -56,8 +56,6 @@ class XmSymfonyExtension extends Extension
                             $repositoryConfig['aggregate_type'],
                             new Reference($repositoryConfig['aggregate_translator']),
                             $repositoryConfig['stream_name'],
-                            $repositoryConfig['one_stream_per_aggregate'],
-                            $repositoryConfig['disable_identity_map'] ?? false,
                         ]
                     );
             }
