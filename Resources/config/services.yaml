@@ -19,7 +19,7 @@ services:
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository:
         abstract: true
-        factory: 'Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory:create'
+        factory: ['Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory', 'create']
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator: ~
     Xm\SymfonyBundle\EventStore\PersistenceStrategy\StreamStrategy: ~
