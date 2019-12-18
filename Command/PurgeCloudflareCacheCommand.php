@@ -15,7 +15,7 @@ final class PurgeCloudflareCacheCommand extends Command
     /** @var Cloudflare */
     private $cloudflare;
 
-    public function __construct(Cloudflare $cloudflare)
+    public function __construct(Cloudflare $cloudflare = null)
     {
         parent::__construct();
 
@@ -34,6 +34,10 @@ final class PurgeCloudflareCacheCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Purge Cloudflare Cache');
+
+        if (null === $this->cloudflare) {
+            throw new \RuntimeException('The Cloudflare service must be configured before using this command.');
+        }
 
         if (!$this->cloudflare->clearCache()) {
             $io->error('Failed to clear the cache.');
