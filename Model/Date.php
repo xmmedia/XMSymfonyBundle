@@ -4,38 +4,38 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Model;
 
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class Date implements ValueObject, \JsonSerializable
 {
     public const STRING_FORMAT = 'Y-m-d';
     public const TZ = 'UTC';
 
-    /** @var Carbon */
+    /** @var CarbonImmutable */
     private $date;
 
     public static function fromString(string $string): self
     {
         // timezone is only used if it's not in the date string
-        return new static(new Carbon($string, self::TZ));
+        return new static(new CarbonImmutable($string, self::TZ));
     }
 
     public static function now(string $tz = self::TZ): self
     {
-        return new static(new Carbon('now', $tz));
+        return new static(new CarbonImmutable('now', $tz));
     }
 
     public static function fromDateTime(\DateTimeInterface $date): self
     {
-        return new static(Carbon::instance($date));
+        return new static(CarbonImmutable::instance($date));
     }
 
-    private function __construct(Carbon $date)
+    private function __construct(CarbonImmutable $date)
     {
         $this->date = $date;
     }
 
-    public function date(): Carbon
+    public function date(): CarbonImmutable
     {
         return $this->date;
     }
