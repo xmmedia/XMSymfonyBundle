@@ -16,7 +16,7 @@ use Xm\SymfonyBundle\Util\Utils;
 class EmailGateway implements EmailGatewayInterface
 {
     /** @var PostmarkClient */
-    private $client;
+    protected $client;
 
     /** @var Email */
     protected $from;
@@ -25,22 +25,22 @@ class EmailGateway implements EmailGatewayInterface
     protected $kernelEnv;
 
     /** @var RouterInterface|\Symfony\Bundle\FrameworkBundle\Routing\Router */
-    private $router;
+    protected $router;
 
     /** @var string */
-    private $productName;
+    protected $productName;
 
     /** @var string */
-    private $companyName;
+    protected $companyName;
 
     /** @var string */
-    private $companyAddress;
+    protected $companyAddress;
 
     /** @var array */
-    private $whitelist;
+    protected $whitelist;
 
     /** @var string|null */
-    private $devEmail;
+    protected $devEmail;
 
     public function __construct(
         string $postmarkApiKey,
@@ -144,7 +144,7 @@ class EmailGateway implements EmailGatewayInterface
         return EmailGatewayMessageId::fromString($result->messageId);
     }
 
-    private function removeNonWhiteListedAddresses(array $to): array
+    protected function removeNonWhiteListedAddresses(array $to): array
     {
         foreach ($to as $key => $toEmail) {
             if (!$this->isWhitelistedAddress($toEmail)) {
@@ -159,7 +159,7 @@ class EmailGateway implements EmailGatewayInterface
         return $to;
     }
 
-    private function isWhitelistedAddress(Email $to): bool
+    protected function isWhitelistedAddress(Email $to): bool
     {
         foreach ($this->whitelist as $pattern) {
             if (preg_match($pattern, $to->toString())) {
@@ -170,7 +170,7 @@ class EmailGateway implements EmailGatewayInterface
         return false;
     }
 
-    private function setGlobalTemplateData(array $data): array
+    protected function setGlobalTemplateData(array $data): array
     {
         $default['supportEmail'] = $this->from->email();
         $default['rootUrl'] = $this->router->generate(
@@ -191,7 +191,7 @@ class EmailGateway implements EmailGatewayInterface
         return array_merge($default, $data);
     }
 
-    private function isProduction(): bool
+    protected function isProduction(): bool
     {
         return 'prod' === $this->kernelEnv;
     }
