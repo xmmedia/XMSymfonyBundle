@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Model;
 
 use Carbon\CarbonImmutable;
 
-class Date implements ValueObject, \JsonSerializable
+class Date implements ValueObject
 {
     public const STRING_FORMAT = 'Y-m-d';
     public const TZ = 'UTC';
@@ -53,11 +53,6 @@ class Date implements ValueObject, \JsonSerializable
     public function __toString(): string
     {
         return $this->toString();
-    }
-
-    public function jsonSerialize(): string
-    {
-        return $this->date->jsonSerialize();
     }
 
     /**
