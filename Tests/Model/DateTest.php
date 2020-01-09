@@ -101,14 +101,6 @@ class DateTest extends BaseTestCase
         $this->assertEquals($dateString, (string) $date);
     }
 
-    /**
-     * @dataProvider jsonProvider
-     */
-    public function testJsonSerialize(Date $date, string $expected): void
-    {
-        $this->assertEquals($expected, Json::encode($date));
-    }
-
     public function jsonProvider(): \Generator
     {
         yield [Date::fromString('2000-01-01'), '"2000-01-01T00:00:00.000000Z"'];
