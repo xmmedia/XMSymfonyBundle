@@ -21,7 +21,7 @@
     "moneyphp/money": "^3.2",
     "nesbot/carbon": "^2.24",
     "odolbeau/phone-number-bundle": "^3.0",
-    "overblog/graphql-bundle": "^0.12.3",
+    "overblog/graphql-bundle": "^0.12.3 || ^0.13.0",
     "prooph/event-store-bus-bridge": "^3.3",
     "prooph/event-store-symfony-bundle": "^0.6.0 || ^0.7.0 || ^0.8.0",
     "prooph/pdo-event-store": "^1.11",
@@ -46,7 +46,7 @@
     "phpstan/phpstan-webmozart-assert": "^0.12",
     "phpunit/phpunit": "^8.0",
     "symfony/debug-pack": "^1.0.0",
-    "symfony/phpunit-bridge": "^4.4",
+    "symfony/phpunit-bridge": "^5.0",
     "symfony/test-pack": "^1.0.0"
   },
   "config": {
