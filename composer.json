@@ -18,6 +18,7 @@
     "doctrine/orm": "~2.5",
     "egulias/email-validator": "^2.1",
     "marc-mabe/php-enum": "^4.1",
+    "mkopinsky/zxcvbn-php": "^4.4",
     "moneyphp/money": "^3.2",
     "nesbot/carbon": "^2.24",
     "odolbeau/phone-number-bundle": "^3.0",
