@@ -7,7 +7,6 @@ namespace Xm\SymfonyBundle\Tests\Model;
 use Xm\SymfonyBundle\Model\Date;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\FakeVo;
-use Xm\SymfonyBundle\Util\Json;
 
 class DateTest extends BaseTestCase
 {
