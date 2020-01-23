@@ -5,27 +5,18 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Util;
 
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use ZxcvbnPhp\Zxcvbn;
 
 class Assert extends \Webmozart\Assert\Assert
 {
-    /**
-     * @param UserInterface|\App\Entity\User $user
-     */
     public static function passwordComplexity(
         string $password,
-        UserInterface $user
+        array $userData
     ): void {
-        $userData = [
-            $user->getUsername(),
-            $user->firstName(),
-            $user->lastName(),
-        ];
-
         $zxcvbn = new Zxcvbn();
-        if ($zxcvbn->passwordStrength('password', $userData) <= 2) {
+
+        if ($zxcvbn->passwordStrength($password, $userData) <= 2) {
             throw new \InvalidArgumentException('The password complexity is 2 or below (out of 4).');
         }
     }
