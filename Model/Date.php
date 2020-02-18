@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Model;
 
 use Carbon\CarbonImmutable;
+use Carbon\CarbonTimeZone;
 
 class Date implements ValueObject
 {
@@ -20,7 +21,10 @@ class Date implements ValueObject
         return new static(new CarbonImmutable($string, self::TZ));
     }
 
-    public static function now(string $tz = self::TZ): self
+    /**
+     * @param string|CarbonTimeZone $tz
+     */
+    public static function now($tz = self::TZ): self
     {
         return new static(new CarbonImmutable('now', $tz));
     }
