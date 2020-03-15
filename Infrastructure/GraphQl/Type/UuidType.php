@@ -49,6 +49,10 @@ final class UuidType extends ScalarType implements AliasedInterface
             return $value;
         }
 
+        if ($value instanceof UuidInterface && Uuid::isValid($value)) {
+            return (string) $value;
+        }
+
         throw new Error('Cannot represent value as UUID: ' . Utils::printSafe($value));
     }
 

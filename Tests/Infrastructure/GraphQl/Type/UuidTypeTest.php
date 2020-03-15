@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Type;
 
+use GraphQL\Error\Error;
 use GraphQL\Language\AST\StringValueNode;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\UuidType;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
@@ -18,6 +19,16 @@ class UuidTypeTest extends BaseTestCase
         $result = (new UuidType())->serialize($value);
 
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider invalidUuidProvider
+     */
+    public function testSerializeInvalid($value): void
+    {
+        $this->expectException(Error::class);
+
+        (new UuidType())->serialize($value);
     }
 
     public function testSerializerUserId(): void
@@ -41,6 +52,16 @@ class UuidTypeTest extends BaseTestCase
     }
 
     /**
+     * @dataProvider invalidUuidProvider
+     */
+    public function testParseValueInvalid($value): void
+    {
+        $this->expectException(Error::class);
+
+        (new UuidType())->parseValue($value);
+    }
+
+    /**
      * @dataProvider uuidProvider
      */
     public function testParseLiteral($value, ?string $expected): void
@@ -53,6 +74,19 @@ class UuidTypeTest extends BaseTestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @dataProvider invalidUuidProvider
+     */
+    public function testParseLiteralInvalid($value): void
+    {
+        $node = new StringValueNode([]);
+        $node->value = $value;
+
+        $this->expectException(Error::class);
+
+        (new UuidType())->parseLiteral($node);
+    }
+
     public function uuidProvider(): \Generator
     {
         $faker = $this->faker();
@@ -60,10 +94,18 @@ class UuidTypeTest extends BaseTestCase
         $fakeId = $faker->fakeId;
 
         yield [
-            $fakeId->toString(),
+            $fakeId,
             $fakeId->toString(),
         ];
 
+        yield [
+            $fakeId->toString(),
+            $fakeId->toString(),
+        ];
+    }
+
+    public function invalidUuidProvider(): \Generator
+    {
         yield [
             'string',
             null,
