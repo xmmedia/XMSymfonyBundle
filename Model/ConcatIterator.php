@@ -11,7 +11,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
 {
     public const INVALID_INDEX = 'Index invalid or out of range';
 
-    /** @var int $count Fast-lookup count for full set of iterators */
+    /** @var int Fast-lookup count for full set of iterators */
     public $count = 0;
 
     /**
