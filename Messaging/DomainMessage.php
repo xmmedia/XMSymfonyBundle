@@ -42,7 +42,7 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
     {
         MessageDataAssertion::assert($messageData);
 
-        $messageRef = new \ReflectionClass(\get_called_class());
+        $messageRef = new \ReflectionClass(static::class);
 
         /** @var $message DomainMessage */
         $message = $messageRef->newInstanceWithoutConstructor();
@@ -63,7 +63,7 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
         }
 
         if (null === $this->messageName) {
-            $this->messageName = \get_class($this);
+            $this->messageName = static::class;
         }
 
         if (null === $this->createdAt) {
