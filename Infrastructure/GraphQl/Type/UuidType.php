@@ -37,7 +37,7 @@ final class UuidType extends ScalarType implements AliasedInterface
             return $value;
         }
 
-        throw new Error('Cannot serialize value as UUID: ' . Utils::printSafe($value));
+        throw new Error('Cannot serialize value as UUID: '.Utils::printSafe($value));
     }
 
     /**
@@ -53,7 +53,7 @@ final class UuidType extends ScalarType implements AliasedInterface
             return (string) $value;
         }
 
-        throw new Error('Cannot represent value as UUID: ' . Utils::printSafe($value));
+        throw new Error('Cannot represent value as UUID: '.Utils::printSafe($value));
     }
 
     /**
