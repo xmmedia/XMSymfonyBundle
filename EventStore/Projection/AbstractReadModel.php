@@ -66,7 +66,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     {
         foreach ($this->tables as $table) {
             $statement = $this->connection->prepare(
-                sprintf('DROP TABLE `%s`;', $table)
+                sprintf('DROP TABLE IF EXISTS `%s`;', $table)
             );
             $statement->execute();
         }
