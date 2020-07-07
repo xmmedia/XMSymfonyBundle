@@ -44,7 +44,7 @@ final class GraphQlDumpSchemaCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->tokenStorage->setToken(
             $this->token($input->getArgument('user-email'))

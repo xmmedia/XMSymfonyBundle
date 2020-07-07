@@ -30,7 +30,7 @@ final class PurgeCloudflareCacheCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Purge Cloudflare Cache');
@@ -44,5 +44,7 @@ final class PurgeCloudflareCacheCommand extends Command
         }
 
         $io->success('Cache Purged');
+
+        return 0;
     }
 }

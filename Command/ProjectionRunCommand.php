@@ -73,7 +73,7 @@ final class ProjectionRunCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
         $this->io->title('Running Projection(s)');
@@ -95,6 +95,8 @@ final class ProjectionRunCommand extends Command
         } else {
             $this->runProjection($keepRunning, $sleep);
         }
+
+        return 0;
     }
 
     private function runProjection(bool $keepRunning, int $sleep): void
