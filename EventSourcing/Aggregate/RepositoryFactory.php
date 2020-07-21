@@ -9,7 +9,7 @@ use Prooph\EventStore\StreamName;
 
 class RepositoryFactory
 {
-    public function create(
+    public static function create(
         string $repositoryClass,
         EventStore $eventStore,
         string $aggregateType,
