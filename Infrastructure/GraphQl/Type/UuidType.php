@@ -49,7 +49,7 @@ final class UuidType extends ScalarType implements AliasedInterface
             return $value;
         }
 
-        if ($value instanceof UuidInterface && Uuid::isValid($value)) {
+        if ($value instanceof UuidInterface && Uuid::isValid((string) $value)) {
             return (string) $value;
         }
 
