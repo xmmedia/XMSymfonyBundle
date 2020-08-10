@@ -34,7 +34,7 @@
     "symfony/messenger": "^4.4 || ^5.0",
     "symfony/security-bundle": "^4.4 || ^5.0",
     "symfony/validator": "^4.4 || ^5.0",
-    "wildbit/postmark-php": "^2.8"
+    "wildbit/postmark-php": "^3.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.13",
