@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Model;
 
-use ArrayIterator;
-use Countable;
-use Iterator;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
