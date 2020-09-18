@@ -48,7 +48,7 @@ final class CreateEventStreamCommand extends Command
             )
         );
 
-        $output->writeln('<info>Event stream "'.$streamName.'rf comp" was created successfully.</info>');
+        $output->writeln('<info>Event stream "'.$streamName.'" was created successfully.</info>');
 
         return 0;
     }
