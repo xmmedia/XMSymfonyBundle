@@ -15,10 +15,10 @@ class Assert extends \Webmozart\Assert\Assert
         string $password,
         array $userData
     ): void {
-        $zxcvbn = new Zxcvbn();
+        $score = (new Zxcvbn())->passwordStrength($password, array_values($userData))['score'];
 
-        if ($zxcvbn->passwordStrength($password, array_values($userData))['score'] <= 2) {
-            throw new \InvalidArgumentException('The password complexity is 2 or below (out of 4).');
+        if ($score <= 2) {
+            throw new \InvalidArgumentException('The password complexity is '.$score.' out of 4 (minimum: 2).');
         }
     }
 
