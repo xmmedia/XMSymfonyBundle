@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Util;
 
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Validator\Constraints\UrlValidator;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use ZxcvbnPhp\Zxcvbn;
@@ -53,5 +54,19 @@ class Assert extends \Webmozart\Assert\Assert
                 throw new \InvalidArgumentException('The entered password has been compromised.');
             }
         }
+    }
+
+    public static function url(
+        $value,
+        $protocols = ['https', 'https'],
+        string $message = ''
+    ): void {
+        self::notEmpty($protocols, 'At least 1 protocol is required. Got 0.');
+
+        self::regex(
+            $value,
+            sprintf(UrlValidator::PATTERN, implode('|', $protocols)),
+            $message ?: 'Expected a value to be a URL with protocol(s) '.implode(',', $protocols).'. Got: %s',
+        );
     }
 }
