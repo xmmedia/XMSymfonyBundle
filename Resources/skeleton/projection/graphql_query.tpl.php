@@ -1,0 +1,21 @@
+<?= $entity_class_short; ?>Query:
+    decorator: true
+    heirs: [Query]
+    config:
+        fields:
+            <?= $entity_class_short_plural; ?>:
+                type: '[<?= $entity_class_short; ?>!]'
+                description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
+                public: '@=isAuthenticated()'
+                access: '@=isAuthenticated()'
+                resolve: '@=resolver("<?= $resolver_multiple; ?>")'
+
+            <?= $entity_class_short; ?>:
+                type: <?= $entity_class_short; ?><?= "\n"; ?>
+                description: 'Retrieve a single <?= $entity_class_short; ?>.'
+                public: '@=isAuthenticated()'
+                access: '@=isAuthenticated()'
+                resolve: '@=resolver("<?= $resolver_single; ?>", [args["<?= $id_property; ?>"]])'
+                args:
+                    <?= $id_property; ?>: UUID!
+
