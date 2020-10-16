@@ -32,7 +32,6 @@
     "symfony/form": "^4.4 || ^5.0",
     "symfony/framework-bundle": "^4.4 || ^5.0",
     "symfony/http-client": "^4.4 || ^5.0",
-    "symfony/maker-bundle": "^1.0",
     "symfony/messenger": "^4.4 || ^5.0",
     "symfony/security-bundle": "^4.4 || ^5.0",
     "symfony/validator": "^4.4 || ^5.0",
@@ -50,6 +49,7 @@
     "phpunit/phpunit": "^9.0",
     "symfony/debug-pack": "^1.0.0",
     "symfony/phpunit-bridge": "^5.0",
+    "symfony/maker-bundle": "^1.0",
     "symfony/test-pack": "^1.0.0"
   },
   "config": {
