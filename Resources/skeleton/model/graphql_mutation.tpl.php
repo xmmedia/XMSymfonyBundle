@@ -48,7 +48,6 @@
             <?= $id_property; ?>:
                 type: UUID!
 
-
 <?= $model; ?>DeleteMutationPayload:
     type: object
     config:

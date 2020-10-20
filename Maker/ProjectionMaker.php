@@ -171,15 +171,17 @@ class ProjectionMaker extends AbstractMaker
             $skeletonPath.'graphql_query.tpl.php',
             [
                 'entity_class_short'        => $entityClassDetails->getShortName(),
-                'entity_class_short_plural' => Str::singularCamelCaseToPluralCamelCase(
-                    $entityClassDetails->getShortName()
+                'entity_class_short_plural' => ucwords(
+                    Str::singularCamelCaseToPluralCamelCase(
+                        $entityClassDetails->getShortName()
+                    )
                 ),
                 'id_property'               => $idProperty,
                 'resolver_single'           => $this->doubleEscapeClass(
                     $resolverClassDetails->getFullName()
                 ),
                 'resolver_multiple'         => $this->doubleEscapeClass(
-                    $resolverClassDetails->getFullName()
+                    $multipleResolverClassDetails->getFullName()
                 ),
             ]
         );
@@ -191,7 +193,7 @@ class ProjectionMaker extends AbstractMaker
         $io->text([
             'Next:',
             sprintf(
-                '- Add <info>public const %s = \'%s_projection\';</info> to <info>App\\Projection\\Table</info>',
+                '- Add <info>public const %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
                 strtoupper(Str::asSnakeCase($projectionName)),
                 $projectionName,
             ),

@@ -25,7 +25,7 @@ final class <?= $class_name; ?> implements MutationInterface
 <?php if (!$delete) { ?>
     public function __invoke(array $<?= $model_lower; ?>): array
     {
-        $<?= $id_property; ?> = <?= $id_class_short; ?>::fromString($<?= $model_lower; ?>['<?= $id_field; ?>']);
+        $<?= $id_property; ?> = <?= $id_class_short; ?>::fromString($<?= $model_lower; ?>['<?= $id_property; ?>']);
 
         $this->commandBus->dispatch(
             <?= $command_class_short; ?>::now(
@@ -35,7 +35,7 @@ final class <?= $class_name; ?> implements MutationInterface
         );
 
         return [
-            '<?= $id_field; ?>' => $<?= $id_property; ?>,
+            '<?= $id_property; ?>' => $<?= $id_property; ?>,
         ];
 <?php } else { ?>
     public function __invoke(string $<?= $id_property; ?>): array
