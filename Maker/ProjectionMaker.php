@@ -212,6 +212,8 @@ class ProjectionMaker extends AbstractMaker
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
+            '- Update permissions in GraphQL config',
+            '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }
 
