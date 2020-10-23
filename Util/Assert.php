@@ -14,12 +14,21 @@ class Assert extends \Webmozart\Assert\Assert
 {
     public static function passwordComplexity(
         string $password,
-        array $userData
+        array $userData,
+        ?int $minimum = null,
+        PasswordStrengthInterface $passwordStrength = null
     ): void {
-        $score = (new Zxcvbn())->passwordStrength($password, array_values($userData))['score'];
+        if (null === $minimum) {
+            $minimum = 2;
+        }
+        if (null === $passwordStrength) {
+            $passwordStrength = new PasswordStrength();
+        }
 
-        if ($score <= 2) {
-            throw new \InvalidArgumentException('The password complexity is '.$score.' out of 4 (minimum: 2).');
+        $score = $passwordStrength($password, $userData)['score'];
+
+        if ($score <= $minimum) {
+            throw new \InvalidArgumentException(sprintf('The password complexity is %d out of 4 (minimum: %d).', $score, $minimum));
         }
     }
 
