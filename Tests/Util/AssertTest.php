@@ -7,6 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Util;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Tests\PasswordStrengthFake;
 use Xm\SymfonyBundle\Util\Assert;
 
 class AssertTest extends BaseTestCase
@@ -16,7 +17,12 @@ class AssertTest extends BaseTestCase
      */
     public function testPasswordComplexityOkay(string $password): void
     {
-        Assert::passwordComplexity($password, []);
+        Assert::passwordComplexity(
+            $password,
+            [],
+            null,
+            new PasswordStrengthFake()
+        );
 
         $this->assertTrue(true);
     }
@@ -38,7 +44,12 @@ class AssertTest extends BaseTestCase
     ): void {
         $this->expectException(\InvalidArgumentException::class);
 
-        Assert::passwordComplexity($password, $userData);
+        Assert::passwordComplexity(
+            $password,
+            $userData,
+            null,
+            new PasswordStrengthFake(0)
+        );
     }
 
     public function badPasswordProvider(): \Generator
