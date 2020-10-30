@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method <?= $entity_class_short; ?>[] findAll()
  * @method <?= $entity_class_short; ?>[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class <?= $class_name; ?> extends ServiceEntityRepository
+class <?= $class_name; ?> extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

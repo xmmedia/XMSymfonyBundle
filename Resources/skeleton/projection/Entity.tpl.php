@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="<?= $finder_class; ?>")
  */
-final class <?= $class_name; ?><?= "\n"; ?>
+class <?= $class_name; ?><?= "\n"; ?>
 {
     /**
      * @var \Ramsey\Uuid\Uuid
