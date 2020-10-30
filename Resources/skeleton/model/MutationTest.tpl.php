@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $command_class; ?>;
-use <?= $mustation_class; ?>;
+use <?= $mutation_class; ?>;
 use App\Tests\BaseTestCase;
 use Mockery;
 use Symfony\Component\Messenger\Envelope;
@@ -28,7 +28,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(Mockery::type(<?= $command_class_short; ?>::class))
             ->andReturn(new Envelope(new \stdClass()));
 
-        $result = (new <?= $mustation_class_short; ?>($commandBus))($args);
+        $result = (new <?= $mutation_class_short; ?>($commandBus))($args);
 
         $expected = [
             '<?= $id_property; ?>' => $args['<?= $id_property; ?>'],
@@ -44,7 +44,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(Mockery::type(<?= $command_class_short; ?>::class))
             ->andReturn(new Envelope(new \stdClass()));
 
-        $result = (new <?= $mustation_class_short; ?>($commandBus))($<?= $id_property; ?>);
+        $result = (new <?= $mutation_class_short; ?>($commandBus))($<?= $id_property; ?>);
 
         $expected = [
             'success' => true,

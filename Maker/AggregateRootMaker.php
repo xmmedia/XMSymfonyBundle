@@ -342,12 +342,12 @@ class AggregateRootMaker extends AbstractMaker
                 $mutationTestClassDetails->getFullName(),
                 $skeletonPath.'MutationTest.tpl.php',
                 [
-                    'delete'                => 'Delete' === $command,
-                    'mustation_class'       => $mutationClassDetails->getFullName(),
-                    'mustation_class_short' => $mutationClassDetails->getShortName(),
-                    'command_class'         => $commandClassDetails->getFullName(),
-                    'command_class_short'   => $commandClassDetails->getShortName(),
-                    'id_property'           => $idProperty,
+                    'delete'               => 'Delete' === $command,
+                    'mutation_class'       => $mutationClassDetails->getFullName(),
+                    'mutation_class_short' => $mutationClassDetails->getShortName(),
+                    'command_class'        => $commandClassDetails->getFullName(),
+                    'command_class_short'  => $commandClassDetails->getShortName(),
+                    'id_property'          => $idProperty,
                 ]
             );
         }
