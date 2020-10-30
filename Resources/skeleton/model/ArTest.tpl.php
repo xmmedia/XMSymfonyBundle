@@ -31,7 +31,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $events = $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->assertRecordedEvent(
-            Event\<?= $model; ?>WasAdded::class,
+            Event\<?= $model; ?>WasCreated::class,
             [
                 'name' => $name->toString(),
             ],

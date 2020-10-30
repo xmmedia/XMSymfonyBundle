@@ -192,7 +192,7 @@ class AggregateRootMaker extends AbstractMaker
         );
 
         $commandsEvents = [
-            'Add'    => 'WasAdded',
+            'Create' => 'WasCreated',
             'Update' => 'WasUpdated',
             'Delete' => 'WasDeleted',
         ];
@@ -240,7 +240,7 @@ class AggregateRootMaker extends AbstractMaker
                 $handlerClassDetails->getFullName(),
                 $skeletonPath.$handlerTemplate,
                 [
-                    'edit'                => 'Add' !== $command,
+                    'edit'                => 'Create' !== $command,
                     'model'               => $arClassDetails->getShortName(),
                     'list_class'          => $listClassName,
                     'repo_property'       => Str::asLowerCamelCase(
@@ -367,8 +367,8 @@ class AggregateRootMaker extends AbstractMaker
                 'model'           => $arClassDetails->getShortName(),
                 'model_lower'     => $arLowerName,
                 'id_property'     => $idProperty,
-                'mutation_add'    => $this->doubleEscapeClass(
-                    $mutationClasses['Add']->getFullName()
+                'mutation_create' => $this->doubleEscapeClass(
+                    $mutationClasses['Create']->getFullName()
                 ),
                 'mutation_update' => $this->doubleEscapeClass(
                     $mutationClasses['Update']->getFullName()

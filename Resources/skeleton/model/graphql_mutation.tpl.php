@@ -3,12 +3,12 @@
     heirs: [Mutation]
     config:
         fields:
-            <?= $model; ?>Add:
+            <?= $model; ?>Create:
                 type: <?= $model; ?>MutationPayload!
-                description: 'Add <?= $model; ?>.'
+                description: 'Create <?= $model; ?>.'
                 public: '@=isAuthenticated()'
                 access: '@=isAuthenticated()'
-                resolve: '@=mutation("<?= $mutation_add; ?>", [args["<?= $model_lower; ?>"]])'
+                resolve: '@=mutation("<?= $mutation_create; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
@@ -33,7 +33,7 @@
 <?= $model; ?>Input:
     type: input-object
     config:
-        description: '<?= $model; ?> add & update mutation input.'
+        description: '<?= $model; ?> create & update mutation input.'
         fields:
             <?= $id_property; ?>:
                 type: UUID!

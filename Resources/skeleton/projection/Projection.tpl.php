@@ -17,9 +17,9 @@ class <?= $class_name; ?> implements ReadModelProjection
     {
         $projector->fromStream('<?= $stream_name; ?>')
             ->when([
-                Event\<?= $model; ?>WasAdded::class => function (
+                Event\<?= $model; ?>WasCreated::class => function (
                     array $state,
-                    Event\<?= $model; ?>WasAdded $event
+                    Event\<?= $model; ?>WasCreated $event
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */

@@ -15,7 +15,7 @@ class <?= $class_name; ?> extends BaseTestCase
     public function test(): void
     {
         $projectedEvents = [
-            Event\<?= $model; ?>WasAdded::class,
+            Event\<?= $model; ?>WasCreated::class,
             Event\<?= $model; ?>WasUpdated::class,
             Event\<?= $model; ?>WadDeleted::class,
         ];
