@@ -15,6 +15,9 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     /** @var <?= $id_class; ?> */
     private $<?= $id_property; ?>;
 
+    /** @var Name */
+    private $name;
+
     /** @var bool */
     private $deleted = false;
 
@@ -66,16 +69,27 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     protected function when<?= $class_name; ?>WasAdded(Event\<?= $class_name; ?>WasAdded $event): void
     {
         $this-><?= $id_property; ?> = $event-><?= $id_property; ?>();
+        $this->name = $event->name();
     }
 
     protected function when<?= $class_name; ?>WasUpdated(Event\<?= $class_name; ?>WasUpdated $event): void
     {
-        // noop
+        $this->name = $event->name();
     }
 
     protected function when<?= $class_name; ?>WasDeleted(Event\<?= $class_name; ?>WasDeleted $event): void
     {
         $this->deleted = true;
+    }
+
+    public function <?= $id_property; ?>(): <?= $id_class; ?><?= "\n"; ?>
+    {
+        return $this-><?= $id_property; ?>;
+    }
+
+    public function name(): Name
+    {
+        return $this->name;
     }
 
     /**

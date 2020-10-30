@@ -8,5 +8,5 @@ interface <?= $class_name; ?><?= "\n"; ?>
 {
     public function save(<?= $model; ?> $<?= $model_lower; ?>): void;
 
-    public function get(<?= $id_class; ?> $<?= $model_lower; ?>Id): ?<?= $model; ?>;
+    public function get(<?= $id_class_short; ?> $<?= $model_lower; ?>Id): ?<?= $model; ?>;
 }

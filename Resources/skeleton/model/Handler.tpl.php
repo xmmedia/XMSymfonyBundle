@@ -8,7 +8,7 @@ namespace <?= $namespace; ?>;
 use App\Model\<?= $model; ?>\<?= $model; ?>;
 <?php } ?>
 use App\Model\<?= $model; ?>\<?= $list_class; ?>;
-use <?= $command_full_class; ?>;
+use <?= $command_class; ?>;
 <?php if ($edit) { ?>
 use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
 <?php } ?>
@@ -23,7 +23,7 @@ final class <?= $class_name; ?><?= "\n"; ?>
         $this-><?= $repo_property; ?> = $<?= $repo_property; ?>;
     }
 
-    public function __invoke(<?= $command_class; ?> $command): void
+    public function __invoke(<?= $command_class_short; ?> $command): void
     {
 <?php if ($edit) { ?>
         $<?= $model_lower; ?> = $this-><?= $repo_property; ?>->get($command-><?= $id_property; ?>());

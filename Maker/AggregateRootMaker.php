@@ -64,6 +64,11 @@ class AggregateRootMaker extends AbstractMaker
         $idField = Str::asSnakeCase($idProperty);
         $listClassName = $arClassDetails->getShortName().'List';
 
+        $nameVoClassDetails = $generator->createClassNameDetails(
+            'Name',
+            'Model\\'.$arName.'\\'
+        );
+
         $generator->generateClass(
             $arClassDetails->getFullName(),
             $skeletonPath.'Ar.tpl.php',
@@ -72,28 +77,71 @@ class AggregateRootMaker extends AbstractMaker
                 'id_property' => $idProperty,
             ]
         );
+        $arTestClassDetails = $generator->createClassNameDetails(
+            $arName.'Test',
+            'Tests\\Model\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $arTestClassDetails->getFullName(),
+            $skeletonPath.'ArTest.tpl.php',
+            [
+                'model_class' => $arClassDetails->getFullName(),
+                'model'       => $arClassDetails->getShortName(),
+                'model_lower' => $arLowerName,
+                'id_property' => $idProperty,
+                'name_class'  => $nameVoClassDetails->getFullName(),
+            ]
+        );
 
         $generator->generateClass(
             $arClassDetails->getFullName().'Id',
             $skeletonPath.'ArId.tpl.php'
         );
+
+        $arIdTestClassDetails = $generator->createClassNameDetails(
+            $arName.'IdTest',
+            'Tests\\Model\\'.$arName.'\\'
+        );
         $generator->generateClass(
-            $arClassDetails->getFullName().'List',
-            $skeletonPath.'ArList.tpl.php',
+            $arIdTestClassDetails->getFullName(),
+            $skeletonPath.'ArIdTest.tpl.php',
             [
-                'model'       => $arClassDetails->getShortName(),
-                'id_class'    => $idClassShortName,
-                'model_lower' => $arLowerName,
+                'model'          => $arClassDetails->getShortName(),
+                'id_class'       => $idClassFullName,
+                'id_class_short' => $idClassShortName,
+                'id_property'    => $idProperty,
             ]
         );
 
-        $nameVoClassDetails = $generator->createClassNameDetails(
-            'Name',
+        $listClassDetails = $generator->createClassNameDetails(
+            $listClassName,
             'Model\\'.$arName.'\\'
         );
         $generator->generateClass(
+            $listClassDetails->getFullName(),
+            $skeletonPath.'ArList.tpl.php',
+            [
+                'model'          => $arClassDetails->getShortName(),
+                'id_class_short' => $idClassShortName,
+                'model_lower'    => $arLowerName,
+            ]
+        );
+
+        $generator->generateClass(
             $nameVoClassDetails->getFullName(),
             $skeletonPath.'Vo.tpl.php'
+        );
+
+        $nameVoTestClassDetails = $generator->createClassNameDetails(
+            'NameTest',
+            'Tests\\Model\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $nameVoTestClassDetails->getFullName(),
+            $skeletonPath.'VoTest.tpl.php',
+            [
+                'name_class' => $nameVoClassDetails->getFullName(),
+            ]
         );
 
         $repositoryClassDetails = $generator->createClassNameDetails(
@@ -167,6 +215,22 @@ class AggregateRootMaker extends AbstractMaker
                 ]
             );
 
+            $commandTestClassDetails = $generator->createClassNameDetails(
+                $command.$arName.'Test',
+                'Tests\\Model\\'.$arName.'\\Command\\'
+            );
+            $commandTestTemplate = 'Delete' !== $command ? 'CommandTest.tpl.php' : 'CommandDeleteTest.tpl.php';
+            $generator->generateClass(
+                $commandTestClassDetails->getFullName(),
+                $skeletonPath.$commandTestTemplate,
+                [
+                    'command_class'       => $commandClassDetails->getFullName(),
+                    'command_class_short' => $commandClassDetails->getShortName(),
+                    'id_property'         => $idProperty,
+                    'name_class'          => $nameVoClassDetails->getFullName(),
+                ]
+            );
+
             $handlerClassDetails = $generator->createClassNameDetails(
                 $command.$arName.'Handler',
                 'Model\\'.$arName.'\\Handler\\'
@@ -176,17 +240,43 @@ class AggregateRootMaker extends AbstractMaker
                 $handlerClassDetails->getFullName(),
                 $skeletonPath.$handlerTemplate,
                 [
-                    'edit'               => 'Add' !== $command,
-                    'model'              => $arClassDetails->getShortName(),
-                    'list_class'         => $listClassName,
-                    'repo_property'      => Str::asLowerCamelCase(
+                    'edit'                => 'Add' !== $command,
+                    'model'               => $arClassDetails->getShortName(),
+                    'list_class'          => $listClassName,
+                    'repo_property'       => Str::asLowerCamelCase(
                         $arClassDetails->getShortName().'Repo'
                     ),
-                    'command_full_class' => $commandClassDetails->getFullName(),
-                    'command_class'      => $commandClassDetails->getShortName(),
-                    'model_lower'        => $arLowerName,
-                    'id_class_short'     => $idClassShortName,
-                    'id_property'        => $idProperty,
+                    'command_class'       => $commandClassDetails->getFullName(),
+                    'command_class_short' => $commandClassDetails->getShortName(),
+                    'model_lower'         => $arLowerName,
+                    'id_class_short'      => $idClassShortName,
+                    'id_property'         => $idProperty,
+                ]
+            );
+
+            $handlerTestClassDetails = $generator->createClassNameDetails(
+                $command.$arName.'HandlerTest',
+                'Tests\\Model\\'.$arName.'\\Handler\\'
+            );
+            $generator->generateClass(
+                $handlerTestClassDetails->getFullName(),
+                $skeletonPath.'Handler'.$command.'Test.tpl.php',
+                [
+                    'model'                 => $arClassDetails->getShortName(),
+                    'model_class'           => $arClassDetails->getFullName(),
+                    'list_class'            => $listClassDetails->getFullName(),
+                    'list_class_short'      => $listClassName,
+                    'command_class'         => $commandClassDetails->getFullName(),
+                    'command_class_short'   => $commandClassDetails->getShortName(),
+                    'handler_class'         => $handlerClassDetails->getFullName(),
+                    'handler_class_short'   => $handlerClassDetails->getShortName(),
+                    'model_lower'           => $arLowerName,
+                    'id_class'              => $idClassFullName,
+                    'id_class_short'        => $idClassShortName,
+                    'id_property'           => $idProperty,
+                    'name_class'            => $nameVoClassDetails->getFullName(),
+                    'not_found_class'       => $notFoundExceptionClassDetails->getFullName(),
+                    'not_found_class_short' => $notFoundExceptionClassDetails->getShortName(),
                 ]
             );
 
@@ -204,6 +294,22 @@ class AggregateRootMaker extends AbstractMaker
                     'id_property'    => $idProperty,
                     'model'          => $arClassDetails->getShortName(),
                     'name_class'     => $nameVoClassDetails->getFullName(),
+                ]
+            );
+
+            $eventTestClassDetails = $generator->createClassNameDetails(
+                $arName.$event.'Test',
+                'Tests\\Model\\'.$arName.'\\Event\\'
+            );
+            $eventTestTemplate = 'Delete' !== $command ? 'EventTest.tpl.php' : 'EventDeleteTest.tpl.php';
+            $generator->generateClass(
+                $eventTestClassDetails->getFullName(),
+                $skeletonPath.$eventTestTemplate,
+                [
+                    'event_class'       => $eventClassDetails->getFullName(),
+                    'event_class_short' => $eventClassDetails->getShortName(),
+                    'id_property'       => $idProperty,
+                    'name_class'        => $nameVoClassDetails->getFullName(),
                 ]
             );
 
@@ -225,6 +331,23 @@ class AggregateRootMaker extends AbstractMaker
                     'id_field'            => $idField,
                     'model_lower'         => $arLowerName,
                     'name_class'          => $nameVoClassDetails->getFullName(),
+                ]
+            );
+
+            $mutationTestClassDetails = $generator->createClassNameDetails(
+                $arName.$command.'MutationTest',
+                'Tests\\Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\'
+            );
+            $generator->generateClass(
+                $mutationTestClassDetails->getFullName(),
+                $skeletonPath.'MutationTest.tpl.php',
+                [
+                    'delete'                => 'Delete' === $command,
+                    'mustation_class'       => $mutationClassDetails->getFullName(),
+                    'mustation_class_short' => $mutationClassDetails->getShortName(),
+                    'command_class'         => $commandClassDetails->getFullName(),
+                    'command_class_short'   => $commandClassDetails->getShortName(),
+                    'id_property'           => $idProperty,
                 ]
             );
         }
@@ -286,6 +409,7 @@ class AggregateRootMaker extends AbstractMaker
                 $arName,
             ),
             '- Update permissions in GraphQL config',
+            '- Add ID class to UuidFakerProvider (for tests)',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }
