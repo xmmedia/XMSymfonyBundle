@@ -12,12 +12,12 @@
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
-            <?= $model; ?>Update:
+            <?= $model; ?>ChangeName:
                 type: <?= $model; ?>MutationPayload!
-                description: 'Update <?= $model; ?>.'
+                description: 'Change name of <?= $model; ?>.'
                 public: '@=isAuthenticated()'
                 access: '@=isAuthenticated()'
-                resolve: '@=mutation("<?= $mutation_update; ?>", [args["<?= $model_lower; ?>"]])'
+                resolve: '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
@@ -33,7 +33,7 @@
 <?= $model; ?>Input:
     type: input-object
     config:
-        description: '<?= $model; ?> create & update mutation input.'
+        description: '<?= $model; ?> create & change name mutation input.'
         fields:
             <?= $id_property; ?>:
                 type: UUID!

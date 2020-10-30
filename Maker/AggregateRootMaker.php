@@ -193,7 +193,7 @@ class AggregateRootMaker extends AbstractMaker
 
         $commandsEvents = [
             'Create' => 'WasCreated',
-            'Update' => 'WasUpdated',
+            'Change' => 'NameWasChanged',
             'Delete' => 'WasDeleted',
         ];
         $mutationClasses = [];
@@ -284,10 +284,9 @@ class AggregateRootMaker extends AbstractMaker
                 $arName.$event,
                 'Model\\'.$arName.'\\Event\\'
             );
-            $eventTemplate = 'Delete' !== $command ? 'Event.tpl.php' : 'EventDelete.tpl.php';
             $generator->generateClass(
                 $eventClassDetails->getFullName(),
-                $skeletonPath.$eventTemplate,
+                $skeletonPath.'Event'.$command.'d.tpl.php',
                 [
                     'id_class'       => $idClassFullName,
                     'id_class_short' => $idClassShortName,
@@ -301,10 +300,9 @@ class AggregateRootMaker extends AbstractMaker
                 $arName.$event.'Test',
                 'Tests\\Model\\'.$arName.'\\Event\\'
             );
-            $eventTestTemplate = 'Delete' !== $command ? 'EventTest.tpl.php' : 'EventDeleteTest.tpl.php';
             $generator->generateClass(
                 $eventTestClassDetails->getFullName(),
-                $skeletonPath.$eventTestTemplate,
+                $skeletonPath.'Event'.$command.'dTest.tpl.php',
                 [
                     'event_class'       => $eventClassDetails->getFullName(),
                     'event_class_short' => $eventClassDetails->getShortName(),
@@ -370,8 +368,8 @@ class AggregateRootMaker extends AbstractMaker
                 'mutation_create' => $this->doubleEscapeClass(
                     $mutationClasses['Create']->getFullName()
                 ),
-                'mutation_update' => $this->doubleEscapeClass(
-                    $mutationClasses['Update']->getFullName()
+                'mutation_change' => $this->doubleEscapeClass(
+                    $mutationClasses['Change']->getFullName()
                 ),
                 'mutation_delete' => $this->doubleEscapeClass(
                     $mutationClasses['Delete']->getFullName()

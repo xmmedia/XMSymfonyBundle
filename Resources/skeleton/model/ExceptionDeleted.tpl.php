@@ -8,11 +8,11 @@ use <?= $id_class; ?>;
 
 final class <?= $class_name; ?> extends \InvalidArgumentException
 {
-    public static function triedToUpdate(<?= $id_class_short; ?> $<?= $id_property; ?>): self
+    public static function triedToChangeName(<?= $id_class_short; ?> $<?= $id_property; ?>): self
     {
         return new self(
             sprintf(
-                'Tried to update an <?= $model; ?> with ID "%s" that\'s deleted.',
+                'Tried to change the name of <?= $model; ?> with ID "%s" that\'s deleted.',
                 $<?= $id_property; ?>->toString()
             )
         );

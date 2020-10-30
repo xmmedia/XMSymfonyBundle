@@ -30,9 +30,9 @@ class <?= $class_name; ?> implements ReadModelProjection
                     ]);
                 },
 
-                Event\<?= $model; ?>WasUpdated ::class => function (
+                Event\<?= $model; ?>NameWasChanged ::class => function (
                     array $state,
-                    Event\<?= $model; ?>WasUpdated $event
+                    Event\<?= $model; ?>NameWasChanged $event
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
@@ -41,7 +41,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         'update',
                         $event->aggregateId(),
                         [
-                            'name' => $event->name()->toString(),
+                            'newName' => $event->newName()->toString(),
                         ]
                     );
                 },

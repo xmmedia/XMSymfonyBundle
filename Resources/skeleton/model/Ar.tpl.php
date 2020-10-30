@@ -36,16 +36,21 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $self;
     }
 
-    public function update(Name $name): void
+    public function changeName(Name $newName): void
     {
+        if ($this->name->sameValueAs($newName)) {
+            return;
+        }
+
         if ($this->deleted) {
-            throw Exception\<?= $class_name; ?>IsDeleted::triedToUpdate($this-><?= $id_property; ?>);
+            throw Exception\<?= $class_name; ?>IsDeleted::triedToChangeName($this-><?= $id_property; ?>);
         }
 
         $this->recordThat(
-            Event\<?= $class_name; ?>WasUpdated::now(
+            Event\<?= $class_name; ?>NameWasChanged::now(
                 $this-><?= $id_property; ?>,
-                $name
+                $newName,
+                $this->name
             )
         );
     }
@@ -72,9 +77,9 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         $this->name = $event->name();
     }
 
-    protected function when<?= $class_name; ?>WasUpdated(Event\<?= $class_name; ?>WasUpdated $event): void
+    protected function when<?= $class_name; ?>NameWasChanged(Event\<?= $class_name; ?>NameWasChanged $event): void
     {
-        $this->name = $event->name();
+        $this->name = $event->newName();
     }
 
     protected function when<?= $class_name; ?>WasDeleted(Event\<?= $class_name; ?>WasDeleted $event): void

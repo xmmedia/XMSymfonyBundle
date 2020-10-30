@@ -43,36 +43,51 @@ class <?= $class_name; ?> extends BaseTestCase
         $this->assertSameValueAs($<?= $id_property; ?>, $<?= $model_lower; ?>-><?= $id_property; ?>());
     }
 
-    public function testUpdate(): void
+    public function testChangeName(): void
     {
         $faker = $this->faker();
 
-        $name = Name::fromString($faker->name);
+        $newName = Name::fromString($faker->unique()->name);
 
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
+        $oldName = $<?= $model_lower; ?>->name();
 
-        $<?= $model_lower; ?>->update($name);
+        $<?= $model_lower; ?>->changeName($newName);
 
         $events = $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->assertRecordedEvent(
-            Event\<?= $model; ?>WasUpdated::class,
+            Event\<?= $model; ?>NameWasChanged::class,
             [
-                'name' => $name->toString(),
+                'newName' => $newName->toString(),
+                'oldName' => $oldName->toString(),
             ],
             $events
         );
 
         $this->assertCount(1, $events);
 
+        $this->assertSameValueAs($newName, $<?= $model_lower; ?>->name());
+    }
+
+    public function testChangeNameNoChange(): void
+    {
+        $<?= $model_lower; ?> = $this->get<?= $model; ?>();
+
+        $name = $<?= $model_lower; ?>->name();
+
+        $<?= $model_lower; ?>->changeName($name);
+
+        $events = $this->popRecordedEvent($<?= $model_lower; ?>);
+
+        $this->assertCount(0, $events);
+
         $this->assertSameValueAs($name, $<?= $model_lower; ?>->name());
     }
 
-    public function testUpdateDeleted(): void
+    public function testChangeNameDeleted(): void
     {
         $faker = $this->faker();
-
-        $name = Name::fromString($faker->name);
 
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
         $<?= $model_lower; ?>->delete();
@@ -80,7 +95,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $this->expectException(Exception\<?= $model; ?>IsDeleted::class);
 
-        $<?= $model_lower; ?>->update($name);
+        $<?= $model_lower; ?>->changeName(Name::fromString($faker->name));
     }
 
     public function testDelete(): void
@@ -155,7 +170,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::create(
             $faker-><?= $id_property; ?>,
-            Name::fromString($faker->name)
+            Name::fromString($faker->unique()->name)
         );
         $this->popRecordedEvent($<?= $model_lower; ?>);
 
