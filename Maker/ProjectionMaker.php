@@ -83,6 +83,21 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
+        $projectionTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ProjectionTest',
+            'Tests\\Projection\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $projectionTestClassDetails->getFullName(),
+            $skeletonPath.'ProjectionTest.tpl.php',
+            [
+                'projection_class'       => $projectionClassDetails->getFullName(),
+                'projection_class_short' => $projectionClassDetails->getShortName(),
+                'model'                  => $arClassDetails->getShortName(),
+                'stream_name'            => Str::asSnakeCase($arName),
+            ]
+        );
+
         $readModelClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'ReadModel',
             'Projection\\'.$arName.'\\'
@@ -127,6 +142,19 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
+        $entityTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Test',
+            'Tests\\Entity\\'
+        );
+        $generator->generateClass(
+            $entityTestClassDetails->getFullName(),
+            $skeletonPath.'EntityTest.tpl.php',
+            [
+                'entity_class'       => $entityClassDetails->getFullName(),
+                'entity_class_short' => $entityClassDetails->getShortName(),
+            ]
+        );
+
         $resolverClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Resolver',
             'Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
@@ -148,6 +176,26 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
+        $resolverTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ResolverTest',
+            'Tests\\Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $resolverTestClassDetails->getFullName(),
+            $skeletonPath.'ResolverTest.tpl.php',
+            [
+                'resolver_class'       => $resolverClassDetails->getFullName(),
+                'resolver_class_short' => $resolverClassDetails->getShortName(),
+                'id_class'             => $idClassFullName,
+                'id_class_short'       => $idClassShortName,
+                'entity_class'         => $entityClassDetails->getFullName(),
+                'entity_class_short'   => $entityClassDetails->getShortName(),
+                'finder_class'         => $finderClassDetails->getFullName(),
+                'finder_class_short'   => $finderClassDetails->getShortName(),
+                'id_property'          => $idProperty,
+            ]
+        );
+
         $multipleResolverClassDetails = $generator->createClassNameDetails(
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Resolver',
             'Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
@@ -163,6 +211,23 @@ class ProjectionMaker extends AbstractMaker
                 'finder_property'    => Str::asLowerCamelCase(
                     $finderClassDetails->getShortName()
                 ),
+            ]
+        );
+
+        $multipleResolverTestClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'ResolverTest',
+            'Tests\\Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $multipleResolverTestClassDetails->getFullName(),
+            $skeletonPath.'MultipleResolverTest.tpl.php',
+            [
+                'resolver_class'       => $multipleResolverClassDetails->getFullName(),
+                'resolver_class_short' => $multipleResolverClassDetails->getShortName(),
+                'entity_class'         => $entityClassDetails->getFullName(),
+                'entity_class_short'   => $entityClassDetails->getShortName(),
+                'finder_class'         => $finderClassDetails->getFullName(),
+                'finder_class_short'   => $finderClassDetails->getShortName(),
             ]
         );
 
