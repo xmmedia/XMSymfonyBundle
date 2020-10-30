@@ -8,7 +8,6 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Validator\Constraints\UrlValidator;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use ZxcvbnPhp\Zxcvbn;
 
 class Assert extends \Webmozart\Assert\Assert
 {
