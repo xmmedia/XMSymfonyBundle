@@ -13,13 +13,13 @@ class <?= $class_name; ?> extends BaseTestCase
     public function testFromString(): void
     {
         $faker = $this->faker();
-        $name = $faker->name;
+        $nameStr = $faker->name;
 
-        $name = Name::fromString($name);
+        $name = Name::fromString($nameStr);
 
-        $this->assertEquals($name, $name->name());
-        $this->assertEquals($name, $name->toString());
-        $this->assertEquals($name, (string) $name);
+        $this->assertEquals($nameStr, $name->name());
+        $this->assertEquals($nameStr, $name->toString());
+        $this->assertEquals($nameStr, (string) $name);
     }
 
     public function testEmpty(): void
@@ -48,10 +48,10 @@ class <?= $class_name; ?> extends BaseTestCase
     public function testSameValueAs(): void
     {
         $faker = $this->faker();
-        $name = $faker->name;
+        $nameStr = $faker->name;
 
-        $name1 = Name::fromString($name);
-        $name2 = Name::fromString($name);
+        $name1 = Name::fromString($nameStr);
+        $name2 = Name::fromString($nameStr);
 
         $this->assertTrue($name1->sameValueAs($name2));
     }
