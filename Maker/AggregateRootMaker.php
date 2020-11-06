@@ -402,10 +402,7 @@ class AggregateRootMaker extends AbstractMaker
                 '- Create the stream: <info>bin/console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
-            sprintf(
-                '- Scaffold projection: <info>bin/console maker:projection %s</info>',
-                $arName,
-            ),
+            '- Scaffold projection: <info>bin/console make:projection</info>',
             '- Update permissions in GraphQL config',
             '- Add ID class to UuidFakerProvider (for tests)',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
