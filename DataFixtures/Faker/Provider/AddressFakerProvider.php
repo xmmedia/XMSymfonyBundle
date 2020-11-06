@@ -13,7 +13,8 @@ use Xm\SymfonyBundle\Model\Province;
 /**
  * @property Address  $addressVo
  * @property array    $addressArray
- * @property Province $province
+ * @property Province $provinceVo
+ * @property Country  $countryVo
  *
  * @codeCoverageIgnore
  */
