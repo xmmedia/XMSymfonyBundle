@@ -17,6 +17,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $command = <?= $command_class_short; ?>::now($<?= $id_property; ?>);
 
-        $this->assertTrue($<?= $id_property; ?>->sameValueAs($command-><?= $id_property; ?>()));
+        $this->assertSameValueAs($<?= $id_property; ?>, $command-><?= $id_property; ?>());
     }
 }
