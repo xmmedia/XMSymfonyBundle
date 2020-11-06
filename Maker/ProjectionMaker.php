@@ -152,6 +152,9 @@ class ProjectionMaker extends AbstractMaker
             [
                 'entity_class'       => $entityClassDetails->getFullName(),
                 'entity_class_short' => $entityClassDetails->getShortName(),
+                'id_class'           => $idClassFullName,
+                'id_class_short'     => $idClassShortName,
+                'id_property'        => $idProperty,
             ]
         );
 
