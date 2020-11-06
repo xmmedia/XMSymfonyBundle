@@ -132,10 +132,15 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
-        $name = Name::fromString($faker->name);
 
-        $<?= $model_lower; ?>1 = <?= $model; ?>::create($<?= $id_property; ?>, $name);
-        $<?= $model_lower; ?>2 = <?= $model; ?>::create($<?= $id_property; ?>, $name);
+        $<?= $model_lower; ?>1 = <?= $model; ?>::create(
+            $<?= $id_property; ?>,
+            Name::fromString($faker->name),
+        );
+        $<?= $model_lower; ?>2 = <?= $model; ?>::create(
+            $<?= $id_property; ?>,
+            Name::fromString($faker->name),
+        );
 
         $this->assertTrue($<?= $model_lower; ?>1->sameIdentityAs($<?= $model_lower; ?>2));
     }
@@ -144,10 +149,14 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $name = Name::fromString($faker->name);
-
-        $<?= $model_lower; ?>1 = <?= $model; ?>::create($faker-><?= $id_property; ?>, $name);
-        $<?= $model_lower; ?>2 = <?= $model; ?>::create($faker-><?= $id_property; ?>, $name);
+        $<?= $model_lower; ?>1 = <?= $model; ?>::create(
+            $<?= $id_property; ?>,
+            Name::fromString($faker->name),
+        );
+        $<?= $model_lower; ?>2 = <?= $model; ?>::create(
+            $<?= $id_property; ?>,
+            Name::fromString($faker->name),
+        );
 
         $this->assertFalse($<?= $model_lower; ?>1->sameIdentityAs($<?= $model_lower; ?>2));
     }
