@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
-use Faker;
 use Faker\Provider\en_CA\Address as FakerAddress;
+use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Model\Address;
+use Xm\SymfonyBundle\Model\Country;
+use Xm\SymfonyBundle\Model\Province;
 
 /**
- * @property Address $addressVo
- * @property array   $addressArray
+ * @property Address  $addressVo
+ * @property array    $addressArray
+ * @property Province $province
  *
  * @codeCoverageIgnore
  */
@@ -23,15 +26,25 @@ class AddressFakerProvider extends FakerAddress
 
     public function addressArray(): array
     {
-        $faker = Faker\Factory::create('en_CA');
-
         return [
-            'line1'      => $faker->streetAddress,
-            'line2'      => $faker->streetAddress,
-            'city'       => $faker->city,
-            'province'   => $faker->provinceAbbr,
-            'postalCode' => $faker->postcode,
+            'line1'      => parent::streetAddress(),
+            'line2'      => parent::streetAddress(),
+            'city'       => parent::city(),
+            'province'   => parent::provinceAbbr(),
+            'postalCode' => parent::postcode(),
             'country'    => 'CA',
         ];
+    }
+
+    public function countryVo(): Country
+    {
+        return Country::fromString(
+            parent::randomElement(CountryProvider::abbreviations())
+        );
+    }
+
+    public function provinceVo(): Province
+    {
+        return Province::fromString(parent::provinceAbbr());
     }
 }
