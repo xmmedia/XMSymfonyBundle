@@ -36,7 +36,7 @@ class Date implements ValueObject
 
     private function __construct(CarbonImmutable $date)
     {
-        $this->date = $date;
+        $this->date = $date->startOfDay();
     }
 
     public function date(): CarbonImmutable
