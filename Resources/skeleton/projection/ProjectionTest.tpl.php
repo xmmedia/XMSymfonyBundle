@@ -34,8 +34,16 @@ class <?= $class_name; ?> extends BaseTestCase
                     return false;
                 }
 
+                // make sure all events in list are used
                 foreach ($projectedEvents as $event) {
                     if (!\array_key_exists($event, $eventHandlers)) {
+                        return false;
+                    }
+                }
+
+                // make sure there are not extra events
+                foreach ($eventHandlers as $event => $handler) {
+                    if (false === array_search($event, $projectedEvents)) {
                         return false;
                     }
                 }
