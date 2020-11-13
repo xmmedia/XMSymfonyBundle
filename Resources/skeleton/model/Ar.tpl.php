@@ -66,6 +66,9 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         );
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function aggregateId(): string
     {
         return $this-><?= $id_property; ?>->toString();
