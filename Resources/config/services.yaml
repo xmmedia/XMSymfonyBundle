@@ -7,6 +7,7 @@ services:
     Xm\SymfonyBundle\Command\CreateEventStreamCommand: ~
     Xm\SymfonyBundle\Command\GraphQlDumpSchemaCommand: ~
     Xm\SymfonyBundle\Command\ProjectionRunCommand: ~
+    Xm\SymfonyBundle\Command\ProjectionRebuildCommand: ~
     Xm\SymfonyBundle\Command\PurgeCloudflareCacheCommand: ~
 
     Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware: ~
