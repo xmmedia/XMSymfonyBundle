@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests;
 
 trait ProjectionWhenArgs
 {
-    private function whenArgs(array $projectedEvents)
+    private function whenArgs(array $projectedEvents): callable
     {
         return function ($eventHandlers) use ($projectedEvents) {
             if (!\is_array($eventHandlers)) {
