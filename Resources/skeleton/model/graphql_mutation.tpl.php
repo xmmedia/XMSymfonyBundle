@@ -4,29 +4,29 @@
     config:
         fields:
             <?= $model; ?>Create:
-                type: <?= $model; ?>MutationPayload!
+                type:        <?= $model; ?>MutationPayload!
                 description: 'Create <?= $model; ?>.'
-                public: '@=isAuthenticated()'
-                access: '@=isAuthenticated()'
-                resolve: '@=mutation("<?= $mutation_create; ?>", [args["<?= $model_lower; ?>"]])'
+                public:      '@=isAuthenticated()'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=mutation("<?= $mutation_create; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
             <?= $model; ?>ChangeName:
-                type: <?= $model; ?>MutationPayload!
+                type:        <?= $model; ?>MutationPayload!
                 description: 'Change name of <?= $model; ?>.'
-                public: '@=isAuthenticated()'
-                access: '@=isAuthenticated()'
-                resolve: '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
+                public:      '@=isAuthenticated()'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
             <?= $model; ?>Delete:
                 type: <?= $model; ?>DeleteMutationPayload!
                 description: 'Delete <?= $model; ?>.'
-                public: '@=isAuthenticated()'
-                access: '@=isAuthenticated()'
-                resolve: '@=mutation("<?= $mutation_delete; ?>", [args["<?= $id_property; ?>"]])'
+                public:      '@=isAuthenticated()'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=mutation("<?= $mutation_delete; ?>", [args["<?= $id_property; ?>"]])'
                 args:
                     <?= $id_property; ?>: UUID!
 
