@@ -236,7 +236,7 @@ class ProjectionMaker extends AbstractMaker
 
         $generator->generateFile(
             'config/graphql/types/'.$projectionName.'.query.yaml',
-            $skeletonPath.'graphql_query.tpl.php',
+            $skeletonPath.'graphql_query.tpl.yaml',
             [
                 'entity_class_short'        => $entityClassDetails->getShortName(),
                 'entity_class_short_plural' => ucwords(

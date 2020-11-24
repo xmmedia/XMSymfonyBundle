@@ -368,7 +368,7 @@ class AggregateRootMaker extends AbstractMaker
 
         $generator->generateFile(
             'config/graphql/types/domain/'.$arLowerName.'.yaml',
-            $skeletonPath.'graphql_domain.tpl.php',
+            $skeletonPath.'graphql_domain.tpl.yaml',
             [
                 'model'       => $arClassDetails->getShortName(),
                 'id_property' => $idProperty,
@@ -376,7 +376,7 @@ class AggregateRootMaker extends AbstractMaker
         );
         $generator->generateFile(
             'config/graphql/types/'.$arLowerName.'.mutation.yaml',
-            $skeletonPath.'graphql_mutation.tpl.php',
+            $skeletonPath.'graphql_mutation.tpl.yaml',
             [
                 'model'           => $arClassDetails->getShortName(),
                 'model_lower'     => $arLowerName,
