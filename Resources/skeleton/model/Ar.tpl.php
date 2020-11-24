@@ -29,7 +29,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         $self->recordThat(
             Event\<?= $class_name; ?>WasCreated::now(
                 $<?= $id_property; ?>,
-                $name
+                $name,
             )
         );
 
@@ -50,7 +50,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
             Event\<?= $class_name; ?>NameWasChanged::now(
                 $this-><?= $id_property; ?>,
                 $newName,
-                $this->name
+                $this->name,
             )
         );
     }

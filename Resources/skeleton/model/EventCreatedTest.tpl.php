@@ -39,7 +39,7 @@ class <?= $class_name; ?> extends BaseTestCase
             $<?= $id_property; ?>->toString(),
             [
                 'name' => $name->toString(),
-            ]
+            ],
         );
 
         $this->assertInstanceOf(<?= $event_class_short; ?>::class, $event);

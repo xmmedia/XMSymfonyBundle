@@ -13,8 +13,8 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
         return new self(
             sprintf(
                 '<?= $model; ?> with ID "%s" cannot be found.',
-                $<?= $id_property; ?>
-            )
+                $<?= $id_property; ?>,
+            ),
         );
     }
 }

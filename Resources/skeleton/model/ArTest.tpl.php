@@ -23,7 +23,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::create(
             $<?= $id_property; ?>,
-            $name
+            $name,
         );
 
         $this->assertInstanceOf(<?= $model; ?>::class, $<?= $model_lower; ?>);
@@ -35,7 +35,7 @@ class <?= $class_name; ?> extends BaseTestCase
             [
                 'name' => $name->toString(),
             ],
-            $events
+            $events,
         );
 
         $this->assertCount(1, $events);
@@ -62,7 +62,7 @@ class <?= $class_name; ?> extends BaseTestCase
                 'newName' => $newName->toString(),
                 'oldName' => $oldName->toString(),
             ],
-            $events
+            $events,
         );
 
         $this->assertCount(1, $events);
@@ -109,7 +109,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $this->assertRecordedEvent(
             Event\<?= $model; ?>WasDeleted::class,
             [],
-            $events
+            $events,
         );
 
         $this->assertCount(1, $events);
@@ -167,7 +167,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::create(
             $faker-><?= $id_property; ?>,
-            Name::fromString($faker->name)
+            Name::fromString($faker->name),
         );
 
         $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::create()));
@@ -179,7 +179,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::create(
             $faker-><?= $id_property; ?>,
-            Name::fromString($faker->unique()->name)
+            Name::fromString($faker->unique()->name),
         );
         $this->popRecordedEvent($<?= $model_lower; ?>);
 

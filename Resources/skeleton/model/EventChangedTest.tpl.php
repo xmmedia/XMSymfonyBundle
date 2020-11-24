@@ -43,7 +43,7 @@ class <?= $class_name; ?> extends BaseTestCase
             [
                 'newName' => $newName->toString(),
                 'oldName' => $oldName->toString(),
-            ]
+            ],
         );
 
         $this->assertInstanceOf(<?= $event_class_short; ?>::class, $event);

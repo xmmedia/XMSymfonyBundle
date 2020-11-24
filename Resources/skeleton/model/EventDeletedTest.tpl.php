@@ -33,7 +33,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $event = $this->createEventFromArray(
             <?= $event_class_short; ?>::class,
             $<?= $id_property; ?>->toString(),
-            []
+            [],
         );
 
         $this->assertInstanceOf(<?= $event_class_short; ?>::class, $event);

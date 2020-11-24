@@ -13,8 +13,8 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
         return new self(
             sprintf(
                 'Tried to change the name of <?= $model; ?> with ID "%s" that\'s deleted.',
-                $<?= $id_property; ?>
-            )
+                $<?= $id_property; ?>,
+            ),
         );
     }
 
@@ -23,8 +23,8 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
         return new self(
             sprintf(
                 'Tried to delete an <?= $model; ?> with ID "%s" that\'s already deleted.',
-                $<?= $id_property; ?>
-            )
+                $<?= $id_property; ?>,
+            ),
         );
     }
 }
