@@ -15,12 +15,14 @@ class DateTest extends BaseTestCase
      */
     public function testFromStringAndToString(
         string $string,
-        string $expected,
+        string $expectedDateString,
+        string $expectedIso,
         string $timezone
     ): void {
         $date = Date::fromString($string);
 
-        $this->assertEquals($expected, $date->format(\DateTime::ISO8601));
+        $this->assertEquals($expectedDateString, $date->toString());
+        $this->assertEquals($expectedIso, $date->format(\DateTime::ISO8601));
         $this->assertEquals($timezone, $date->date()->timezone->getName());
     }
 
@@ -30,10 +32,15 @@ class DateTest extends BaseTestCase
         $max = '+5 years';
 
         $str = $faker->iso8601($max);
-        yield [$str, $str, '+00:00'];
+        yield [
+            $str,
+            substr($str, 0, 10),
+            substr($str, 0, 10).'T00:00:00+0000',
+            '+00:00',
+        ];
 
         $str = $faker->date('Y-m-d', $max);
-        yield [$str, $str.'T00:00:00+0000', 'UTC'];
+        yield [$str, $str, $str.'T00:00:00+0000', 'UTC'];
     }
 
     public function testNow(): void
@@ -42,7 +49,7 @@ class DateTest extends BaseTestCase
         $date = Date::now();
 
         $this->assertEquals(
-            $now->format(\DateTime::ISO8601),
+            $now->setTime(0, 0, 0)->format(\DateTime::ISO8601),
             $date->date()->format(\DateTime::ISO8601)
         );
         $this->assertEquals('UTC', $date->date()->timezone->getName());
@@ -57,7 +64,7 @@ class DateTest extends BaseTestCase
         $date = Date::now('America/Edmonton');
 
         $this->assertEquals(
-            $now->format(\DateTime::ISO8601),
+            $now->setTime(0, 0, 0)->format(\DateTime::ISO8601),
             $date->date()->format(\DateTime::ISO8601)
         );
         $this->assertEquals('America/Edmonton', $date->date()->timezone->getName());
@@ -71,7 +78,7 @@ class DateTest extends BaseTestCase
         $date = Date::fromDateTime($dateTime);
 
         $this->assertEquals(
-            $dateTime->format(\DateTime::ISO8601),
+            $dateTime->setTime(0, 0, 0)->format(\DateTime::ISO8601),
             $date->date()->format(\DateTime::ISO8601)
         );
         $this->assertEquals('UTC', $date->date()->timezone->getName());
@@ -119,13 +126,6 @@ class DateTest extends BaseTestCase
         $this->assertEquals($expected, $date1->sameValueAs($date2));
     }
 
-    public function testSameValueAsDiffClass(): void
-    {
-        $date = Date::fromString('2019-01-01');
-
-        $this->assertFalse($date->sameValueAs(FakeVo::create()));
-    }
-
     public function sameValueAsProvider(): \Generator
     {
         yield ['2000-01-01', '2000-01-01', true];
@@ -137,13 +137,20 @@ class DateTest extends BaseTestCase
         yield ['2000-01-01 00:00:00.000000', '2000-01-01 00:00:00.000001', true];
 
         yield ['2000-01-01', '2000-01-02', false];
-        yield ['2000-01-01 00:00:00', '2000-01-01 10:00:00', false];
-        yield ['2000-01-01 00:00:00', '2000-01-01 00:01:00', false];
-        yield ['2000-01-01 00:00:00', '2000-01-01 00:00:01', false];
+        yield ['2000-01-01 00:00:00', '2000-01-01 10:00:00', true];
+        yield ['2000-01-01 00:00:00', '2000-01-01 00:01:00', true];
+        yield ['2000-01-01 00:00:00', '2000-01-01 00:00:01', true];
         // 1000 is the max milliseconds
-        yield ['2000-01-01 00:00:00.0', '2000-01-01 00:00:00.1', false];
-        yield ['2000-01-01 00:00:00.00', '2000-01-01 00:00:00.01', false];
-        yield ['2000-01-01 00:00:00.000', '2000-01-01 00:00:00.001', false];
+        yield ['2000-01-01 00:00:00.0', '2000-01-01 00:00:00.1', true];
+        yield ['2000-01-01 00:00:00.00', '2000-01-01 00:00:00.01', true];
+        yield ['2000-01-01 00:00:00.000', '2000-01-01 00:00:00.001', true];
+    }
+
+    public function testSameValueAsDiffClass(): void
+    {
+        $date = Date::fromString('2019-01-01');
+
+        $this->assertFalse($date->sameValueAs(FakeVo::create()));
     }
 
     public function testInvalid(): void
