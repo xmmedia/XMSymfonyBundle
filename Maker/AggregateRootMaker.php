@@ -161,6 +161,22 @@ class AggregateRootMaker extends AbstractMaker
             ]
         );
 
+        $repositoryClassTestDetails = $generator->createClassNameDetails(
+            $arName.'Repository',
+            'Infrastructure\\Repository\\'
+        );
+        $generator->generateClass(
+            $repositoryClassTestDetails->getFullName(),
+            $skeletonPath.'RepositoryTest.tpl.php',
+            [
+                'repository_class'       => $repositoryClassDetails->getFullName(),
+                'repository_class_short' => $repositoryClassDetails->getShortName(),
+                'id_property'            => $idProperty,
+                'model'                  => $arClassDetails->getShortName(),
+                'model_lower'            => $arLowerName,
+            ]
+        );
+
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
             'Model\\'.$arName.'\\Exception\\'
