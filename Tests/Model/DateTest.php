@@ -107,14 +107,6 @@ class DateTest extends BaseTestCase
         $this->assertEquals($dateString, (string) $date);
     }
 
-    public function jsonProvider(): \Generator
-    {
-        yield [Date::fromString('2000-01-01'), '"2000-01-01T00:00:00.000000Z"'];
-
-        $date = Date::now();
-        yield [$date, '"'.$date->format('Y-m-d\TH:i:s.u\Z').'"'];
-    }
-
     /**
      * @dataProvider sameValueAsProvider
      */
