@@ -11,11 +11,6 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
         return new static('mixed', $data);
     }
 
-    private function __construct(string $collectionType, array $data = [])
-    {
-        parent::__construct($collectionType, $data);
-    }
-
     public function find(callable $cb)
     {
         $collection = $this->filter($cb);
