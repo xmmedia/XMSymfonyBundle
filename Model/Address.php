@@ -78,6 +78,10 @@ class Address implements ValueObject
         PostalCode $postalCode,
         Country $country
     ) {
+        $line1 = StringUtil::trim($line1);
+        $line2 = StringUtil::trim($line2);
+        $city = StringUtil::trim($city);
+
         try {
             Assert::lengthBetween(
                 $line1,
@@ -88,7 +92,6 @@ class Address implements ValueObject
             throw InvalidAddress::line1($line1, $e);
         }
 
-        $line2 = StringUtil::trim($line2);
         if (null !== $line2) {
             try {
                 Assert::nullOrLengthBetween(
