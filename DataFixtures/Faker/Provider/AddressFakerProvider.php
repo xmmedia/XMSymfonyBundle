@@ -8,6 +8,7 @@ use Faker\Provider\en_CA\Address as FakerAddress;
 use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Model\Address;
 use Xm\SymfonyBundle\Model\Country;
+use Xm\SymfonyBundle\Model\PostalCode;
 use Xm\SymfonyBundle\Model\Province;
 
 /**
@@ -32,7 +33,8 @@ class AddressFakerProvider extends FakerAddress
             'line2'      => parent::streetAddress(),
             'city'       => parent::city(),
             'province'   => parent::provinceAbbr(),
-            'postalCode' => parent::postcode(),
+            // make sure the postal code doesn't come with a dash
+            'postalCode' => PostalCode::fromString(parent::postcode())->toString(),
             'country'    => 'CA',
         ];
     }
