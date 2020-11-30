@@ -17,7 +17,7 @@ abstract class Enum extends MabeEnum implements Serializable, ValueObject
         return $this->is($object);
     }
 
-    public function oneOf(array $enumerators): bool
+    public function oneOf(iterable $enumerators): bool
     {
         foreach ($enumerators as $enumerator) {
             if ($this->is($enumerator)) {
