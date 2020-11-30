@@ -24,15 +24,15 @@ class Utils
             return $var;
         }
 
-        if (\is_object($var) && method_exists($var, 'getValue')) {
+        if (\is_object($var) && is_callable([$var, 'getValue'])) {
             return $var->getValue();
         }
 
-        if (\is_object($var) && method_exists($var, '__toString')) {
-            return (string) $var;
+        if (\is_object($var) && is_callable([$var, '__toString'])) {
+            return (string) $var->__toString();
         }
 
-        if (\is_object($var) && method_exists($var, 'toArray')) {
+        if (\is_object($var) && is_callable([$var, 'toArray'])) {
             return $var->toArray();
         }
 
