@@ -92,16 +92,14 @@ class Address implements ValueObject
             throw InvalidAddress::line1($line1, $e);
         }
 
-        if (null !== $line2) {
-            try {
-                Assert::nullOrLengthBetween(
-                    $line2,
-                    self::LINE_MIN_LENGTH,
-                    self::LINE_MAX_LENGTH
-                );
-            } catch (\InvalidArgumentException $e) {
-                throw InvalidAddress::line2($line2, $e);
-            }
+        try {
+            Assert::nullOrLengthBetween(
+                $line2,
+                self::LINE_MIN_LENGTH,
+                self::LINE_MAX_LENGTH
+            );
+        } catch (\InvalidArgumentException $e) {
+            throw InvalidAddress::line2($line2, $e);
         }
 
         try {
