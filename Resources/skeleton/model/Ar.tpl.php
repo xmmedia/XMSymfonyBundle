@@ -21,13 +21,13 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     /** @var bool */
     private $deleted = false;
 
-    public static function create(
+    public static function add(
         <?= $id_class; ?> $<?= $id_property; ?>,
         Name $name
     ): self {
         $self = new self();
         $self->recordThat(
-            Event\<?= $class_name; ?>WasCreated::now(
+            Event\<?= $class_name; ?>WasAdded::now(
                 $<?= $id_property; ?>,
                 $name,
             )
@@ -74,7 +74,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $this-><?= $id_property; ?>->toString();
     }
 
-    protected function when<?= $class_name; ?>WasCreated(Event\<?= $class_name; ?>WasCreated $event): void
+    protected function when<?= $class_name; ?>WasAdded(Event\<?= $class_name; ?>WasAdded $event): void
     {
         $this-><?= $id_property; ?> = $event-><?= $id_property; ?>();
         $this->name = $event->name();

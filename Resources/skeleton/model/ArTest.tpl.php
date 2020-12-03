@@ -14,14 +14,14 @@ use Xm\SymfonyBundle\Tests\FakeAr;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
-    public function testCreate(): void
+    public function testAdd(): void
     {
         $faker = $this->faker();
 
         $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
         $name = Name::fromString($faker->name);
 
-        $<?= $model_lower; ?> = <?= $model; ?>::create(
+        $<?= $model_lower; ?> = <?= $model; ?>::add(
             $<?= $id_property; ?>,
             $name,
         );
@@ -31,7 +31,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $events = $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->assertRecordedEvent(
-            Event\<?= $model; ?>WasCreated::class,
+            Event\<?= $model; ?>WasAdded::class,
             [
                 'name' => $name->toString(),
             ],
@@ -133,11 +133,11 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
 
-        $<?= $model_lower; ?>1 = <?= $model; ?>::create(
+        $<?= $model_lower; ?>1 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
             Name::fromString($faker->name),
         );
-        $<?= $model_lower; ?>2 = <?= $model; ?>::create(
+        $<?= $model_lower; ?>2 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
             Name::fromString($faker->name),
         );
@@ -149,11 +149,11 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $model_lower; ?>1 = <?= $model; ?>::create(
+        $<?= $model_lower; ?>1 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
             Name::fromString($faker->name),
         );
-        $<?= $model_lower; ?>2 = <?= $model; ?>::create(
+        $<?= $model_lower; ?>2 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
             Name::fromString($faker->name),
         );
@@ -165,19 +165,19 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $model_lower; ?> = <?= $model; ?>::create(
+        $<?= $model_lower; ?> = <?= $model; ?>::add(
             $faker-><?= $id_property; ?>,
             Name::fromString($faker->name),
         );
 
-        $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::create()));
+        $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::add()));
     }
 
     private function get<?= $model; ?>(): <?= $model; ?><?= "\n"; ?>
     {
         $faker = $this->faker();
 
-        $<?= $model_lower; ?> = <?= $model; ?>::create(
+        $<?= $model_lower; ?> = <?= $model; ?>::add(
             $faker-><?= $id_property; ?>,
             Name::fromString($faker->unique()->name),
         );

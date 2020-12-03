@@ -34,7 +34,7 @@ final class <?= $class_name; ?><?= "\n"; ?>
 
         $<?= $model_lower; ?>->changeName($command->name());
 <?php } else { ?>
-        $<?= $model_lower; ?> = <?= $model; ?>::create(
+        $<?= $model_lower; ?> = <?= $model; ?>::add(
             $command-><?= $id_property; ?>(),
             $command->name(),
         );

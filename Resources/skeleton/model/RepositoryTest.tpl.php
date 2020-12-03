@@ -16,7 +16,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $model_lower; ?> = <?= $model; ?>::create(
+        $<?= $model_lower; ?> = <?= $model; ?>::add(
             $faker-><?= $id_property; ?>,
             $faker->name,
         );
