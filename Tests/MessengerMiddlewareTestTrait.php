@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
+use Mockery;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
-use Mockery;
 
 trait MessengerMiddlewareTestTrait
 {
