@@ -16,6 +16,9 @@ class Country implements ValueObject
     /** @var string */
     private $name;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $country): self
     {
         return new self($country);

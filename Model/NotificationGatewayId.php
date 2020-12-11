@@ -11,6 +11,9 @@ class NotificationGatewayId implements ValueObject
     /** @var string */
     private $id;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $id): self
     {
         Assert::notEmpty($id, 'The ID cannot be empty.');

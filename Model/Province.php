@@ -19,9 +19,12 @@ class Province implements ValueObject
     /** @var Country */
     private $country;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $abbreviation): self
     {
-        return new self($abbreviation);
+        return new static($abbreviation);
     }
 
     private function __construct(string $abbreviation)

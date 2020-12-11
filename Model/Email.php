@@ -17,9 +17,12 @@ final class Email implements ValueObject
     /** @var string|null */
     private $name;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $email, ?string $name = null): self
     {
-        return new self($email, $name);
+        return new static($email, $name);
     }
 
     private function __construct(string $email, ?string $name = null)

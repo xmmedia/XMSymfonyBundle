@@ -15,6 +15,9 @@ class Date implements ValueObject
     /** @var CarbonImmutable */
     private $date;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $string): self
     {
         // timezone is only used if it's not in the date string
@@ -23,12 +26,17 @@ class Date implements ValueObject
 
     /**
      * @param string|CarbonTimeZone $tz
+     *
+     * @retrun static
      */
     public static function now($tz = self::TZ): self
     {
         return new static(new CarbonImmutable('now', $tz));
     }
 
+    /**
+     * @return static
+     */
     public static function fromDateTime(\DateTimeInterface $date): self
     {
         return new static(CarbonImmutable::instance($date));

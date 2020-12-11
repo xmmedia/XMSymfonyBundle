@@ -11,8 +11,11 @@ use Ramsey\Uuid\Uuid;
  */
 trait UuidIdGeneratable
 {
+    /**
+     * @return static
+     */
     public static function generate(): self
     {
-        return new self(Uuid::uuid4());
+        return new static(Uuid::uuid4());
     }
 }

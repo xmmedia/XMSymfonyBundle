@@ -19,9 +19,12 @@ class PostalCode implements ValueObject
     /** @var string */
     private $postalCode;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $postalCode): self
     {
-        return new self($postalCode);
+        return new static($postalCode);
     }
 
     private function __construct(string $postalCode)

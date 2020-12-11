@@ -12,11 +12,17 @@ trait UuidId
     /** @var UuidInterface */
     private $uuid;
 
+    /**
+     * @return static
+     */
     public static function fromString(string $id): self
     {
         return new static(Uuid::fromString($id));
     }
 
+    /**
+     * @return static
+     */
     public static function fromUuid(UuidInterface $id): self
     {
         return new static($id);

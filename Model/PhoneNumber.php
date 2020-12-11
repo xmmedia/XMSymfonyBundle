@@ -16,6 +16,9 @@ class PhoneNumber implements ValueObject
     /** @var LibPhoneNumber */
     private $phoneNumber;
 
+    /**
+     * @return static
+     */
     public static function fromArray(array $data): self
     {
         $util = PhoneNumberUtil::getInstance();
@@ -29,15 +32,18 @@ class PhoneNumber implements ValueObject
             throw new \InvalidArgumentException(sprintf('The phone number is invalid: %s', $e->getMessage()));
         }
 
-        return new self($phoneNumber);
+        return new static($phoneNumber);
     }
 
+    /**
+     * @return static
+     */
     public static function fromString(string $phoneNumber): self
     {
         $util = PhoneNumberUtil::getInstance();
 
         try {
-            return new self(
+            return new static(
                 $util->parse($phoneNumber, self::$defaultRegion)
             );
         } catch (NumberParseException $e) {
@@ -45,9 +51,12 @@ class PhoneNumber implements ValueObject
         }
     }
 
+    /**
+     * @return static
+     */
     public static function fromObject(LibPhoneNumber $phoneNumber): self
     {
-        return new self($phoneNumber);
+        return new static($phoneNumber);
     }
 
     private function __construct(LibPhoneNumber $phoneNumber)

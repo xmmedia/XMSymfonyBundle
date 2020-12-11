@@ -33,6 +33,9 @@ class Address implements ValueObject
     /** @var Country */
     private $country;
 
+    /**
+     * @return static
+     */
     public static function fromStrings(
         string $line1,
         ?string $line2,
@@ -48,6 +51,9 @@ class Address implements ValueObject
         return new self($line1, $line2, $city, $province, $postalCode, $country);
     }
 
+    /**
+     * @return static
+     */
     public static function fromArray(array $address): self
     {
         if (!$address['province'] instanceof Province) {
