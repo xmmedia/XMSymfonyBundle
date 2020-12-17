@@ -14,7 +14,7 @@ trait IsAdminTrait
     /**
      * True when the user has an admin role.
      */
-    protected function isAdmin(TokenInterface $token)
+    protected function isAdmin(TokenInterface $token): bool
     {
         return $this->decisionManager->decide($token, ['ROLE_ADMIN']);
     }
