@@ -19,20 +19,4 @@ trait VoterTestTrait
 
         return $token;
     }
-
-    /**
-     * @param bool[] ...$results The results of the decide() method calls.
-     */
-    private function getAccessDecisionManager(...$results): AccessDecisionManager
-    {
-        $decisionManager = Mockery::mock(AccessDecisionManager::class);
-
-        foreach ($results as $result) {
-            $decisionManager->shouldReceive('decide')
-                ->once()
-                ->andReturn($result);
-        }
-
-        return $decisionManager;
-    }
 }
