@@ -6,7 +6,6 @@ namespace Xm\SymfonyBundle\Tests;
 
 use Mockery;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 trait VoterTestTrait
