@@ -8,6 +8,9 @@ use Mockery;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Xm\SymfonyBundle\Entity\User;
 
+/**
+ * @deprecated Not really useful any more
+ */
 trait UserAuthMock
 {
     /**
