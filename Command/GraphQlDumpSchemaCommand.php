@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 use Xm\SymfonyBundle\Model\Email;
@@ -38,17 +39,20 @@ final class GraphQlDumpSchemaCommand extends Command
             ->setDescription('Dumps GraphQL schema')
             ->addArgument(
                 'user-email',
-                InputArgument::REQUIRED,
-                'The user to use for the permission checks in the GraphQL config. Typically an admin user.'
+                InputArgument::OPTIONAL,
+                'The user to use for the permission checks in the GraphQL config. Skip to do the public schema.'
             )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->tokenStorage->setToken(
-            $this->token($input->getArgument('user-email'))
-        );
+        if ($input->getArgument('user-email')) {
+            $token = $this->token($input->getArgument('user-email'));
+        } else {
+            $token = new NullToken();
+        }
+        $this->tokenStorage->setToken($token);
 
         $command = $this->getApplication()->find('graphql:dump-schema');
 
