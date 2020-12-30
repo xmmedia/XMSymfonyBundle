@@ -11,7 +11,10 @@ abstract class Filters
     /** @var array */
     protected $filters;
 
-    public static function fromArray(?array $filters): static
+    /**
+     * @return static
+     */
+    public static function fromArray(?array $filters): self
     {
         return new static($filters ?? []);
     }
