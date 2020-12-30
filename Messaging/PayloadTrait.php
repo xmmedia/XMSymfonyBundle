@@ -16,6 +16,14 @@ trait PayloadTrait
      */
     protected $payload;
 
+    /**
+     * @return static
+     */
+    public static function create(array $payload = []): self
+    {
+        return new static($payload);
+    }
+
     public function __construct(array $payload = [])
     {
         $this->init();
