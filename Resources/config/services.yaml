@@ -15,6 +15,7 @@ services:
     Xm\SymfonyBundle\Messenger\FailureCatcherMiddleware: ~
 
     Xm\SymfonyBundle\DataProvider\IssuerProvider: ~
+    Xm\SymfonyBundle\DataProvider\CausationProvider: ~
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\RepositoryFactory: ~
 
