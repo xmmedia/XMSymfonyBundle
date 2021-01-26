@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Validation;
 
 class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 {
-    use ValidatorExtensionTrait;
     use MockeryPHPUnitIntegration;
     use UsesFaker;
+    use ValidatorExtensionTrait;
 
     /**
      * @var Container for use when validators have constructor arguments

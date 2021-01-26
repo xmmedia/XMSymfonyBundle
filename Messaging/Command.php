@@ -9,8 +9,8 @@ namespace Xm\SymfonyBundle\Messaging;
  */
 abstract class Command extends DomainMessage
 {
-    use PayloadTrait;
     use IssuedByTrait;
+    use PayloadTrait;
 
     public function messageType(): string
     {
