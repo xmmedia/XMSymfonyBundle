@@ -13,9 +13,9 @@ class MetadataCausationEnricher implements MetadataEnricher
     /** @var CausationProvider */
     private $causationProvider;
 
-    public function __construct(CausationProvider $causationTracker)
+    public function __construct(CausationProvider $causationProvider)
     {
-        $this->causationProvider = $causationTracker;
+        $this->causationProvider = $causationProvider;
     }
 
     public function enrich(Message $message): Message
