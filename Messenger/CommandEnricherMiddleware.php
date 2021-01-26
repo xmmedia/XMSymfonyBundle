@@ -21,6 +21,7 @@ class CommandEnricherMiddleware implements MiddlewareInterface
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
+        /** @var \Xm\SymfonyBundle\Messaging\DomainEvent $message */
         $message = $envelope->getMessage();
         $message = $message->withAddedMetadata(
             'issuedBy',
