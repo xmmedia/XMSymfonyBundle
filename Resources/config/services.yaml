@@ -12,6 +12,7 @@ services:
 
     Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware: ~
     Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware: ~
+    Xm\SymfonyBundle\Messenger\CausationRecorderMiddleware: ~
     Xm\SymfonyBundle\Messenger\FailureCatcherMiddleware: ~
 
     Xm\SymfonyBundle\DataProvider\IssuerProvider: ~
