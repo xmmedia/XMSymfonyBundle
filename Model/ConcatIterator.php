@@ -62,7 +62,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset)) {
-            list($it, $idx) = $this->getIteratorByIndex($offset);
+            [$it, $idx] = $this->getIteratorByIndex($offset);
 
             return $it->offsetGet($idx);
         } else {
@@ -72,13 +72,13 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
 
     public function offsetSet($offset, $value)
     {
-        list($it, $idx) = $this->getIteratorByIndex($offset);
+        [$it, $idx] = $this->getIteratorByIndex($offset);
         $it->offsetSet($idx, $value);
     }
 
     public function offsetUnset($offset)
     {
-        list($it, $idx) = $this->getIteratorByIndex($offset);
+        [$it, $idx] = $this->getIteratorByIndex($offset);
         $it->offsetUnset($idx);
     }
 
