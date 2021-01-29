@@ -12,8 +12,7 @@ use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
 
 final class <?= $class_name; ?><?= "\n"; ?>
 {
-    /** @var <?= $list_class; ?> */
-    private $<?= $repo_property; ?>;
+    private <?= $list_class; ?> $<?= $repo_property; ?>;
 
     public function __construct(<?= $list_class; ?> $<?= $repo_property; ?>)
     {

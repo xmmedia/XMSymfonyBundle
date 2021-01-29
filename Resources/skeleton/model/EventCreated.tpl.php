@@ -10,8 +10,7 @@ use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
 final class <?= $class_name; ?> extends AggregateChanged
 {
-    /** @var Name */
-    private $name;
+    private Name $name;
 
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,

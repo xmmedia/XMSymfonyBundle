@@ -12,14 +12,9 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
 {
     use AppliesAggregateChanged;
 
-    /** @var <?= $id_class; ?> */
-    private $<?= $id_property; ?>;
-
-    /** @var Name */
-    private $name;
-
-    /** @var bool */
-    private $deleted = false;
+    private <?= $id_class; ?> $<?= $id_property; ?>;
+    private Name $name;
+    private bool $deleted = false;
 
     public static function add(
         <?= $id_class; ?> $<?= $id_property; ?>,

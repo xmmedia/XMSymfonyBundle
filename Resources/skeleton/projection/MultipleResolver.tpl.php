@@ -10,8 +10,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 final class <?= $class_name; ?> implements ResolverInterface
 {
-    /** @var <?= $finder_class_short; ?> */
-    private $<?= $finder_property; ?>;
+    private <?= $finder_class_short; ?> $<?= $finder_property; ?>;
 
     public function __construct(<?= $finder_class_short; ?> $<?= $finder_property; ?>)
     {
