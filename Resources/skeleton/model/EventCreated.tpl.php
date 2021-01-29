@@ -32,7 +32,7 @@ final class <?= $class_name; ?> extends AggregateChanged
 
     public function name(): Name
     {
-        if (null === $this->name) {
+        if (!isset($this->name)) {
             $this->name = Name::fromString($this->payload['name']);
         }
 

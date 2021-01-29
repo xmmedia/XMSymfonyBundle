@@ -36,7 +36,7 @@ final class <?= $class_name; ?> extends AggregateChanged
 
     public function newName(): Name
     {
-        if (null === $this->newName) {
+        if (!isset($this->newName)) {
             $this->newName = Name::fromString($this->payload['newName']);
         }
 
@@ -45,7 +45,7 @@ final class <?= $class_name; ?> extends AggregateChanged
 
     public function oldName(): Name
     {
-        if (null === $this->oldName) {
+        if (!isset($this->oldName)) {
             $this->oldName = Name::fromString($this->payload['oldName']);
         }
 
