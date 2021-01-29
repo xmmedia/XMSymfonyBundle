@@ -152,10 +152,10 @@ final class ProjectionRunCommand extends Command
 
     private function setupPcntl(): void
     {
-        pcntl_signal(SIGTERM, [$this, 'signalHandler']);
-        pcntl_signal(SIGHUP, [$this, 'signalHandler']);
-        pcntl_signal(SIGINT, [$this, 'signalHandler']);
-        pcntl_signal(SIGQUIT, [$this, 'signalHandler']);
+        pcntl_signal(\SIGTERM, [$this, 'signalHandler']);
+        pcntl_signal(\SIGHUP, [$this, 'signalHandler']);
+        pcntl_signal(\SIGINT, [$this, 'signalHandler']);
+        pcntl_signal(\SIGQUIT, [$this, 'signalHandler']);
     }
 
     public function signalHandler(): void
