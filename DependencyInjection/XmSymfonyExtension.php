@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\DependencyInjection;
 
-use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Xm\SymfonyBundle\Doctrine\Types\DateTimeMicrosecondsType;
 
 class XmSymfonyExtension extends Extension
 {
@@ -30,13 +28,6 @@ class XmSymfonyExtension extends Extension
 
         if (!empty($config['repositories'])) {
             $this->loadRepositories($config, $container);
-        }
-
-        if (!Type::hasType('datetime_microseconds')) {
-            Type::addType(
-                DateTimeMicrosecondsType::TYPENAME,
-                DateTimeMicrosecondsType::class,
-            );
         }
     }
 
