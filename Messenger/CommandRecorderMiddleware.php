@@ -42,7 +42,7 @@ class CommandRecorderMiddleware implements MiddlewareInterface
         ], [
             'payload'  => 'json',
             'metadata' => 'json',
-            'sent_at'  => 'datetime',
+            'sent_at'  => 'datetime_microseconds',
         ]);
     }
 }
