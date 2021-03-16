@@ -75,8 +75,6 @@ class ProjectionRunner
             // try running
             // the likely case is the projection has not been initialized
             $this->projector->run($keepRunning);
-        } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
-            throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s"', $projectionName, 'unknown'));
         }
     }
 
