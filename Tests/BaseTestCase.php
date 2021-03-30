@@ -91,7 +91,10 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         ValueObject $expected,
         ValueObject $actual
     ): void {
-        $this->assertTrue($expected->sameValueAs($actual));
+        $this->assertTrue(
+            $expected->sameValueAs($actual),
+            'The ValueObjects are not the same based on the result of calling sameValueAs().',
+        );
     }
 
     protected function assertSameValueAsOrNull(
