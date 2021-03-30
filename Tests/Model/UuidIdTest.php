@@ -15,7 +15,7 @@ class UuidIdTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuidString = $faker->uuid;
+        $uuidString = $faker->uuid();
 
         $uuid = UuidIdId::fromString($uuidString);
 
@@ -32,7 +32,7 @@ class UuidIdTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuidString = $faker->uuid;
+        $uuidString = $faker->uuid();
 
         $uuid = UuidIdId::fromUuid(\Ramsey\Uuid\Uuid::fromString($uuidString));
 
@@ -49,7 +49,7 @@ class UuidIdTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuidString = $faker->uuid;
+        $uuidString = $faker->uuid();
 
         $uuid1 = UuidIdId::fromString($uuidString);
         $uuid2 = UuidIdId::fromString($uuidString);
@@ -61,7 +61,7 @@ class UuidIdTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuidString = $faker->uuid;
+        $uuidString = $faker->uuid();
 
         $uuid = UuidIdId::fromString($uuidString);
 

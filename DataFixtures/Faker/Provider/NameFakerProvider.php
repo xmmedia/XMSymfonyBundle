@@ -7,8 +7,6 @@ namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 use Faker;
 
 /**
- * @property string $name
- *
  * @codeCoverageIgnore
  */
 class NameFakerProvider extends Faker\Provider\Person

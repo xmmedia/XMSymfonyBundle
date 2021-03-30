@@ -16,7 +16,7 @@ class StreamStrategyTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuid = $faker->uuid;
+        $uuid = $faker->uuid();
 
         $strategy = new StreamStrategy(new DefaultMessageConverter());
 

@@ -35,7 +35,7 @@ class UuidTypeTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $fakeId = $faker->fakeId;
+        $fakeId = $faker->fakeId();
         $result = (new UuidType())->serialize($fakeId);
 
         $this->assertEquals($fakeId->toString(), $result);
@@ -91,7 +91,7 @@ class UuidTypeTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $fakeId = $faker->fakeId;
+        $fakeId = $faker->fakeId();
 
         yield [
             $fakeId,

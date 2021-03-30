@@ -8,8 +8,6 @@ use Faker;
 use Xm\SymfonyBundle\Model\Date;
 
 /**
- * @property Date $dateVoBetween
- *
  * @codeCoverageIgnore
  */
 class DateFakerProvider extends Faker\Provider\Base

@@ -13,7 +13,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         $command = <?= $command_class_short; ?>::now($<?= $id_property; ?>);
 

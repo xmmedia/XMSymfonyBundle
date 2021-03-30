@@ -14,8 +14,8 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
-        $name = Name::fromString($faker->name);
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
+        $name = Name::fromString($faker->name());
 
         $command = <?= $command_class_short; ?>::now($<?= $id_property; ?>, $name);
 

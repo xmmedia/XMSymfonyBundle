@@ -16,7 +16,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         $event = <?= $event_class_short; ?>::now($<?= $id_property; ?>);
 
@@ -27,7 +27,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         /** @var <?= $event_class_short; ?> $event */
         $event = $this->createEventFromArray(

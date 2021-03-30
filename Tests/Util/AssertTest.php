@@ -31,7 +31,7 @@ class AssertTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        yield [$faker->password];
+        yield [$faker->password()];
         yield ['oh98yih87tg8ybo97c976c98'];
     }
 
@@ -57,14 +57,14 @@ class AssertTest extends BaseTestCase
         $faker = $this->faker();
 
         yield ['123456', []];
-        yield ['asdf@asdf.com'.substr($faker->password, 0, 5), ['asdf@asdf.com']];
+        yield ['asdf@asdf.com'.substr($faker->password(), 0, 5), ['asdf@asdf.com']];
     }
 
     public function testCompromisedPasswordCompromisedRealCallNotCompromised(): void
     {
         $faker = $this->faker();
 
-        Assert::compromisedPassword($faker->password);
+        Assert::compromisedPassword($faker->password());
 
         $this->assertTrue(true);
     }
@@ -85,7 +85,7 @@ class AssertTest extends BaseTestCase
             new MockResponse('0044F0E373D616646005C6B320FB3B1AC10:1'),
         ]);
 
-        Assert::compromisedPassword($faker->password, $httpClient);
+        Assert::compromisedPassword($faker->password(), $httpClient);
 
         $this->assertTrue(true);
     }
@@ -101,14 +101,14 @@ class AssertTest extends BaseTestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to check for compromised password.');
 
-        Assert::compromisedPassword($faker->password, $httpClient);
+        Assert::compromisedPassword($faker->password(), $httpClient);
     }
 
     public function testCompromisedPasswordCompromised1Time(): void
     {
         $faker = $this->faker();
 
-        $password = $faker->password;
+        $password = $faker->password();
         $hashPassword = strtoupper(sha1($password));
 
         $httpClient = new MockHttpClient([
@@ -124,7 +124,7 @@ class AssertTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $password = $faker->password;
+        $password = $faker->password();
         $hashPassword = strtoupper(sha1($password));
 
         $httpClient = new MockHttpClient([
@@ -151,6 +151,6 @@ class AssertTest extends BaseTestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to check for compromised password.');
 
-        Assert::compromisedPassword($faker->password, $httpClient);
+        Assert::compromisedPassword($faker->password(), $httpClient);
     }
 }

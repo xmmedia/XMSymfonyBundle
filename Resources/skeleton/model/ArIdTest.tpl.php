@@ -13,7 +13,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $uuid = $faker->uuid;
+        $uuid = $faker->uuid();
 
         $<?= $id_property; ?> = <?= $id_class_short; ?>::fromString($uuid);
 

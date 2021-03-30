@@ -17,7 +17,7 @@ class CommandEnricherMiddlewareTest extends BaseTestCase
     public function test(): void
     {
         $faker = $this->faker();
-        $uuid = $faker->uuid;
+        $uuid = $faker->uuid();
 
         $issuerProvider = Mockery::mock(IssuerProvider::class);
         $issuerProvider->shouldReceive('getIssuer')

@@ -8,8 +8,6 @@ use Faker;
 use Xm\SymfonyBundle\Tests\FakeId;
 
 /**
- * @property FakeId $fakeId
- *
  * @codeCoverageIgnore
  */
 class UuidFakerProvider extends Faker\Provider\Uuid

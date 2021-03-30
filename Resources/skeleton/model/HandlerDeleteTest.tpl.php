@@ -19,7 +19,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>);
+        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>());
 
         $<?= $model_lower; ?> = Mockery::mock(<?= $model; ?>::class);
         $<?= $model_lower; ?>->shouldReceive('delete')
@@ -40,7 +40,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>);
+        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>());
 
         $repo = Mockery::mock(<?= $list_class_short; ?>::class);
         $repo->shouldReceive('get')

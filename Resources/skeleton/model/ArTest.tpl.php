@@ -18,8 +18,8 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
-        $name = Name::fromString($faker->name);
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
+        $name = Name::fromString($faker->name());
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
             $<?= $id_property; ?>,
@@ -47,7 +47,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $newName = Name::fromString($faker->unique()->name);
+        $newName = Name::fromString($faker->unique()->name());
 
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
         $oldName = $<?= $model_lower; ?>->name();
@@ -95,7 +95,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $this->expectException(Exception\<?= $model; ?>IsDeleted::class);
 
-        $<?= $model_lower; ?>->changeName(Name::fromString($faker->name));
+        $<?= $model_lower; ?>->changeName(Name::fromString($faker->name()));
     }
 
     public function testDelete(): void
@@ -131,15 +131,15 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker-><?= $id_property; ?>;
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         $<?= $model_lower; ?>1 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
-            Name::fromString($faker->name),
+            Name::fromString($faker->name()),
         );
         $<?= $model_lower; ?>2 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
-            Name::fromString($faker->name),
+            Name::fromString($faker->name()),
         );
 
         $this->assertTrue($<?= $model_lower; ?>1->sameIdentityAs($<?= $model_lower; ?>2));
@@ -151,11 +151,11 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?>1 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
-            Name::fromString($faker->name),
+            Name::fromString($faker->name()),
         );
         $<?= $model_lower; ?>2 = <?= $model; ?>::add(
             $<?= $id_property; ?>,
-            Name::fromString($faker->name),
+            Name::fromString($faker->name()),
         );
 
         $this->assertFalse($<?= $model_lower; ?>1->sameIdentityAs($<?= $model_lower; ?>2));
@@ -166,8 +166,8 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
-            $faker-><?= $id_property; ?>,
-            Name::fromString($faker->name),
+            $faker-><?= $id_property; ?>(),
+            Name::fromString($faker->name()),
         );
 
         $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::add()));
@@ -178,8 +178,8 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
-            $faker-><?= $id_property; ?>,
-            Name::fromString($faker->unique()->name),
+            $faker-><?= $id_property; ?>(),
+            Name::fromString($faker->unique()->name()),
         );
         $this->popRecordedEvent($<?= $model_lower; ?>);
 

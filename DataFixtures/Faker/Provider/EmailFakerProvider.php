@@ -8,8 +8,6 @@ use Faker;
 use Xm\SymfonyBundle\Model\Email;
 
 /**
- * @property Email $emailVo
- *
  * @codeCoverageIgnore
  */
 class EmailFakerProvider extends Faker\Provider\Internet

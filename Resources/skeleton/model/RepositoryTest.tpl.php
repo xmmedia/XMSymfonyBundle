@@ -17,8 +17,8 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
-            $faker-><?= $id_property; ?>,
-            $faker->name,
+            $faker-><?= $id_property; ?>(),
+            $faker->name(),
         );
 
         $repository = $this->getRepository(<?= $repository_class_short; ?>::class, <?= $model; ?>::class);
@@ -37,7 +37,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $fetched = $this->getRepository(<?= $repository_class_short; ?>::class, <?= $model; ?>::class)
-            ->get($faker-><?= $id_property; ?>);
+            ->get($faker-><?= $id_property; ?>());
 
         $this->assertNull($fetched);
     }

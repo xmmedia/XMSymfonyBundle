@@ -12,11 +12,6 @@ use Xm\SymfonyBundle\Model\PostalCode;
 use Xm\SymfonyBundle\Model\Province;
 
 /**
- * @property Address  $addressVo
- * @property array    $addressArray
- * @property Province $provinceVo
- * @property Country  $countryVo
- *
  * @codeCoverageIgnore
  */
 class AddressFakerProvider extends FakerAddress

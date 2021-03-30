@@ -15,7 +15,7 @@ class MetadataIssuedByEnricherTest extends BaseTestCase
     public function test(): void
     {
         $faker = $this->faker();
-        $uuid = $faker->uuid;
+        $uuid = $faker->uuid();
 
         $issuerProvider = Mockery::mock(IssuerProvider::class);
         $issuerProvider->shouldReceive('getIssuer')
@@ -24,7 +24,7 @@ class MetadataIssuedByEnricherTest extends BaseTestCase
 
         $enricher = new MetadataIssuedByEnricher($issuerProvider);
 
-        $event = $enricher->enrich(AggregateChanged::occur($faker->uuid, []));
+        $event = $enricher->enrich(AggregateChanged::occur($faker->uuid(), []));
 
         $this->assertArrayHasKey('issuedBy', $event->metadata());
         $this->assertEquals($uuid, $event->metadata()['issuedBy']);

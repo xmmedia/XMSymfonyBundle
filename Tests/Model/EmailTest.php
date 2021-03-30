@@ -14,8 +14,8 @@ class EmailTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $email = $faker->email;
-        $name = $faker->name;
+        $email = $faker->email();
+        $name = $faker->name();
 
         $vo = Email::fromString($email, $name);
 
@@ -29,7 +29,7 @@ class EmailTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $email = $faker->email;
+        $email = $faker->email();
 
         $vo = Email::fromString($email);
 
@@ -42,7 +42,7 @@ class EmailTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $email = $faker->email;
+        $email = $faker->email();
 
         $vo = Email::fromString($email, null);
 

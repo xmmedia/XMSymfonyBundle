@@ -8,8 +8,6 @@ use Faker;
 use Xm\SymfonyBundle\Model\Gender;
 
 /**
- * @property string $gender
- *
  * @codeCoverageIgnore
  */
 class GenderFakerProvider extends Faker\Provider\Person

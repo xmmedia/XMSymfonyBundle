@@ -15,8 +15,8 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker->uuid;
-        $name = $faker->name;
+        $<?= $id_property; ?> = $faker->uuid();
+        $name = $faker->name();
 
         $entity = new <?= $entity_class_short; ?>();
         $reflection = new \ReflectionClass(<?= $entity_class_short; ?>::class);

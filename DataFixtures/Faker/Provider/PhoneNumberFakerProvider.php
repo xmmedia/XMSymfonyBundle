@@ -9,8 +9,6 @@ use libphonenumber\PhoneNumberUtil;
 use Xm\SymfonyBundle\Model\PhoneNumber;
 
 /**
- * @property PhoneNumber $phoneNumberVo
- *
  * @codeCoverageIgnore
  */
 class PhoneNumberFakerProvider extends FakerPhoneNumber

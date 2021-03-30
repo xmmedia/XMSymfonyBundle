@@ -7,8 +7,6 @@ namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 use Faker\Provider\Internet as FakerInternet;
 
 /**
- * @property string $password
- *
  * @codeCoverageIgnore
  */
 class InternetFakerProvider extends FakerInternet
