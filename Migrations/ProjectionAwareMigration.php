@@ -15,6 +15,8 @@ trait ProjectionAwareMigration
     /** @var ContainerInterface */
     private $container;
 
+    abstract function write(string $message): void;
+
     protected function rebuildProjection(string $projection): void
     {
         if (!isset($this->container)) {
@@ -32,9 +34,13 @@ trait ProjectionAwareMigration
         ]);
 
         $output = new BufferedOutput();
-        $application->run($input, $output);
+        $return = $application->run($input, $output);
 
         $this->write($output->fetch());
+
+        if (0 !== $return) {
+            throw new \RuntimeException('Rebuilding projection failed!');
+        }
     }
 
     public function setContainer(ContainerInterface $container = null)
