@@ -59,7 +59,7 @@ final class ProjectionRebuildCommand extends Command
             );
 
         // run again to rebuild
-        $this->getApplication()
+        return $this->getApplication()
             ->find('app:projection:run')
             ->run(
                 new ArrayInput([
@@ -68,7 +68,5 @@ final class ProjectionRebuildCommand extends Command
                 ]),
                 $output,
             );
-
-        return 0;
     }
 }
