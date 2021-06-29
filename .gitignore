@@ -8,7 +8,7 @@ sftp-config.json
 .remote-sync.json
 /composer.phar
 /.php_cs
-/.php_cs.cache
+/.php-cs-fixer.cache
 
 composer.lock
 phpunit.xml

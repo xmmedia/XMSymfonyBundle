@@ -39,7 +39,7 @@
     "wildbit/postmark-php": "^2.8 || ^3.0 || ^4.0"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.13",
+    "friendsofphp/php-cs-fixer": "^3.0",
     "fakerphp/faker": "^1.8",
     "mockery/mockery": "^1.2",
     "phpstan/phpstan": "^0.12",
@@ -67,8 +67,8 @@
   "scripts": {
     "test": "vendor/bin/simple-phpunit",
     "test:coverage": "vendor/bin/simple-phpunit --coverage-html coverage",
-    "cs": "php-cs-fixer fix -v --dry-run --config=php_cs.dist",
-    "cs:fix": "php-cs-fixer fix -v --config=php_cs.dist",
+    "cs": "php-cs-fixer fix -v --dry-run --config=php_cs.dist.php",
+    "cs:fix": "php-cs-fixer fix -v --config=php_cs.dist.php",
     "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse"
   }
 }
