@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 $finder = PhpCsFixer\Finder::create()
     ->in('.')
+    ->exclude('Resources/skeleton')
 ;
 
 return (new PhpCsFixer\Config())
