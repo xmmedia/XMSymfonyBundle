@@ -15,7 +15,7 @@ trait ProjectionAwareMigration
     /** @var ContainerInterface */
     private $container;
 
-    abstract function write(string $message): void;
+    abstract public function write(string $message): void;
 
     protected function rebuildProjection(string $projection): void
     {
