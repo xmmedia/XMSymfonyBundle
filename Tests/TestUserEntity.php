@@ -30,9 +30,14 @@ class TestUserEntity implements UserInterface
         return null;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
-        return null;
+        return $this->getUserIdentifier();
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return '';
     }
 
     public function eraseCredentials()
