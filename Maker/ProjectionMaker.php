@@ -117,6 +117,24 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
+        $readModelTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ReadModelTest',
+            'Tests\\Projection\\'.$arName.'\\'
+        );
+        $generator->generateClass(
+            $readModelTestClassDetails->getFullName(),
+            $skeletonPath.'ReadModelTest.tpl.php',
+            [
+                'read_model_class' => $readModelClassDetails->getFullName(),
+                'read_model_class_short' => $readModelClassDetails->getShortName(),
+                'projection_name' => $projectionName,
+                'id_field'    => $idField,
+                'id_property' => $idProperty,
+
+                'model_upper' => $modelUpper,
+            ]
+        );
+
         $entityClassDetails = $generator->createClassNameDetails(
             $projectionClassName,
             'Entity\\'

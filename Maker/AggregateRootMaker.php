@@ -426,6 +426,7 @@ class AggregateRootMaker extends AbstractMaker
             '- Scaffold projection: <info>bin/console make:projection</info>',
             '- Update permissions in GraphQL config',
             '- Add ID class to UuidFakerProvider (for tests)',
+            '- If necessary, upload files to dev server',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }
