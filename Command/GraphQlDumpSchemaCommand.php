@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
+use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 use Xm\SymfonyBundle\Model\Email;
 
 final class GraphQlDumpSchemaCommand extends Command
@@ -65,7 +65,7 @@ final class GraphQlDumpSchemaCommand extends Command
         return $command->run(new ArrayInput($arguments), $output);
     }
 
-    private function token(string $userEmail): PostAuthenticationGuardToken
+    private function token(string $userEmail): PostAuthenticationToken
     {
         $userFinder = $this->em->getRepository('App\Entity\User');
 
@@ -75,7 +75,7 @@ final class GraphQlDumpSchemaCommand extends Command
             throw new \InvalidArgumentException(sprintf('The user with email "%s" cannot be found.', $userEmail));
         }
 
-        return new PostAuthenticationGuardToken(
+        return new PostAuthenticationToken(
             $user,
             'app_provider',
             $user->roles()
