@@ -25,7 +25,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
             Event\<?= $class_name; ?>WasAdded::now(
                 $<?= $id_property; ?>,
                 $name,
-            )
+            ),
         );
 
         return $self;
@@ -46,7 +46,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
                 $this-><?= $id_property; ?>,
                 $newName,
                 $this->name,
-            )
+            ),
         );
     }
 
@@ -57,7 +57,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         }
 
         $this->recordThat(
-            Event\<?= $class_name; ?>WasDeleted::now($this-><?= $id_property; ?>)
+            Event\<?= $class_name; ?>WasDeleted::now($this-><?= $id_property; ?>),
         );
     }
 

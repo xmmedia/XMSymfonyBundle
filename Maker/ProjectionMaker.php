@@ -312,7 +312,7 @@ class ProjectionMaker extends AbstractMaker
                 $projectionName,
             ),
             '- Update permissions in GraphQL config',
-            '- If necessary, upload files to dev server',
+            '- Upload files to dev server, if necessary',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }

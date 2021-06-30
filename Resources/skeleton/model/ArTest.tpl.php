@@ -9,7 +9,6 @@ use App\Model\<?= $model; ?>\Exception;
 use <?= $name_class; ?>;
 use <?= $model_class; ?>;
 use App\Tests\BaseTestCase;
-use Mockery;
 use Xm\SymfonyBundle\Tests\FakeAr;
 
 class <?= $class_name; ?> extends BaseTestCase

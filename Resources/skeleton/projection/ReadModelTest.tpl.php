@@ -7,7 +7,6 @@ namespace <?= $namespace; ?>;
 use <?= $read_model_class; ?>;
 use App\Tests\BaseTestCase;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Statement;
 use Mockery;
 
 class <?= $class_name; ?> extends BaseTestCase
