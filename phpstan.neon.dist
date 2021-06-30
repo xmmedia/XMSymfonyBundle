@@ -11,3 +11,5 @@ parameters:
         - .
     excludes_analyse:
         - vendor
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\).#'
