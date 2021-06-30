@@ -9,16 +9,16 @@ use <?= $projection_class; ?>;
 use App\Tests\BaseTestCase;
 use Mockery;
 use Prooph\EventStore\Projection\ReadModelProjector;
-use Xm\SymfonyBundle\Tests\ProjectionWithArgs;
+use Xm\SymfonyBundle\Tests\ProjectionWhenArgs;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
-    use ProjectionWithArgs;
+    use ProjectionWhenArgs;
 
     public function test(): void
     {
         $projectedEvents = [
-            Event\<?= $model; ?>WasCreated::class,
+            Event\<?= $model; ?>WasAdded::class,
             Event\<?= $model; ?>NameWasChanged::class,
             Event\<?= $model; ?>WasDeleted::class,
         ];

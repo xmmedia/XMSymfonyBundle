@@ -166,8 +166,8 @@ class AggregateRootMaker extends AbstractMaker
         );
 
         $repositoryClassTestDetails = $generator->createClassNameDetails(
-            $arName.'Repository',
-            'Infrastructure\\Repository\\'
+            $arName.'RepositoryTest',
+            'Tests\\Infrastructure\\Repository\\'
         );
         $generator->generateClass(
             $repositoryClassTestDetails->getFullName(),
@@ -178,6 +178,7 @@ class AggregateRootMaker extends AbstractMaker
                 'id_property'            => $idProperty,
                 'model'                  => $arClassDetails->getShortName(),
                 'model_lower'            => $arLowerName,
+                'name_class'             => $nameVoClassDetails->getFullName(),
             ]
         );
 
@@ -306,7 +307,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $eventClassDetails->getFullName(),
-                $skeletonPath.'Event'.$command.'d.tpl.php',
+                $skeletonPath.'Event'.$event.'.tpl.php',
                 [
                     'id_class'       => $idClassFullName,
                     'id_class_short' => $idClassShortName,
@@ -322,7 +323,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $eventTestClassDetails->getFullName(),
-                $skeletonPath.'Event'.$command.'dTest.tpl.php',
+                $skeletonPath.'Event'.$event.'Test.tpl.php',
                 [
                     'event_class'       => $eventClassDetails->getFullName(),
                     'event_class_short' => $eventClassDetails->getShortName(),

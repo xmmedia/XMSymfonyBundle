@@ -95,7 +95,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $this->expectException(Exception\<?= $model; ?>IsDeleted::class);
 
-        $<?= $model_lower; ?>->changeName(Name::fromString($faker->name()));
+        $<?= $model_lower; ?>->changeName(Name::fromString($faker->unique()->name()));
     }
 
     public function testDelete(): void
@@ -150,11 +150,11 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $model_lower; ?>1 = <?= $model; ?>::add(
-            $<?= $id_property; ?>,
+            $faker-><?= $id_property; ?>(),
             Name::fromString($faker->name()),
         );
         $<?= $model_lower; ?>2 = <?= $model; ?>::add(
-            $<?= $id_property; ?>,
+            $faker-><?= $id_property; ?>(),
             Name::fromString($faker->name()),
         );
 
@@ -170,7 +170,7 @@ class <?= $class_name; ?> extends BaseTestCase
             Name::fromString($faker->name()),
         );
 
-        $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::add()));
+        $this->assertFalse($<?= $model_lower; ?>->sameIdentityAs(FakeAr::create()));
     }
 
     private function get<?= $model; ?>(): <?= $model; ?><?= "\n"; ?>

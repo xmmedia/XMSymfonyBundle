@@ -22,16 +22,14 @@ CREATE TABLE `$tableName` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 EOT;
 
-        $statement = $this->connection->prepare($sql);
-        $statement->execute();
+        $this->connection->executeQuery($sql);
 
         $sql = <<<EOT
 ALTER TABLE `$tableName`
   ADD PRIMARY KEY (`<?= $id_field; ?>`);
 EOT;
 
-        $statement = $this->connection->prepare($sql);
-        $statement->execute();
+        $this->connection->executeQuery($sql);
     }
 
     protected function insert(array $data, array $types = []): void

@@ -6,7 +6,9 @@ namespace <?= $namespace; ?>;
 
 use <?= $repository_class; ?>;
 use App\Model\<?= $model; ?>\<?= $model; ?>;
+use <?= $name_class; ?>;
 use App\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Util\Tests\AggregateRepositoryFactory;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
@@ -18,7 +20,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
             $faker-><?= $id_property; ?>(),
-            $faker->name(),
+            Name::fromString($faker->name()),
         );
 
         $repository = $this->getRepository(<?= $repository_class_short; ?>::class, <?= $model; ?>::class);

@@ -60,6 +60,7 @@ class ProjectionMaker extends AbstractMaker
     ) {
         $projectionName = strtolower(trim($input->getArgument('projection')));
         $arName = trim($input->getArgument('ar'));
+        $modelUpper = strtoupper(Str::asSnakeCase($arName));
         $skeletonPath = $this->skeletonPath().'projection/';
 
         $projectionClassName = Str::asCamelCase($projectionName);
@@ -112,7 +113,7 @@ class ProjectionMaker extends AbstractMaker
             [
                 'id_field'    => $idField,
                 'id_property' => $idProperty,
-                'model_upper' => strtoupper(Str::asSnakeCase($arName)),
+                'model_upper' => $modelUpper,
             ]
         );
 
@@ -276,11 +277,17 @@ class ProjectionMaker extends AbstractMaker
                 $readModelClassDetails->getFullName(),
                 $projectionClassDetails->getFullName(),
             ),
+            '- Add to <info>App\\Messenger\\RunProjectionMiddleware</info>:',
+            sprintf(
+                "<info>\tprivate const %s = '%s';</info>",
+                $modelUpper,
+                $projectionName.'_projection',
+            ),
             '- Add to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
             sprintf(
-                "<info>\t'%s\\Event' => [\n\t    '%s_projection',\n\t],</info>",
+                "<info>\t'%s\\Event' => [\n\t    self::%s',\n\t],</info>",
                 Str::getNamespace($arClassDetails->getFullName()),
-                $projectionName,
+                $modelUpper,
             ),
             sprintf(
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
