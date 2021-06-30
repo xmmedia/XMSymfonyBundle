@@ -37,12 +37,9 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     public function isInitialized(): bool
     {
         foreach ($this->tables as $table) {
-            $statement = $this->connection->prepare(
+            $result = $this->connection->fetchOne(
                 sprintf("SHOW TABLES LIKE '%s';", $table)
             );
-            $statement->execute();
-
-            $result = $statement->fetch();
 
             if (false === $result) {
                 return false;
@@ -55,20 +52,18 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     public function reset(): void
     {
         foreach ($this->tables as $table) {
-            $statement = $this->connection->prepare(
+            $this->connection->executeQuery(
                 sprintf('TRUNCATE TABLE `%s`;', $table)
             );
-            $statement->execute();
         }
     }
 
     public function delete(): void
     {
         foreach ($this->tables as $table) {
-            $statement = $this->connection->prepare(
+            $this->connection->executeQuery(
                 sprintf('DROP TABLE IF EXISTS `%s`;', $table)
             );
-            $statement->execute();
         }
     }
 }
