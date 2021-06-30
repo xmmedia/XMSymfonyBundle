@@ -28,12 +28,16 @@ class AggregateRootMaker extends AbstractMaker
         return 'make:model';
     }
 
+    public static function getCommandDescription(): string
+    {
+        return 'Creates a new model with aggregate root.';
+    }
+
     public function configureCommand(
         Command $command,
         InputConfiguration $inputConfig
     ) {
         $command
-            ->setDescription('Creates a new model with aggregate root.')
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,

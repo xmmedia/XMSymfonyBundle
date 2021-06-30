@@ -24,12 +24,16 @@ class ProjectionMaker extends AbstractMaker
         return 'make:projection';
     }
 
+    public static function getCommandDescription(): string
+    {
+        return 'Creates a new projection plus entity & repository/finder.';
+    }
+
     public function configureCommand(
         Command $command,
         InputConfiguration $inputConfig
     ) {
         $command
-            ->setDescription('Creates a new projection plus entity & repository/finder.')
             ->addArgument(
                 'projection',
                 InputArgument::OPTIONAL,
