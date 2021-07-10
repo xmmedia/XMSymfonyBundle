@@ -213,9 +213,9 @@ class AggregateRootMaker extends AbstractMaker
         );
 
         $commandsEvents = [
-            'Add'        => 'WasAdded',
-            'ChangeName' => 'NameWasChanged',
-            'Delete'     => 'WasDeleted',
+            'Add'    => 'WasAdded',
+            'Change' => 'WasChanged',
+            'Delete' => 'WasDeleted',
         ];
         $mutationClasses = [];
         foreach ($commandsEvents as $command => $event) {
@@ -390,7 +390,7 @@ class AggregateRootMaker extends AbstractMaker
                     $mutationClasses['Add']->getFullName()
                 ),
                 'mutation_change' => $this->doubleEscapeClass(
-                    $mutationClasses['ChangeName']->getFullName()
+                    $mutationClasses['Change']->getFullName()
                 ),
                 'mutation_delete' => $this->doubleEscapeClass(
                     $mutationClasses['Delete']->getFullName()
