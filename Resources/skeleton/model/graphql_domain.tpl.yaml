@@ -3,7 +3,5 @@
     config:
         description: 'The <?= $model; ?> object.'
         fields:
-            <?= $id_property; ?>:
-                type: UUID!
-            name:
-                type: String!
+            <?= $id_property; ?>: UUID!
+            name: String!
