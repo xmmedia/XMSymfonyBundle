@@ -307,12 +307,12 @@ class ProjectionMaker extends AbstractMaker
                 Str::getNamespace($arClassDetails->getFullName()),
                 $modelUpper,
             ),
+            '- Upload files to dev server, if necessary',
             sprintf(
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
             '- Update permissions in GraphQL config',
-            '- Upload files to dev server, if necessary',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }
