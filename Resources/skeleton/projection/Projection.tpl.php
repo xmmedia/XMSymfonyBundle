@@ -41,7 +41,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         'update',
                         $event->aggregateId(),
                         [
-                            'newName' => $event->newName()->toString(),
+                            'name' => $event->newName()->toString(),
                         ]
                     );
                 },
