@@ -20,7 +20,7 @@
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
             <?= $model; ?>Delete:
-                type: <?= $model; ?>DeleteMutationPayload!
+                type:        <?= $model; ?>DeleteMutationPayload!
                 description: 'Delete <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_delete; ?>", [args["<?= $id_property; ?>"]])'

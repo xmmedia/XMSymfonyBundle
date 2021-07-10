@@ -4,16 +4,16 @@
     config:
         fields:
             <?= $entity_class_short_plural; ?>:
-                type: '[<?= $entity_class_short; ?>!]'
+                type:        '[<?= $entity_class_short; ?>!]'
                 description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
-                access: '@=isAuthenticated()'
-                resolve: '@=resolver("<?= $resolver_multiple; ?>")'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=resolver("<?= $resolver_multiple; ?>")'
 
             <?= $entity_class_short; ?>:
-                type: <?= $entity_class_short; ?><?= "\n"; ?>
+                type:        <?= $entity_class_short; ?><?= "\n"; ?>
                 description: 'Retrieve a single <?= $entity_class_short; ?>.'
-                access: '@=isAuthenticated()'
-                resolve: '@=resolver("<?= $resolver_single; ?>", [args["<?= $id_property; ?>"]])'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=resolver("<?= $resolver_single; ?>", [args["<?= $id_property; ?>"]])'
                 args:
                     <?= $id_property; ?>: UUID!
 
