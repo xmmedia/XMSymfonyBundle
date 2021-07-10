@@ -303,7 +303,7 @@ class ProjectionMaker extends AbstractMaker
             ),
             '- Add to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
             sprintf(
-                "<info>\t'%s\\Event' => [\n\t    self::%s',\n\t],</info>",
+                "<info>\t'%s\\Event' => [\n\t    self::%s,\n\t],</info>",
                 Str::getNamespace($arClassDetails->getFullName()),
                 $modelUpper,
             ),
