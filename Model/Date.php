@@ -42,7 +42,7 @@ class Date implements ValueObject
         return new static(CarbonImmutable::instance($date));
     }
 
-    private function __construct(CarbonImmutable $date)
+    protected function __construct(CarbonImmutable $date)
     {
         $this->date = $date->startOfDay();
     }
