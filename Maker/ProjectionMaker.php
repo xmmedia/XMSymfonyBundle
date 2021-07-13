@@ -125,11 +125,11 @@ class ProjectionMaker extends AbstractMaker
             $readModelTestClassDetails->getFullName(),
             $skeletonPath.'ReadModelTest.tpl.php',
             [
-                'read_model_class' => $readModelClassDetails->getFullName(),
+                'read_model_class'       => $readModelClassDetails->getFullName(),
                 'read_model_class_short' => $readModelClassDetails->getShortName(),
-                'projection_name' => $projectionName,
-                'id_field'    => $idField,
-                'id_property' => $idProperty,
+                'projection_name'        => $projectionName,
+                'id_field'               => $idField,
+                'id_property'            => $idProperty,
 
                 'model_upper' => $modelUpper,
             ]
