@@ -42,7 +42,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         }
 
         $this->recordThat(
-            Event\<?= $class_name; ?>NameWasChanged::now(
+            Event\<?= $class_name; ?>WasChanged::now(
                 $this-><?= $id_property; ?>,
                 $newName,
                 $this->name,
@@ -75,7 +75,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         $this->name = $event->name();
     }
 
-    protected function when<?= $class_name; ?>NameWasChanged(Event\<?= $class_name; ?>NameWasChanged $event): void
+    protected function when<?= $class_name; ?>WasChanged(Event\<?= $class_name; ?>WasChanged $event): void
     {
         $this->name = $event->newName();
     }

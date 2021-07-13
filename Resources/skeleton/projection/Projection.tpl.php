@@ -30,9 +30,9 @@ class <?= $class_name; ?> implements ReadModelProjection
                     ]);
                 },
 
-                Event\<?= $model; ?>NameWasChanged ::class => function (
+                Event\<?= $model; ?>WasChanged ::class => function (
                     array $state,
-                    Event\<?= $model; ?>NameWasChanged $event
+                    Event\<?= $model; ?>WasChanged $event
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
