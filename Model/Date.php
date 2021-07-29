@@ -16,12 +16,14 @@ class Date implements ValueObject
     private $date;
 
     /**
+     * @param string|CarbonTimeZone $tz
+     *
      * @return static
      */
-    public static function fromString(string $string): self
+    public static function fromString(string $string, $tz = self::TZ): self
     {
         // timezone is only used if it's not in the date string
-        return new static(new CarbonImmutable($string, self::TZ));
+        return new static(new CarbonImmutable($string, $tz));
     }
 
     /**
