@@ -16,4 +16,3 @@
                 resolve:     '@=resolver("<?= $resolver_single; ?>", [args["<?= $id_property; ?>"]])'
                 args:
                     <?= $id_property; ?>: UUID!
-
