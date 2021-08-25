@@ -7,6 +7,7 @@ namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Type;
 use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
+use Xm\SymfonyBundle\Util\StringUtil;
 
 final class DateType extends ScalarType implements AliasedInterface
 {
@@ -41,7 +42,7 @@ final class DateType extends ScalarType implements AliasedInterface
      */
     public function parseValue($value): ?\DateTimeImmutable
     {
-        if (null === $value) {
+        if (empty(StringUtil::trim($value))) {
             return null;
         }
 
