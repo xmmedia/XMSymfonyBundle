@@ -17,13 +17,12 @@ class <?= $class_name; ?><?= "\n"; ?>
      * @ORM\Id
      * @ORM\Column(type="uuid")
      */
-    private $<?= $id_property; ?>;
+    private UuidInterface $<?= $id_property; ?>;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    private string $name;
 
     public function <?= $id_property; ?>(): <?= $id_class_short; ?><?= "\n"; ?>
     {
