@@ -30,7 +30,7 @@ final class <?= $class_name; ?> implements MutationInterface
             <?= $command_class_short; ?>::now(
                 $<?= $id_property; ?>,
                 Name::fromString($<?= $model_lower; ?>['name']),
-            )
+            ),
         );
 
         return [
