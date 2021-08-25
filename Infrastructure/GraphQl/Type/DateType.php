@@ -50,7 +50,7 @@ final class DateType extends ScalarType implements AliasedInterface
         $date = \DateTimeImmutable::createFromFormat(self::FORMAT, $value);
 
         if (!$date) {
-            throw new UserError('Unable to parse Date.');
+            throw new UserError('Unable to parse Date. Ensure format is '.self::FORMAT.'.');
         }
 
         return $date;
