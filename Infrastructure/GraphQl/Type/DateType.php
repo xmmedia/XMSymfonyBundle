@@ -7,17 +7,18 @@ namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Type;
 use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Xm\SymfonyBundle\Util\StringUtil;
+use Overblog\GraphQLBundle\Error\UserError;
 
 final class DateType extends ScalarType implements AliasedInterface
 {
     private const NAME = 'Date';
+    private const FORMAT = 'Y-m-d';
 
     public function __construct()
     {
         parent::__construct([
             'name'        => self::NAME,
-            'description' => 'Date represented as string, the format of Y-m-d.',
+            'description' => 'Date represented as string, the format of '.self::FORMAT.'.',
         ]);
     }
 
@@ -34,7 +35,7 @@ final class DateType extends ScalarType implements AliasedInterface
             return $value;
         }
 
-        return $value->format('Y-m-d');
+        return $value->format(self::FORMAT);
     }
 
     /**
@@ -42,11 +43,17 @@ final class DateType extends ScalarType implements AliasedInterface
      */
     public function parseValue($value): ?\DateTimeImmutable
     {
-        if (empty(StringUtil::trim($value))) {
+        if (null === empty($value)) {
             return null;
         }
 
-        return new \DateTimeImmutable($value);
+        $date = \DateTimeImmutable::createFromFormat(self::FORMAT, $value);
+
+        if (!$date) {
+            throw new UserError('Unable to parse Date.');
+        }
+
+        return $date;
     }
 
     /**
