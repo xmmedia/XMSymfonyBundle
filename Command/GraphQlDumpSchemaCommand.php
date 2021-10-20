@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -42,6 +43,12 @@ final class GraphQlDumpSchemaCommand extends Command
                 InputArgument::OPTIONAL,
                 'The user to use for the permission checks in the GraphQL config. Skip to do the public schema.'
             )
+            ->addOption(
+                'schema',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The schema name to generate.',
+            )
         ;
     }
 
@@ -54,13 +61,22 @@ final class GraphQlDumpSchemaCommand extends Command
         }
         $this->tokenStorage->setToken($token);
 
+        $schemaName = $input->getOption('schema');
+
         $command = $this->getApplication()->find('graphql:dump-schema');
 
         $arguments = [
-            'command'  => 'graphql:dump-schema',
-            '--file'   => 'graphql.schema.json',
-            '--modern' => true,
+            'command'             => 'graphql:dump-schema',
+            '--file'              => sprintf(
+                'graphql%s.schema.json',
+                $schemaName ? '.'.$schemaName : ''
+            ),
+            '--modern'            => true,
+            '--with-descriptions' => true,
         ];
+        if ($schemaName) {
+            $arguments['--schema'] = $schemaName;
+        }
 
         return $command->run(new ArrayInput($arguments), $output);
     }
