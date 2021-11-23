@@ -13,6 +13,7 @@
   "require": {
     "php": "^7.3 || ^8.0",
     "ext-json": "*",
+    "ext-pdo": "*",
     "bjeavons/zxcvbn-php": "^1.2",
     "cloudflare/sdk": "^1.1",
     "doctrine/doctrine-bundle": "^2.0",
