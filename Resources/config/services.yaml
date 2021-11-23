@@ -35,3 +35,5 @@ services:
 
     Xm\SymfonyBundle\Maker\AggregateRootMaker: ~
     Xm\SymfonyBundle\Maker\ProjectionMaker: ~
+
+    Xm\SymfonyBundle\Doctrine\PdoProvider: ~
