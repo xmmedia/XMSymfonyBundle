@@ -6,6 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $id_class; ?>;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity(repositoryClass="<?= $finder_class; ?>")
