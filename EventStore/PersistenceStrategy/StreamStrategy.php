@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\EventStore\PersistenceStrategy;
 use Prooph\Common\Messaging\MessageConverter;
 use Prooph\EventStore\Pdo\DefaultMessageConverter;
 use Prooph\EventStore\Pdo\HasQueryHint;
-use Prooph\EventStore\Pdo\PersistenceStrategy;
+use Prooph\EventStore\Pdo\PersistenceStrategy\MySqlPersistenceStrategy;
 use Prooph\EventStore\StreamName;
 use Xm\SymfonyBundle\Util\Json;
 
@@ -15,7 +15,7 @@ use Xm\SymfonyBundle\Util\Json;
  * THIS IS A COPY of \Prooph\EventStore\Pdo\PersistenceStrategy\MySqlSingleStreamStrategy
  * EXCEPT for generateTableName().
  */
-final class StreamStrategy implements PersistenceStrategy, HasQueryHint
+final class StreamStrategy implements MySqlPersistenceStrategy, HasQueryHint
 {
     /** @var MessageConverter */
     private $messageConverter;
