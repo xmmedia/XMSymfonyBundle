@@ -5,57 +5,65 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Infrastructure\Service;
 
 use Cloudflare\API\Adapter\Guzzle;
-use Cloudflare\API\Auth\APIKey;
+use Cloudflare\API\Auth\APIToken;
+use Cloudflare\API\Endpoints\DNS;
 use Cloudflare\API\Endpoints\Zones;
 use Webmozart\Assert\Assert;
 
 class Cloudflare
 {
-    /** @var string */
-    private $cloudflareZone;
-
-    /** @var string */
-    private $cloudflareUsername;
-
-    /** @var string */
-    private $cloudflareApiKey;
-
-    /** @var Guzzle */
-    private $adaptor;
+    private string $cloudflareZone;
+    private string $cloudflareApiToken;
+    private Guzzle $adaptor;
 
     public function __construct(
         string $cloudflareZone,
-        string $cloudflareUsername,
-        string $cloudflareApiKey
+        string $cloudflareApiToken
     ) {
         $this->cloudflareZone = $cloudflareZone;
-        $this->cloudflareUsername = $cloudflareUsername;
-        $this->cloudflareApiKey = $cloudflareApiKey;
+        $this->cloudflareApiToken = $cloudflareApiToken;
+    }
+
+    public function addRecord(
+        string $type,
+        string $name,
+        string $content,
+        int $ttl = 0,
+        bool $proxied = true,
+        string $priority = '',
+        array $data = []
+    ): bool {
+        $this->connect();
+
+        return (new DNS($this->adaptor))->addRecord(
+            $this->cloudflareZone,
+            $type,
+            $name,
+            $content,
+            $ttl,
+            $proxied,
+            $priority,
+            $data,
+        );
     }
 
     public function clearCache(): bool
     {
         $this->connect();
 
-        $zones = new Zones($this->adaptor);
-
-        return $zones->cachePurgeEverything($this->cloudflareZone);
+        return (new Zones($this->adaptor))->cachePurgeEverything($this->cloudflareZone);
     }
 
     private function connect(): void
     {
-        if (null !== $this->adaptor) {
+        if (isset($this->adaptor)) {
             return;
         }
 
-        Assert::notEmpty($this->cloudflareZone, 'The Cloudflare zone env var is not set.');
-        Assert::notEmpty($this->cloudflareUsername, 'The Cloudflare username env var is not set.');
-        Assert::notEmpty($this->cloudflareApiKey, 'The Cloudflare api key env var is not set.');
+        Assert::notEmpty($this->cloudflareZone, 'The Cloudflare zone is not set.');
+        Assert::notEmpty($this->cloudflareApiToken, 'The Cloudflare API Token is not set.');
 
-        $key = new APIKey(
-            $this->cloudflareUsername,
-            $this->cloudflareApiKey
-        );
+        $key = new APIToken($this->cloudflareApiToken);
         $this->adaptor = new Guzzle($key);
     }
 }
