@@ -26,7 +26,8 @@ EOT;
 
         $sql = <<<EOT
 ALTER TABLE `$tableName`
-  ADD PRIMARY KEY (`<?= $id_field; ?>`);
+  ADD PRIMARY KEY (`<?= $id_field; ?>`),
+  ADD KEY `name` (`name`) USING BTREE;
 EOT;
 
         $this->connection->executeQuery($sql);
