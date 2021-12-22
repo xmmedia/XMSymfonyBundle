@@ -15,17 +15,17 @@ class TestUserEntity implements UserInterface
         return $this->userId;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [];
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return '';
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -40,7 +40,7 @@ class TestUserEntity implements UserInterface
         return '';
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 }
