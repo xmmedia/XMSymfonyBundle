@@ -31,6 +31,13 @@ class DateTimeTypeTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testParseValueNonUtc(): void
+    {
+        $result = (new DateTimeType())->parseValue('2019-01-01T10:53:32-07:00');
+
+        $this->assertEquals(new \DateTimeImmutable('2019-01-01 17:53:32'), $result);
+    }
+
     /**
      * @dataProvider dateProvider
      */

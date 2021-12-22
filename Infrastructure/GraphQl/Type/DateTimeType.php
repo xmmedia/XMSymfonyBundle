@@ -45,7 +45,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
             return null;
         }
 
-        return new \DateTimeImmutable($value);
+        return (new \DateTimeImmutable($value))->setTimezone(new \DateTimezone('UTC'));
     }
 
     /**
