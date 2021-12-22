@@ -24,7 +24,7 @@ class PhoneNumberFakerProvider extends FakerPhoneNumber
         204, 226, 236, 249, 250, 289, 306, 343, 365, 403, 416, 418, 431, 437, 438, 450, 506, 514, 519, 548, 579, 581, 587, 604, 613, 639, 647, 705, 709, 778, 780, 782, 782, 807, 819, 825, 867, 867, 867, 873, 902, 902, 905, 907,
     ];
 
-    public static function areaCode()
+    public static function areaCode(): string
     {
         return self::randomElement(self::$areaCodes);
     }

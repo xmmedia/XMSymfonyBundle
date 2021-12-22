@@ -22,7 +22,7 @@ class IssuerProvider
             return 'cli';
         }
 
-        /** @var \App\Entity\User $user */
+        /** @var \Symfony\Component\Security\Core\User\UserInterface $user */
         $user = $this->security->getUser();
 
         if (!$user) {
