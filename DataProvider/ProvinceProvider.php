@@ -17,7 +17,7 @@ class ProvinceProvider
             'Alberta'                 => 'AB',
             'British Columbia'        => 'BC',
             'Manitoba'                => 'MB',
-            'New Burnswick'           => 'NB',
+            'New Brunswick'           => 'NB',
             'Newfoundland & Labrador' => 'NL',
             'Nova Scotia'             => 'NS',
             'Northwest Territories'   => 'NT',
