@@ -47,6 +47,32 @@ class Cloudflare
         );
     }
 
+    public function updateRecord(
+        string $type,
+        string $existingName,
+        array $details
+    ): bool {
+        $this->connect();
+
+        $dns = new DNS($this->adaptor);
+
+        $recordId = $dns->getRecordID($this->cloudflareZone, $type, $existingName);
+        if (!$recordId) {
+            throw new \InvalidArgumentException('Cannot find record');
+        }
+
+        $recordData = (array) $dns->getRecordDetails($this->cloudflareZone, $recordId);
+
+        $newDetails = [
+                'type'    => $recordData['type'],
+                'name'    => $recordData['name'],
+                'content' => $recordData['content'],
+                'ttl'     => $recordData['ttl'],
+            ] + $details;
+
+        return $dns->updateRecordDetails($this->cloudflareZone, $recordId, $newDetails)->success;
+    }
+
     public function clearCache(): bool
     {
         $this->connect();
