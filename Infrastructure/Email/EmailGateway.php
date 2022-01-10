@@ -116,6 +116,8 @@ class EmailGateway implements EmailGatewayInterface
 
         $templateData = $this->setGlobalTemplateData($templateData);
 
+        Assert::allScalar($templateData, 'All of the template data must be scalars. Got %s');
+
         if (null !== $attachments) {
             Assert::allIsInstanceOf(
                 $attachments,
