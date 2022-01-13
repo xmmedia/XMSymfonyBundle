@@ -74,7 +74,8 @@ class EmailGateway implements EmailGatewayInterface
         $to,
         array $templateData,
         ?array $attachments = null,
-        ?Email $from = null
+        ?Email $from = null,
+        ?Email $replyTo = null
     ): EmailGatewayMessageId {
         $headers = [];
 
@@ -136,7 +137,7 @@ class EmailGateway implements EmailGatewayInterface
             true,
             null,
             true,
-            null,
+            $replyTo,
             null,
             null,
             $headers,

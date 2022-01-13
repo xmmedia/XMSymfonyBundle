@@ -20,6 +20,7 @@ interface EmailGatewayInterface
         $to,
         array $templateData,
         ?array $attachments = null,
-        ?Email $from = null
+        ?Email $from = null,
+        ?Email $replyTo = null
     ): EmailGatewayMessageId;
 }
