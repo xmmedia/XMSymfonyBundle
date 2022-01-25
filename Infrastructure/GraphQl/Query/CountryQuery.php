@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver;
+namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Query;
 
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Xm\SymfonyBundle\DataProvider\CountryProvider;
