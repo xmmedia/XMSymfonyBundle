@@ -28,7 +28,7 @@ class ProvinceInputType extends EnumType implements AliasedInterface
     /**
      * @param Province $value
      */
-    public function serialize($value)
+    public function serialize($value): string
     {
         if ($value instanceof Province) {
             return $value->toString();

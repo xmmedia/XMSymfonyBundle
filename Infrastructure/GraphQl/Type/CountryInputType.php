@@ -27,7 +27,7 @@ class CountryInputType extends EnumType implements AliasedInterface
     /**
      * @param Country $value
      */
-    public function serialize($value)
+    public function serialize($value): string
     {
         if ($value instanceof Country) {
             return $value->toString();

@@ -8,7 +8,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 
 class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
 {
-    public function __invoke($parentValue, $args, $context, ResolveInfo $info)
+    public function __invoke($parentValue, $args, $context, ResolveInfo $info): mixed
     {
         $fieldName = $info->fieldName;
         $value = self::valueFromObjectOrArray($parentValue, $fieldName);
@@ -16,7 +16,7 @@ class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
         return $value instanceof \Closure ? $value($parentValue, $args, $context, $info) : $value;
     }
 
-    public static function valueFromObjectOrArray($objectOrArray, $fieldName)
+    public static function valueFromObjectOrArray($objectOrArray, $fieldName): mixed
     {
         if (\is_object($objectOrArray) && \is_callable([$objectOrArray, $fieldName])) {
             return $objectOrArray->$fieldName();

@@ -31,7 +31,7 @@ class GenderType extends EnumType implements AliasedInterface
     /**
      * @param Gender $value
      */
-    public function serialize($value)
+    public function serialize($value): string
     {
         if ($value instanceof Gender) {
             return $value->getValue();
