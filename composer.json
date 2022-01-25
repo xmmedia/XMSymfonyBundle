@@ -23,7 +23,7 @@
     "moneyphp/money": "^3.2 || ^4.0",
     "nesbot/carbon": "^2.24",
     "odolbeau/phone-number-bundle": "^3.0",
-    "overblog/graphql-bundle": "^0.12.3 || ^0.13.0",
+    "overblog/graphql-bundle": "^0.12.3 || ^0.13.0 || ^0.14.0",
     "prooph/event-store-bus-bridge": "^3.3",
     "prooph/event-store-symfony-bundle": "^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0",
     "prooph/pdo-event-store": "^1.11",
