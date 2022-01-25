@@ -18,7 +18,7 @@ trait CanCreateEventFromArray
 
         return $eventName::fromArray([
             'message_name' => $eventName,
-            'uuid'         => $faker->uuid(),
+            'uuid'         => method_exists($faker, 'uuid3') ? $faker->uuid3() : $faker->uuid(),
             'payload'      => $payload,
             'metadata'     => [
                 '_aggregate_id' => $aggregateId,
