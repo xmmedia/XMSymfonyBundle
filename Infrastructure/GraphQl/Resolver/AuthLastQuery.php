@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver;
 
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @deprecated use ProvinceQuery instead
  */
-class AuthLastResolver implements ResolverInterface
+class AuthLastQuery implements QueryInterface
 {
     /** @var AuthenticationUtils */
     private $authenticationUtils;

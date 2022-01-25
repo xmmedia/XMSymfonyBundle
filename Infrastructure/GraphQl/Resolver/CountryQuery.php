@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver;
 
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Model\Country;
 
 /**
  * @deprecated use ProvinceQuery instead
  */
-class CountryResolver implements ResolverInterface
+class CountryQuery implements QueryInterface
 {
     /**
      * @return Country[]

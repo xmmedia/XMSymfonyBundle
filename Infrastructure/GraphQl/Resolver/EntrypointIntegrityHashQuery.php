@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver;
 
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
-/**
- * @deprecated use ProvinceQuery instead
- */
-class EntrypointIntegrityHashResolver implements ResolverInterface
+class EntrypointIntegrityHashQuery implements QueryInterface
 {
     /** @var EntrypointLookupInterface */
     private $entrypointLookup;
