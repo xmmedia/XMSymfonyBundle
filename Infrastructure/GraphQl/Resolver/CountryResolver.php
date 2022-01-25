@@ -9,7 +9,7 @@ use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Model\Country;
 
 /**
- * @deprecated use ProvinceQuery instead
+ * @deprecated use CountryQuery instead with odolbeau/phone-number-bundle ^0.14
  */
 class CountryResolver implements ResolverInterface
 {

@@ -8,9 +8,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Model\Country;
 
-/**
- * @deprecated use ProvinceQuery instead
- */
 class CountryQuery implements QueryInterface
 {
     /**

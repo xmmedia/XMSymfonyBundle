@@ -8,9 +8,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @deprecated use ProvinceQuery instead
- */
 class AuthLastQuery implements QueryInterface
 {
     /** @var AuthenticationUtils */
