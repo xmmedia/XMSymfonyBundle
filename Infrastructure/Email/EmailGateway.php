@@ -137,7 +137,7 @@ class EmailGateway implements EmailGatewayInterface
             true,
             null,
             true,
-            $replyTo,
+            $replyTo ? $replyTo->toString() : null,
             null,
             null,
             $headers,
