@@ -69,7 +69,7 @@ class ProjectionRunner
             if ($state->is(ProjectionStatus::IDLE())) {
                 $this->projector->run($keepRunning);
             } else {
-                throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s"', $projectionName, $state->getValue()));
+                throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
             }
         } catch (\Prooph\EventStore\Exception\ProjectionNotFound $e) {
             // try running
