@@ -25,11 +25,11 @@ final class UuidType extends ScalarType implements AliasedInterface
     }
 
     /**
-     * @param UuidInterface|string $value Strings must be valid UUIDs
+     * @param UuidInterface|\Ramsey\Uuid\UuidInterface|string $value Strings must be valid UUIDs
      */
     public function serialize($value): string
     {
-        if ($value instanceof UuidInterface) {
+        if ($value instanceof UuidInterface || $value instanceof \Ramsey\Uuid\UuidInterface) {
             return $value->toString();
         }
 
