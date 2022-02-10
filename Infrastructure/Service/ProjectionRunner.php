@@ -59,6 +59,7 @@ class ProjectionRunner
             $attempts = 0;
             do {
                 if ($attempts > 0) {
+                    // 1/2 second
                     usleep(500000);
                 }
 
