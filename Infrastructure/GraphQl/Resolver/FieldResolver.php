@@ -8,6 +8,11 @@ use GraphQL\Type\Definition\ResolveInfo;
 
 class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
 {
+    /**
+     * Allowed method prefixes
+     */
+    protected const PREFIXES = ['get', 'is', 'has', ''];
+
     public function __invoke($parentValue, $args, $context, ResolveInfo $info): mixed
     {
         $fieldName = $info->fieldName;
