@@ -20,7 +20,7 @@ trait ProjectionAwareMigration
     protected function rebuildProjection(string $projection): void
     {
         if (!isset($this->container)) {
-            throw new \RuntimeException(sprintf('The migration must implement the %s class to use %s', ContainerAwareInterface::class, self::class));
+            throw new \RuntimeException(sprintf('The migration %s must implement %s to rebuild projections', self::class, ContainerAwareInterface::class));
         }
 
         $this->write('Rebuilding projection: '.$projection);
