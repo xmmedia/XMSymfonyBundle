@@ -25,6 +25,8 @@ trait ProjectionAwareMigration
 
         $this->write('Rebuilding projection: '.$projection);
 
+        ini_set('memory_limit', '-1');
+
         $application = new Application($this->container->get('kernel'));
         $application->setAutoExit(false);
 
