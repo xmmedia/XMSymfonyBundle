@@ -4,16 +4,16 @@
     config:
         fields:
             <?= $model; ?>Add:
-                type:        <?= $model; ?>MutationPayload!
+                type:        <?= $model; ?>!
                 description: 'Add <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_add; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
-            <?= $model; ?>ChangeName:
-                type:        <?= $model; ?>MutationPayload!
-                description: 'Change name of <?= $model; ?>.'
+            <?= $model; ?>Change:
+                type:        <?= $model; ?>!
+                description: 'Change <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
                 args:
@@ -30,25 +30,14 @@
 <?= $model; ?>Input:
     type: input-object
     config:
-        description: '<?= $model; ?> add & change name mutation input.'
+        description: '<?= $model; ?> add & change mutation input.'
         fields:
-            <?= $id_property; ?>:
-                type: UUID!
-            name:
-                type: String!
-
-<?= $model; ?>MutationPayload:
-    type: object
-    config:
-        description: '<?= $model; ?> mutation payload.'
-        fields:
-            <?= $id_property; ?>:
-                type: UUID!
+            <?= $id_property; ?>: UUID!
+            name: String!
 
 <?= $model; ?>DeleteMutationPayload:
     type: object
     config:
         description: '<?= $model; ?> delete mutation payload.'
         fields:
-            success:
-                type: Boolean!
+            success: Boolean!

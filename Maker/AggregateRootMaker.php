@@ -46,6 +46,14 @@ class AggregateRootMaker extends AbstractMaker
                     Str::asClassName(Str::getRandomTerm())
                 )
             )
+            ->addArgument(
+                'entity',
+                InputArgument::OPTIONAL,
+                sprintf(
+                    'Enter the name of the related entity (e.g. <fg=yellow>%s</>)',
+                    Str::asClassName(Str::getRandomTerm())
+                )
+            )
         ;
     }
 
@@ -55,6 +63,7 @@ class AggregateRootMaker extends AbstractMaker
         Generator $generator
     ) {
         $arName = trim($input->getArgument('name'));
+        $entityName = trim($input->getArgument('entity'));
         $skeletonPath = $this->skeletonPath().'model/';
 
         $arClassDetails = $generator->createClassNameDetails(
@@ -67,6 +76,15 @@ class AggregateRootMaker extends AbstractMaker
         $idProperty = Str::asLowerCamelCase($arClassDetails->getShortName().'Id');
         $idField = Str::asSnakeCase($idProperty);
         $listClassName = $arClassDetails->getShortName().'List';
+
+        $entityClassDetails = $generator->createClassNameDetails(
+            $entityName,
+            'Entity\\'
+        );
+        $entityFinder = $generator->createClassNameDetails(
+            $entityName.'Finder',
+            'Projection\\'.$arName.'\\'
+        );
 
         $nameVoClassDetails = $generator->createClassNameDetails(
             'Name',
@@ -350,6 +368,12 @@ class AggregateRootMaker extends AbstractMaker
                     'id_field'            => $idField,
                     'model_lower'         => $arLowerName,
                     'name_class'          => $nameVoClassDetails->getFullName(),
+                    'entity'              => Str::asLowerCamelCase(
+                        $entityClassDetails->getShortName()
+                    ),
+                    'entity_finder'       => $entityFinder->getShortName(),
+                    'entity_finder_lower' => Str::asLowerCamelCase($entityFinder->getShortName()),
+                    'entity_finder_class' => $entityFinder->getFullName(),
                 ]
             );
 
@@ -367,6 +391,16 @@ class AggregateRootMaker extends AbstractMaker
                     'command_class'        => $commandClassDetails->getFullName(),
                     'command_class_short'  => $commandClassDetails->getShortName(),
                     'id_property'          => $idProperty,
+                    'id_class' => $idClassFullName,
+                    'id_class_short'       => $idClassShortName,
+                    'entity'               => Str::asLowerCamelCase(
+                        $entityClassDetails->getShortName()
+                    ),
+                    'entity_class'         => $entityClassDetails->getFullName(),
+                    'entity_class_short'   => $entityClassDetails->getShortName(),
+                    'entity_finder'        => $entityFinder->getShortName(),
+                    'entity_finder_lower'  => Str::asLowerCamelCase($entityFinder->getShortName()),
+                    'entity_finder_class'  => $entityFinder->getFullName(),
                 ]
             );
         }
@@ -423,7 +457,6 @@ class AggregateRootMaker extends AbstractMaker
                 '- Create the stream: <info>bin/console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
-            '- Scaffold projection: <info>bin/console make:projection</info>',
             '- Update permissions in GraphQL config',
             '- Add ID class to UuidFakerProvider (for tests)',
             '- Upload files to dev server, if necessary',

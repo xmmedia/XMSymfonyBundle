@@ -6,6 +6,11 @@ namespace <?= $namespace; ?>;
 
 use <?= $command_class; ?>;
 use <?= $mutation_class; ?>;
+<?php if (!$delete) { ?>
+use <?= $id_class; ?>;
+use <?= $entity_class; ?>;
+use <?= $entity_finder_class; ?>;
+<?php } ?>
 use App\Tests\BaseTestCase;
 use Mockery;
 use Symfony\Component\Messenger\Envelope;
@@ -28,10 +33,18 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(Mockery::type(<?= $command_class_short; ?>::class))
             ->andReturn(new Envelope(new \stdClass()));
 
-        $result = (new <?= $mutation_class_short; ?>($commandBus))($args);
+        $entity = Mockery::mock(<?= $entity_class_short; ?>::class);
+
+        $<?= $entity_finder_lower; ?> = Mockery::mock(<?= $entity_finder; ?>::class);
+        $<?= $entity_finder_lower; ?>->shouldReceive('findRefreshed')
+            ->once()
+            ->with(Mockery::type(<?= $id_class_short; ?>::class))
+            ->andReturn($entity);
+
+        $result = (new <?= $mutation_class_short; ?>($commandBus, $<?= $entity_finder_lower; ?>))($args);
 
         $expected = [
-            '<?= $id_property; ?>' => $args['<?= $id_property; ?>'],
+            '<?= $entity; ?>' => $entity,
         ];
 
         $this->assertEquals($expected, $result);

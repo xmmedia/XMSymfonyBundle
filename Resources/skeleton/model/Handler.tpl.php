@@ -31,7 +31,7 @@ final class <?= $class_name; ?><?= "\n"; ?>
             throw <?= $model; ?>NotFound::with<?= $id_class_short; ?>($command-><?= $id_property; ?>());
         }
 
-        $<?= $model_lower; ?>->changeName($command->name());
+        $<?= $model_lower; ?>->change($command->name());
 <?php } else { ?>
         $<?= $model_lower; ?> = <?= $model; ?>::add(
             $command-><?= $id_property; ?>(),

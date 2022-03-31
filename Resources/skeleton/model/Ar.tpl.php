@@ -31,14 +31,14 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $self;
     }
 
-    public function changeName(Name $newName): void
+    public function change(Name $newName): void
     {
         if ($this->name->sameValueAs($newName)) {
             return;
         }
 
         if ($this->deleted) {
-            throw Exception\<?= $class_name; ?>IsDeleted::triedToChangeName($this-><?= $id_property; ?>);
+            throw Exception\<?= $class_name; ?>IsDeleted::triedToChange($this-><?= $id_property; ?>);
         }
 
         $this->recordThat(

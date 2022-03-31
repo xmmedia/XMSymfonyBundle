@@ -152,6 +152,7 @@ class ProjectionMaker extends AbstractMaker
                 'id_class_short'     => $idClassShortName,
                 'entity_class'       => $entityClassDetails->getFullName(),
                 'entity_class_short' => $entityClassDetails->getShortName(),
+                'entity'             => Str::asLowerCamelCase($entityClassDetails->getShortName()),
             ]
         );
         $generator->generateClass(
@@ -307,6 +308,7 @@ class ProjectionMaker extends AbstractMaker
                 Str::getNamespace($arClassDetails->getFullName()),
                 $modelUpper,
             ),
+            '- Scaffold model: <info>bin/console make:model</info>',
             '- Upload files to dev server, if necessary',
             sprintf(
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',

@@ -8,7 +8,7 @@ use <?= $id_class; ?>;
 
 final class <?= $class_name; ?> extends \InvalidArgumentException
 {
-    public static function triedToChangeName(<?= $id_class_short; ?> $<?= $id_property; ?>): self
+    public static function triedToChange(<?= $id_class_short; ?> $<?= $id_property; ?>): self
     {
         return new self(
             sprintf(

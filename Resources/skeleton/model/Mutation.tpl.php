@@ -6,6 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $command_class; ?>;
 use <?= $id_class; ?>;
+use <?= $entity_finder_class; ?>;
 <?php if (!$delete) { ?>
 use <?= $name_class; ?>;
 <?php } ?>
@@ -15,10 +16,20 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class <?= $class_name; ?> implements MutationInterface
 {
     private MessageBusInterface $commandBus;
+<?php if (!$delete) { ?>
+    private <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>;
+<?php } ?>
 
+<?php if (!$delete) { ?>
+    public function __construct(MessageBusInterface $commandBus, <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
+<?php } else { ?>
     public function __construct(MessageBusInterface $commandBus)
+<?php } ?>
     {
         $this->commandBus = $commandBus;
+<?php if (!$delete) { ?>
+        $this-><?= $entity_finder_lower; ?> = $<?= $entity_finder_lower; ?>;
+<?php } ?>
     }
 
 <?php if (!$delete) { ?>
@@ -34,7 +45,7 @@ final class <?= $class_name; ?> implements MutationInterface
         );
 
         return [
-            '<?= $id_property; ?>' => $<?= $id_property; ?>,
+            '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>->findRefreshed($<?= $id_property; ?>),
         ];
 <?php } else { ?>
     public function __invoke(string $<?= $id_property; ?>): array

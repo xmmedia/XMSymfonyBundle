@@ -23,7 +23,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>(), Name::fromString($faker->name()));
 
         $<?= $model_lower; ?> = Mockery::mock(<?= $model; ?>::class);
-        $<?= $model_lower; ?>->shouldReceive('changeName')
+        $<?= $model_lower; ?>->shouldReceive('change')
             ->once();
 
         $repo = Mockery::mock(<?= $list_class_short; ?>::class);
