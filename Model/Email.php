@@ -28,6 +28,7 @@ final class Email implements ValueObject
     private function __construct(string $email, ?string $name = null)
     {
         $email = StringUtil::trim($email);
+        $name = StringUtil::trim($name);
 
         Assert::notEmpty($email);
         Assert::true(
@@ -35,8 +36,10 @@ final class Email implements ValueObject
             sprintf('The email "%s" is invalid.', $email)
         );
 
+        Assert::nullOrMaxLength($name, 50, 'The name must be less than 50 characters.');
+
         $this->email = $email;
-        $this->name = StringUtil::trim($name);
+        $this->name = $name;
     }
 
     public function email(): string
@@ -65,7 +68,10 @@ final class Email implements ValueObject
             return $this->email;
         }
 
-        return sprintf('%s <%s>', $this->name, $this->email);
+        // replace commas with space because email services will assume it's multiple email addresses
+        $name = StringUtil::trim(substr(str_replace(',', ' ', $this->name), 0, 20));
+
+        return sprintf('%s <%s>', $name, $this->email);
     }
 
     /**

@@ -65,6 +65,13 @@ class EmailTest extends BaseTestCase
         Email::fromString('asdf');
     }
 
+    public function testNameTooLong(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Email::fromString('Name Name Name Name Name Name Name Name Name Name Name Name Name');
+    }
+
     public function testFromStringWithNameMethod(): void
     {
         $vo = Email::fromString('email@email.com', 'Name');
@@ -77,6 +84,20 @@ class EmailTest extends BaseTestCase
         $vo = Email::fromString('email@email.com');
 
         $this->assertEquals('email@email.com', $vo->withName());
+    }
+
+    public function testFromStringWithNameMethodTooLong(): void
+    {
+        $vo = Email::fromString('email@email.com', 'Name Name Name Name Name Name Name Name');
+
+        $this->assertEquals('Name Name Name Name <email@email.com>', $vo->withName());
+    }
+
+    public function testFromStringWithNameMethodWithComma(): void
+    {
+        $vo = Email::fromString('email@email.com', 'Name, Name');
+
+        $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
     }
 
     public function testSameAs(): void
