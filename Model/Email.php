@@ -68,8 +68,8 @@ final class Email implements ValueObject
             return $this->email;
         }
 
-        // replace commas with space because email services will assume it's multiple email addresses
-        $name = StringUtil::trim(substr(str_replace(',', ' ', $this->name), 0, 20));
+        // replace commas and semicolons with space because email services will assume it's multiple email addresses
+        $name = StringUtil::trim(substr(str_replace([',', ';'], ' ', $this->name), 0, 20));
 
         return sprintf('%s <%s>', $name, $this->email);
     }

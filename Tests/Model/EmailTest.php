@@ -100,6 +100,20 @@ class EmailTest extends BaseTestCase
         $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
     }
 
+    public function testFromStringWithNameMethodWithSemicolon(): void
+    {
+        $vo = Email::fromString('email@email.com', 'Name; Name');
+
+        $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
+    }
+
+    public function testFromStringWithNameMethodWithCommaAndSemicolon(): void
+    {
+        $vo = Email::fromString('email@email.com', 'Name; Name, Name');
+
+        $this->assertEquals('Name  Name  Name <email@email.com>', $vo->withName());
+    }
+
     public function testSameAs(): void
     {
         $vo1 = Email::fromString('email@email.com');
