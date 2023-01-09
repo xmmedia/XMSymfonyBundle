@@ -29,7 +29,7 @@
     "prooph/pdo-event-store": "^1.11",
     "ramsey/collection": "^1.1",
     "ramsey/uuid": "^3.7.3 || ^4.0",
-    "ramsey/uuid-doctrine": "^1.5",
+    "ramsey/uuid-doctrine": "^1.5 || ^2.0",
     "symfony/form": "^4.4 || ^5.0",
     "symfony/framework-bundle": "^4.4 || ^5.0",
     "symfony/http-client": "^4.4 || ^5.0",
