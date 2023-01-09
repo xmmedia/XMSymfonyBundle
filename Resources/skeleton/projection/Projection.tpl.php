@@ -24,10 +24,13 @@ class <?= $class_name; ?> implements ReadModelProjection
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
                     $readModel = $this->readModel();
-                    $readModel->stack('insert', [
-                        '<?= $id_field; ?>' => $event->aggregateId(),
-                        'name' => $event->name()->toString(),
-                    ]);
+                    $readModel->stack(
+                        'insert',
+                        [
+                            '<?= $id_field; ?>' => $event->aggregateId(),
+                            'name' => $event->name()->toString(),
+                        ]
+                    );
                 },
 
                 Event\<?= $model; ?>WasChanged ::class => function (
