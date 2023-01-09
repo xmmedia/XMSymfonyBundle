@@ -20,7 +20,7 @@ class Utils
             return null;
         }
 
-        if (is_scalar($var) || \is_array($var)) {
+        if (\is_scalar($var) || \is_array($var)) {
             return $var;
         }
 
@@ -65,7 +65,7 @@ class Utils
         if (\is_string($var)) {
             return $var;
         }
-        if (is_scalar($var)) {
+        if (\is_scalar($var)) {
             return (string) $var;
         }
 

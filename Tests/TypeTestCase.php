@@ -29,7 +29,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 
         $this->validatorContainer = new Container();
 
-        $validator = (Validation::createValidatorBuilder())
+        $validator = Validation::createValidatorBuilder()
             ->setConstraintValidatorFactory(
                 new ContainerConstraintValidatorFactory($this->validatorContainer)
             )

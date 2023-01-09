@@ -6,9 +6,8 @@ namespace Xm\SymfonyBundle\Model;
 
 use MabeEnum\Enum as MabeEnum;
 use MabeEnum\EnumSerializableTrait;
-use Serializable;
 
-abstract class Enum extends MabeEnum implements Serializable, ValueObject
+abstract class Enum extends MabeEnum implements \Serializable, ValueObject
 {
     use EnumSerializableTrait;
 

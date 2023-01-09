@@ -9,7 +9,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
 {
     /**
-     * Allowed method prefixes
+     * Allowed method prefixes.
      */
     protected const PREFIXES = ['get', 'is', 'has', ''];
 

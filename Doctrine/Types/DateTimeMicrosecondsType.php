@@ -70,7 +70,7 @@ class DateTimeMicrosecondsType extends Type
         }
 
         if (!$val) {
-            throw ConversionException::conversionFailedFormat($value, $this->getName(), self::FORMAT, );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), self::FORMAT);
         }
 
         return $val;

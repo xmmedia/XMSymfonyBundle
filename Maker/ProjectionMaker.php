@@ -131,7 +131,7 @@ class ProjectionMaker extends AbstractMaker
                 'id_field'               => $idField,
                 'id_property'            => $idProperty,
 
-                'model_upper' => $modelUpper,
+                'model_upper'            => $modelUpper,
             ]
         );
 

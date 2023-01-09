@@ -391,7 +391,7 @@ class AggregateRootMaker extends AbstractMaker
                     'command_class'        => $commandClassDetails->getFullName(),
                     'command_class_short'  => $commandClassDetails->getShortName(),
                     'id_property'          => $idProperty,
-                    'id_class' => $idClassFullName,
+                    'id_class'             => $idClassFullName,
                     'id_class_short'       => $idClassShortName,
                     'entity'               => Str::asLowerCamelCase(
                         $entityClassDetails->getShortName()

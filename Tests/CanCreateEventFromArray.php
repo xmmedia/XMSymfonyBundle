@@ -23,7 +23,7 @@ trait CanCreateEventFromArray
             'metadata'     => [
                 '_aggregate_id' => $aggregateId,
             ],
-            'created_at' => new \DateTimeImmutable(),
+            'created_at'   => new \DateTimeImmutable(),
         ]);
     }
 }
