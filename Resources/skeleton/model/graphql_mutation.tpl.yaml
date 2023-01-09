@@ -4,7 +4,7 @@
     config:
         fields:
             <?= $model; ?>Add:
-                type:        <?= $model; ?>!
+                type:        <?= $model; ?>MutationPayload!
                 description: 'Add <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_add; ?>", [args["<?= $model_lower; ?>"]])'
@@ -12,7 +12,7 @@
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
             <?= $model; ?>Change:
-                type:        <?= $model; ?>!
+                type:        <?= $model; ?>MutationPayload!
                 description: 'Change <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
@@ -34,6 +34,13 @@
         fields:
             <?= $id_property; ?>: UUID!
             name: String!
+
+<?= $model; ?>MutationPayload:
+    type: object
+    config:
+        description: '<?= $model; ?> mutation payload.'
+        fields:
+            <?= $model_lower; ?>: <?= $model; ?>!
 
 <?= $model; ?>DeleteMutationPayload:
     type: object
