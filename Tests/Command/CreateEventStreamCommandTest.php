@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Command;
 
-use Mockery;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Stream;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -17,7 +16,7 @@ class CreateEventStreamCommandTest extends BaseTestCase
     {
         $streamName = 'user';
 
-        $eventStore = Mockery::mock(EventStore::class);
+        $eventStore = \Mockery::mock(EventStore::class);
         $eventStore->shouldReceive('create')
             ->withArgs(function ($stream) use ($streamName): bool {
                 /* @var Stream $stream */

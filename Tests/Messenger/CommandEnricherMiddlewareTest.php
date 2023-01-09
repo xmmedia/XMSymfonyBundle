@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Messenger;
 
-use Mockery;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
@@ -19,7 +18,7 @@ class CommandEnricherMiddlewareTest extends BaseTestCase
         $faker = $this->faker();
         $uuid = $faker->uuid();
 
-        $issuerProvider = Mockery::mock(IssuerProvider::class);
+        $issuerProvider = \Mockery::mock(IssuerProvider::class);
         $issuerProvider->shouldReceive('getIssuer')
             ->once()
             ->andReturn($uuid);

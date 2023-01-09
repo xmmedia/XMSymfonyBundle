@@ -22,10 +22,10 @@ trait CanCreateSecurityTrait
      */
     private function createSecurity($user): Security
     {
-        $tokenStorage = Mockery::mock(TokenStorageInterface::class);
+        $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
 
         if (false !== $user) {
-            $token = Mockery::mock(TokenInterface::class);
+            $token = \Mockery::mock(TokenInterface::class);
             $token->shouldReceive('getUser')
                 ->andReturn($user);
 
@@ -45,7 +45,7 @@ trait CanCreateSecurityTrait
         string $serviceId,
         object $serviceObject
     ): ContainerInterface {
-        $container = Mockery::mock(ContainerInterface::class);
+        $container = \Mockery::mock(ContainerInterface::class);
         $container->shouldReceive('get')
             ->with($serviceId)
             ->andReturn($serviceObject);

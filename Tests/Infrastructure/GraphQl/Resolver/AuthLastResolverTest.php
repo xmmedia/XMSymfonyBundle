@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Resolver;
 
-use Mockery;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,7 +14,7 @@ class AuthLastResolverTest extends BaseTestCase
 {
     public function test(): void
     {
-        $authException = Mockery::mock(AuthenticationException::class);
+        $authException = \Mockery::mock(AuthenticationException::class);
         $authException->shouldReceive('getMessageKey')
             ->once()
             ->andReturn('key');
@@ -23,7 +22,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->once()
             ->andReturn([]);
 
-        $authUtils = Mockery::mock(AuthenticationUtils::class);
+        $authUtils = \Mockery::mock(AuthenticationUtils::class);
         $authUtils->shouldReceive('getLastAuthenticationError')
             ->once()
             ->andReturn($authException);
@@ -31,7 +30,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->once()
             ->andReturn('email@email.com');
 
-        $translator = Mockery::mock(TranslatorInterface::class);
+        $translator = \Mockery::mock(TranslatorInterface::class);
         $translator->shouldReceive('trans')
             ->once()
             ->with('key', [], 'security')
@@ -51,7 +50,7 @@ class AuthLastResolverTest extends BaseTestCase
 
     public function testNoExceptionNoUsername(): void
     {
-        $authUtils = Mockery::mock(AuthenticationUtils::class);
+        $authUtils = \Mockery::mock(AuthenticationUtils::class);
         $authUtils->shouldReceive('getLastAuthenticationError')
             ->once()
             ->andReturnNull();
@@ -59,7 +58,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->once()
             ->andReturnNull();
 
-        $translator = Mockery::mock(TranslatorInterface::class);
+        $translator = \Mockery::mock(TranslatorInterface::class);
 
         $resolver = new AuthLastResolver($authUtils, $translator);
 
@@ -75,7 +74,7 @@ class AuthLastResolverTest extends BaseTestCase
 
     public function testNoException(): void
     {
-        $authUtils = Mockery::mock(AuthenticationUtils::class);
+        $authUtils = \Mockery::mock(AuthenticationUtils::class);
         $authUtils->shouldReceive('getLastAuthenticationError')
             ->once()
             ->andReturnNull();
@@ -83,7 +82,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->once()
             ->andReturn('email@email.com');
 
-        $translator = Mockery::mock(TranslatorInterface::class);
+        $translator = \Mockery::mock(TranslatorInterface::class);
 
         $resolver = new AuthLastResolver($authUtils, $translator);
 

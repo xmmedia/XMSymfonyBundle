@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Mockery;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Xm\SymfonyBundle\Entity\User;
 
@@ -23,7 +22,7 @@ trait UserAuthMock
      */
     protected function getUserMock($id, $getIdTimes = 1)
     {
-        $user = Mockery::mock(User::class);
+        $user = \Mockery::mock(User::class);
         $user->shouldReceive('getId')
             ->times($getIdTimes)
             ->andReturn($id);
@@ -47,7 +46,7 @@ trait UserAuthMock
             $user = $this->getUserMock($user);
         }
 
-        $token = Mockery::mock(TokenInterface::class);
+        $token = \Mockery::mock(TokenInterface::class);
         $token->shouldReceive('getUser')
             ->times($getUserTimes)
             ->andReturn($user);

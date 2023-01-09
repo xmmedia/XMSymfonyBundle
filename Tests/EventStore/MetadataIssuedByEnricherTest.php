@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\EventStore;
 
-use Mockery;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 use Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher;
@@ -17,7 +16,7 @@ class MetadataIssuedByEnricherTest extends BaseTestCase
         $faker = $this->faker();
         $uuid = $faker->uuid();
 
-        $issuerProvider = Mockery::mock(IssuerProvider::class);
+        $issuerProvider = \Mockery::mock(IssuerProvider::class);
         $issuerProvider->shouldReceive('getIssuer')
             ->once()
             ->andReturn($uuid);

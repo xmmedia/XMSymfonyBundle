@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\DataProvider;
 
-use Mockery;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -41,7 +40,7 @@ class IssuerProviderTest extends BaseTestCase
 
     public function testCli(): void
     {
-        $tokenStorage = Mockery::mock(TokenStorageInterface::class);
+        $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
         $tokenStorage->shouldReceive('getToken')
             ->andReturnNull();
 
@@ -61,10 +60,10 @@ class IssuerProviderTest extends BaseTestCase
      */
     private function createSecurity($user): Security
     {
-        $tokenStorage = Mockery::mock(TokenStorageInterface::class);
+        $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
 
         if (false !== $user) {
-            $token = Mockery::mock(TokenInterface::class);
+            $token = \Mockery::mock(TokenInterface::class);
             $token->shouldReceive('getUser')
                 ->andReturn($user)
             ;
@@ -81,7 +80,7 @@ class IssuerProviderTest extends BaseTestCase
 
     private function createContainer($serviceId, $serviceObject): ContainerInterface
     {
-        $container = Mockery::mock(ContainerInterface::class);
+        $container = \Mockery::mock(ContainerInterface::class);
         $container->shouldReceive('get')
             ->with($serviceId)
             ->andReturn($serviceObject);

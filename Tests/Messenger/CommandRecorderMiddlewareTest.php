@@ -17,7 +17,7 @@ class CommandRecorderMiddlewareTest extends BaseTestCase
     public function test(): void
     {
         /** @var Connection|Mockery\MockInterface $connection */
-        $connection = Mockery::mock(Connection::class);
+        $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
             ->once()
             ->withArgs(function ($tableName): bool {

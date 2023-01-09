@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Mockery;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
@@ -14,7 +13,7 @@ trait MessengerMiddlewareTestTrait
 {
     private function getStackMock(): StackInterface
     {
-        $nextMiddleware = Mockery::mock(MiddlewareInterface::class);
+        $nextMiddleware = \Mockery::mock(MiddlewareInterface::class);
         $nextMiddleware->shouldReceive('handle')
             ->once()
             ->andReturnUsing(
