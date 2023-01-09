@@ -8,15 +8,14 @@ use <?= $entity_class; ?>;
 use <?= $resolver_class; ?>;
 use <?= $finder_class; ?>;
 use App\Tests\BaseTestCase;
-use Mockery;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
     public function test(): void
     {
-        $entity = Mockery::mock(<?= $entity_class_short; ?>::class);
+        $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
-        $finder = Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
         $finder->shouldReceive('findAll')
             ->once()
             ->andReturn([$entity]);
@@ -30,7 +29,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
     public function testNoneFound(): void
     {
-        $finder = Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
         $finder->shouldReceive('findAll')
             ->once()
             ->andReturn([]);

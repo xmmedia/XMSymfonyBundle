@@ -7,13 +7,12 @@ namespace <?= $namespace; ?>;
 use <?= $read_model_class; ?>;
 use App\Tests\BaseTestCase;
 use Doctrine\DBAL\Connection;
-use Mockery;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
     public function testInit(): void
     {
-        $connection = Mockery::mock(Connection::class);
+        $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('executeQuery')
             ->twice()
             ->withArgs(function (string $sql) {
@@ -28,7 +27,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
         $data = $types = ['key' => $faker->string(5)];
 
-        $connection = Mockery::mock(Connection::class);
+        $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
             ->once()
             ->withArgs(
@@ -58,7 +57,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $<?= $id_property; ?> = $faker->uuid();
         $data = $types = ['key' => $faker->string(5)];
 
-        $connection = Mockery::mock(Connection::class);
+        $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('update')
             ->once()
             ->withArgs(
@@ -89,7 +88,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
         $<?= $id_property; ?> = $faker->uuid();
 
-        $connection = Mockery::mock(Connection::class);
+        $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('delete')
             ->once()
             ->withArgs(

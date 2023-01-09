@@ -10,7 +10,6 @@ use <?= $model_class; ?>;
 use <?= $name_class; ?>;
 use <?= $list_class; ?>;
 use App\Tests\BaseTestCase;
-use Mockery;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
@@ -23,10 +22,10 @@ class <?= $class_name; ?> extends BaseTestCase
             Name::fromString($faker->name()),
         );
 
-        $repo = Mockery::mock(<?= $list_class_short; ?>::class);
+        $repo = \Mockery::mock(<?= $list_class_short; ?>::class);
         $repo->shouldReceive('save')
             ->once()
-            ->with(Mockery::type(<?= $model; ?>::class));
+            ->with(\Mockery::type(<?= $model; ?>::class));
 
         (new <?= $handler_class_short; ?>($repo))($command);
     }

@@ -12,7 +12,6 @@ use <?= $entity_class; ?>;
 use <?= $entity_finder_class; ?>;
 <?php } ?>
 use App\Tests\BaseTestCase;
-use Mockery;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -27,18 +26,18 @@ class <?= $class_name; ?> extends BaseTestCase
             'name' => $faker->name(),
         ];
 
-        $commandBus = Mockery::mock(MessageBusInterface::class);
+        $commandBus = \Mockery::mock(MessageBusInterface::class);
         $commandBus->shouldReceive('dispatch')
             ->once()
-            ->with(Mockery::type(<?= $command_class_short; ?>::class))
+            ->with(\Mockery::type(<?= $command_class_short; ?>::class))
             ->andReturn(new Envelope(new \stdClass()));
 
-        $entity = Mockery::mock(<?= $entity_class_short; ?>::class);
+        $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
-        $<?= $entity_finder_lower; ?> = Mockery::mock(<?= $entity_finder; ?>::class);
+        $<?= $entity_finder_lower; ?> = \Mockery::mock(<?= $entity_finder; ?>::class);
         $<?= $entity_finder_lower; ?>->shouldReceive('findRefreshed')
             ->once()
-            ->with(Mockery::type(<?= $id_class_short; ?>::class))
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($entity);
 
         $result = (new <?= $mutation_class_short; ?>($commandBus, $<?= $entity_finder_lower; ?>))($args);
@@ -51,10 +50,10 @@ class <?= $class_name; ?> extends BaseTestCase
 <?php } else { ?>
         $<?= $id_property; ?> = $faker->uuid();
 
-        $commandBus = Mockery::mock(MessageBusInterface::class);
+        $commandBus = \Mockery::mock(MessageBusInterface::class);
         $commandBus->shouldReceive('dispatch')
             ->once()
-            ->with(Mockery::type(<?= $command_class_short; ?>::class))
+            ->with(\Mockery::type(<?= $command_class_short; ?>::class))
             ->andReturn(new Envelope(new \stdClass()));
 
         $result = (new <?= $mutation_class_short; ?>($commandBus))($<?= $id_property; ?>);

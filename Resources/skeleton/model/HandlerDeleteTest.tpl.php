@@ -11,7 +11,6 @@ use <?= $id_class; ?>;
 use <?= $list_class; ?>;
 use <?= $not_found_class; ?>;
 use App\Tests\BaseTestCase;
-use Mockery;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
@@ -21,17 +20,17 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>());
 
-        $<?= $model_lower; ?> = Mockery::mock(<?= $model; ?>::class);
+        $<?= $model_lower; ?> = \Mockery::mock(<?= $model; ?>::class);
         $<?= $model_lower; ?>->shouldReceive('delete')
             ->once();
 
-        $repo = Mockery::mock(<?= $list_class_short; ?>::class);
+        $repo = \Mockery::mock(<?= $list_class_short; ?>::class);
         $repo->shouldReceive('get')
-            ->with(Mockery::type(<?= $id_class_short; ?>::class))
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($<?= $model_lower; ?>);
         $repo->shouldReceive('save')
             ->once()
-            ->with(Mockery::type(<?= $model; ?>::class));
+            ->with(\Mockery::type(<?= $model; ?>::class));
 
         (new <?= $handler_class_short; ?>($repo))($command);
     }
@@ -42,9 +41,9 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>());
 
-        $repo = Mockery::mock(<?= $list_class_short; ?>::class);
+        $repo = \Mockery::mock(<?= $list_class_short; ?>::class);
         $repo->shouldReceive('get')
-            ->with(Mockery::type(<?= $id_class_short; ?>::class))
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnNull();
 
         $this->expectException(<?= $not_found_class_short; ?>::class);
