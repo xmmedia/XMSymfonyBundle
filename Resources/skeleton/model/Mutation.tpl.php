@@ -45,7 +45,7 @@ final class <?= $class_name; ?> implements MutationInterface
         );
 
         return [
-            '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>->findRefreshed($<?= $id_property; ?>),
+        '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>>($<?= $id_property; ?>),
         ];
 <?php } else { ?>
     public function __invoke(string $<?= $id_property; ?>): array
