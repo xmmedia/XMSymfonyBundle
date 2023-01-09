@@ -6,6 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
 use <?= $id_class; ?>;
+use <?= $not_found_class; ?>;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,16 @@ class <?= $class_name; ?> extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, <?= $entity_class_short; ?>::class);
+    }
+
+    public function findOrThrow(<?= $id_class_short; ?>|string $id): <?= $entity_class_short; ?><?= "\n"; ?>
+    {
+        $<?= $entity ?> = $this->find($id);
+        if (!$<?= $entity ?>) {
+            throw <?= $not_found_class_short; ?>::with<?= $id_class_short; ?>($id);
+        }
+
+        return $<?= $entity ?>;
     }
 
     public function findRefreshed(<?= $id_class_short; ?>|string $id): ?<?= $entity_class_short; ?><?= "\n"; ?>

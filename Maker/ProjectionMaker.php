@@ -143,16 +143,22 @@ class ProjectionMaker extends AbstractMaker
             $projectionClassName.'Finder',
             'Projection\\'.$arName.'\\'
         );
+        $notFoundExceptionClassDetails = $generator->createClassNameDetails(
+            $arName.'NotFound',
+            'Model\\'.$arName.'\\Exception\\'
+        );
 
         $generator->generateClass(
             $finderClassDetails->getFullName(),
             $skeletonPath.'Finder.tpl.php',
             [
-                'id_class'           => $idClassFullName,
-                'id_class_short'     => $idClassShortName,
-                'entity_class'       => $entityClassDetails->getFullName(),
-                'entity_class_short' => $entityClassDetails->getShortName(),
-                'entity'             => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+                'id_class'              => $idClassFullName,
+                'id_class_short'        => $idClassShortName,
+                'entity_class'          => $entityClassDetails->getFullName(),
+                'entity_class_short'    => $entityClassDetails->getShortName(),
+                'entity'                => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+                'not_found_class'       => $notFoundExceptionClassDetails->getFullName(),
+                'not_found_class_short' => $notFoundExceptionClassDetails->getShortName(),
             ]
         );
         $generator->generateClass(
