@@ -22,10 +22,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
         parent::__construct($registry, <?= $entity_class_short; ?>::class);
     }
 
-    /**
-     * @param <?= $id_class_short; ?>|string $id
-     */
-    public function findRefreshed($id): ?<?= $entity_class_short; ?><?= "\n"; ?>
+    public function findRefreshed(<?= $id_class_short; ?>|string $id): ?<?= $entity_class_short; ?><?= "\n"; ?>
     {
         $<?= $entity ?> = $this->find($id);
 
