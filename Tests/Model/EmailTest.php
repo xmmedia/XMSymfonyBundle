@@ -114,6 +114,13 @@ class EmailTest extends BaseTestCase
         $this->assertEquals('Name  Name  Name <email@email.com>', $vo->withName());
     }
 
+    public function testObfuscated(): void
+    {
+        $vo = Email::fromString('email@email.com');
+
+        $this->assertSame('em…@e….com', $vo->obfuscated());
+    }
+
     public function testSameAs(): void
     {
         $vo1 = Email::fromString('email@email.com');

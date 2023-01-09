@@ -75,6 +75,19 @@ final class Email implements ValueObject
     }
 
     /**
+     * Obfuscates the email, but only picking the first 2 characters, the first after the @ and the TLD.
+     */
+    public function obfuscated(): string
+    {
+        return sprintf(
+            '%s…@%s….%s',
+            substr($this->email, 0, 2),
+            substr($this->email, strpos($this->email, '@') + 1, 1),
+            substr($this->email, strrpos($this->email, '.') + 1),
+        );
+    }
+
+    /**
      * @param self|ValueObject $other
      */
     public function sameValueAs(ValueObject $other): bool
