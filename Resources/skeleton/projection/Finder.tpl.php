@@ -29,6 +29,10 @@ class <?= $class_name; ?> extends ServiceEntityRepository
     {
         $<?= $entity ?> = $this->find($id);
 
+        if (!$<?= $entity ?>) {
+            return null;
+        }
+
         $this->getEntityManager()->refresh($<?= $entity ?>);
 
         return $<?= $entity ?>;
