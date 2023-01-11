@@ -10,7 +10,7 @@ use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
 final class <?= $class_name; ?> extends AggregateChanged
 {
-    private Name $name;
+    private <?= $has_readonly_properties ? 'readonly ' : ''; ?>Name $name;
 
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,

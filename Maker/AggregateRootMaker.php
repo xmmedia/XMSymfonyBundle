@@ -327,11 +327,12 @@ class AggregateRootMaker extends AbstractMaker
                 $eventClassDetails->getFullName(),
                 $skeletonPath.'Event'.$event.'.tpl.php',
                 [
-                    'id_class'       => $idClassFullName,
-                    'id_class_short' => $idClassShortName,
-                    'id_property'    => $idProperty,
-                    'model'          => $arClassDetails->getShortName(),
-                    'name_class'     => $nameVoClassDetails->getFullName(),
+                    'has_readonly_properties' => version_compare(PHP_VERSION, '8.1', '>='),
+                    'id_class'                => $idClassFullName,
+                    'id_class_short'          => $idClassShortName,
+                    'id_property'             => $idProperty,
+                    'model'                   => $arClassDetails->getShortName(),
+                    'name_class'              => $nameVoClassDetails->getFullName(),
                 ]
             );
 
