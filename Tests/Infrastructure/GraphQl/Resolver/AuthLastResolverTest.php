@@ -56,7 +56,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->andReturnNull();
         $authUtils->shouldReceive('getLastUsername')
             ->once()
-            ->andReturnNull();
+            ->andReturn('');
 
         $translator = \Mockery::mock(TranslatorInterface::class);
 
