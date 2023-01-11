@@ -51,42 +51,6 @@ class UuidTypeTest extends BaseTestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
-    public function testParseValueInvalid($value): void
-    {
-        $this->expectException(Error::class);
-
-        (new UuidType())->parseValue($value);
-    }
-
-    /**
-     * @dataProvider uuidProvider
-     */
-    public function testParseLiteral($value, ?string $expected): void
-    {
-        $node = new StringValueNode([]);
-        $node->value = $value;
-
-        $result = (new UuidType())->parseLiteral($node);
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @dataProvider invalidUuidProvider
-     */
-    public function testParseLiteralInvalid($value): void
-    {
-        $node = new StringValueNode([]);
-        $node->value = $value;
-
-        $this->expectException(Error::class);
-
-        (new UuidType())->parseLiteral($node);
-    }
-
     public function uuidProvider(): \Generator
     {
         $faker = $this->faker();
@@ -102,6 +66,39 @@ class UuidTypeTest extends BaseTestCase
             $fakeId->toString(),
             $fakeId->toString(),
         ];
+    }
+
+    /**
+     * @dataProvider invalidUuidProvider
+     */
+    public function testParseValueInvalid($value): void
+    {
+        $this->expectException(Error::class);
+
+        (new UuidType())->parseValue($value);
+    }
+
+    public function testParseLiteral(): void
+    {
+        $faker = $this->faker();
+        $fakeId = $faker->fakeId();
+
+        $node = new StringValueNode([]);
+        $node->value = $fakeId->toString();
+
+        $result = (new UuidType())->parseLiteral($node);
+
+        $this->assertEquals($fakeId->toString(), $result);
+    }
+
+    public function testParseLiteralInvalid(): void
+    {
+        $node = new StringValueNode([]);
+        $node->value = 'string';
+
+        $this->expectException(Error::class);
+
+        (new UuidType())->parseLiteral($node);
     }
 
     public function invalidUuidProvider(): \Generator

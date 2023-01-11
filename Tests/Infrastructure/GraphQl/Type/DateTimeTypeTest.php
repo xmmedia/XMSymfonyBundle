@@ -38,19 +38,6 @@ class DateTimeTypeTest extends TestCase
         $this->assertEquals(new \DateTimeImmutable('2019-01-01 17:53:32'), $result);
     }
 
-    /**
-     * @dataProvider dateProvider
-     */
-    public function testParseLiteral(?\DateTimeInterface $expected, ?string $value): void
-    {
-        $valueNode = new StringValueNode([]);
-        $valueNode->value = $value;
-
-        $result = (new DateTimeType())->parseLiteral($valueNode);
-
-        $this->assertEquals($expected, $result);
-    }
-
     public function dateProvider(): \Generator
     {
         yield [
@@ -71,6 +58,37 @@ class DateTimeTypeTest extends TestCase
         yield [
             null,
             null,
+        ];
+    }
+
+    /**
+     * @dataProvider dateProviderParseLiteral
+     */
+    public function testParseLiteral(?\DateTimeInterface $expected, string $value): void
+    {
+        $valueNode = new StringValueNode([]);
+        $valueNode->value = $value;
+
+        $result = (new DateTimeType())->parseLiteral($valueNode);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function dateProviderParseLiteral(): \Generator
+    {
+        yield [
+            new \DateTime('2019-01-01'),
+            '2019-01-01T00:00:00+00:00',
+        ];
+
+        yield [
+            new \DateTimeImmutable('2019-01-01'),
+            '2019-01-01T00:00:00+00:00',
+        ];
+
+        yield [
+            new \DateTimeImmutable('2019-01-01 10:53:32'),
+            '2019-01-01T10:53:32+00:00',
         ];
     }
 
