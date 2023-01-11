@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @deprecated use AuthLastQuery instead with odolbeau/phone-number-bundle ^0.14
+ * @deprecated use AuthLastQuery instead with overblog/graphql-bundle ^0.14
  */
 class AuthLastResolver implements ResolverInterface
 {

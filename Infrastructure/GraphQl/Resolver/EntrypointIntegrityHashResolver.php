@@ -9,7 +9,7 @@ use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 /**
- * @deprecated use EntrypointIntegrityHashQuery instead with odolbeau/phone-number-bundle ^0.14
+ * @deprecated use EntrypointIntegrityHashQuery instead with overblog/graphql-bundle ^0.14
  */
 class EntrypointIntegrityHashResolver implements ResolverInterface
 {

@@ -9,7 +9,7 @@ use Xm\SymfonyBundle\DataProvider\ProvinceProvider;
 use Xm\SymfonyBundle\Model\Province;
 
 /**
- * @deprecated use ProvinceQuery instead with odolbeau/phone-number-bundle ^0.14
+ * @deprecated use ProvinceQuery instead with overblog/graphql-bundle ^0.14
  */
 class ProvinceResolver implements ResolverInterface
 {
