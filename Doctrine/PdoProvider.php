@@ -17,16 +17,12 @@ class PdoProvider
 
     public function __invoke(): \PDO
     {
-        if (method_exists($this->connection, 'getNativeConnection')) {
-            $connection = $this->connection->getNativeConnection();
-        } else {
-            // @phpstan-ignore-next-line
-            $connection = $this->connection->getWrappedConnection();
-        }
-        if ($connection instanceof \PDO) {
-            return $connection;
+        $connection = $this->connection->getNativeConnection();
+
+        if (!$connection instanceof \PDO) {
+            throw new \RuntimeException(sprintf('Expecting \PDO, but got %s', get_class($connection)));
         }
 
-        return $connection->getWrappedConnection();
+        return $connection;
     }
 }
