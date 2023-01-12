@@ -1,18 +1,18 @@
 <?= $entity_class_short; ?>Query:
     decorator: true
-    heirs: [Query]
+    heirs: [ Query ]
     config:
         fields:
             <?= $entity_class_short_plural; ?>:
                 type:        '[<?= $entity_class_short; ?>!]'
                 description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=resolver("<?= $resolver_multiple; ?>")'
+                resolve:     '@=query("<?= $query_multiple; ?>")'
 
             <?= $entity_class_short; ?>:
                 type:        <?= $entity_class_short; ?><?= "\n"; ?>
                 description: 'Retrieve a single <?= $entity_class_short; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=resolver("<?= $resolver_single; ?>", [args["<?= $id_property; ?>"]])'
+                resolve:     '@=query("<?= $query_single; ?>", [args["<?= $id_property; ?>"]])'
                 args:
                     <?= $id_property; ?>: UUID!

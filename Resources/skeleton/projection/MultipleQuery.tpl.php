@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
-use <?= $id_class; ?>;
 use <?= $finder_class; ?>;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-final class <?= $class_name; ?> implements ResolverInterface
+final class <?= $class_name; ?> implements QueryInterface
 {
     private <?= $finder_class_short; ?> $<?= $finder_property; ?>;
 
@@ -18,8 +17,11 @@ final class <?= $class_name; ?> implements ResolverInterface
         $this-><?= $finder_property; ?> = $<?= $finder_property; ?>;
     }
 
-    public function __invoke(string $<?= $id_property; ?>): ?<?= $entity_class_short; ?><?= "\n"; ?>
+    /**
+     * @return <?= $entity_class_short; ?>[]
+     */
+    public function __invoke(): array
     {
-        return $this-><?= $finder_property; ?>->find(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>));
+        return $this-><?= $finder_property; ?>->findAll();
     }
 }

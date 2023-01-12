@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
-use <?= $resolver_class; ?>;
+use <?= $query_class; ?>;
 use <?= $finder_class; ?>;
 use App\Tests\BaseTestCase;
 
@@ -20,9 +20,9 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->andReturn([$entity]);
 
-        $resolver = new <?= $resolver_class_short; ?>($finder);
+        $query = new <?= $query_class_short; ?>($finder);
 
-        $result = $resolver();
+        $result = $query();
 
         $this->assertEquals([$entity], $result);
     }
@@ -34,8 +34,8 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->andReturn([]);
 
-        $resolver = new <?= $resolver_class_short; ?>($finder);
+        $query = new <?= $query_class_short; ?>($finder);
 
-        $this->assertEquals([], $resolver());
+        $this->assertEquals([], $query());
     }
 }

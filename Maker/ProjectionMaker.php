@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Maker;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Prooph\Bundle\EventStore\Projection\ReadModelProjection;
 use Prooph\EventStore\Projection\ReadModelProjector;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -188,13 +188,13 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
-        $resolverClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'Resolver',
-            'Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        $queryClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Query',
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
         );
         $generator->generateClass(
-            $resolverClassDetails->getFullName(),
-            $skeletonPath.'Resolver.tpl.php',
+            $queryClassDetails->getFullName(),
+            $skeletonPath.'Query.tpl.php',
             [
                 'entity_class'       => $entityClassDetails->getFullName(),
                 'entity_class_short' => $entityClassDetails->getShortName(),
@@ -209,33 +209,33 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
-        $resolverTestClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'ResolverTest',
-            'Tests\\Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        $queryTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'QueryTest',
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
         );
         $generator->generateClass(
-            $resolverTestClassDetails->getFullName(),
-            $skeletonPath.'ResolverTest.tpl.php',
+            $queryTestClassDetails->getFullName(),
+            $skeletonPath.'QueryTest.tpl.php',
             [
-                'resolver_class'       => $resolverClassDetails->getFullName(),
-                'resolver_class_short' => $resolverClassDetails->getShortName(),
-                'id_class'             => $idClassFullName,
-                'id_class_short'       => $idClassShortName,
-                'entity_class'         => $entityClassDetails->getFullName(),
-                'entity_class_short'   => $entityClassDetails->getShortName(),
-                'finder_class'         => $finderClassDetails->getFullName(),
-                'finder_class_short'   => $finderClassDetails->getShortName(),
-                'id_property'          => $idProperty,
+                'query_class'        => $queryClassDetails->getFullName(),
+                'query_class_short'  => $queryClassDetails->getShortName(),
+                'id_class'           => $idClassFullName,
+                'id_class_short'     => $idClassShortName,
+                'entity_class'       => $entityClassDetails->getFullName(),
+                'entity_class_short' => $entityClassDetails->getShortName(),
+                'finder_class'       => $finderClassDetails->getFullName(),
+                'finder_class_short' => $finderClassDetails->getShortName(),
+                'id_property'        => $idProperty,
             ]
         );
 
-        $multipleResolverClassDetails = $generator->createClassNameDetails(
-            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Resolver',
-            'Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        $multipleQueryClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
         );
         $generator->generateClass(
-            $multipleResolverClassDetails->getFullName(),
-            $skeletonPath.'MultipleResolver.tpl.php',
+            $multipleQueryClassDetails->getFullName(),
+            $skeletonPath.'MultipleQuery.tpl.php',
             [
                 'entity_class'       => $entityClassDetails->getFullName(),
                 'entity_class_short' => $entityClassDetails->getShortName(),
@@ -247,16 +247,16 @@ class ProjectionMaker extends AbstractMaker
             ]
         );
 
-        $multipleResolverTestClassDetails = $generator->createClassNameDetails(
-            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'ResolverTest',
-            'Tests\\Infrastructure\\GraphQl\\Resolver\\'.$arName.'\\'
+        $multipleQueryTestClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
         );
         $generator->generateClass(
-            $multipleResolverTestClassDetails->getFullName(),
-            $skeletonPath.'MultipleResolverTest.tpl.php',
+            $multipleQueryTestClassDetails->getFullName(),
+            $skeletonPath.'MultipleQueryTest.tpl.php',
             [
-                'resolver_class'       => $multipleResolverClassDetails->getFullName(),
-                'resolver_class_short' => $multipleResolverClassDetails->getShortName(),
+                'query_class'          => $multipleQueryClassDetails->getFullName(),
+                'query_class_short'    => $multipleQueryClassDetails->getShortName(),
                 'entity_class'         => $entityClassDetails->getFullName(),
                 'entity_class_short'   => $entityClassDetails->getShortName(),
                 'finder_class'         => $finderClassDetails->getFullName(),
@@ -270,17 +270,11 @@ class ProjectionMaker extends AbstractMaker
             [
                 'entity_class_short'        => $entityClassDetails->getShortName(),
                 'entity_class_short_plural' => ucwords(
-                    Str::singularCamelCaseToPluralCamelCase(
-                        $entityClassDetails->getShortName()
-                    )
+                    Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName())
                 ),
                 'id_property'               => $idProperty,
-                'resolver_single'           => $this->doubleEscapeClass(
-                    $resolverClassDetails->getFullName()
-                ),
-                'resolver_multiple'         => $this->doubleEscapeClass(
-                    $multipleResolverClassDetails->getFullName()
-                ),
+                'query_single'              => $this->doubleEscapeClass($queryClassDetails->getFullName()),
+                'query_multiple'            => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
             ]
         );
 
@@ -343,7 +337,7 @@ class ProjectionMaker extends AbstractMaker
         );
 
         $dependencies->addClassDependency(
-            ResolverInterface::class,
+            QueryInterface::class,
             'overblog/graphql-bundle'
         );
     }

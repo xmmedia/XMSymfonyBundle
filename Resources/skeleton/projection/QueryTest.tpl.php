@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
-use <?= $resolver_class; ?>;
+use <?= $query_class; ?>;
 use <?= $id_class; ?>;
 use <?= $finder_class; ?>;
 use App\Tests\BaseTestCase;
@@ -25,9 +25,9 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($entity);
 
-        $resolver = new <?= $resolver_class_short; ?>($finder);
+        $query = new <?= $query_class_short; ?>($finder);
 
-        $result = $resolver($<?= $id_property; ?>);
+        $result = $query($<?= $id_property; ?>);
 
         $this->assertEquals($entity, $result);
     }
@@ -44,9 +44,9 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnNull();
 
-        $resolver = new <?= $resolver_class_short; ?>($finder);
+        $query = new <?= $query_class_short; ?>($finder);
 
-        $result = $resolver($<?= $id_property; ?>);
+        $result = $query($<?= $id_property; ?>);
 
         $this->assertNull($result);
     }
