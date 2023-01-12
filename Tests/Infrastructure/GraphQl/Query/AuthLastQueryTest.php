@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Resolver;
+namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver\AuthLastResolver;
+use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\AuthLastQuery;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 
-class AuthLastResolverTest extends BaseTestCase
+class AuthLastQueryTest extends BaseTestCase
 {
     public function test(): void
     {
@@ -36,7 +36,7 @@ class AuthLastResolverTest extends BaseTestCase
             ->with('key', [], 'security')
             ->andReturn('message');
 
-        $resolver = new AuthLastResolver($authUtils, $translator);
+        $resolver = new AuthLastQuery($authUtils, $translator);
 
         $result = $resolver();
 
@@ -60,7 +60,7 @@ class AuthLastResolverTest extends BaseTestCase
 
         $translator = \Mockery::mock(TranslatorInterface::class);
 
-        $resolver = new AuthLastResolver($authUtils, $translator);
+        $resolver = new AuthLastQuery($authUtils, $translator);
 
         $result = $resolver();
 
@@ -84,7 +84,7 @@ class AuthLastResolverTest extends BaseTestCase
 
         $translator = \Mockery::mock(TranslatorInterface::class);
 
-        $resolver = new AuthLastResolver($authUtils, $translator);
+        $resolver = new AuthLastQuery($authUtils, $translator);
 
         $result = $resolver();
 
