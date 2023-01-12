@@ -15,8 +15,7 @@ class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
 
     public function __invoke($parentValue, $args, $context, ResolveInfo $info): mixed
     {
-        $fieldName = $info->fieldName;
-        $value = self::valueFromObjectOrArray($parentValue, $fieldName);
+        $value = self::valueFromObjectOrArray($parentValue, $info->fieldName);
 
         return $value instanceof \Closure ? $value($parentValue, $args, $context, $info) : $value;
     }
