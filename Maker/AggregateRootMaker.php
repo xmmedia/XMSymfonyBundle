@@ -36,7 +36,7 @@ class AggregateRootMaker extends AbstractMaker
     public function configureCommand(
         Command $command,
         InputConfiguration $inputConfig
-    ) {
+    ): void {
         $command
             ->addArgument(
                 'name',
@@ -61,7 +61,7 @@ class AggregateRootMaker extends AbstractMaker
         InputInterface $input,
         ConsoleStyle $io,
         Generator $generator
-    ) {
+    ): void {
         $arName = trim($input->getArgument('name'));
         $entityName = trim($input->getArgument('entity'));
         $skeletonPath = $this->skeletonPath().'model/';
@@ -465,7 +465,7 @@ class AggregateRootMaker extends AbstractMaker
         ]);
     }
 
-    public function configureDependencies(DependencyBuilder $dependencies)
+    public function configureDependencies(DependencyBuilder $dependencies): void
     {
         $dependencies->addClassDependency(
             \Xm\SymfonyBundle\Messaging\Command::class,

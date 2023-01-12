@@ -11,8 +11,8 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
 {
     public const INVALID_INDEX = 'Index invalid or out of range';
 
-    /** @var int Fast-lookup count for full set of iterators */
-    public $count = 0;
+    /** Fast-lookup count for full set of iterators */
+    public int $count = 0;
 
     /**
      * Build an iterator over multiple iterators
@@ -46,7 +46,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * Countable.
      */
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }
@@ -54,12 +54,12 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * ArrayAccess.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $offset >= 0 && $offset < $this->count;
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if ($this->offsetExists($offset)) {
             [$it, $idx] = $this->getIteratorByIndex($offset);
@@ -70,13 +70,13 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
         }
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         [$it, $idx] = $this->getIteratorByIndex($offset);
         $it->offsetSet($idx, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         [$it, $idx] = $this->getIteratorByIndex($offset);
         $it->offsetUnset($idx);
@@ -85,12 +85,12 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * JsonSerializable.
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return iterator_to_array($this, false);
     }

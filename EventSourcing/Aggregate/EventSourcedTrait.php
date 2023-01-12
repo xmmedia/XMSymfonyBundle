@@ -10,10 +10,8 @@ trait EventSourcedTrait
 {
     /**
      * Current version.
-     *
-     * @var int
      */
-    protected $version = 0;
+    protected int $version = 0;
 
     protected static function reconstituteFromHistory(\Iterator $historyEvents): self
     {

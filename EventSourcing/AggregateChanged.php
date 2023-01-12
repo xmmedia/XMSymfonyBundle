@@ -9,13 +9,9 @@ use Xm\SymfonyBundle\Messaging\DomainEvent;
 
 class AggregateChanged extends DomainEvent
 {
-    /** @var array */
-    protected $payload = [];
+    protected array $payload = [];
 
-    /**
-     * @return static
-     */
-    public static function occur(string $aggregateId, array $payload = []): self
+    public static function occur(string $aggregateId, array $payload = []): static
     {
         return new static($aggregateId, $payload);
     }

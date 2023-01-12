@@ -8,8 +8,7 @@ use Webmozart\Assert\Assert;
 
 class NotificationGatewayId implements ValueObject
 {
-    /** @var string */
-    private $id;
+    private string $id;
 
     /**
      * @return static

@@ -10,18 +10,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AuthLastQuery implements QueryInterface
 {
-    /** @var AuthenticationUtils */
-    private $authenticationUtils;
-
-    /** @var TranslatorInterface */
-    private $trans;
-
     public function __construct(
-        AuthenticationUtils $authenticationUtils,
-        TranslatorInterface $trans
+        private readonly AuthenticationUtils $authenticationUtils,
+        private readonly TranslatorInterface $trans,
     ) {
-        $this->authenticationUtils = $authenticationUtils;
-        $this->trans = $trans;
     }
 
     public function __invoke(): array

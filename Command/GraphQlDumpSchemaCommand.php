@@ -18,20 +18,11 @@ use Xm\SymfonyBundle\Model\Email;
 
 final class GraphQlDumpSchemaCommand extends Command
 {
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
-
-    /** @var EntityManagerInterface */
-    private $em;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        EntityManagerInterface $em
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly EntityManagerInterface $em,
     ) {
         parent::__construct();
-
-        $this->tokenStorage = $tokenStorage;
-        $this->em = $em;
     }
 
     protected function configure(): void

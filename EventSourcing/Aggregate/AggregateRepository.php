@@ -13,37 +13,17 @@ use Xm\SymfonyBundle\Messaging\Message;
 
 class AggregateRepository
 {
-    /** @var EventStore */
-    protected $eventStore;
-
-    /** @var AggregateTranslator */
-    protected $aggregateTranslator;
-
-    /** @var AggregateType */
-    protected $aggregateType;
-
-    /** @var array */
-    protected $identityMap = [];
-
-    /** @var StreamName */
-    protected $streamName;
+    protected array $identityMap = [];
 
     public function __construct(
-        EventStore $eventStore,
-        AggregateType $aggregateType,
-        AggregateTranslator $aggregateTranslator,
-        StreamName $streamName = null
+        private readonly EventStore $eventStore,
+        private readonly AggregateType $aggregateType,
+        private readonly AggregateTranslator $aggregateTranslator,
+        private StreamName|null $streamName = null
     ) {
-        $this->eventStore = $eventStore;
-        $this->aggregateType = $aggregateType;
-        $this->aggregateTranslator = $aggregateTranslator;
-        $this->streamName = $streamName;
     }
 
-    /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    public function saveAggregateRoot($eventSourcedAggregateRoot): void
+    public function saveAggregateRoot(object $eventSourcedAggregateRoot): void
     {
         $this->assertAggregateType($eventSourcedAggregateRoot);
 
@@ -57,7 +37,7 @@ class AggregateRepository
             return;
         }
 
-        $enrichedEvents = array_map(function ($event) use ($aggregateId) {
+        $enrichedEvents = array_map(function ($event) use ($aggregateId): Message {
             return $this->enrichEventMetadata($event, $aggregateId);
         }, $domainEvents);
 
@@ -70,10 +50,8 @@ class AggregateRepository
 
     /**
      * Returns null if no stream events can be found for aggregate root otherwise the reconstituted aggregate root.
-     *
-     * @return object|null
      */
-    public function getAggregateRoot(string $aggregateId)
+    public function getAggregateRoot(string $aggregateId): object|null
     {
         if (isset($this->identityMap[$aggregateId])) {
             return $this->identityMap[$aggregateId];
@@ -114,10 +92,7 @@ class AggregateRepository
         return $eventSourcedAggregateRoot;
     }
 
-    /**
-     * @param object $aggregateRoot
-     */
-    public function extractAggregateVersion($aggregateRoot): int
+    public function extractAggregateVersion(object $aggregateRoot): int
     {
         return $this->aggregateTranslator->extractAggregateVersion($aggregateRoot);
     }
@@ -160,10 +135,7 @@ class AggregateRepository
         return $domainEvent;
     }
 
-    /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    protected function assertAggregateType($eventSourcedAggregateRoot)
+    protected function assertAggregateType(object $eventSourcedAggregateRoot): void
     {
         $this->aggregateType->assert($eventSourcedAggregateRoot);
     }

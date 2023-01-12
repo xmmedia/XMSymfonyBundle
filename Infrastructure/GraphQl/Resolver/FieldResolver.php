@@ -21,7 +21,7 @@ class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
         return $value instanceof \Closure ? $value($parentValue, $args, $context, $info) : $value;
     }
 
-    public static function valueFromObjectOrArray($objectOrArray, $fieldName): mixed
+    public static function valueFromObjectOrArray($objectOrArray, string $fieldName): mixed
     {
         if (\is_object($objectOrArray) && \is_callable([$objectOrArray, $fieldName])) {
             return $objectOrArray->$fieldName();

@@ -10,8 +10,7 @@ use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class EntrypointIntegrityHashQuery implements QueryInterface
 {
-    /** @var EntrypointLookupInterface */
-    private $entrypointLookup;
+    private EntrypointLookupInterface $entrypointLookup;
 
     public function __construct(EntrypointLookupCollectionInterface $collection)
     {

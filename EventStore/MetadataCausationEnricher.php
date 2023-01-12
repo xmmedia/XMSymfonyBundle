@@ -10,12 +10,8 @@ use Xm\SymfonyBundle\DataProvider\CausationProvider;
 
 class MetadataCausationEnricher implements MetadataEnricher
 {
-    /** @var CausationProvider */
-    private $causationProvider;
-
-    public function __construct(CausationProvider $causationProvider)
+    public function __construct(private readonly CausationProvider $causationProvider)
     {
-        $this->causationProvider = $causationProvider;
     }
 
     public function enrich(Message $message): Message

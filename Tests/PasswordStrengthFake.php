@@ -8,7 +8,7 @@ use Xm\SymfonyBundle\Util\PasswordStrengthInterface;
 
 class PasswordStrengthFake implements PasswordStrengthInterface
 {
-    private $score;
+    private int $score;
 
     public function __construct(int $score = 4)
     {

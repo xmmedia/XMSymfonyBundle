@@ -15,67 +15,35 @@ use Xm\SymfonyBundle\Util\Utils;
 
 class EmailGateway implements EmailGatewayInterface
 {
-    /** @var PostmarkClient */
-    protected $client;
-
-    /** @var Email */
-    protected $from;
-
-    /** @var string */
-    protected $kernelEnv;
-
-    /** @var RouterInterface|\Symfony\Bundle\FrameworkBundle\Routing\Router */
-    protected $router;
-
-    /** @var string */
-    protected $productName;
-
-    /** @var string */
-    protected $companyName;
-
-    /** @var string */
-    protected $companyAddress;
-
-    /** @var array */
-    protected $whitelist;
-
-    /** @var string|null */
-    protected $devEmail;
+    protected PostmarkClient $client;
+    protected Email $from;
 
     public function __construct(
         string $postmarkApiKey,
         string $emailFrom,
         string $emailFromName,
-        string $kernelEnv,
-        RouterInterface $router,
-        string $productName,
-        string $companyName,
-        string $companyAddress,
-        array $whitelist,
-        ?string $devEmail = null
+        private readonly string $kernelEnv,
+        private readonly RouterInterface $router,
+        private readonly string $productName,
+        private readonly string $companyName,
+        private readonly string $companyAddress,
+        private readonly array $whitelist,
+        private ?string $devEmail = null,
     ) {
         $this->client = new PostmarkClient($postmarkApiKey);
-        $this->kernelEnv = $kernelEnv;
         $this->from = Email::fromString($emailFrom, $emailFromName);
-        $this->router = $router;
-
-        $this->productName = $productName;
-        $this->companyName = $companyName;
-        $this->companyAddress = $companyAddress;
-        $this->whitelist = $whitelist;
-        $this->devEmail = $devEmail;
     }
 
     /**
      * {@inheritdoc}
      */
     public function send(
-        $templateIdOrAlias,
-        $to,
+        int|string $templateIdOrAlias,
+        Email|array $to,
         array $templateData,
         ?array $attachments = null,
         ?Email $from = null,
-        ?Email $replyTo = null
+        ?Email $replyTo = null,
     ): EmailGatewayMessageId {
         $headers = [];
 

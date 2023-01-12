@@ -6,20 +6,15 @@ namespace Xm\SymfonyBundle\EventSourcing\Aggregate;
 
 class AggregateType
 {
-    /** @var string|null */
-    protected $aggregateType;
-
-    /** @var array */
-    protected $mapping = [];
+    protected string|null $aggregateType;
+    protected array $mapping = [];
 
     /**
      * Use this factory when aggregate type should be detected based on given aggregate root.
      *
-     * @param object $eventSourcedAggregateRoot
-     *
      * @throws Exception\AggregateTypeException
      */
-    public static function fromAggregateRoot($eventSourcedAggregateRoot): self
+    public static function fromAggregateRoot(object $eventSourcedAggregateRoot): self
     {
         if (!\is_object($eventSourcedAggregateRoot)) {
             throw new Exception\AggregateTypeException(sprintf('Aggregate root must be an object but type of %s given', \gettype($eventSourcedAggregateRoot)));
@@ -98,11 +93,9 @@ class AggregateType
     }
 
     /**
-     * @param object $aggregateRoot
-     *
      * @throws Exception\AggregateTypeException
      */
-    public function assert($aggregateRoot): void
+    public function assert(object $aggregateRoot): void
     {
         $otherAggregateType = self::fromAggregateRoot($aggregateRoot);
 

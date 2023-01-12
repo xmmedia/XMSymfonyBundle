@@ -22,26 +22,16 @@ final class ProjectionRunCommand extends Command
     protected const OPTION_RUN_ONCE = 'run-once';
     protected const OPTION_SLEEP = 'sleep';
 
-    /** @var ProjectionRunner */
-    private $projectionRunner;
+    private string $projectionName;
+    private ReadModelProjector $projector;
+    private SymfonyStyle $io;
 
-    /** @var string */
-    private $projectionName;
-
-    /** @var ReadModelProjector */
-    private $projector;
-
-    /** @var SymfonyStyle */
-    private $io;
-
-    public function __construct(ProjectionRunner $projectionRunner)
+    public function __construct(private readonly ProjectionRunner $projectionRunner)
     {
         parent::__construct();
-
-        $this->projectionRunner = $projectionRunner;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:projection:run')

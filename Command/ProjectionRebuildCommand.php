@@ -15,7 +15,7 @@ final class ProjectionRebuildCommand extends Command
 {
     protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:projection:rebuild')

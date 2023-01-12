@@ -16,8 +16,7 @@ class PostalCode implements ValueObject
     public const MIN_LENGTH = 5;
     public const MAX_LENGTH = 10;
 
-    /** @var string */
-    private $postalCode;
+    private string $postalCode;
 
     /**
      * @return static

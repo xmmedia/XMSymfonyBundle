@@ -10,17 +10,15 @@ trait EventProducerTrait
 {
     /**
      * Current version.
-     *
-     * @var int
      */
-    protected $version = 0;
+    protected int $version = 0;
 
     /**
      * List of events that are not committed to the EventStore.
      *
      * @var AggregateChanged[]
      */
-    protected $recordedEvents = [];
+    protected array $recordedEvents = [];
 
     /**
      * Get pending events and reset stack.

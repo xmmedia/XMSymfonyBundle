@@ -12,17 +12,12 @@ use Xm\SymfonyBundle\Infrastructure\Service\Cloudflare;
 
 final class PurgeCloudflareCacheCommand extends Command
 {
-    /** @var Cloudflare */
-    private $cloudflare;
-
-    public function __construct(Cloudflare $cloudflare = null)
+    public function __construct(private Cloudflare|null $cloudflare = null)
     {
         parent::__construct();
-
-        $this->cloudflare = $cloudflare;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:cloudflare:purge-cache')

@@ -11,11 +11,9 @@ use Xm\SymfonyBundle\Util\StringUtil;
 
 final class Email implements ValueObject
 {
-    /** @var string */
-    private $email;
+    private string $email;
 
-    /** @var string|null */
-    private $name;
+    private ?string $name;
 
     /**
      * @return static

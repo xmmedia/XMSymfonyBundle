@@ -33,7 +33,7 @@ class UtilsTest extends BaseTestCase
     /**
      * @dataProvider serializeInvalidProvider
      */
-    public function testSerializeInvalid($input): void
+    public function testSerializeInvalid(\stdClass $input): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -57,7 +57,7 @@ class UtilsTest extends BaseTestCase
     {
         yield [new \stdClass(), 'instance of stdClass'];
         yield [
-            function () {
+            function (): void {
             },
             'instance of Closure',
         ];

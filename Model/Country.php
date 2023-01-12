@@ -10,11 +10,9 @@ use Xm\SymfonyBundle\Exception\InvalidCountry;
 
 class Country implements ValueObject
 {
-    /** @var string */
-    private $abbreviation;
+    private string $abbreviation;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
     /**
      * @return static

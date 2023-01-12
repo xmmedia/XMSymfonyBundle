@@ -15,23 +15,12 @@ class Address implements ValueObject
     public const CITY_MIN_LENGTH = 2;
     public const CITY_MAX_LENGTH = 50;
 
-    /** @var string */
-    private $line1;
-
-    /** @var string|null */
-    private $line2;
-
-    /** @var string */
-    private $city;
-
-    /** @var Province */
-    private $province;
-
-    /** @var PostalCode */
-    private $postalCode;
-
-    /** @var Country */
-    private $country;
+    private string $line1;
+    private ?string $line2;
+    private string $city;
+    private Province $province;
+    private PostalCode $postalCode;
+    private Country $country;
 
     /**
      * @return static

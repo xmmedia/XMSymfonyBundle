@@ -9,30 +9,22 @@ use Xm\SymfonyBundle\Messaging\Message;
 
 final class AggregateTranslator implements EventStoreAggregateTranslator
 {
-    /** @var AggregateRootDecorator */
-    private $aggregateRootDecorator;
+    private AggregateRootDecorator $aggregateRootDecorator;
 
-    /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    public function extractAggregateVersion($eventSourcedAggregateRoot): int
+    public function extractAggregateVersion(AggregateRoot $eventSourcedAggregateRoot): int
     {
         return $this->getAggregateRootDecorator()->extractAggregateVersion($eventSourcedAggregateRoot);
     }
 
-    /**
-     * @param object $anEventSourcedAggregateRoot
-     */
-    public function extractAggregateId($anEventSourcedAggregateRoot): string
+    public function extractAggregateId(AggregateRoot $eventSourcedAggregateRoot): string
     {
-        return $this->getAggregateRootDecorator()->extractAggregateId($anEventSourcedAggregateRoot);
+        return $this->getAggregateRootDecorator()->extractAggregateId($eventSourcedAggregateRoot);
     }
 
-    /**
-     * @return object reconstructed AggregateRoot
-     */
-    public function reconstituteAggregateFromHistory(AggregateType $aggregateType, \Iterator $historyEvents)
-    {
+    public function reconstituteAggregateFromHistory(
+        AggregateType $aggregateType,
+        \Iterator $historyEvents,
+    ): AggregateRoot {
         if (!$aggregateRootClass = $aggregateType->mappedClass()) {
             $aggregateRootClass = $aggregateType->toString();
         }
@@ -42,32 +34,30 @@ final class AggregateTranslator implements EventStoreAggregateTranslator
     }
 
     /**
-     * @param object $anEventSourcedAggregateRoot
-     *
      * @return Message[]
      */
-    public function extractPendingStreamEvents($anEventSourcedAggregateRoot): array
+    public function extractPendingStreamEvents(AggregateRoot $anEventSourcedAggregateRoot): array
     {
         return $this->getAggregateRootDecorator()->extractRecordedEvents($anEventSourcedAggregateRoot);
     }
 
-    /**
-     * @param object $anEventSourcedAggregateRoot
-     */
-    public function replayStreamEvents($anEventSourcedAggregateRoot, \Iterator $events): void
+    public function replayStreamEvents(AggregateRoot $anEventSourcedAggregateRoot, \Iterator $events): void
     {
         $this->getAggregateRootDecorator()->replayStreamEvents($anEventSourcedAggregateRoot, $events);
     }
 
     public function getAggregateRootDecorator(): AggregateRootDecorator
     {
-        if (null === $this->aggregateRootDecorator) {
+        if (!isset($this->aggregateRootDecorator)) {
             $this->aggregateRootDecorator = AggregateRootDecorator::newInstance();
         }
 
         return $this->aggregateRootDecorator;
     }
 
+    /**
+     * @deprecated Likely not used.
+     */
     public function setAggregateRootDecorator(AggregateRootDecorator $anAggregateRootDecorator): void
     {
         $this->aggregateRootDecorator = $anAggregateRootDecorator;

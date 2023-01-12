@@ -9,12 +9,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestInfoProvider
 {
-    /** @var RequestStack */
-    private $requestStack;
-
-    public function __construct(RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     public function currentRequest(): Request

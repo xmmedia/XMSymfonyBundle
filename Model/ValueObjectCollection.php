@@ -11,7 +11,7 @@ namespace Xm\SymfonyBundle\Model;
 abstract class ValueObjectCollection extends Collection
 {
     /** @var ValueObject[] */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * {@inheritDoc}

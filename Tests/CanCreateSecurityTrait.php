@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Mockery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 trait CanCreateSecurityTrait
 {
     /**
      * $user: false = no token storage within container, null = no user.
-     *
-     * @param UserInterface|bool|null $user
-     *
-     * @return Security|Mockery\MockInterface
      */
-    private function createSecurity($user): Security
+    private function createSecurity(UserInterface|bool|null $user): Security|\Mockery\MockInterface
     {
         $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
 
@@ -39,7 +34,7 @@ trait CanCreateSecurityTrait
     }
 
     /**
-     * @return ContainerInterface|Mockery\MockInterface
+     * @return ContainerInterface|\Mockery\MockInterface
      */
     private function createContainer(
         string $serviceId,

@@ -12,22 +12,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GraphQlProcessor implements ProcessorInterface, EventSubscriberInterface
 {
-    /** @var ErrorFormattingEvent */
-    private $event;
+    private ErrorFormattingEvent $event;
 
-    /**
-     * @param LogRecord|array $record
-     *
-     * @return LogRecord|array
-     */
-    public function __invoke($record)
+    public function __invoke(LogRecord $record): LogRecord
     {
-        if ($this->event) {
-            if ($record instanceof LogRecord) {
-                $record->extra['query'] = $this->event->getError()->getSource()->body;
-            } else {
-                $record['extra']['query'] = $this->event->getError()->getSource()->body;
-            }
+        if (isset($this->event)) {
+            $record->extra['query'] = $this->event->getError()->getSource()->body;
         }
 
         return $record;

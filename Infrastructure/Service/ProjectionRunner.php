@@ -13,37 +13,16 @@ use Psr\Container\ContainerInterface;
 
 class ProjectionRunner
 {
-    /** @var ContainerInterface */
-    private $projectionManagerForProjectionsLocator;
-
-    /** @var ContainerInterface */
-    private $projectionsLocator;
-
-    /** @var ContainerInterface */
-    private $projectionReadModelLocator;
-
-    /** @var string */
-    private $projectionName;
-
-    /** @var ProjectionManager */
-    private $projectionManager;
-
-    /** @var ReadModelProjector */
-    private $projector;
-
-    /** @var ProjectionManager */
-    private $projectionsManager;
+    private string $projectionName;
+    private ProjectionManager $projectionManager;
+    private ReadModelProjector $projector;
 
     public function __construct(
-        ProjectionManager $projectionsManager,
-        ContainerInterface $projectionManagerForProjectionsLocator,
-        ContainerInterface $projectionsLocator,
-        ContainerInterface $projectionReadModelLocator
+        private readonly ProjectionManager $projectionsManager,
+        private readonly ContainerInterface $projectionManagerForProjectionsLocator,
+        private readonly ContainerInterface $projectionsLocator,
+        private readonly ContainerInterface $projectionReadModelLocator,
     ) {
-        $this->projectionsManager = $projectionsManager;
-        $this->projectionManagerForProjectionsLocator = $projectionManagerForProjectionsLocator;
-        $this->projectionsLocator = $projectionsLocator;
-        $this->projectionReadModelLocator = $projectionReadModelLocator;
     }
 
     public function run(

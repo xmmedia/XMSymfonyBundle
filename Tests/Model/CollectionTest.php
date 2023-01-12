@@ -47,7 +47,7 @@ class CollectionTest extends TestCase
 
         $collection = Collection::fromArray($arr);
 
-        $res = $collection->find(function ($i) {
+        $res = $collection->find(function ($i): bool {
             return 1 === $i;
         });
 
@@ -60,7 +60,7 @@ class CollectionTest extends TestCase
 
         $collection = Collection::fromArray($arr);
 
-        $res = $collection->find(function ($i) {
+        $res = $collection->find(function ($i): bool {
             return 0 === $i;
         });
 

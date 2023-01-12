@@ -6,10 +6,7 @@ namespace Xm\SymfonyBundle\DataProvider;
 
 class CountryProvider
 {
-    /**
-     * @var array
-     */
-    private static $countries = [
+    private static array $countries = [
         'Canada'        => 'CA',
         'United States' => 'US',
     ];

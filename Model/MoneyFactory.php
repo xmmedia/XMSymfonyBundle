@@ -9,7 +9,7 @@ use Money\Money;
 
 final class MoneyFactory
 {
-    private static $currency = 'CAD';
+    private static string $currency = 'CAD';
 
     public static function fromInt(int $cents): Money
     {

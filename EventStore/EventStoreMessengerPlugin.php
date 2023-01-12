@@ -11,12 +11,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class EventStoreMessengerPlugin extends AbstractPlugin
 {
-    /** @var MessageBusInterface */
-    private $eventBus;
-
-    public function __construct(MessageBusInterface $eventBus)
+    public function __construct(private readonly MessageBusInterface $eventBus)
     {
-        $this->eventBus = $eventBus;
     }
 
     public function attachToEventStore(ActionEventEmitterEventStore $eventStore): void

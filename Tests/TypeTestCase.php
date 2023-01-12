@@ -18,10 +18,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
     use UsesFaker;
     use ValidatorExtensionTrait;
 
-    /**
-     * @var Container for use when validators have constructor arguments
-     */
-    protected $validatorContainer;
+    protected ?Container $validatorContainer = null;
 
     protected function getExtensions(): array
     {
@@ -86,7 +83,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 
                 array_walk_recursive(
                     $childErrors,
-                    function ($a) use (&$all) {
+                    function ($a) use (&$all): void {
                         $all[] = $a;
                     }
                 );

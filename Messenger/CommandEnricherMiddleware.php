@@ -11,12 +11,8 @@ use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 
 class CommandEnricherMiddleware implements MiddlewareInterface
 {
-    /** @var IssuerProvider */
-    private $issuerProvider;
-
-    public function __construct(IssuerProvider $issuerProvider)
+    public function __construct(private readonly IssuerProvider $issuerProvider)
     {
-        $this->issuerProvider = $issuerProvider;
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope

@@ -43,7 +43,7 @@ class StringUtilTest extends BaseTestCase
         $class = new \stdClass();
         yield [$class, $class];
 
-        $function = function () {
+        $function = function (): void {
         };
         yield [$function, $function];
 

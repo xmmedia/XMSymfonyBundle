@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Model;
 
 abstract class Collection extends \Ramsey\Collection\Collection implements \JsonSerializable
 {
-    public static function fromArray(array $data = [])
+    public static function fromArray(array $data = []): static
     {
         return new static('mixed', $data);
     }
@@ -35,7 +35,7 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
         return 0 === $this->diff($other)->count();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }

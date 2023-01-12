@@ -12,8 +12,7 @@ class Date implements ValueObject
     public const STRING_FORMAT = 'Y-m-d';
     public const TZ = 'UTC';
 
-    /** @var CarbonImmutable */
-    private $date;
+    private CarbonImmutable $date;
 
     /**
      * @param string|CarbonTimeZone $tz

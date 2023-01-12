@@ -12,12 +12,8 @@ use Xm\SymfonyBundle\Messaging\Command;
 
 class CommandRecorderMiddleware implements MiddlewareInterface
 {
-    /** @var Connection */
-    private $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope

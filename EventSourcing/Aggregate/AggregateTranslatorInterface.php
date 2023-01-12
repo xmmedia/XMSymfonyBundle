@@ -8,30 +8,19 @@ use Xm\SymfonyBundle\Messaging\Message;
 
 interface AggregateTranslatorInterface
 {
-    /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    public function extractAggregateVersion($eventSourcedAggregateRoot): int;
+    public function extractAggregateVersion(AggregateRoot $eventSourcedAggregateRoot): int;
+
+    public function extractAggregateId(AggregateRoot $eventSourcedAggregateRoot): string;
+
+    public function reconstituteAggregateFromHistory(
+        AggregateType $aggregateType,
+        \Iterator $historyEvents,
+    ): AggregateRoot;
 
     /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    public function extractAggregateId($eventSourcedAggregateRoot): string;
-
-    /**
-     * @return object reconstructed EventSourcedAggregateRoot
-     */
-    public function reconstituteAggregateFromHistory(AggregateType $aggregateType, \Iterator $historyEvents);
-
-    /**
-     * @param object $eventSourcedAggregateRoot
-     *
      * @return Message[]
      */
-    public function extractPendingStreamEvents($eventSourcedAggregateRoot): array;
+    public function extractPendingStreamEvents(AggregateRoot $eventSourcedAggregateRoot): array;
 
-    /**
-     * @param object $eventSourcedAggregateRoot
-     */
-    public function replayStreamEvents($eventSourcedAggregateRoot, \Iterator $events): void;
+    public function replayStreamEvents(AggregateRoot $eventSourcedAggregateRoot, \Iterator $events): void;
 }

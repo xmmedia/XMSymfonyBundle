@@ -12,16 +12,12 @@ use Webmozart\Assert\Assert;
 
 class Cloudflare
 {
-    private string $cloudflareZone;
-    private string $cloudflareApiToken;
     private Guzzle $adaptor;
 
     public function __construct(
-        string $cloudflareZone,
-        string $cloudflareApiToken
+        private readonly string $cloudflareZone,
+        private readonly string $cloudflareApiToken
     ) {
-        $this->cloudflareZone = $cloudflareZone;
-        $this->cloudflareApiToken = $cloudflareApiToken;
     }
 
     public function addRecord(

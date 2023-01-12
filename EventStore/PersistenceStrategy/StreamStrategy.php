@@ -17,8 +17,7 @@ use Xm\SymfonyBundle\Util\Json;
  */
 final class StreamStrategy implements MySqlPersistenceStrategy, HasQueryHint
 {
-    /** @var MessageConverter */
-    private $messageConverter;
+    private MessageConverter $messageConverter;
 
     public function __construct(?MessageConverter $messageConverter = null)
     {

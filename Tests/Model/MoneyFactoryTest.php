@@ -12,7 +12,7 @@ class MoneyFactoryTest extends TestCase
     /**
      * @dataProvider intDataProvider
      */
-    public function testFromInt($cents, $expected): void
+    public function testFromInt(int $cents, string $expected): void
     {
         $res = MoneyFactory::fromInt($cents);
 

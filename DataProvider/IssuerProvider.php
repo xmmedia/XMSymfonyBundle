@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\DataProvider;
 
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class IssuerProvider
 {
-    /** @var Security */
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private readonly Security $security)
     {
-        $this->security = $security;
     }
 
     public function getIssuer(): string

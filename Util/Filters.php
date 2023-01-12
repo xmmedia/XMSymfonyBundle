@@ -8,8 +8,7 @@ use Webmozart\Assert\Assert;
 
 abstract class Filters
 {
-    /** @var array */
-    protected $filters;
+    protected array $filters;
 
     /**
      * @return static

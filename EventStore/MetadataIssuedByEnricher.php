@@ -10,12 +10,8 @@ use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 
 class MetadataIssuedByEnricher implements MetadataEnricher
 {
-    /** @var IssuerProvider */
-    private $issuerProvider;
-
-    public function __construct(IssuerProvider $issuerProvider)
+    public function __construct(private readonly IssuerProvider $issuerProvider)
     {
-        $this->issuerProvider = $issuerProvider;
     }
 
     public function enrich(Message $message): Message

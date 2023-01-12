@@ -11,12 +11,8 @@ use Xm\SymfonyBundle\DataProvider\CausationProvider;
 
 class CausationRecorderMiddleware implements MiddlewareInterface
 {
-    /** @var CausationProvider */
-    private $causationProvider;
-
-    public function __construct(CausationProvider $causationProvider)
+    public function __construct(private readonly CausationProvider $causationProvider)
     {
-        $this->causationProvider = $causationProvider;
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope

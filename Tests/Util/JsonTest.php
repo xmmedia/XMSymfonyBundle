@@ -12,7 +12,7 @@ class JsonTest extends TestCase
     /**
      * @dataProvider provider
      */
-    public function testEncode($value, $expected): void
+    public function testEncode(string|float|int|bool|array $value, string $expected): void
     {
         $this->assertEquals($expected, Json::encode($value));
     }
@@ -20,7 +20,7 @@ class JsonTest extends TestCase
     /**
      * @dataProvider provider
      */
-    public function testDecode($expected, $json): void
+    public function testDecode(string|float|int|bool|array $expected, string $json): void
     {
         $this->assertEquals($expected, Json::decode($json));
     }

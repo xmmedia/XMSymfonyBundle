@@ -11,16 +11,15 @@ use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
 interface EmailGatewayInterface
 {
     /**
-     * @param int|string           $templateIdOrAlias
      * @param Email[]|Email        $to
      * @param PostmarkAttachment[] $attachments
      */
     public function send(
-        $templateIdOrAlias,
-        $to,
+        int|string $templateIdOrAlias,
+        Email|array $to,
         array $templateData,
         ?array $attachments = null,
         ?Email $from = null,
-        ?Email $replyTo = null
+        ?Email $replyTo = null,
     ): EmailGatewayMessageId;
 }

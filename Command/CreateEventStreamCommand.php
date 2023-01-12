@@ -14,14 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class CreateEventStreamCommand extends Command
 {
-    /** @var EventStore */
-    private $eventStore;
-
-    public function __construct(EventStore $eventStore)
+    public function __construct(private readonly EventStore $eventStore)
     {
         parent::__construct();
-
-        $this->eventStore = $eventStore;
     }
 
     protected function configure(): void

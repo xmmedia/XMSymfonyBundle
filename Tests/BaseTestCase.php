@@ -18,8 +18,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
     use MockeryPHPUnitIntegration;
     use UsesFaker;
 
-    /** @var AggregateTranslator */
-    private $aggregateTranslator;
+    private ?AggregateTranslator $aggregateTranslator = null;
 
     protected function assertRecordedEvent(
         string $eventName,
@@ -129,7 +128,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
     protected function reconstituteAggregateFromHistory(
         string $aggregateRootClass,
         array $events
-    ) {
+    ): AggregateRoot {
         return $this->getAggregateTranslator()->reconstituteAggregateFromHistory(
             AggregateType::fromAggregateRootClass($aggregateRootClass),
             new \ArrayIterator($events)

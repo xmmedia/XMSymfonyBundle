@@ -11,10 +11,10 @@ use libphonenumber\PhoneNumberUtil;
 
 class PhoneNumber implements ValueObject
 {
-    private static $defaultRegion = 'CA';
+    private static string $defaultRegion = 'CA';
 
     /** @var LibPhoneNumber */
-    private $phoneNumber;
+    private LibPhoneNumber $phoneNumber;
 
     /**
      * @return static

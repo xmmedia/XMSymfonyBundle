@@ -32,7 +32,7 @@ class ProjectionMaker extends AbstractMaker
     public function configureCommand(
         Command $command,
         InputConfiguration $inputConfig
-    ) {
+    ): void {
         $command
             ->addArgument(
                 'projection',
@@ -57,7 +57,7 @@ class ProjectionMaker extends AbstractMaker
         InputInterface $input,
         ConsoleStyle $io,
         Generator $generator
-    ) {
+    ): void {
         $projectionName = strtolower(trim($input->getArgument('projection')));
         $arName = trim($input->getArgument('ar'));
         $modelUpper = strtoupper(Str::asSnakeCase($arName));
@@ -319,7 +319,7 @@ class ProjectionMaker extends AbstractMaker
         ]);
     }
 
-    public function configureDependencies(DependencyBuilder $dependencies)
+    public function configureDependencies(DependencyBuilder $dependencies): void
     {
         // @todo update
         $dependencies->addClassDependency(

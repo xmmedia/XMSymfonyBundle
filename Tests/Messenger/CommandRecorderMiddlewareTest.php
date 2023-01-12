@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Tests\Messenger;
 
 use Doctrine\DBAL\Connection;
-use Mockery;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware;
@@ -16,7 +15,7 @@ class CommandRecorderMiddlewareTest extends BaseTestCase
 {
     public function test(): void
     {
-        /** @var Connection|Mockery\MockInterface $connection */
+        /** @var Connection|\Mockery\MockInterface $connection */
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
             ->once()
