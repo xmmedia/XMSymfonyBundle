@@ -23,7 +23,7 @@ class AuthLastQuery implements QueryInterface
             $errorMsg = $this->trans->trans(
                 $error->getMessageKey(),
                 $error->getMessageData(),
-                'security'
+                'security',
             );
         }
 

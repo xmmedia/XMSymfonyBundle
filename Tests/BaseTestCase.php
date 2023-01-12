@@ -24,7 +24,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         string $eventName,
         array $payload,
         array $events,
-        $assertNotRecorded = false
+        $assertNotRecorded = false,
     ): void {
         $isRecorded = false;
 
@@ -42,8 +42,8 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
                         $event->payload(),
                         sprintf(
                             'Payload of recorded event %s does not match with expected payload.',
-                            $eventName
-                        )
+                            $eventName,
+                        ),
                     );
                 }
             }
@@ -52,12 +52,12 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         if ($assertNotRecorded) {
             $this->assertFalse(
                 $isRecorded,
-                sprintf('Event %s was recorded.', $eventName)
+                sprintf('Event %s was recorded.', $eventName),
             );
         } else {
             $this->assertTrue(
                 $isRecorded,
-                sprintf('Event %s was not recorded.', $eventName)
+                sprintf('Event %s was not recorded.', $eventName),
             );
         }
     }
@@ -87,7 +87,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
 
     protected function assertSameValueAs(
         ValueObject $expected,
-        ValueObject $actual
+        ValueObject $actual,
     ): void {
         $this->assertTrue(
             $expected->sameValueAs($actual),
@@ -97,7 +97,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
 
     protected function assertSameValueAsOrNull(
         ?ValueObject $expected,
-        ?ValueObject $actual
+        ?ValueObject $actual,
     ): void {
         if (null !== $expected) {
             $this->assertSameValueAs($expected, $actual);
@@ -111,7 +111,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         foreach ($resolver::getAliases() as $method => $alias) {
             $this->assertTrue(
                 method_exists($resolver, $method),
-                'Resolver method "'.$method.'" is missing.'
+                'Resolver method "'.$method.'" is missing.',
             );
         }
     }
@@ -127,11 +127,11 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function reconstituteAggregateFromHistory(
         string $aggregateRootClass,
-        array $events
+        array $events,
     ): AggregateRoot {
         return $this->getAggregateTranslator()->reconstituteAggregateFromHistory(
             AggregateType::fromAggregateRootClass($aggregateRootClass),
-            new \ArrayIterator($events)
+            new \ArrayIterator($events),
         );
     }
 
@@ -145,7 +145,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
     }
 
     protected function getCommandBusMock(
-        ?string $commandClass
+        ?string $commandClass,
     ): MessageBusInterface {
         $commandBus = \Mockery::mock(MessageBusInterface::class);
 

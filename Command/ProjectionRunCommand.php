@@ -39,26 +39,26 @@ final class ProjectionRunCommand extends Command
             ->addArgument(
                 static::ARGUMENT_PROJECTION_NAME,
                 InputArgument::OPTIONAL,
-                'The name of the Projection'
+                'The name of the Projection',
             )
             ->addOption(
                 static::OPTION_RUN_ALL,
                 null,
                 InputOption::VALUE_NONE,
-                'Run all projections once'
+                'Run all projections once',
             )
             ->addOption(
                 static::OPTION_RUN_ONCE,
                 'o',
                 InputOption::VALUE_NONE,
-                'Loop the projection only once, then exit. Not supported when running all'
+                'Loop the projection only once, then exit. Not supported when running all',
             )
             ->addOption(
                 static::OPTION_SLEEP,
                 's',
                 InputOption::VALUE_REQUIRED,
                 'The sleep time of the projector in microseconds',
-                1000000 // 1 second
+                1000000, // 1 second
             )
         ;
     }
@@ -70,7 +70,7 @@ final class ProjectionRunCommand extends Command
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
 
         $this->projectionName = $input->getArgument(
-            static::ARGUMENT_PROJECTION_NAME
+            static::ARGUMENT_PROJECTION_NAME,
         );
         $runAll = $input->getOption(static::OPTION_RUN_ALL);
         $keepRunning = !$input->getOption(static::OPTION_RUN_ONCE);
@@ -96,11 +96,11 @@ final class ProjectionRunCommand extends Command
             [
                 PdoEventStoreProjector::OPTION_SLEEP          => $sleep,
                 PdoEventStoreProjector::OPTION_PCNTL_DISPATCH => true,
-            ]
+            ],
         );
 
         $this->io->text(
-            sprintf('Initialized projection "%s"', $this->projectionName)
+            sprintf('Initialized projection "%s"', $this->projectionName),
         );
 
         try {
@@ -111,13 +111,13 @@ final class ProjectionRunCommand extends Command
         $this->io->text(sprintf('Current status: %s', $state));
 
         $this->io->text(
-            sprintf('Starting projection "%s"', $this->projectionName)
+            sprintf('Starting projection "%s"', $this->projectionName),
         );
         $this->io->text(
             sprintf(
                 'Keep running %s',
-                true === $keepRunning ? 'enabled' : 'disabled'
-            )
+                true === $keepRunning ? 'enabled' : 'disabled',
+            ),
         );
 
         $this->setupPcntl();
@@ -126,7 +126,7 @@ final class ProjectionRunCommand extends Command
 
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
         $this->io->success(
-            sprintf('Projection %s completed.', $this->projectionName)
+            sprintf('Projection %s completed.', $this->projectionName),
         );
     }
 
@@ -151,7 +151,7 @@ final class ProjectionRunCommand extends Command
     public function signalHandler(): void
     {
         $this->io->success(
-            sprintf('Projection %s stopped.', $this->projectionName)
+            sprintf('Projection %s stopped.', $this->projectionName),
         );
         $this->projector->stop();
     }

@@ -52,7 +52,7 @@ class ProvinceProviderTest extends TestCase
     {
         $this->assertEquals(
             Country::fromString('CA'),
-            ProvinceProvider::country('AB')
+            ProvinceProvider::country('AB'),
         );
     }
 

@@ -55,8 +55,8 @@ class EmailGateway implements EmailGatewayInterface
             $to,
             Email::class,
             'All to addresses must be instances of '.Utils::printSafe(
-                Email::class
-            ).'. Got %s'
+                Email::class,
+            ).'. Got %s',
         );
 
         if (!$this->isProduction()) {
@@ -64,7 +64,7 @@ class EmailGateway implements EmailGatewayInterface
                 ', ',
                 array_map(function (Email $email): string {
                     return $email->withName();
-                }, $to)
+                }, $to),
             );
 
             $to = $this->removeNonWhiteListedAddresses($to);
@@ -74,7 +74,7 @@ class EmailGateway implements EmailGatewayInterface
             ', ',
             array_map(function (Email $email): string {
                 return $email->withName();
-            }, $to)
+            }, $to),
         );
 
         if (null === $from) {
@@ -92,8 +92,8 @@ class EmailGateway implements EmailGatewayInterface
                 $attachments,
                 PostmarkAttachment::class,
                 'All attachments must be instances of '.Utils::printSafe(
-                    PostmarkAttachment::class
-                )
+                    PostmarkAttachment::class,
+                ),
             );
         }
 
@@ -109,7 +109,7 @@ class EmailGateway implements EmailGatewayInterface
             null,
             null,
             $headers,
-            $attachments
+            $attachments,
         );
 
         return EmailGatewayMessageId::fromString($result->messageId);
@@ -147,12 +147,12 @@ class EmailGateway implements EmailGatewayInterface
         $default['rootUrl'] = $this->router->generate(
             'index',
             [],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
         $default['indexUrl'] = $this->router->generate(
             'index',
             [],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
         $default['productName'] = $this->productName;
         $default['copyrightYear'] = date('Y');

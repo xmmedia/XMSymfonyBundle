@@ -44,7 +44,7 @@ class PhoneNumber implements ValueObject
 
         try {
             return new static(
-                $util->parse($phoneNumber, self::$defaultRegion)
+                $util->parse($phoneNumber, self::$defaultRegion),
             );
         } catch (NumberParseException $e) {
             throw new \InvalidArgumentException(sprintf('The phone number "%s" is invalid: %s', $phoneNumber, $e->getMessage()));

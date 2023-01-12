@@ -24,7 +24,7 @@ abstract class Filters
         if (empty($availableFields)) {
             Assert::notEmpty(
                 $availableFields,
-                'The filter class must have at least 1 filter constant.'
+                'The filter class must have at least 1 filter constant.',
             );
         }
 
@@ -34,7 +34,7 @@ abstract class Filters
             Assert::oneOf(
                 $key,
                 $availableFields,
-                '%s is not an available filter.'
+                '%s is not an available filter.',
             );
         }
 

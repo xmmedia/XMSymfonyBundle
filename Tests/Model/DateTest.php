@@ -17,7 +17,7 @@ class DateTest extends BaseTestCase
         string $string,
         string $expectedDateString,
         string $expectedIso,
-        string $timezone
+        string $timezone,
     ): void {
         $date = Date::fromString($string);
 
@@ -50,7 +50,7 @@ class DateTest extends BaseTestCase
 
         $this->assertEquals(
             $now->setTime(0, 0, 0)->format(\DateTime::ISO8601),
-            $date->date()->format(\DateTime::ISO8601)
+            $date->date()->format(\DateTime::ISO8601),
         );
         $this->assertEquals('UTC', $date->date()->timezone->getName());
     }
@@ -59,13 +59,13 @@ class DateTest extends BaseTestCase
     {
         $now = new \DateTimeImmutable(
             'now',
-            new \DateTimeZone('America/Edmonton')
+            new \DateTimeZone('America/Edmonton'),
         );
         $date = Date::now('America/Edmonton');
 
         $this->assertEquals(
             $now->setTime(0, 0, 0)->format(\DateTime::ISO8601),
-            $date->date()->format(\DateTime::ISO8601)
+            $date->date()->format(\DateTime::ISO8601),
         );
         $this->assertEquals('America/Edmonton', $date->date()->timezone->getName());
     }
@@ -79,7 +79,7 @@ class DateTest extends BaseTestCase
 
         $this->assertEquals(
             $dateTime->setTime(0, 0, 0)->format(\DateTime::ISO8601),
-            $date->date()->format(\DateTime::ISO8601)
+            $date->date()->format(\DateTime::ISO8601),
         );
         $this->assertEquals('UTC', $date->date()->timezone->getName());
     }

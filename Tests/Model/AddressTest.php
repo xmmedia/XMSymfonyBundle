@@ -24,7 +24,7 @@ class AddressTest extends BaseTestCase
         string $province,
         string $postalCode,
         string $country,
-        string $expectedPostalCode
+        string $expectedPostalCode,
     ): void {
         $address = Address::fromStrings(
             $line1,
@@ -32,7 +32,7 @@ class AddressTest extends BaseTestCase
             $city,
             $province,
             $postalCode,
-            $country
+            $country,
         );
 
         $this->assertEquals($line1, $address->line1());
@@ -151,7 +151,7 @@ class AddressTest extends BaseTestCase
                 'province'   => Province::fromString($faker->stateAbbr()),
                 'postalCode' => PostalCode::fromString($postalCode),
                 'country'    => Country::fromString(
-                    $faker->randomElement(['CA', 'US'])
+                    $faker->randomElement(['CA', 'US']),
                 ),
             ],
             PostalCode::format($postalCode),
@@ -170,7 +170,7 @@ class AddressTest extends BaseTestCase
         string $province,
         string $postalCode,
         string $country,
-        string $exception
+        string $exception,
     ): void {
         $this->expectException($exception);
 
@@ -180,7 +180,7 @@ class AddressTest extends BaseTestCase
             $city,
             $province,
             $postalCode,
-            $country
+            $country,
         );
     }
 

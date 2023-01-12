@@ -12,7 +12,7 @@ trait CanCreateEventFromArray
     protected function createEventFromArray(
         string $eventName,
         string $aggregateId,
-        array $payload = []
+        array $payload = [],
     ): DomainEvent {
         $faker = Faker\Factory::create();
 

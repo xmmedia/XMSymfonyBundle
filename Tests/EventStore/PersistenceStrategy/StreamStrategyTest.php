@@ -43,7 +43,7 @@ class StreamStrategyTest extends BaseTestCase
 
         $this->assertEquals(
             'test_event_stream',
-            $strategy->generateTableName($streamName)
+            $strategy->generateTableName($streamName),
         );
     }
 }

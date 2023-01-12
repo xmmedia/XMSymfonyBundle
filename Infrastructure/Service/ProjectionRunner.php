@@ -28,7 +28,7 @@ class ProjectionRunner
     public function run(
         string $projectionName,
         bool $keepRunning = false,
-        array $readModelProjectionOptions = []
+        array $readModelProjectionOptions = [],
     ): void {
         $this->projectionName = $projectionName;
 
@@ -60,7 +60,7 @@ class ProjectionRunner
 
     public function configure(
         string $projectionName,
-        array $readModelProjectionOptions = []
+        array $readModelProjectionOptions = [],
     ): ReadModelProjector {
         $this->projectionName = $projectionName;
 
@@ -86,8 +86,8 @@ class ProjectionRunner
             $this->projectionManager->createReadModelProjection(
                 $this->projectionName,
                 $readModel,
-                $readModelProjectionOptions
-            )
+                $readModelProjectionOptions,
+            ),
         );
 
         return $this->projector;
@@ -96,7 +96,7 @@ class ProjectionRunner
     public function state(): ProjectionStatus
     {
         return $this->projectionManager->fetchProjectionStatus(
-            $this->projectionName
+            $this->projectionName,
         );
     }
 

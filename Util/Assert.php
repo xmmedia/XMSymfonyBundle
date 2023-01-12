@@ -15,7 +15,7 @@ class Assert extends \Webmozart\Assert\Assert
         string $password,
         array $userData,
         ?int $minimum = null,
-        PasswordStrengthInterface $passwordStrength = null
+        PasswordStrengthInterface $passwordStrength = null,
     ): void {
         if (null === $minimum) {
             $minimum = 2;
@@ -33,7 +33,7 @@ class Assert extends \Webmozart\Assert\Assert
 
     public static function compromisedPassword(
         string $password,
-        HttpClientInterface $httpClient = null
+        HttpClientInterface $httpClient = null,
     ): void {
         $endpoint = 'https://api.pwnedpasswords.com/range/%s';
         if (null === $httpClient) {
@@ -67,7 +67,7 @@ class Assert extends \Webmozart\Assert\Assert
     public static function url(
         $value,
         $protocols = ['https', 'https'],
-        string $message = ''
+        string $message = '',
     ): void {
         self::notEmpty($protocols, 'At least 1 protocol is required. Got 0.');
 

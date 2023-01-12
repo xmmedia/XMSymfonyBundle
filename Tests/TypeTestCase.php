@@ -28,7 +28,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 
         $validator = Validation::createValidatorBuilder()
             ->setConstraintValidatorFactory(
-                new ContainerConstraintValidatorFactory($this->validatorContainer)
+                new ContainerConstraintValidatorFactory($this->validatorContainer),
             )
             ->getValidator();
 
@@ -43,16 +43,16 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
             $form->isSynchronized(),
             'The form data is not synchronized: '.implode(
                 ', ',
-                $this->getFormErrors($form)
-            )
+                $this->getFormErrors($form),
+            ),
         );
 
         $this->assertTrue(
             $form->isValid(),
             'The following fields are invalid: '.implode(
                 ', ',
-                $this->getFormErrors($form)
-            )
+                $this->getFormErrors($form),
+            ),
         );
     }
 
@@ -85,14 +85,14 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
                     $childErrors,
                     function ($a) use (&$all): void {
                         $all[] = $a;
-                    }
+                    },
                 );
 
                 if ($all) {
                     $strings[] = sprintf(
                         '%s [%s]',
                         $field,
-                        implode(', ', $all)
+                        implode(', ', $all),
                     );
                 }
             }

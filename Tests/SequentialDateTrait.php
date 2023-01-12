@@ -13,7 +13,7 @@ trait SequentialDateTrait
         return Date::fromString(
             $this->faker()
                 ->dateTimeBetween('-5 years', '-1 year')
-                ->format('Y-m-d')
+                ->format('Y-m-d'),
         );
     }
 
@@ -22,7 +22,7 @@ trait SequentialDateTrait
         return Date::fromString(
             $this->faker()
                 ->dateTimeBetween('-1 years', 'now')
-                ->format('Y-m-d')
+                ->format('Y-m-d'),
         );
     }
 }

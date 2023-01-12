@@ -19,7 +19,7 @@ trait MessengerMiddlewareTestTrait
             ->andReturnUsing(
                 function (Envelope $envelope, StackInterface $stack): Envelope {
                     return $envelope;
-                }
+                },
             );
 
         return new StackMiddleware($nextMiddleware);

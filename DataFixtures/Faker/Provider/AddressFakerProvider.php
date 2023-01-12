@@ -37,7 +37,7 @@ class AddressFakerProvider extends FakerAddress
     public function countryVo(): Country
     {
         return Country::fromString(
-            parent::randomElement(CountryProvider::abbreviations())
+            parent::randomElement(CountryProvider::abbreviations()),
         );
     }
 

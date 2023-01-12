@@ -27,16 +27,16 @@ class CommandEnricherMiddlewareTest extends BaseTestCase
 
         $envelope = $middleware->handle(
             new Envelope(FakeCommand::perform()),
-            new StackMiddleware()
+            new StackMiddleware(),
         );
 
         $this->assertArrayHasKey(
             'issuedBy',
-            $envelope->getMessage()->metadata()
+            $envelope->getMessage()->metadata(),
         );
         $this->assertEquals(
             $uuid,
-            $envelope->getMessage()->metadata()['issuedBy']
+            $envelope->getMessage()->metadata()['issuedBy'],
         );
     }
 }

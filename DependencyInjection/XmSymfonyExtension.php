@@ -17,13 +17,13 @@ class XmSymfonyExtension extends Extension
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__.'/../Resources/config'),
         );
         $loader->load('services.yaml');
 
         $config = $this->processConfiguration(
             $this->getConfiguration($configs, $container),
-            $configs
+            $configs,
         );
 
         if (!empty($config['repositories'])) {
@@ -33,7 +33,7 @@ class XmSymfonyExtension extends Extension
 
     private function loadRepositories(
         array $config,
-        ContainerBuilder $container
+        ContainerBuilder $container,
     ): void {
         if (!empty($config['repositories'])) {
             foreach ($config['repositories'] as $repositoryName => $repositoryConfig) {
@@ -47,7 +47,7 @@ class XmSymfonyExtension extends Extension
                 $container
                     ->setDefinition(
                         $repositoryName,
-                        new ChildDefinition('Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository')
+                        new ChildDefinition('Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository'),
                     )
                     ->setArguments(
                         [
@@ -56,7 +56,7 @@ class XmSymfonyExtension extends Extension
                             $repositoryConfig['aggregate_type'],
                             new Reference($repositoryConfig['aggregate_translator']),
                             $repositoryConfig['stream_name'],
-                        ]
+                        ],
                     );
             }
         }

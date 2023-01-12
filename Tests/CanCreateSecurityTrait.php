@@ -38,7 +38,7 @@ trait CanCreateSecurityTrait
      */
     private function createContainer(
         string $serviceId,
-        object $serviceObject
+        object $serviceObject,
     ): ContainerInterface {
         $container = \Mockery::mock(ContainerInterface::class);
         $container->shouldReceive('get')

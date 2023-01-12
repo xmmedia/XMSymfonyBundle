@@ -31,7 +31,7 @@ final class EventStoreMessengerPlugin extends AbstractPlugin
                 foreach ($recordedEvents as $recordedEvent) {
                     $this->eventBus->dispatch($recordedEvent);
                 }
-            }
+            },
         );
 
         $this->listenerHandlers[] = $eventStore->attach(
@@ -47,7 +47,7 @@ final class EventStoreMessengerPlugin extends AbstractPlugin
                 foreach ($recordedEvents as $recordedEvent) {
                     $this->eventBus->dispatch($recordedEvent);
                 }
-            }
+            },
         );
     }
 }

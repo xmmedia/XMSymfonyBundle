@@ -24,7 +24,7 @@ class UuidIdTest extends BaseTestCase
 
         $this->assertEquals(
             \Ramsey\Uuid\Uuid::fromString($uuidString),
-            $uuid->uuid()
+            $uuid->uuid(),
         );
     }
 
@@ -41,7 +41,7 @@ class UuidIdTest extends BaseTestCase
 
         $this->assertEquals(
             \Ramsey\Uuid\Uuid::fromString($uuidString),
-            $uuid->uuid()
+            $uuid->uuid(),
         );
     }
 

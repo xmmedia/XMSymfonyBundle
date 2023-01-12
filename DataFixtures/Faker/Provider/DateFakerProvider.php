@@ -14,7 +14,7 @@ class DateFakerProvider extends Faker\Provider\Base
 {
     public function dateVoBetween(
         string $min = '-30 years',
-        string $max = 'now'
+        string $max = 'now',
     ): Date {
         $faker = Faker\Factory::create('en_CA');
 

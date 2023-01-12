@@ -16,7 +16,7 @@ class Cloudflare
 
     public function __construct(
         private readonly string $cloudflareZone,
-        private readonly string $cloudflareApiToken
+        private readonly string $cloudflareApiToken,
     ) {
     }
 
@@ -27,7 +27,7 @@ class Cloudflare
         int $ttl = 0,
         bool $proxied = true,
         string $priority = '',
-        array $data = []
+        array $data = [],
     ): bool {
         $this->connect();
 
@@ -46,7 +46,7 @@ class Cloudflare
     public function updateRecord(
         string $type,
         string $existingName,
-        array $details
+        array $details,
     ): bool {
         $this->connect();
 

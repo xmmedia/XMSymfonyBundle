@@ -21,7 +21,7 @@ class CommandEnricherMiddleware implements MiddlewareInterface
         $message = $envelope->getMessage();
         $message = $message->withAddedMetadata(
             'issuedBy',
-            $this->issuerProvider->getIssuer()
+            $this->issuerProvider->getIssuer(),
         );
 
         $newEnvelope = new Envelope(

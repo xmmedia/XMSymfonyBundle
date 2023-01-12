@@ -31,7 +31,7 @@ class ProjectionMaker extends AbstractMaker
 
     public function configureCommand(
         Command $command,
-        InputConfiguration $inputConfig
+        InputConfiguration $inputConfig,
     ): void {
         $command
             ->addArgument(
@@ -39,16 +39,16 @@ class ProjectionMaker extends AbstractMaker
                 InputArgument::OPTIONAL,
                 sprintf(
                     'Choose a name of the projection (e.g. <fg=yellow>%s</>). "_projection" will be appended to the end',
-                    Str::asSnakeCase(Str::getRandomTerm())
-                )
+                    Str::asSnakeCase(Str::getRandomTerm()),
+                ),
             )
             ->addArgument(
                 'ar',
                 InputArgument::OPTIONAL,
                 sprintf(
                     'What is the name of the related aggregate root (model) (e.g. <fg=yellow>%s</>)',
-                    Str::asClassName(Str::getRandomTerm())
-                )
+                    Str::asClassName(Str::getRandomTerm()),
+                ),
             )
         ;
     }
@@ -56,7 +56,7 @@ class ProjectionMaker extends AbstractMaker
     public function generate(
         InputInterface $input,
         ConsoleStyle $io,
-        Generator $generator
+        Generator $generator,
     ): void {
         $projectionName = strtolower(trim($input->getArgument('projection')));
         $arName = trim($input->getArgument('ar'));
@@ -67,7 +67,7 @@ class ProjectionMaker extends AbstractMaker
 
         $arClassDetails = $generator->createClassNameDetails(
             $arName,
-            'Model\\'.$arName.'\\'
+            'Model\\'.$arName.'\\',
         );
         $idClassShortName = $arClassDetails->getShortName().'Id';
         $idClassFullName = $arClassDetails->getFullName().'Id';
@@ -76,7 +76,7 @@ class ProjectionMaker extends AbstractMaker
 
         $projectionClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Projection',
-            'Projection\\'.$arName.'\\'
+            'Projection\\'.$arName.'\\',
         );
         $generator->generateClass(
             $projectionClassDetails->getFullName(),
@@ -85,12 +85,12 @@ class ProjectionMaker extends AbstractMaker
                 'id_field'    => $idField,
                 'model'       => $arClassDetails->getShortName(),
                 'stream_name' => Str::asSnakeCase($arName),
-            ]
+            ],
         );
 
         $projectionTestClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'ProjectionTest',
-            'Tests\\Projection\\'.$arName.'\\'
+            'Tests\\Projection\\'.$arName.'\\',
         );
         $generator->generateClass(
             $projectionTestClassDetails->getFullName(),
@@ -100,12 +100,12 @@ class ProjectionMaker extends AbstractMaker
                 'projection_class_short' => $projectionClassDetails->getShortName(),
                 'model'                  => $arClassDetails->getShortName(),
                 'stream_name'            => Str::asSnakeCase($arName),
-            ]
+            ],
         );
 
         $readModelClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'ReadModel',
-            'Projection\\'.$arName.'\\'
+            'Projection\\'.$arName.'\\',
         );
         $generator->generateClass(
             $readModelClassDetails->getFullName(),
@@ -114,12 +114,12 @@ class ProjectionMaker extends AbstractMaker
                 'id_field'    => $idField,
                 'id_property' => $idProperty,
                 'model_upper' => $modelUpper,
-            ]
+            ],
         );
 
         $readModelTestClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'ReadModelTest',
-            'Tests\\Projection\\'.$arName.'\\'
+            'Tests\\Projection\\'.$arName.'\\',
         );
         $generator->generateClass(
             $readModelTestClassDetails->getFullName(),
@@ -132,20 +132,20 @@ class ProjectionMaker extends AbstractMaker
                 'id_property'            => $idProperty,
 
                 'model_upper'            => $modelUpper,
-            ]
+            ],
         );
 
         $entityClassDetails = $generator->createClassNameDetails(
             $projectionClassName,
-            'Entity\\'
+            'Entity\\',
         );
         $finderClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Finder',
-            'Projection\\'.$arName.'\\'
+            'Projection\\'.$arName.'\\',
         );
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
-            'Model\\'.$arName.'\\Exception\\'
+            'Model\\'.$arName.'\\Exception\\',
         );
 
         $generator->generateClass(
@@ -159,7 +159,7 @@ class ProjectionMaker extends AbstractMaker
                 'entity'                => Str::asLowerCamelCase($entityClassDetails->getShortName()),
                 'not_found_class'       => $notFoundExceptionClassDetails->getFullName(),
                 'not_found_class_short' => $notFoundExceptionClassDetails->getShortName(),
-            ]
+            ],
         );
         $generator->generateClass(
             $entityClassDetails->getFullName(),
@@ -169,12 +169,12 @@ class ProjectionMaker extends AbstractMaker
                 'id_class_short' => $idClassShortName,
                 'id_property'    => $idProperty,
                 'finder_class'   => $finderClassDetails->getFullName(),
-            ]
+            ],
         );
 
         $entityTestClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Test',
-            'Tests\\Entity\\'
+            'Tests\\Entity\\',
         );
         $generator->generateClass(
             $entityTestClassDetails->getFullName(),
@@ -185,12 +185,12 @@ class ProjectionMaker extends AbstractMaker
                 'id_class'           => $idClassFullName,
                 'id_class_short'     => $idClassShortName,
                 'id_property'        => $idProperty,
-            ]
+            ],
         );
 
         $queryClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
         );
         $generator->generateClass(
             $queryClassDetails->getFullName(),
@@ -203,15 +203,15 @@ class ProjectionMaker extends AbstractMaker
                 'finder_class'       => $finderClassDetails->getFullName(),
                 'finder_class_short' => $finderClassDetails->getShortName(),
                 'finder_property'    => Str::asLowerCamelCase(
-                    $finderClassDetails->getShortName()
+                    $finderClassDetails->getShortName(),
                 ),
                 'id_property'        => $idProperty,
-            ]
+            ],
         );
 
         $queryTestClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
         );
         $generator->generateClass(
             $queryTestClassDetails->getFullName(),
@@ -226,12 +226,12 @@ class ProjectionMaker extends AbstractMaker
                 'finder_class'       => $finderClassDetails->getFullName(),
                 'finder_class_short' => $finderClassDetails->getShortName(),
                 'id_property'        => $idProperty,
-            ]
+            ],
         );
 
         $multipleQueryClassDetails = $generator->createClassNameDetails(
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
         );
         $generator->generateClass(
             $multipleQueryClassDetails->getFullName(),
@@ -242,14 +242,14 @@ class ProjectionMaker extends AbstractMaker
                 'finder_class'       => $finderClassDetails->getFullName(),
                 'finder_class_short' => $finderClassDetails->getShortName(),
                 'finder_property'    => Str::asLowerCamelCase(
-                    $finderClassDetails->getShortName()
+                    $finderClassDetails->getShortName(),
                 ),
-            ]
+            ],
         );
 
         $multipleQueryTestClassDetails = $generator->createClassNameDetails(
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\'
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
         );
         $generator->generateClass(
             $multipleQueryTestClassDetails->getFullName(),
@@ -261,7 +261,7 @@ class ProjectionMaker extends AbstractMaker
                 'entity_class_short'   => $entityClassDetails->getShortName(),
                 'finder_class'         => $finderClassDetails->getFullName(),
                 'finder_class_short'   => $finderClassDetails->getShortName(),
-            ]
+            ],
         );
 
         $generator->generateFile(
@@ -270,12 +270,12 @@ class ProjectionMaker extends AbstractMaker
             [
                 'entity_class_short'        => $entityClassDetails->getShortName(),
                 'entity_class_short_plural' => ucwords(
-                    Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName())
+                    Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
                 ),
                 'id_property'               => $idProperty,
                 'query_single'              => $this->doubleEscapeClass($queryClassDetails->getFullName()),
                 'query_multiple'            => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
-            ]
+            ],
         );
 
         $generator->writeChanges();
@@ -324,21 +324,21 @@ class ProjectionMaker extends AbstractMaker
         // @todo update
         $dependencies->addClassDependency(
             ReadModelProjection::class,
-            'prooph/event-store-symfony-bundle'
+            'prooph/event-store-symfony-bundle',
         );
         $dependencies->addClassDependency(
             ReadModelProjector::class,
-            'prooph/event-store'
+            'prooph/event-store',
         );
 
         $dependencies->addClassDependency(
             DoctrineBundle::class,
-            'orm-pack'
+            'orm-pack',
         );
 
         $dependencies->addClassDependency(
             QueryInterface::class,
-            'overblog/graphql-bundle'
+            'overblog/graphql-bundle',
         );
     }
 }

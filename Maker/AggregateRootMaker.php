@@ -35,7 +35,7 @@ class AggregateRootMaker extends AbstractMaker
 
     public function configureCommand(
         Command $command,
-        InputConfiguration $inputConfig
+        InputConfiguration $inputConfig,
     ): void {
         $command
             ->addArgument(
@@ -43,16 +43,16 @@ class AggregateRootMaker extends AbstractMaker
                 InputArgument::OPTIONAL,
                 sprintf(
                     'Choose a name for your aggregate root (model) (e.g. <fg=yellow>%s</>)',
-                    Str::asClassName(Str::getRandomTerm())
-                )
+                    Str::asClassName(Str::getRandomTerm()),
+                ),
             )
             ->addArgument(
                 'entity',
                 InputArgument::OPTIONAL,
                 sprintf(
                     'Enter the name of the related entity (e.g. <fg=yellow>%s</>)',
-                    Str::asClassName(Str::getRandomTerm())
-                )
+                    Str::asClassName(Str::getRandomTerm()),
+                ),
             )
         ;
     }
@@ -60,7 +60,7 @@ class AggregateRootMaker extends AbstractMaker
     public function generate(
         InputInterface $input,
         ConsoleStyle $io,
-        Generator $generator
+        Generator $generator,
     ): void {
         $arName = trim($input->getArgument('name'));
         $entityName = trim($input->getArgument('entity'));
@@ -68,7 +68,7 @@ class AggregateRootMaker extends AbstractMaker
 
         $arClassDetails = $generator->createClassNameDetails(
             $arName,
-            'Model\\'.$arName.'\\'
+            'Model\\'.$arName.'\\',
         );
         $arLowerName = Str::asLowerCamelCase($arName);
         $idClassShortName = $arClassDetails->getShortName().'Id';
@@ -79,16 +79,16 @@ class AggregateRootMaker extends AbstractMaker
 
         $entityClassDetails = $generator->createClassNameDetails(
             $entityName,
-            'Entity\\'
+            'Entity\\',
         );
         $entityFinder = $generator->createClassNameDetails(
             $entityName.'Finder',
-            'Projection\\'.$arName.'\\'
+            'Projection\\'.$arName.'\\',
         );
 
         $nameVoClassDetails = $generator->createClassNameDetails(
             'Name',
-            'Model\\'.$arName.'\\'
+            'Model\\'.$arName.'\\',
         );
 
         $generator->generateClass(
@@ -97,11 +97,11 @@ class AggregateRootMaker extends AbstractMaker
             [
                 'id_class'    => $idClassShortName,
                 'id_property' => $idProperty,
-            ]
+            ],
         );
         $arTestClassDetails = $generator->createClassNameDetails(
             $arName.'Test',
-            'Tests\\Model\\'.$arName.'\\'
+            'Tests\\Model\\'.$arName.'\\',
         );
         $generator->generateClass(
             $arTestClassDetails->getFullName(),
@@ -112,17 +112,17 @@ class AggregateRootMaker extends AbstractMaker
                 'model_lower' => $arLowerName,
                 'id_property' => $idProperty,
                 'name_class'  => $nameVoClassDetails->getFullName(),
-            ]
+            ],
         );
 
         $generator->generateClass(
             $arClassDetails->getFullName().'Id',
-            $skeletonPath.'ArId.tpl.php'
+            $skeletonPath.'ArId.tpl.php',
         );
 
         $arIdTestClassDetails = $generator->createClassNameDetails(
             $arName.'IdTest',
-            'Tests\\Model\\'.$arName.'\\'
+            'Tests\\Model\\'.$arName.'\\',
         );
         $generator->generateClass(
             $arIdTestClassDetails->getFullName(),
@@ -132,12 +132,12 @@ class AggregateRootMaker extends AbstractMaker
                 'id_class'       => $idClassFullName,
                 'id_class_short' => $idClassShortName,
                 'id_property'    => $idProperty,
-            ]
+            ],
         );
 
         $listClassDetails = $generator->createClassNameDetails(
             $listClassName,
-            'Model\\'.$arName.'\\'
+            'Model\\'.$arName.'\\',
         );
         $generator->generateClass(
             $listClassDetails->getFullName(),
@@ -146,29 +146,29 @@ class AggregateRootMaker extends AbstractMaker
                 'model'          => $arClassDetails->getShortName(),
                 'id_class_short' => $idClassShortName,
                 'model_lower'    => $arLowerName,
-            ]
+            ],
         );
 
         $generator->generateClass(
             $nameVoClassDetails->getFullName(),
-            $skeletonPath.'Vo.tpl.php'
+            $skeletonPath.'Vo.tpl.php',
         );
 
         $nameVoTestClassDetails = $generator->createClassNameDetails(
             'NameTest',
-            'Tests\\Model\\'.$arName.'\\'
+            'Tests\\Model\\'.$arName.'\\',
         );
         $generator->generateClass(
             $nameVoTestClassDetails->getFullName(),
             $skeletonPath.'VoTest.tpl.php',
             [
                 'name_class' => $nameVoClassDetails->getFullName(),
-            ]
+            ],
         );
 
         $repositoryClassDetails = $generator->createClassNameDetails(
             $arName.'Repository',
-            'Infrastructure\\Repository\\'
+            'Infrastructure\\Repository\\',
         );
         $generator->generateClass(
             $repositoryClassDetails->getFullName(),
@@ -180,12 +180,12 @@ class AggregateRootMaker extends AbstractMaker
                 'model'          => $arClassDetails->getShortName(),
                 'model_lower'    => $arLowerName,
                 'list_class'     => $listClassName,
-            ]
+            ],
         );
 
         $repositoryClassTestDetails = $generator->createClassNameDetails(
             $arName.'RepositoryTest',
-            'Tests\\Infrastructure\\Repository\\'
+            'Tests\\Infrastructure\\Repository\\',
         );
         $generator->generateClass(
             $repositoryClassTestDetails->getFullName(),
@@ -197,12 +197,12 @@ class AggregateRootMaker extends AbstractMaker
                 'model'                  => $arClassDetails->getShortName(),
                 'model_lower'            => $arLowerName,
                 'name_class'             => $nameVoClassDetails->getFullName(),
-            ]
+            ],
         );
 
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
-            'Model\\'.$arName.'\\Exception\\'
+            'Model\\'.$arName.'\\Exception\\',
         );
         $generator->generateClass(
             $notFoundExceptionClassDetails->getFullName(),
@@ -212,12 +212,12 @@ class AggregateRootMaker extends AbstractMaker
                 'id_class_short' => $idClassShortName,
                 'id_property'    => $idProperty,
                 'model'          => $arClassDetails->getShortName(),
-            ]
+            ],
         );
 
         $deletedExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'IsDeleted',
-            'Model\\'.$arName.'\\Exception\\'
+            'Model\\'.$arName.'\\Exception\\',
         );
         $generator->generateClass(
             $deletedExceptionClassDetails->getFullName(),
@@ -227,7 +227,7 @@ class AggregateRootMaker extends AbstractMaker
                 'id_class_short' => $idClassShortName,
                 'id_property'    => $idProperty,
                 'model'          => $arClassDetails->getShortName(),
-            ]
+            ],
         );
 
         $commandsEvents = [
@@ -239,7 +239,7 @@ class AggregateRootMaker extends AbstractMaker
         foreach ($commandsEvents as $command => $event) {
             $commandClassDetails = $generator->createClassNameDetails(
                 $command.$arName,
-                'Model\\'.$arName.'\\Command\\'
+                'Model\\'.$arName.'\\Command\\',
             );
             $commandTemplate = 'Delete' !== $command ? 'Command.tpl.php' : 'CommandDelete.tpl.php';
             $generator->generateClass(
@@ -251,12 +251,12 @@ class AggregateRootMaker extends AbstractMaker
                     'id_property'    => $idProperty,
                     'model'          => $arClassDetails->getShortName(),
                     'name_class'     => $nameVoClassDetails->getFullName(),
-                ]
+                ],
             );
 
             $commandTestClassDetails = $generator->createClassNameDetails(
                 $command.$arName.'Test',
-                'Tests\\Model\\'.$arName.'\\Command\\'
+                'Tests\\Model\\'.$arName.'\\Command\\',
             );
             $commandTestTemplate = 'Delete' !== $command ? 'CommandTest.tpl.php' : 'CommandDeleteTest.tpl.php';
             $generator->generateClass(
@@ -267,12 +267,12 @@ class AggregateRootMaker extends AbstractMaker
                     'command_class_short' => $commandClassDetails->getShortName(),
                     'id_property'         => $idProperty,
                     'name_class'          => $nameVoClassDetails->getFullName(),
-                ]
+                ],
             );
 
             $handlerClassDetails = $generator->createClassNameDetails(
                 $command.$arName.'Handler',
-                'Model\\'.$arName.'\\Handler\\'
+                'Model\\'.$arName.'\\Handler\\',
             );
             $handlerTemplate = 'Delete' !== $command ? 'Handler.tpl.php' : 'HandlerDelete.tpl.php';
             $generator->generateClass(
@@ -283,19 +283,19 @@ class AggregateRootMaker extends AbstractMaker
                     'model'               => $arClassDetails->getShortName(),
                     'list_class'          => $listClassName,
                     'repo_property'       => Str::asLowerCamelCase(
-                        $arClassDetails->getShortName().'Repo'
+                        $arClassDetails->getShortName().'Repo',
                     ),
                     'command_class'       => $commandClassDetails->getFullName(),
                     'command_class_short' => $commandClassDetails->getShortName(),
                     'model_lower'         => $arLowerName,
                     'id_class_short'      => $idClassShortName,
                     'id_property'         => $idProperty,
-                ]
+                ],
             );
 
             $handlerTestClassDetails = $generator->createClassNameDetails(
                 $command.$arName.'HandlerTest',
-                'Tests\\Model\\'.$arName.'\\Handler\\'
+                'Tests\\Model\\'.$arName.'\\Handler\\',
             );
             $generator->generateClass(
                 $handlerTestClassDetails->getFullName(),
@@ -316,12 +316,12 @@ class AggregateRootMaker extends AbstractMaker
                     'name_class'            => $nameVoClassDetails->getFullName(),
                     'not_found_class'       => $notFoundExceptionClassDetails->getFullName(),
                     'not_found_class_short' => $notFoundExceptionClassDetails->getShortName(),
-                ]
+                ],
             );
 
             $eventClassDetails = $generator->createClassNameDetails(
                 $arName.$event,
-                'Model\\'.$arName.'\\Event\\'
+                'Model\\'.$arName.'\\Event\\',
             );
             $generator->generateClass(
                 $eventClassDetails->getFullName(),
@@ -332,12 +332,12 @@ class AggregateRootMaker extends AbstractMaker
                     'id_property'    => $idProperty,
                     'model'          => $arClassDetails->getShortName(),
                     'name_class'     => $nameVoClassDetails->getFullName(),
-                ]
+                ],
             );
 
             $eventTestClassDetails = $generator->createClassNameDetails(
                 $arName.$event.'Test',
-                'Tests\\Model\\'.$arName.'\\Event\\'
+                'Tests\\Model\\'.$arName.'\\Event\\',
             );
             $generator->generateClass(
                 $eventTestClassDetails->getFullName(),
@@ -347,12 +347,12 @@ class AggregateRootMaker extends AbstractMaker
                     'event_class_short' => $eventClassDetails->getShortName(),
                     'id_property'       => $idProperty,
                     'name_class'        => $nameVoClassDetails->getFullName(),
-                ]
+                ],
             );
 
             $mutationClassDetails = $generator->createClassNameDetails(
                 $arName.$command.'Mutation',
-                'Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\'
+                'Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\',
             );
             $mutationClasses[$command] = $mutationClassDetails;
             $generator->generateClass(
@@ -370,17 +370,17 @@ class AggregateRootMaker extends AbstractMaker
                     'model_lower'         => $arLowerName,
                     'name_class'          => $nameVoClassDetails->getFullName(),
                     'entity'              => Str::asLowerCamelCase(
-                        $entityClassDetails->getShortName()
+                        $entityClassDetails->getShortName(),
                     ),
                     'entity_finder'       => $entityFinder->getShortName(),
                     'entity_finder_lower' => Str::asLowerCamelCase($entityFinder->getShortName()),
                     'entity_finder_class' => $entityFinder->getFullName(),
-                ]
+                ],
             );
 
             $mutationTestClassDetails = $generator->createClassNameDetails(
                 $arName.$command.'MutationTest',
-                'Tests\\Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\'
+                'Tests\\Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\',
             );
             $generator->generateClass(
                 $mutationTestClassDetails->getFullName(),
@@ -395,14 +395,14 @@ class AggregateRootMaker extends AbstractMaker
                     'id_class'             => $idClassFullName,
                     'id_class_short'       => $idClassShortName,
                     'entity'               => Str::asLowerCamelCase(
-                        $entityClassDetails->getShortName()
+                        $entityClassDetails->getShortName(),
                     ),
                     'entity_class'         => $entityClassDetails->getFullName(),
                     'entity_class_short'   => $entityClassDetails->getShortName(),
                     'entity_finder'        => $entityFinder->getShortName(),
                     'entity_finder_lower'  => Str::asLowerCamelCase($entityFinder->getShortName()),
                     'entity_finder_class'  => $entityFinder->getFullName(),
-                ]
+                ],
             );
         }
 
@@ -412,7 +412,7 @@ class AggregateRootMaker extends AbstractMaker
             [
                 'model'       => $arClassDetails->getShortName(),
                 'id_property' => $idProperty,
-            ]
+            ],
         );
         $generator->generateFile(
             'config/graphql/types/'.$arLowerName.'.mutation.yaml',
@@ -422,15 +422,15 @@ class AggregateRootMaker extends AbstractMaker
                 'model_lower'     => $arLowerName,
                 'id_property'     => $idProperty,
                 'mutation_add'    => $this->doubleEscapeClass(
-                    $mutationClasses['Add']->getFullName()
+                    $mutationClasses['Add']->getFullName(),
                 ),
                 'mutation_change' => $this->doubleEscapeClass(
-                    $mutationClasses['Change']->getFullName()
+                    $mutationClasses['Change']->getFullName(),
                 ),
                 'mutation_delete' => $this->doubleEscapeClass(
-                    $mutationClasses['Delete']->getFullName()
+                    $mutationClasses['Delete']->getFullName(),
                 ),
-            ]
+            ],
         );
 
         $generator->writeChanges();
@@ -469,41 +469,41 @@ class AggregateRootMaker extends AbstractMaker
     {
         $dependencies->addClassDependency(
             \Xm\SymfonyBundle\Messaging\Command::class,
-            'xm/symfony'
+            'xm/symfony',
         );
         $dependencies->addClassDependency(
             MessageBusInterface::class,
-            'symfony/message-bus'
+            'symfony/message-bus',
         );
 
         $dependencies->addClassDependency(
             AggregateRoot::class,
-            'xm/symfony'
+            'xm/symfony',
         );
 
         $dependencies->addClassDependency(
             Entity::class,
-            'xm/symfony'
+            'xm/symfony',
         );
 
         $dependencies->addClassDependency(
             UuidId::class,
-            'xm/symfony'
+            'xm/symfony',
         );
 
         $dependencies->addClassDependency(
             ValueObject::class,
-            'xm/symfony'
+            'xm/symfony',
         );
 
         $dependencies->addClassDependency(
             AggregateChanged::class,
-            'xm/symfony'
+            'xm/symfony',
         );
 
         $dependencies->addClassDependency(
             AggregateRepository::class,
-            'xm/symfony'
+            'xm/symfony',
         );
     }
 }

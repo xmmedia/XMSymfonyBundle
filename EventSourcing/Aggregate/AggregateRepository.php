@@ -19,7 +19,7 @@ class AggregateRepository
         private readonly EventStore $eventStore,
         private readonly AggregateType $aggregateType,
         private readonly AggregateTranslator $aggregateTranslator,
-        private StreamName|null $streamName = null
+        private StreamName|null $streamName = null,
     ) {
     }
 
@@ -63,12 +63,12 @@ class AggregateRepository
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
             '_aggregate_type',
             Operator::EQUALS(),
-            $this->aggregateType->toString()
+            $this->aggregateType->toString(),
         );
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
             '_aggregate_id',
             Operator::EQUALS(),
-            $aggregateId
+            $aggregateId,
         );
 
         try {
@@ -83,7 +83,7 @@ class AggregateRepository
 
         $eventSourcedAggregateRoot = $this->aggregateTranslator->reconstituteAggregateFromHistory(
             $this->aggregateType,
-            $streamEvents
+            $streamEvents,
         );
 
         // Cache aggregate root in the identity map but without pending events

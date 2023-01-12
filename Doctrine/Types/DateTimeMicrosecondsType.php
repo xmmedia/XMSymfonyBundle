@@ -29,7 +29,7 @@ class DateTimeMicrosecondsType extends Type
      */
     public function getSQLDeclaration(
         array $column,
-        AbstractPlatform $platform
+        AbstractPlatform $platform,
     ): string {
         return $platform->getDateTimeTypeDeclarationSQL($column).'(6)';
     }
@@ -39,7 +39,7 @@ class DateTimeMicrosecondsType extends Type
      */
     public function convertToDatabaseValue(
         $value,
-        AbstractPlatform $platform
+        AbstractPlatform $platform,
     ): ?string {
         if (null === $value) {
             return null;
@@ -57,7 +57,7 @@ class DateTimeMicrosecondsType extends Type
      */
     public function convertToPHPValue(
         $value,
-        AbstractPlatform $platform
+        AbstractPlatform $platform,
     ): ?\DateTimeInterface {
         if (null === $value || $value instanceof \DateTimeInterface) {
             return $value;

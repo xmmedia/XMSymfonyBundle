@@ -15,7 +15,7 @@ trait AggregateRepositoryFactory
 {
     private function getRepository(
         string $repositoryClass,
-        string $aggregateRootClass
+        string $aggregateRootClass,
     ): AggregateRepository {
         $aggregateType = AggregateType::fromAggregateRootClass($aggregateRootClass);
         $aggregateTranslator = new AggregateTranslator();
@@ -23,14 +23,14 @@ trait AggregateRepositoryFactory
         $eventStore = new InMemoryEventStore();
         $eventStore->beginTransaction();
         $eventStore->create(
-            new Stream(new StreamName('event_stream'), new \ArrayIterator())
+            new Stream(new StreamName('event_stream'), new \ArrayIterator()),
         );
         $eventStore->commit();
 
         return new $repositoryClass(
             $eventStore,
             $aggregateType,
-            $aggregateTranslator
+            $aggregateTranslator,
         );
     }
 }

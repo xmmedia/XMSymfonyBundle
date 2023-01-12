@@ -34,7 +34,7 @@ class PostalCode implements ValueObject
             Assert::lengthBetween(
                 $postalCode,
                 self::MIN_LENGTH,
-                self::MAX_LENGTH
+                self::MAX_LENGTH,
             );
         } catch (\InvalidArgumentException $e) {
             throw InvalidPostalCode::invalid($postalCode);
@@ -52,7 +52,7 @@ class PostalCode implements ValueObject
             $postalCode = sprintf(
                 '%s %s',
                 substr($postalCode, 0, 3),
-                substr($postalCode, 3, 3)
+                substr($postalCode, 3, 3),
             );
         }
 

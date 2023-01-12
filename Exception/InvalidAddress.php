@@ -12,10 +12,10 @@ final class InvalidAddress extends \InvalidArgumentException
             sprintf(
                 'The address line 1 ("%s") is invalid: %s',
                 $line1,
-                $previous->getMessage()
+                $previous->getMessage(),
             ),
             0,
-            $previous
+            $previous,
         );
     }
 
@@ -25,10 +25,10 @@ final class InvalidAddress extends \InvalidArgumentException
             sprintf(
                 'The address line 2 ("%s") is invalid: %s',
                 $line2,
-                $previous->getMessage()
+                $previous->getMessage(),
             ),
             0,
-            $previous
+            $previous,
         );
     }
 
@@ -38,10 +38,10 @@ final class InvalidAddress extends \InvalidArgumentException
             sprintf(
                 'The address city ("%s") is invalid: %s',
                 $city,
-                $previous->getMessage()
+                $previous->getMessage(),
             ),
             0,
-            $previous
+            $previous,
         );
     }
 }

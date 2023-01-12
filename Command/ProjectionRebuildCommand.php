@@ -23,7 +23,7 @@ final class ProjectionRebuildCommand extends Command
             ->addArgument(
                 static::ARGUMENT_PROJECTION_NAME,
                 InputArgument::REQUIRED,
-                'The name of the Projection'
+                'The name of the Projection',
             )
         ;
     }

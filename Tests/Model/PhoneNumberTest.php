@@ -31,7 +31,7 @@ class PhoneNumberTest extends BaseTestCase
     public function testToArrayFromArray(string $void, array $data): void
     {
         $phoneNumber = PhoneNumber::fromArray(
-            PhoneNumber::fromArray($data)->toArray()
+            PhoneNumber::fromArray($data)->toArray(),
         );
 
         $this->assertEquals($data, $phoneNumber->toArray());

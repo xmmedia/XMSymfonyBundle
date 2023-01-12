@@ -32,7 +32,7 @@ class Province implements ValueObject
             Assert::length($abbreviation, 2);
             Assert::oneOf(
                 $abbreviation,
-                ProvinceProvider::abbreviations(false)
+                ProvinceProvider::abbreviations(false),
             );
         } catch (\InvalidArgumentException $e) {
             throw InvalidProvince::invalid($abbreviation);

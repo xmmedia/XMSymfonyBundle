@@ -21,7 +21,7 @@ class AssertTest extends BaseTestCase
             $password,
             [],
             null,
-            new PasswordStrengthFake()
+            new PasswordStrengthFake(),
         );
 
         $this->assertTrue(true);
@@ -40,7 +40,7 @@ class AssertTest extends BaseTestCase
      */
     public function testPasswordComplexityBad(
         string $password,
-        array $userData
+        array $userData,
     ): void {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -48,7 +48,7 @@ class AssertTest extends BaseTestCase
             $password,
             $userData,
             null,
-            new PasswordStrengthFake(0)
+            new PasswordStrengthFake(0),
         );
     }
 

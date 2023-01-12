@@ -20,7 +20,7 @@ class GenderType extends EnumType implements AliasedInterface
             'name'        => self::NAME,
             'values'      => array_combine(
                 Gender::getNames(),
-                Gender::getValues()
+                Gender::getValues(),
             ),
             'description' => 'Gender.',
         ];

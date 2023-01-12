@@ -27,7 +27,7 @@ class CommandRecorderMiddlewareTest extends BaseTestCase
 
         $middleware->handle(
             new Envelope(FakeCommand::perform()),
-            new StackMiddleware()
+            new StackMiddleware(),
         );
     }
 }

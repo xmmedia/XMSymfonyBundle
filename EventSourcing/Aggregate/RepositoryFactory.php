@@ -14,13 +14,13 @@ class RepositoryFactory
         EventStore $eventStore,
         string $aggregateType,
         AggregateTranslator $aggregateTranslator,
-        string $streamName = null
+        string $streamName = null,
     ) {
         return new $repositoryClass(
             $eventStore,
             AggregateType::fromAggregateRootClass($aggregateType),
             $aggregateTranslator,
-            $streamName ? new StreamName($streamName) : null
+            $streamName ? new StreamName($streamName) : null,
         );
     }
 }

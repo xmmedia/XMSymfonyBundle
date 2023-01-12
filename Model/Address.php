@@ -31,7 +31,7 @@ class Address implements ValueObject
         string $city,
         string $province,
         string $postalCode,
-        string $country
+        string $country,
     ): self {
         $province = Province::fromString($province);
         $postalCode = PostalCode::fromString($postalCode);
@@ -61,7 +61,7 @@ class Address implements ValueObject
             $address['city'],
             $address['province'],
             $address['postalCode'],
-            $address['country']
+            $address['country'],
         );
     }
 
@@ -71,7 +71,7 @@ class Address implements ValueObject
         string $city,
         Province $province,
         PostalCode $postalCode,
-        Country $country
+        Country $country,
     ) {
         $line1 = StringUtil::trim($line1);
         $line2 = StringUtil::trim($line2);
@@ -81,7 +81,7 @@ class Address implements ValueObject
             Assert::lengthBetween(
                 $line1,
                 self::LINE_MIN_LENGTH,
-                self::LINE_MAX_LENGTH
+                self::LINE_MAX_LENGTH,
             );
         } catch (\InvalidArgumentException $e) {
             throw InvalidAddress::line1($line1, $e);
@@ -91,7 +91,7 @@ class Address implements ValueObject
             Assert::nullOrLengthBetween(
                 $line2,
                 self::LINE_MIN_LENGTH,
-                self::LINE_MAX_LENGTH
+                self::LINE_MAX_LENGTH,
             );
         } catch (\InvalidArgumentException $e) {
             throw InvalidAddress::line2($line2, $e);
@@ -101,7 +101,7 @@ class Address implements ValueObject
             Assert::lengthBetween(
                 $city,
                 self::CITY_MIN_LENGTH,
-                self::CITY_MAX_LENGTH
+                self::CITY_MAX_LENGTH,
             );
         } catch (\InvalidArgumentException $e) {
             throw InvalidAddress::city($city, $e);

@@ -18,7 +18,7 @@ class MetadataIssuedByEnricher implements MetadataEnricher
     {
         return $message->withAddedMetadata(
             'issuedBy',
-            $this->issuerProvider->getIssuer()
+            $this->issuerProvider->getIssuer(),
         );
     }
 }

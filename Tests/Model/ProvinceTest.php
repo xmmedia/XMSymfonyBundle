@@ -19,7 +19,7 @@ class ProvinceTest extends TestCase
         string $abbreviation,
         string $expected,
         string $name,
-        Country $country
+        Country $country,
     ): void {
         $province = Province::fromString($abbreviation);
 

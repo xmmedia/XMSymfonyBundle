@@ -17,7 +17,7 @@ class CountryTest extends TestCase
     public function testFromString(
         string $abbreviation,
         string $expected,
-        string $name
+        string $name,
     ): void {
         $country = Country::fromString($abbreviation);
 

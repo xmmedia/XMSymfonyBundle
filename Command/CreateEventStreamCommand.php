@@ -27,7 +27,7 @@ final class CreateEventStreamCommand extends Command
             ->addArgument(
                 'stream_name',
                 InputArgument::REQUIRED,
-                'The name of the event stream. This will also be used in the table name. Don\'t include "_event_stream".'
+                'The name of the event stream. This will also be used in the table name. Don\'t include "_event_stream".',
             )
         ;
     }
@@ -39,8 +39,8 @@ final class CreateEventStreamCommand extends Command
         $this->eventStore->create(
             new Stream(
                 new StreamName($streamName),
-                new \ArrayIterator([])
-            )
+                new \ArrayIterator([]),
+            ),
         );
 
         $output->writeln('<info>Event stream "'.$streamName.'" was created successfully.</info>');

@@ -32,7 +32,7 @@ final class GraphQlDumpSchemaCommand extends Command
             ->addArgument(
                 'user-email',
                 InputArgument::OPTIONAL,
-                'The user to use for the permission checks in the GraphQL config. Skip to do the public schema.'
+                'The user to use for the permission checks in the GraphQL config. Skip to do the public schema.',
             )
             ->addOption(
                 'schema',
@@ -60,7 +60,7 @@ final class GraphQlDumpSchemaCommand extends Command
             'command'             => 'graphql:dump-schema',
             '--file'              => sprintf(
                 'graphql%s.schema.json',
-                $schemaName ? '.'.$schemaName : ''
+                $schemaName ? '.'.$schemaName : '',
             ),
             '--modern'            => true,
             '--with-descriptions' => true,
@@ -85,7 +85,7 @@ final class GraphQlDumpSchemaCommand extends Command
         return new PostAuthenticationToken(
             $user,
             'app_provider',
-            $user->roles()
+            $user->roles(),
         );
     }
 }

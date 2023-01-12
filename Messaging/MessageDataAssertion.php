@@ -74,7 +74,7 @@ final class MessageDataAssertion
         Assert::isInstanceOf($createdAt, \DateTimeImmutable::class, sprintf(
             'created_at must be of type %s. Got %s',
             \DateTimeImmutable::class,
-            \is_object($createdAt) ? \get_class($createdAt) : \gettype($createdAt)
+            \is_object($createdAt) ? \get_class($createdAt) : \gettype($createdAt),
         ));
     }
 }
