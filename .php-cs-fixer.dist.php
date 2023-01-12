@@ -6,35 +6,40 @@ declare(strict_types=1);
 
 $finder = PhpCsFixer\Finder::create()
     ->in('.')
-    ->exclude('Resources/skeleton')
-;
+    ->exclude('Resources/skeleton');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
-        '@Symfony'                  => true,
-        '@Symfony:risky'            => true,
-        '@PSR2'                     => true,
-        '@DoctrineAnnotation'       => true,
-        '@PHP71Migration'           => true,
-        '@PHP73Migration'           => true,
-        '@PHPUnit60Migration:risky' => true,
-        'array_syntax'              => [
-            'syntax' => 'short',
+        '@Symfony'                    => true,
+        '@Symfony:risky'              => true,
+        '@PSR2'                       => true,
+        '@DoctrineAnnotation'         => true,
+        '@PHP71Migration'             => true,
+        '@PHP73Migration'             => true,
+        '@PHP74Migration'             => true,
+        '@PHP80Migration'             => true,
+        '@PHP81Migration'             => true,
+        '@PHPUnit60Migration:risky'   => true,
+        'array_syntax'                => [
+           'syntax' => 'short',
         ],
-        'binary_operator_spaces' => [
-            'operators' => [
-                '=>' => 'align',
-            ],
+        'binary_operator_spaces'      => [
+           'operators' => [
+               '=>' => 'align',
+           ],
         ],
-        'declare_strict_types'  => true,
-        'fopen_flags'           => false,
-        'heredoc_indentation'   => false,
-        'method_argument_space' => [
-            'on_multiline' => 'ensure_fully_multiline',
+        'declare_strict_types'        => true,
+        'fopen_flags'                 => false,
+        'heredoc_indentation'         => false,
+        'method_argument_space'       => [
+           'on_multiline' => 'ensure_fully_multiline',
         ],
-        'ordered_imports'      => true,
-        'protected_to_private' => false,
+        'ordered_imports'             => true,
+        'protected_to_private'        => false,
+        'trailing_comma_in_multiline' => [
+           'elements' => ['arrays', 'arguments', 'parameters'],
+        ],
+        'single_line_throw'           => false,
     ])
-    ->setFinder($finder)
-;
+    ->setFinder($finder);
