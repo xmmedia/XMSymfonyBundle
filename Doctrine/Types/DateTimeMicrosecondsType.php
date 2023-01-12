@@ -49,7 +49,7 @@ class DateTimeMicrosecondsType extends Type
             return $value->format(self::FORMAT);
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
+        throw ConversionException::conversionFailedInvalidType($value, self::TYPENAME, ['null', 'DateTime']);
     }
 
     /**
@@ -70,7 +70,7 @@ class DateTimeMicrosecondsType extends Type
         }
 
         if (!$val) {
-            throw ConversionException::conversionFailedFormat($value, $this->getName(), self::FORMAT);
+            throw ConversionException::conversionFailedFormat($value, self::TYPENAME, self::FORMAT);
         }
 
         return $val;
