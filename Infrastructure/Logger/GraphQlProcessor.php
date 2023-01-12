@@ -17,6 +17,7 @@ class GraphQlProcessor implements ProcessorInterface, EventSubscriberInterface
 
     /**
      * @param LogRecord|array $record
+     *
      * @return LogRecord|array
      */
     public function __invoke($record)

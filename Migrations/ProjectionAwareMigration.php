@@ -46,7 +46,7 @@ trait ProjectionAwareMigration
     }
 
     /**
-     * @deprecated Use ContainerAwareTrait instead.
+     * @deprecated use ContainerAwareTrait instead
      */
     public function setContainer(ContainerInterface $container = null)
     {
