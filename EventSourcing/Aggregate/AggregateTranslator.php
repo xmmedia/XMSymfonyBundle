@@ -56,7 +56,7 @@ final class AggregateTranslator implements EventStoreAggregateTranslator
     }
 
     /**
-     * @deprecated Likely not used.
+     * @deprecated likely not used
      */
     public function setAggregateRootDecorator(AggregateRootDecorator $anAggregateRootDecorator): void
     {

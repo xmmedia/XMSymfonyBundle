@@ -13,7 +13,6 @@ class PhoneNumber implements ValueObject
 {
     private static string $defaultRegion = 'CA';
 
-    /** @var LibPhoneNumber */
     private LibPhoneNumber $phoneNumber;
 
     /**

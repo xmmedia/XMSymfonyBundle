@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Tests\DataProvider;
 
 use Ramsey\Uuid\Uuid;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
@@ -58,7 +58,7 @@ class IssuerProviderTest extends BaseTestCase
      *
      * @param UserInterface|bool|null $user
      */
-    private function createSecurity(?\Xm\SymfonyBundle\Tests\TestUserEntity $user): Security
+    private function createSecurity(?User $user): Security
     {
         $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
 

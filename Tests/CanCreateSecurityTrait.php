@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 trait CanCreateSecurityTrait
