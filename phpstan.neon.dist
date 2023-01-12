@@ -11,7 +11,7 @@ parameters:
     level: 0
     paths:
         - .
-    excludes_analyse:
+    excludePaths:
         - Resources/skeleton
         - vendor
     ignoreErrors:
