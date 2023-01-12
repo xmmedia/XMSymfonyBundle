@@ -15,21 +15,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class <?= $class_name; ?> implements MutationInterface
 {
-    private MessageBusInterface $commandBus;
 <?php if (!$delete) { ?>
-    private <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>;
-<?php } ?>
-
-<?php if (!$delete) { ?>
-    public function __construct(MessageBusInterface $commandBus, <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
+    public function __construct(private readonly MessageBusInterface $commandBus, private readonly <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
 <?php } else { ?>
-    public function __construct(MessageBusInterface $commandBus)
+    public function __construct(private readonly MessageBusInterface $commandBus)
 <?php } ?>
     {
-        $this->commandBus = $commandBus;
-<?php if (!$delete) { ?>
-        $this-><?= $entity_finder_lower; ?> = $<?= $entity_finder_lower; ?>;
-<?php } ?>
     }
 
 <?php if (!$delete) { ?>

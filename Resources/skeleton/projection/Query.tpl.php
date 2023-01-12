@@ -11,11 +11,8 @@ use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
 final class <?= $class_name; ?> implements QueryInterface
 {
-    private <?= $finder_class_short; ?> $<?= $finder_property; ?>;
-
-    public function __construct(<?= $finder_class_short; ?> $<?= $finder_property; ?>)
+    public function __construct(private readonly <?= $finder_class_short; ?> $<?= $finder_property; ?>)
     {
-        $this-><?= $finder_property; ?> = $<?= $finder_property; ?>;
     }
 
     public function __invoke(string $<?= $id_property; ?>): ?<?= $entity_class_short; ?><?= "\n"; ?>

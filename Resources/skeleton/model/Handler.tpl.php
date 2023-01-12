@@ -15,11 +15,8 @@ use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
 
 final class <?= $class_name; ?><?= "\n"; ?>
 {
-    private <?= $list_class; ?> $<?= $repo_property; ?>;
-
-    public function __construct(<?= $list_class; ?> $<?= $repo_property; ?>)
+    public function __construct(private readonly <?= $list_class; ?> $<?= $repo_property; ?>)
     {
-        $this-><?= $repo_property; ?> = $<?= $repo_property; ?>;
     }
 
     public function __invoke(<?= $command_class_short; ?> $command): void
