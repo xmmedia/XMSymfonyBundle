@@ -26,7 +26,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     {
         $this->connection = $connection;
 
-        if (null === $this->tables) {
+        if (!isset($this->tables)) {
             $this->tables = [static::TABLE];
         }
     }
