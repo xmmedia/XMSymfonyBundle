@@ -15,14 +15,12 @@ class <?= $class_name; ?><?= "\n"; ?>
 {
     /**
      * @var \Ramsey\Uuid\Uuid
-     * @ORM\Id
-     * @ORM\Column(type="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
     private UuidInterface $<?= $id_property; ?>;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(length: 50)]
     private string $name;
 
     public function <?= $id_property; ?>(): <?= $id_class_short; ?><?= "\n"; ?>

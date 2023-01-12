@@ -35,7 +35,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
         $<?= $entity_finder_lower; ?> = \Mockery::mock(<?= $entity_finder; ?>::class);
-        $<?= $entity_finder_lower; ?>->shouldReceive('findRefreshed')
+        $<?= $entity_finder_lower; ?>->shouldReceive('<?= $add ? 'find' : 'findRefreshed' ?>')
             ->once()
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($entity);

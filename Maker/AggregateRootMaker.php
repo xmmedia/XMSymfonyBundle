@@ -387,6 +387,7 @@ class AggregateRootMaker extends AbstractMaker
                 $skeletonPath.'MutationTest.tpl.php',
                 [
                     'delete'               => 'Delete' === $command,
+                    'add'                  => 'Add' === $command,
                     'mutation_class'       => $mutationClassDetails->getFullName(),
                     'mutation_class_short' => $mutationClassDetails->getShortName(),
                     'command_class'        => $commandClassDetails->getFullName(),
