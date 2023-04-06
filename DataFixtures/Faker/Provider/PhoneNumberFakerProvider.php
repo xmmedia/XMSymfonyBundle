@@ -26,7 +26,7 @@ class PhoneNumberFakerProvider extends FakerPhoneNumber
 
     public static function areaCode(): string
     {
-        return self::randomElement(self::$areaCodes);
+        return (string) self::randomElement(self::$areaCodes);
     }
 
     public function phoneNumberVo(): PhoneNumber
