@@ -34,7 +34,7 @@ class <?= $class_name; ?> extends BaseTestCase
                 function (
                     string $table,
                     array $passedData,
-                    array $passedTypes
+                    array $passedTypes,
                 ) use ($data, $types): bool {
                     $this->assertEquals('<?= $projection_name; ?>', $table);
                     $this->assertEquals($data, $passedData);
@@ -65,7 +65,7 @@ class <?= $class_name; ?> extends BaseTestCase
                     string $table,
                     array $passedData,
                     array $passedCriteria,
-                    array $passedTypes
+                    array $passedTypes,
                 ) use ($<?= $id_property; ?>, $data, $types): bool {
                     $this->assertEquals('<?= $projection_name; ?>', $table);
                     $this->assertEquals($data, $passedData);
@@ -94,7 +94,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->withArgs(
                 function (
                     string $table,
-                    array $passedCriteria
+                    array $passedCriteria,
                 ) use ($<?= $id_property; ?>): bool {
                     $this->assertEquals('<?= $projection_name; ?>', $table);
                     $this->assertEquals(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);

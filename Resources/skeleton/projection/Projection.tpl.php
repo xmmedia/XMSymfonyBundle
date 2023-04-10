@@ -19,7 +19,7 @@ class <?= $class_name; ?> implements ReadModelProjection
             ->when([
                 Event\<?= $model; ?>WasAdded::class => function (
                     array $state,
-                    Event\<?= $model; ?>WasAdded $event
+                    Event\<?= $model; ?>WasAdded $event,
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
@@ -35,7 +35,7 @@ class <?= $class_name; ?> implements ReadModelProjection
 
                 Event\<?= $model; ?>WasChanged ::class => function (
                     array $state,
-                    Event\<?= $model; ?>WasChanged $event
+                    Event\<?= $model; ?>WasChanged $event,
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
@@ -51,7 +51,7 @@ class <?= $class_name; ?> implements ReadModelProjection
 
                 Event\<?= $model; ?>WasDeleted ::class => function (
                     array $state,
-                    Event\<?= $model; ?>WasDeleted $event
+                    Event\<?= $model; ?>WasDeleted $event,
                 ): void {
                     /** @var <?= $model; ?>ReadModel $readModel */
                     /** @var ReadModelProjector $this */
