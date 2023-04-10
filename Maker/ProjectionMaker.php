@@ -309,7 +309,6 @@ class ProjectionMaker extends AbstractMaker
                 $modelUpper,
             ),
             '- Scaffold model: <info>bin/console make:model</info>',
-            '- Upload files to dev server, if necessary',
             sprintf(
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,

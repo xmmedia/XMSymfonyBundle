@@ -461,7 +461,6 @@ class AggregateRootMaker extends AbstractMaker
             ),
             '- Update permissions in GraphQL config',
             '- Add ID class to UuidFakerProvider (for tests)',
-            '- Upload files to dev server, if necessary',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
     }
