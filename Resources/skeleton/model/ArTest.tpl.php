@@ -20,10 +20,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
         $name = Name::fromString($faker->name());
 
-        $<?= $model_lower; ?> = <?= $model; ?>::add(
-            $<?= $id_property; ?>,
-            $name,
-        );
+        $<?= $model_lower; ?> = <?= $model; ?>::add($<?= $id_property; ?>, $name);
 
         $this->assertInstanceOf(<?= $model; ?>::class, $<?= $model_lower; ?>);
 
