@@ -9,7 +9,7 @@ use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeCommand;
+use Xm\SymfonyBundle\Tests\FakeEvent;
 
 class CommandEnricherMiddlewareTest extends BaseTestCase
 {
@@ -26,7 +26,7 @@ class CommandEnricherMiddlewareTest extends BaseTestCase
         $middleware = new CommandEnricherMiddleware($issuerProvider);
 
         $envelope = $middleware->handle(
-            new Envelope(FakeCommand::perform()),
+            new Envelope(FakeEvent::performed()),
             new StackMiddleware(),
         );
 
