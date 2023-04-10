@@ -11,10 +11,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?>|string $id, $lockMode = null, $lockVersion = null)
+ * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?>|string $id, int|null $lockMode = null, int|null $lockVersion = null)
  * @method <?= $entity_class_short; ?>|null findOneBy(array $criteria, array $orderBy = null)
  * @method <?= $entity_class_short; ?>[] findAll()
- * @method <?= $entity_class_short; ?>[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method <?= $entity_class_short; ?>[] findBy(array $criteria, array $orderBy = null, int|null $limit = null, int|null $offset = null)
  */
 class <?= $class_name; ?> extends ServiceEntityRepository
 {
