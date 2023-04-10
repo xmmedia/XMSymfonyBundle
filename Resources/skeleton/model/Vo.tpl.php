@@ -45,10 +45,7 @@ final class <?= $class_name; ?> implements ValueObject
         return $this->toString();
     }
 
-    /**
-     * @param self|ValueObject $other
-     */
-    public function sameValueAs(ValueObject $other): bool
+    public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== \get_class($other)) {
             return false;
