@@ -9,7 +9,7 @@ use Xm\SymfonyBundle\Model\Country;
 
 class ProvinceProvider
 {
-    private static array $provincesByCountry = [
+    protected static array $provincesByCountry = [
         'CA' => [
             'Alberta'                 => 'AB',
             'British Columbia'        => 'BC',
