@@ -33,7 +33,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                     );
                 },
 
-                Event\<?= $model; ?>WasChanged ::class => function (
+                Event\<?= $model; ?>WasChanged::class => function (
                     array $state,
                     Event\<?= $model; ?>WasChanged $event,
                 ): void {
@@ -49,7 +49,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                     );
                 },
 
-                Event\<?= $model; ?>WasDeleted ::class => function (
+                Event\<?= $model; ?>WasDeleted::class => function (
                     array $state,
                     Event\<?= $model; ?>WasDeleted $event,
                 ): void {
