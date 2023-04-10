@@ -12,8 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 trait ProjectionAwareMigration
 {
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
     abstract public function write(string $message): void;
 
