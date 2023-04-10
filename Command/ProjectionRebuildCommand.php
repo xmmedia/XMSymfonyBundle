@@ -23,7 +23,7 @@ final class ProjectionRebuildCommand extends Command
             ->addArgument(
                 static::ARGUMENT_PROJECTION_NAME,
                 InputArgument::REQUIRED,
-                'The name of the Projection',
+                'The name of the Projection, with or without "_projection" suffix',
             )
         ;
     }
@@ -31,6 +31,10 @@ final class ProjectionRebuildCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectionName = $input->getArgument(static::ARGUMENT_PROJECTION_NAME);
+        // append _projection if not present
+        if (!str_ends_with($projectionName, '_projection')) {
+            $projectionName .= '_projection';
+        }
 
         $io = new SymfonyStyle($input, $output);
         $io->title(sprintf('Rebuilding Projection "%s"', $projectionName));
