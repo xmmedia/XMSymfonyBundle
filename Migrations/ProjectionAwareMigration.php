@@ -10,6 +10,19 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ *
+ * Example:
+ * final class Version20230201002 extends AbstractMigration implements ContainerAwareInterface
+ * {
+ *     use ProjectionAwareMigration;
+ *     // ...
+ *     public function postUp(Schema $schema): void
+ *     {
+ *          $this->rebuildProjection('user');
+ *     }
+ * }
+ */
 trait ProjectionAwareMigration
 {
     private ContainerInterface $container;
