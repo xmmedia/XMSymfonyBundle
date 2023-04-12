@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Command;
 
 use Prooph\EventStore\Pdo\Projection\PdoEventStoreProjector;
 use Prooph\EventStore\Projection\ReadModelProjector;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,6 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Xm\SymfonyBundle\Infrastructure\Service\ProjectionRunner;
 
+#[AsCommand(
+    name: 'app:projection:run',
+    description: 'Runs a projection.',
+)]
 final class ProjectionRunCommand extends Command
 {
     protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
@@ -34,8 +39,6 @@ final class ProjectionRunCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:projection:run')
-            ->setDescription('Runs a projection')
             ->addArgument(
                 static::ARGUMENT_PROJECTION_NAME,
                 InputArgument::OPTIONAL,

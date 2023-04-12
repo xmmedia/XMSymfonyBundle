@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,6 +17,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 use Xm\SymfonyBundle\Model\Email;
 
+#[AsCommand(
+    name: 'app:graphql:dump-schema',
+    description: 'Dumps GraphQL schema.',
+)]
 final class GraphQlDumpSchemaCommand extends Command
 {
     public function __construct(
@@ -27,8 +32,7 @@ final class GraphQlDumpSchemaCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('app:graphql:dump-schema')
-            ->setDescription('Dumps GraphQL schema')
+        $this
             ->addArgument(
                 'user-email',
                 InputArgument::OPTIONAL,

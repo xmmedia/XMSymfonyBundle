@@ -7,11 +7,16 @@ namespace Xm\SymfonyBundle\Command;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Stream;
 use Prooph\EventStore\StreamName;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'event-store:event-stream:create',
+    description: 'Create event_stream.',
+)]
 final class CreateEventStreamCommand extends Command
 {
     public function __construct(private readonly EventStore $eventStore)
@@ -21,8 +26,7 @@ final class CreateEventStreamCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('event-store:event-stream:create')
-            ->setDescription('Create event_stream.')
+        $this
             ->setHelp('This command creates the event_stream')
             ->addArgument(
                 'stream_name',
