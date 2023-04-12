@@ -11,8 +11,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
+ * Used for migrations that need to rebuild projections.
  *
- * Example:
+ * Example usage:
  * final class Version20230201002 extends AbstractMigration implements ContainerAwareInterface
  * {
  *     use ProjectionAwareMigration;
