@@ -11,12 +11,12 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
         return new static('mixed', $data);
     }
 
-    public function find(callable $cb)
+    public function find(callable $cb): mixed
     {
         $collection = $this->filter($cb);
 
         if ($collection->isEmpty()) {
-            return;
+            return null;
         }
 
         return $collection->first();
@@ -35,7 +35,7 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
         return 0 === $this->diff($other)->count();
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
