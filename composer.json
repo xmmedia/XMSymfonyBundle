@@ -74,7 +74,7 @@
     "test:coverage": "vendor/bin/simple-phpunit --coverage-html coverage",
     "cs": "php-cs-fixer fix -v --dry-run --config=./.php-cs-fixer.dist.php",
     "cs:fix": "php-cs-fixer fix -v --config=./.php-cs-fixer.dist.php",
-    "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse --xdebug",
+    "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse",
     "rector": "vendor/bin/rector --dry-run --xdebug",
     "rector:fix": "vendor/bin/rector --xdebug"
   }
