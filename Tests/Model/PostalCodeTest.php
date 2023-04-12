@@ -22,7 +22,7 @@ class PostalCodeTest extends TestCase
         $this->assertEquals($expected, (string) $province);
     }
 
-    public function countryProvider(): \Generator
+    public static function countryProvider(): \Generator
     {
         yield ['T9D 8K2', 'T9D 8K2'];
         yield ['T9D8K2', 'T9D 8K2'];
@@ -43,7 +43,7 @@ class PostalCodeTest extends TestCase
         PostalCode::fromString($value);
     }
 
-    public function invalidProvider(): \Generator
+    public static function invalidProvider(): \Generator
     {
         yield ['2332'];
         yield [''];

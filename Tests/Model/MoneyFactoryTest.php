@@ -20,7 +20,7 @@ class MoneyFactoryTest extends TestCase
         $this->assertEquals('CAD', $res->getCurrency());
     }
 
-    public function intDataProvider(): array
+    public static function intDataProvider(): array
     {
         return [
             [533, '533'],

@@ -101,7 +101,7 @@ class UuidTypeTest extends BaseTestCase
         (new UuidType())->parseLiteral($node);
     }
 
-    public function invalidUuidProvider(): \Generator
+    public static function invalidUuidProvider(): \Generator
     {
         yield [
             'string',

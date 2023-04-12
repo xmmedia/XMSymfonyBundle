@@ -17,7 +17,7 @@ class StringUtilTest extends BaseTestCase
         $this->assertSame($expected, StringUtil::trim($input));
     }
 
-    public function dataProvider(): \Generator
+    public static function dataProvider(): \Generator
     {
         yield ['string', 'string'];
         yield ['   string', 'string'];

@@ -53,7 +53,7 @@ class UtilsTest extends BaseTestCase
         $this->assertSame($type, Utils::printSafe($var));
     }
 
-    public function printSafeProvider(): \Generator
+    public static function printSafeProvider(): \Generator
     {
         yield [new \stdClass(), 'instance of stdClass'];
         yield [

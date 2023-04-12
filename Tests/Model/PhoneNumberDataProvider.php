@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Model;
 
 trait PhoneNumberDataProvider
 {
-    public function phoneNumberValidProvider(): \Generator
+    public static function phoneNumberValidProvider(): \Generator
     {
         yield [
             '403-543-3233',
@@ -131,7 +131,7 @@ trait PhoneNumberDataProvider
         ];
     }
 
-    public function phoneNumberInvalidProvider(): \Generator
+    public static function phoneNumberInvalidProvider(): \Generator
     {
         // Mexico, but no country code
         yield ['711-543-3233'];
