@@ -11,7 +11,7 @@ class AccountNotVerifiedException extends AccountStatusException
     /**
      * {@inheritdoc}
      */
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return 'Account is not verified.';
     }
