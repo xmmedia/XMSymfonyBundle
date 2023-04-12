@@ -51,11 +51,11 @@ class Assert extends \Webmozart\Assert\Assert
         }
 
         foreach (explode("\r\n", $result) as $line) {
-            try {
-                [$hashSuffix, $count] = explode(':', $line);
-            } catch (\Throwable $e) {
+            if (!str_contains($line, ':')) {
                 throw new \InvalidArgumentException('Unable to check for compromised password. Bad response.');
             }
+
+            [$hashSuffix, $count] = explode(':', $line);
 
             // reject if in more than 3 breaches
             if ($hashPrefix.$hashSuffix === $hash && 3 <= (int) $count) {
