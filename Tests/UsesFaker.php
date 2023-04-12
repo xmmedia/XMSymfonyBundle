@@ -9,15 +9,14 @@ use Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
 trait UsesFaker
 {
-    /** @var Faker\Generator */
-    private $faker;
+    private Faker\Generator $faker;
 
     /**
      * @return Faker\Generator|Provider\AddressFakerProvider|Provider\DateFakerProvider|Provider\EmailFakerProvider|Provider\GenderFakerProvider|Provider\InternetFakerProvider|Provider\NameFakerProvider|Provider\PhoneNumberFakerProvider|Provider\StringFakerProvider|Provider\UuidFakerProvider
      */
     protected function faker(): Faker\Generator
     {
-        return null === $this->faker ? $this->makeFaker() : $this->faker;
+        return !isset($this->faker) ? $this->makeFaker() : $this->faker;
     }
 
     private function makeFaker(): Faker\Generator
