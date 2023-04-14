@@ -12,7 +12,7 @@ class EntrypointIntegrityHashQuery implements QueryInterface
 {
     private EntrypointLookupInterface $entrypointLookup;
 
-    public function __construct(EntrypointLookupCollectionInterface $collection)
+    public function __construct(EntrypointLookupCollectionInterface $collection = null)
     {
         $this->entrypointLookup = $collection->getEntrypointLookup();
     }
