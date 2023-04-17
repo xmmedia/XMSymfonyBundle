@@ -12,7 +12,7 @@ class StringUtilTest extends BaseTestCase
     /**
      * @dataProvider dataProvider
      */
-    public function test($input, $expected): void
+    public function test($input, string|null|int|array|float|\stdClass|\Closure $expected): void
     {
         $this->assertSame($expected, StringUtil::trim($input));
     }

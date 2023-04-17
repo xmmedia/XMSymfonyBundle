@@ -24,7 +24,7 @@ class UuidTypeTest extends BaseTestCase
     /**
      * @dataProvider invalidUuidProvider
      */
-    public function testSerializeInvalid($value): void
+    public function testSerializeInvalid(string|null|array $value): void
     {
         $this->expectException(Error::class);
 
@@ -71,7 +71,7 @@ class UuidTypeTest extends BaseTestCase
     /**
      * @dataProvider invalidUuidProvider
      */
-    public function testParseValueInvalid($value): void
+    public function testParseValueInvalid(string|null|array $value): void
     {
         $this->expectException(Error::class);
 

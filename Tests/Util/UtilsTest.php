@@ -12,7 +12,7 @@ class UtilsTest extends BaseTestCase
     /**
      * @dataProvider serializeValidProvider
      */
-    public function testSerializeValid($input, $expected): void
+    public function testSerializeValid(null|bool|string|float|int|array|\Xm\SymfonyBundle\Tests\Util\ClassWithToString|\Xm\SymfonyBundle\Tests\Util\ClassWithGetValue|\Xm\SymfonyBundle\Tests\Util\ClassWithToArray $input, null|bool|string|float|int|array $expected): void
     {
         $this->assertSame($expected, Utils::serialize($input));
     }
@@ -48,7 +48,7 @@ class UtilsTest extends BaseTestCase
     /**
      * @dataProvider printSafeProvider
      */
-    public function testPrintSafe($var, string $type): void
+    public function testPrintSafe(\stdClass|\Closure|array|string|null|bool|int|float $var, string $type): void
     {
         $this->assertSame($type, Utils::printSafe($var));
     }
