@@ -77,6 +77,10 @@ final class ProjectionRunCommand extends Command
             $this->projectionName = $input->getArgument(
                 static::ARGUMENT_PROJECTION_NAME,
             );
+            // append _projection if not present
+            if (!str_ends_with($this->projectionName, '_projection')) {
+                $this->projectionName .= '_projection';
+            }
         }
         $keepRunning = !$input->getOption(static::OPTION_RUN_ONCE);
         $sleep = (int) $input->getOption(static::OPTION_SLEEP);
