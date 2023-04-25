@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EventStore;
 
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
-use Xm\SymfonyBundle\EventStore\MetadataIpAddressEnricher;
 use Xm\SymfonyBundle\EventStore\MetadataUserAgentEnricher;
 use Xm\SymfonyBundle\Infrastructure\Service\RequestInfoProvider;
 use Xm\SymfonyBundle\Tests\BaseTestCase;

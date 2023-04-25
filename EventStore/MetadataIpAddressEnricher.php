@@ -6,7 +6,6 @@ namespace Xm\SymfonyBundle\EventStore;
 
 use Prooph\Common\Messaging\Message;
 use Prooph\EventStore\Metadata\MetadataEnricher;
-use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Infrastructure\Service\RequestInfoProvider;
 
 class MetadataIpAddressEnricher implements MetadataEnricher
