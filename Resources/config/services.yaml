@@ -33,6 +33,12 @@ services:
     Xm\SymfonyBundle\EventStore\MetadataCausationEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
 
+    Xm\SymfonyBundle\EventStore\MetadataUserAgentEnricher:
+        tags: [ 'prooph_event_store.metadata_enricher' ]
+
+    Xm\SymfonyBundle\EventStore\MetadataIpAddressEnricher:
+        tags: [ 'prooph_event_store.metadata_enricher' ]
+
     Xm\SymfonyBundle\Maker\AggregateRootMaker: ~
     Xm\SymfonyBundle\Maker\ProjectionMaker: ~
 
