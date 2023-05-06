@@ -8,7 +8,7 @@ use <?= $id_class; ?>;
 use <?= $name_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
-final class <?= $class_name; ?> extends AggregateChanged
+class <?= $class_name; ?> extends AggregateChanged
 {
     private Name $newName;
     private Name $oldName;

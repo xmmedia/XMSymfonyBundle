@@ -7,7 +7,7 @@ namespace <?= $namespace; ?>;
 use <?= $id_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
-final class <?= $class_name; ?> extends AggregateChanged
+class <?= $class_name; ?> extends AggregateChanged
 {
     public static function now(<?= $id_class_short; ?> $<?= $id_property; ?>): self
     {
