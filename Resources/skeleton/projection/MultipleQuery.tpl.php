@@ -8,9 +8,9 @@ use <?= $entity_class; ?>;
 use <?= $finder_class; ?>;
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-final class <?= $class_name; ?> implements QueryInterface
+final readonly class <?= $class_name; ?> implements QueryInterface
 {
-    public function __construct(private readonly <?= $finder_class_short; ?> $<?= $finder_property; ?>)
+    public function __construct(private <?= $finder_class_short; ?> $<?= $finder_property; ?>)
     {
     }
 

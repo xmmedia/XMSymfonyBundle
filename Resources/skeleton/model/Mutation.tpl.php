@@ -13,12 +13,12 @@ use <?= $name_class; ?>;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class <?= $class_name; ?> implements MutationInterface
+final readonly class <?= $class_name; ?> implements MutationInterface
 {
 <?php if (!$delete) { ?>
-    public function __construct(private readonly MessageBusInterface $commandBus, private readonly <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
+    public function __construct(private MessageBusInterface $commandBus, private <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
 <?php } else { ?>
-    public function __construct(private readonly MessageBusInterface $commandBus)
+    public function __construct(private MessageBusInterface $commandBus)
 <?php } ?>
     {
     }

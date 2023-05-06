@@ -10,9 +10,9 @@ use <?= $command_class; ?>;
 use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
 <?php } ?>
 
-final class <?= $class_name; ?><?= "\n"; ?>
+final readonly class <?= $class_name; ?><?= "\n"; ?>
 {
-    public function __construct(private readonly <?= $list_class; ?> $<?= $repo_property; ?>)
+    public function __construct(private <?= $list_class; ?> $<?= $repo_property; ?>)
     {
     }
 
