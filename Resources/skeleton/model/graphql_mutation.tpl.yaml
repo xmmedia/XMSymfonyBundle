@@ -7,7 +7,7 @@
                 type:        <?= $model; ?>MutationPayload!
                 description: 'Add <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=mutation("<?= $mutation_add; ?>", [args["<?= $model_lower; ?>"]])'
+                resolve:     '@=mutation("<?= $mutation_add; ?>", args["<?= $model_lower; ?>"])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
@@ -15,7 +15,7 @@
                 type:        <?= $model; ?>MutationPayload!
                 description: 'Change <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=mutation("<?= $mutation_change; ?>", [args["<?= $model_lower; ?>"]])'
+                resolve:     '@=mutation("<?= $mutation_change; ?>", args["<?= $model_lower; ?>"])'
                 args:
                     <?= $model_lower; ?>: <?= $model; ?>Input!
 
@@ -23,7 +23,7 @@
                 type:        <?= $model; ?>DeleteMutationPayload!
                 description: 'Delete <?= $model; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=mutation("<?= $mutation_delete; ?>", [args["<?= $id_property; ?>"]])'
+                resolve:     '@=mutation("<?= $mutation_delete; ?>", args["<?= $id_property; ?>"])'
                 args:
                     <?= $id_property; ?>: UUID!
 

@@ -13,6 +13,6 @@
                 type:        <?= $entity_class_short; ?><?= "\n"; ?>
                 description: 'Retrieve a single <?= $entity_class_short; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=query("<?= $query_single; ?>", [args["<?= $id_property; ?>"]])'
+                resolve:     '@=query("<?= $query_single; ?>", args["<?= $id_property; ?>"])'
                 args:
                     <?= $id_property; ?>: UUID!
