@@ -41,7 +41,7 @@ class <?= $class_name; ?> extends BaseTestCase
                     $this->assertEquals($types, $passedTypes);
 
                     return true;
-                }
+                },
             );
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
@@ -73,7 +73,7 @@ class <?= $class_name; ?> extends BaseTestCase
                     $this->assertEquals($types, $passedTypes);
 
                     return true;
-                }
+                },
             );
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
@@ -100,7 +100,7 @@ class <?= $class_name; ?> extends BaseTestCase
                     $this->assertEquals(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
 
                     return true;
-                }
+                },
             );
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);

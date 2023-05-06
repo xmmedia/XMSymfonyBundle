@@ -6,8 +6,8 @@ namespace <?= $namespace; ?>;
 
 use <?= $command_class; ?>;
 use <?= $id_class; ?>;
-use <?= $entity_finder_class; ?>;
 <?php if (!$delete) { ?>
+use <?= $entity_finder_class; ?>;
 use <?= $name_class; ?>;
 <?php } ?>
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -36,13 +36,13 @@ final class <?= $class_name; ?> implements MutationInterface
         );
 
         return [
-        '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
+            '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
         ];
 <?php } else { ?>
     public function __invoke(string $<?= $id_property; ?>): array
     {
         $this->commandBus->dispatch(
-            <?= $command_class_short; ?>::now(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>))
+            <?= $command_class_short; ?>::now(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>)),
         );
 
         return [

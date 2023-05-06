@@ -13,7 +13,7 @@ final class <?= $class_name; ?> extends Command
 {
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $name
+        Name $name,
     ): self {
         return new self([
             '<?= $id_property; ?>' => $<?= $id_property; ?>->toString(),

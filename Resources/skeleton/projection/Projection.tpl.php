@@ -29,7 +29,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         [
                             '<?= $id_field; ?>' => $event->aggregateId(),
                             'name' => $event->name()->toString(),
-                        ]
+                        ],
                     );
                 },
 
@@ -45,7 +45,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         $event->aggregateId(),
                         [
                             'name' => $event->newName()->toString(),
-                        ]
+                        ],
                     );
                 },
 

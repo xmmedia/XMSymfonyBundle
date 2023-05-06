@@ -44,7 +44,7 @@ EOT;
             self::TABLE,
             $data,
             ['<?= $id_field; ?>' => $<?= $id_property; ?>],
-            $types
+            $types,
         );
     }
 

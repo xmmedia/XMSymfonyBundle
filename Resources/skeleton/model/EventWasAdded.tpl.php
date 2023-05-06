@@ -14,7 +14,7 @@ final class <?= $class_name; ?> extends AggregateChanged
 
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $name
+        Name $name,
     ): self {
         $event = self::occur($<?= $id_property; ?>->toString(), [
             'name' => $name->toString(),

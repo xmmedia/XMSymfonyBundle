@@ -18,7 +18,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
 
     public static function add(
         <?= $id_class; ?> $<?= $id_property; ?>,
-        Name $name
+        Name $name,
     ): self {
         $self = new self();
         $self->recordThat(
