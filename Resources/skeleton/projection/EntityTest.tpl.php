@@ -21,13 +21,10 @@ class <?= $class_name; ?> extends BaseTestCase
         $entity = new <?= $entity_class_short; ?>();
         $reflection = new \ReflectionClass(<?= $entity_class_short; ?>::class);
 
-        $property = $reflection->getProperty('<?= $id_property; ?>');
-        $property->setAccessible(true);
-        $property->setValue($entity, Uuid::fromString($<?= $id_property; ?>));
-
-        $property = $reflection->getProperty('name');
-        $property->setAccessible(true);
-        $property->setValue($entity, $name);
+        $reflection->getProperty('<?= $id_property; ?>')
+            ->setValue($entity, Uuid::fromString($<?= $id_property; ?>));
+        $reflection->getProperty('name')
+            ->setValue($entity, $name);
 
         $this->assertSameValueAs(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>), $entity-><?= $id_property; ?>());
         $this->assertEquals($name, $entity->name());
