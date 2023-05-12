@@ -28,4 +28,20 @@ class MetadataUserAgentEnricherTest extends BaseTestCase
         $this->assertArrayHasKey('userAgent', $event->metadata());
         $this->assertEquals($userAgent, $event->metadata()['userAgent']);
     }
+
+    public function testCli(): void
+    {
+        $faker = $this->faker();
+
+        $requestInfoProvider = \Mockery::mock(RequestInfoProvider::class);
+        $requestInfoProvider->shouldReceive('userAgent')
+            ->once()
+            ->andReturnNull();
+
+        $enricher = new MetadataUserAgentEnricher($requestInfoProvider);
+
+        $event = $enricher->enrich(AggregateChanged::occur($faker->uuid(), []));
+
+        $this->assertArrayNotHasKey('userAgent', $event->metadata());
+    }
 }

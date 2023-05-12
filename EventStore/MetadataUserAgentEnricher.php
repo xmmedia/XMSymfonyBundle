@@ -16,9 +16,11 @@ class MetadataUserAgentEnricher implements MetadataEnricher
 
     public function enrich(Message $message): Message
     {
-        return $message->withAddedMetadata(
-            'userAgent',
-            $this->requestInfoProvider->userAgent(),
-        );
+        $userAgent = $this->requestInfoProvider->userAgent();
+        if (null === $userAgent) {
+            return $message;
+        }
+
+        return $message->withAddedMetadata('userAgent', $userAgent);
     }
 }

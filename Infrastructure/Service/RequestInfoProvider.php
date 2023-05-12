@@ -13,18 +13,18 @@ class RequestInfoProvider
     {
     }
 
-    public function currentRequest(): Request
+    public function currentRequest(): ?Request
     {
         return $this->requestStack->getCurrentRequest();
     }
 
     public function userAgent(): ?string
     {
-        return $this->currentRequest()->headers->get('User-Agent');
+        return $this->currentRequest()?->headers->get('User-Agent');
     }
 
     public function ipAddress(): ?string
     {
-        return $this->currentRequest()->getClientIp();
+        return $this->currentRequest()?->getClientIp();
     }
 }

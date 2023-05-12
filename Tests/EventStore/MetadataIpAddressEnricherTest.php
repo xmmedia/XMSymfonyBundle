@@ -46,4 +46,20 @@ class MetadataIpAddressEnricherTest extends BaseTestCase
         $this->assertArrayHasKey('ipAddress', $event->metadata());
         $this->assertEquals($ipAddress, $event->metadata()['ipAddress']);
     }
+
+    public function testCli(): void
+    {
+        $faker = $this->faker();
+
+        $requestInfoProvider = \Mockery::mock(RequestInfoProvider::class);
+        $requestInfoProvider->shouldReceive('ipAddress')
+            ->once()
+            ->andReturnNull();
+
+        $enricher = new MetadataIpAddressEnricher($requestInfoProvider);
+
+        $event = $enricher->enrich(AggregateChanged::occur($faker->uuid(), []));
+
+        $this->assertArrayNotHasKey('ipAddress', $event->metadata());
+    }
 }

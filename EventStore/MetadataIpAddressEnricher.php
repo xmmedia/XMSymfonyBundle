@@ -16,9 +16,11 @@ class MetadataIpAddressEnricher implements MetadataEnricher
 
     public function enrich(Message $message): Message
     {
-        return $message->withAddedMetadata(
-            'ipAddress',
-            $this->requestInfoProvider->ipAddress(),
-        );
+        $ipAddress = $this->requestInfoProvider->ipAddress();
+        if (null === $ipAddress) {
+            return $message;
+        }
+
+        return $message->withAddedMetadata('ipAddress', $ipAddress);
     }
 }
