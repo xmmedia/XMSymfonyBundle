@@ -460,6 +460,7 @@ class AggregateRootMaker extends AbstractMaker
                 Str::asSnakeCase($arLowerName),
             ),
             '- Update permissions in GraphQL config',
+            '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
             '- Add ID class to UuidFakerProvider (for tests)',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
         ]);
