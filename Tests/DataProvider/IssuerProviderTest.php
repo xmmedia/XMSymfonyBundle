@@ -22,9 +22,8 @@ class IssuerProviderTest extends BaseTestCase
 
         $user = new User();
         $reflection = new \ReflectionClass(User::class);
-        $property = $reflection->getProperty('userId');
-        $property->setAccessible(true);
-        $property->setValue($user, $userId);
+        $reflection->getProperty('userId')
+            ->setValue($user, $userId);
 
         $provider = new IssuerProvider($this->createSecurity($user));
 
