@@ -22,8 +22,8 @@ abstract class FilterQueryBuilder
         $qCriteria = [];
 
         foreach ($qParts as $i => $part) {
-            foreach ($includeFields as $field) {
-                $qCriteria[] = 'u.'.$field.' LIKE :q'.$i;
+            foreach ($includeFields as $includeField) {
+                $qCriteria[] = $includeField.' LIKE :q'.$i;
             }
 
             $this->parameters['q'.$i] = '%'.$part.'%';
