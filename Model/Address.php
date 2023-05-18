@@ -15,13 +15,6 @@ class Address implements ValueObject
     public const CITY_MIN_LENGTH = 2;
     public const CITY_MAX_LENGTH = 50;
 
-    private string $line1;
-    private ?string $line2;
-    private string $city;
-    private Province $province;
-    private PostalCode $postalCode;
-    private Country $country;
-
     /**
      * @return static
      */
@@ -66,12 +59,12 @@ class Address implements ValueObject
     }
 
     private function __construct(
-        string $line1,
-        ?string $line2,
-        string $city,
-        Province $province,
-        PostalCode $postalCode,
-        Country $country,
+        private string $line1,
+        private ?string $line2,
+        private string $city,
+        private Province $province,
+        private PostalCode $postalCode,
+        private Country $country,
     ) {
         $line1 = StringUtil::trim($line1);
         $line2 = StringUtil::trim($line2);
