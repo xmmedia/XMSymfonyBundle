@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Doctrine;
 
-use Xm\SymfonyBundle\Util\Filters;
+use Xm\SymfonyBundle\Util\FiltersInterface;
 
 abstract class FilterQueryBuilder
 {
@@ -14,9 +14,9 @@ abstract class FilterQueryBuilder
     protected array $parameterTypes = [];
     protected string $order = '';
 
-    abstract public function queryParts(Filters $filters): array;
+    abstract public function queryParts(FiltersInterface $filters): array;
 
-    protected function applyBasicQ(Filters $filters, string $field, array $includeFields): void
+    protected function applyBasicQ(FiltersInterface $filters, string $field, array $includeFields): void
     {
         $qParts = preg_split('/[ ,]/', trim($filters->get($field)));
         $qCriteria = [];
