@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Util;
 
 use Webmozart\Assert\Assert;
 
-abstract class Filters
+abstract class Filters implements FiltersInterface
 {
     protected array $filters;
 
@@ -50,10 +50,7 @@ abstract class Filters
         return \array_key_exists($field, $this->filters);
     }
 
-    /**
-     * @return mixed|null
-     */
-    public function get(string $field)
+    public function get(string $field): mixed
     {
         return $this->filters[$field] ?? null;
     }
