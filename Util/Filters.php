@@ -60,6 +60,11 @@ abstract class Filters implements FiltersInterface
         return $this->filters;
     }
 
+    public function isTrue($value): bool
+    {
+        return true === $value || 'true' === $value;
+    }
+
     protected function parseFilters(array $filters): array
     {
         return $filters;
@@ -70,10 +75,6 @@ abstract class Filters implements FiltersInterface
         return !(empty($value) && !\is_bool($value) && !\is_int($value) && '0' !== $value);
     }
 
-    protected function isTrue($value): bool
-    {
-        return true === $value || 'true' === $value;
-    }
 
     private function getFields(): array
     {
