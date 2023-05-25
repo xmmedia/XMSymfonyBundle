@@ -18,12 +18,12 @@ final class Email implements ValueObject
     /**
      * @return static
      */
-    public static function fromString(string $email, ?string $name = null): self
+    public static function fromString(string $email, string $name = null): self
     {
         return new static($email, $name);
     }
 
-    private function __construct(string $email, ?string $name = null)
+    private function __construct(string $email, string $name = null)
     {
         $email = StringUtil::trim($email);
         $name = StringUtil::trim($name);

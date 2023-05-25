@@ -14,7 +14,7 @@ class Assert extends \Webmozart\Assert\Assert
     public static function passwordComplexity(
         string $password,
         array $userData,
-        ?int $minimum = null,
+        int $minimum = null,
         PasswordStrengthInterface $passwordStrength = null,
     ): void {
         if (null === $minimum) {

@@ -18,8 +18,8 @@ interface EmailGatewayInterface
         int|string $templateIdOrAlias,
         Email|array $to,
         array $templateData,
-        ?array $attachments = null,
-        ?Email $from = null,
-        ?Email $replyTo = null,
+        array $attachments = null,
+        Email $from = null,
+        Email $replyTo = null,
     ): EmailGatewayMessageId;
 }
