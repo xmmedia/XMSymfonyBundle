@@ -149,7 +149,7 @@ class Address implements ValueObject
         $str .= $br.$this->city.', '.$this->province->abbreviation();
         $str .= ($html ? ' &nbsp;' : '  ').$this->postalCode;
         if ($includeCountry) {
-            $str .= $br . $this->country->name();
+            $str .= $br.$this->country->name();
         }
 
         return $str;

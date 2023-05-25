@@ -75,7 +75,6 @@ abstract class Filters implements FiltersInterface
         return !(empty($value) && !\is_bool($value) && !\is_int($value) && '0' !== $value);
     }
 
-
     private function getFields(): array
     {
         $reflection = new \ReflectionClass(static::class);

@@ -263,11 +263,11 @@ class AddressTest extends BaseTestCase
 
         $address = $faker->addressVo();
 
-        $string = $address->line1() . "\n" .
-            $address->line2() . "\n" .
-            $address->city() . ', ' .
-            $address->province()->toString() . '  ' .
-            $address->postalCode()->toString() . "\n" .
+        $string = $address->line1()."\n".
+            $address->line2()."\n".
+            $address->city().', '.
+            $address->province()->toString().'  '.
+            $address->postalCode()->toString()."\n".
             $address->country()->name();
 
         $this->assertSame($string, $address->toString());
@@ -286,10 +286,10 @@ class AddressTest extends BaseTestCase
             $faker->postcode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1() . "\n" .
-            $address->city() . ', ' .
-            $address->province()->toString() . '  ' .
-            $address->postalCode()->toString() . "\n" .
+        $string = $address->line1()."\n".
+            $address->city().', '.
+            $address->province()->toString().'  '.
+            $address->postalCode()->toString()."\n".
             $address->country()->name();
 
         $this->assertSame($string, $address->toString());
@@ -308,11 +308,11 @@ class AddressTest extends BaseTestCase
             $faker->postcode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1() . '<br>' .
-            $address->line2() . '<br>' .
-            $address->city() . ', ' .
-            $address->province()->toString() . ' &nbsp;' .
-            $address->postalCode()->toString() . '<br>' .
+        $string = $address->line1().'<br>'.
+            $address->line2().'<br>'.
+            $address->city().', '.
+            $address->province()->toString().' &nbsp;'.
+            $address->postalCode()->toString().'<br>'.
             $address->country()->name();
 
         $this->assertSame($string, $address->toString(true));
@@ -330,10 +330,10 @@ class AddressTest extends BaseTestCase
             $faker->postcode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1() . '<br>' .
-            $address->city() . ', ' .
-            $address->province()->toString() . ' &nbsp;' .
-            $address->postalCode()->toString() . '<br>' .
+        $string = $address->line1().'<br>'.
+            $address->city().', '.
+            $address->province()->toString().' &nbsp;'.
+            $address->postalCode()->toString().'<br>'.
             $address->country()->name();
 
         $this->assertSame($string, $address->toString(true));
@@ -351,9 +351,9 @@ class AddressTest extends BaseTestCase
             $faker->postcode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1() . "\n" .
-            $address->city() . ', ' .
-            $address->province()->toString() . '  ' .
+        $string = $address->line1()."\n".
+            $address->city().', '.
+            $address->province()->toString().'  '.
             $address->postalCode()->toString();
 
         $this->assertSame($string, $address->toString(false, false));
@@ -371,10 +371,10 @@ class AddressTest extends BaseTestCase
             $faker->postcode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1() . '<br>' .
-            $address->line2() . '<br>' .
-            $address->city() . ', ' .
-            $address->province()->toString() . ' &nbsp;' .
+        $string = $address->line1().'<br>'.
+            $address->line2().'<br>'.
+            $address->city().', '.
+            $address->province()->toString().' &nbsp;'.
             $address->postalCode()->toString();
 
         $this->assertSame($string, $address->toString(true, false));
