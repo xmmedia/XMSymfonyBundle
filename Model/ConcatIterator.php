@@ -25,8 +25,8 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
         parent::__construct();
         foreach (\func_get_args() as $i => $iterator) {
             if (
-                $iterator instanceof \ArrayAccess &&
-                $iterator instanceof \Countable
+                $iterator instanceof \ArrayAccess
+                && $iterator instanceof \Countable
             ) {
                 // Unroll other ConcatIterators, so we avoid deep iterator stacks
                 if ($iterator instanceof self) {
