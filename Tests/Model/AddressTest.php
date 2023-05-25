@@ -171,8 +171,10 @@ class AddressTest extends BaseTestCase
         string $postalCode,
         string $country,
         string $exception,
+        string $message,
     ): void {
         $this->expectException($exception);
+        $this->expectExceptionMessage($message);
 
         Address::fromStrings(
             $line1,
@@ -196,6 +198,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address line 1',
         ];
 
         yield [
@@ -206,6 +209,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address line 1',
         ];
 
         yield [
@@ -216,6 +220,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address line 2',
         ];
 
         yield [
@@ -226,6 +231,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address line 2',
         ];
 
         yield [
@@ -236,6 +242,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address city',
         ];
 
         yield [
@@ -246,6 +253,7 @@ class AddressTest extends BaseTestCase
             'T3L 2H9',
             $faker->randomElement(['CA', 'US']),
             InvalidAddress::class,
+            'The address city',
         ];
     }
 
