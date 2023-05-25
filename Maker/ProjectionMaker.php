@@ -315,6 +315,7 @@ class ProjectionMaker extends AbstractMaker
             ),
             '- Update permissions in GraphQL config',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
+            '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
         ]);
     }
 
