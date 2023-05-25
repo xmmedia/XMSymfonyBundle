@@ -24,7 +24,7 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
 
     public function sameValuesAs(self $other): bool
     {
-        if (static::class !== \get_class($other)) {
+        if (static::class !== $other::class) {
             return false;
         }
 

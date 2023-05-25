@@ -18,6 +18,6 @@ trait AppliesAggregateChanged
 
     protected function determineEventHandlerMethodFor(AggregateChanged $e): string
     {
-        return 'when'.implode('', \array_slice(explode('\\', \get_class($e)), -1));
+        return 'when'.implode('', \array_slice(explode('\\', $e::class), -1));
     }
 }

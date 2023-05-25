@@ -45,7 +45,7 @@ class Utils
     public static function printSafe($var): string
     {
         if (\is_object($var)) {
-            return 'instance of '.\get_class($var);
+            return 'instance of '.$var::class;
         }
         if (\is_array($var)) {
             return 'array';

@@ -31,7 +31,7 @@ class CommandRecorderMiddleware implements MiddlewareInterface
     {
         $this->connection->insert('command_log', [
             'command_id' => $command->uuid()->toString(),
-            'command'    => \get_class($command),
+            'command'    => $command::class,
             'payload'    => $command->payload(),
             'metadata'   => $command->metadata(),
             'sent_at'    => $command->createdAt(),

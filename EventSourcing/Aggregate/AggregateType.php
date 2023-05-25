@@ -25,7 +25,7 @@ class AggregateType
         }
 
         $self = new static();
-        $self->aggregateType = \get_class($eventSourcedAggregateRoot);
+        $self->aggregateType = $eventSourcedAggregateRoot::class;
 
         return $self;
     }

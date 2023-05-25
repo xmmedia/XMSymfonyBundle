@@ -17,7 +17,7 @@ class PdoProvider
         $connection = $this->connection->getNativeConnection();
 
         if (!$connection instanceof \PDO) {
-            throw new \RuntimeException(sprintf('Expecting \PDO, but got %s', \get_class($connection)));
+            throw new \RuntimeException(sprintf('Expecting \PDO, but got %s', $connection::class));
         }
 
         return $connection;
