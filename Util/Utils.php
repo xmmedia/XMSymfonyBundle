@@ -9,12 +9,8 @@ class Utils
     /**
      * If object is being serialized, it must have a
      * __toString, getValue, or toArray method.
-     *
-     * @param mixed $var
-     *
-     * @return mixed
      */
-    public static function serialize($var)
+    public static function serialize(mixed $var): mixed
     {
         if (null === $var) {
             return null;
@@ -39,10 +35,7 @@ class Utils
         throw new \InvalidArgumentException(sprintf('Can\'t serialize an %s.', self::printSafe($var)));
     }
 
-    /**
-     * @param mixed $var
-     */
-    public static function printSafe($var): string
+    public static function printSafe(mixed $var): string
     {
         if (\is_object($var)) {
             return 'instance of '.$var::class;

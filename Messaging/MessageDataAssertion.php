@@ -8,10 +8,7 @@ use Webmozart\Assert\Assert;
 
 final class MessageDataAssertion
 {
-    /**
-     * @param mixed $messageData
-     */
-    public static function assert($messageData): void
+    public static function assert(mixed $messageData): void
     {
         Assert::isArray($messageData, 'MessageData must be an array');
         Assert::keyExists($messageData, 'message_name', 'MessageData must contain a key message_name');
@@ -43,10 +40,7 @@ final class MessageDataAssertion
         self::assertSubPayload($payload);
     }
 
-    /**
-     * @param mixed $payload
-     */
-    private static function assertSubPayload($payload): void
+    private static function assertSubPayload(mixed $payload): void
     {
         if (\is_array($payload)) {
             foreach ($payload as $subPayload) {
