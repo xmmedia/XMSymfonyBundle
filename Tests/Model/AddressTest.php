@@ -257,6 +257,129 @@ class AddressTest extends BaseTestCase
         ];
     }
 
+    public function testToString(): void
+    {
+        $faker = $this->faker();
+
+        $address = $faker->addressVo();
+
+        $string = $address->line1() . "\n" .
+            $address->line2() . "\n" .
+            $address->city() . ', ' .
+            $address->province()->toString() . '  ' .
+            $address->postalCode()->toString() . "\n" .
+            $address->country()->name();
+
+        $this->assertSame($string, $address->toString());
+        $this->assertSame($string, (string) $address);
+    }
+
+    public function testToStringNoLine2(): void
+    {
+        $faker = $this->faker();
+
+        $address = Address::fromStrings(
+            $faker->streetAddress(),
+            '',
+            $faker->city(),
+            $faker->stateAbbr(),
+            $faker->postcode(),
+            $faker->randomElement(['CA', 'US']),
+        );
+        $string = $address->line1() . "\n" .
+            $address->city() . ', ' .
+            $address->province()->toString() . '  ' .
+            $address->postalCode()->toString() . "\n" .
+            $address->country()->name();
+
+        $this->assertSame($string, $address->toString());
+        $this->assertSame($string, (string) $address);
+    }
+
+    public function testToStringHtml(): void
+    {
+        $faker = $this->faker();
+
+        $address = Address::fromStrings(
+            $faker->streetAddress(),
+            $faker->streetAddress(),
+            $faker->city(),
+            $faker->stateAbbr(),
+            $faker->postcode(),
+            $faker->randomElement(['CA', 'US']),
+        );
+        $string = $address->line1() . '<br>' .
+            $address->line2() . '<br>' .
+            $address->city() . ', ' .
+            $address->province()->toString() . ' &nbsp;' .
+            $address->postalCode()->toString() . '<br>' .
+            $address->country()->name();
+
+        $this->assertSame($string, $address->toString(true));
+    }
+
+    public function testToStringHtmlNoLine2(): void
+    {
+        $faker = $this->faker();
+
+        $address = Address::fromStrings(
+            $faker->streetAddress(),
+            '',
+            $faker->city(),
+            $faker->stateAbbr(),
+            $faker->postcode(),
+            $faker->randomElement(['CA', 'US']),
+        );
+        $string = $address->line1() . '<br>' .
+            $address->city() . ', ' .
+            $address->province()->toString() . ' &nbsp;' .
+            $address->postalCode()->toString() . '<br>' .
+            $address->country()->name();
+
+        $this->assertSame($string, $address->toString(true));
+    }
+
+    public function testToStringExcludeCountry(): void
+    {
+        $faker = $this->faker();
+
+        $address = Address::fromStrings(
+            $faker->streetAddress(),
+            '',
+            $faker->city(),
+            $faker->stateAbbr(),
+            $faker->postcode(),
+            $faker->randomElement(['CA', 'US']),
+        );
+        $string = $address->line1() . "\n" .
+            $address->city() . ', ' .
+            $address->province()->toString() . '  ' .
+            $address->postalCode()->toString();
+
+        $this->assertSame($string, $address->toString(false, false));
+    }
+
+    public function testToStringHtmlExcludeCountry(): void
+    {
+        $faker = $this->faker();
+
+        $address = Address::fromStrings(
+            $faker->streetAddress(),
+            $faker->streetAddress(),
+            $faker->city(),
+            $faker->stateAbbr(),
+            $faker->postcode(),
+            $faker->randomElement(['CA', 'US']),
+        );
+        $string = $address->line1() . '<br>' .
+            $address->line2() . '<br>' .
+            $address->city() . ', ' .
+            $address->province()->toString() . ' &nbsp;' .
+            $address->postalCode()->toString();
+
+        $this->assertSame($string, $address->toString(true, false));
+    }
+
     /**
      * @dataProvider addressArrayProvider
      */

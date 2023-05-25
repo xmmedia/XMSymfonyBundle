@@ -138,17 +138,26 @@ class Address implements ValueObject
         return $this->country;
     }
 
-    public function toString(): string
+    public function toString(bool $html = false, bool $includeCountry = true): string
     {
+        $br = $html ? '<br>' : "\n";
+
         $str = $this->line1;
         if (null !== $this->line2) {
-            $str .= "\n".$this->line2;
+            $str .= $br.$this->line2;
         }
-        $str .= "\n".$this->city.', '.$this->province->name();
-        $str .= '  '.$this->postalCode;
-        $str .= "\n".$this->country->name();
+        $str .= $br.$this->city.', '.$this->province->abbreviation();
+        $str .= ($html ? ' &nbsp;' : '  ').$this->postalCode;
+        if ($includeCountry) {
+            $str .= $br . $this->country->name();
+        }
 
         return $str;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     public function toArray(): array
