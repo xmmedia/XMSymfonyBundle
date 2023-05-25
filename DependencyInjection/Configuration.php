@@ -33,7 +33,7 @@ final class Configuration implements ConfigurationInterface
         $repositoriesNode = $treeBuilder->getRootNode();
 
         $beginsWithAt = function (string $v): bool {
-            return 0 === strpos($v, '@');
+            return str_starts_with($v, '@');
         };
         $removeFirstCharacter = function (string $v): string {
             return substr($v, 1);
