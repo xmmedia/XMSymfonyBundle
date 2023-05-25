@@ -18,7 +18,7 @@ final class MoneyFactory
 
     public static function fromFloat(float $cents): Money
     {
-        return new Money(intval(round($cents)), new Currency(self::$currency));
+        return new Money((int) round($cents), new Currency(self::$currency));
     }
 
     public static function fromString(string $cents): Money
