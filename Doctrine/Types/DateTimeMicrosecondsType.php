@@ -16,17 +16,11 @@ class DateTimeMicrosecondsType extends Type
     public const TYPENAME = 'datetime_microseconds';
     private const FORMAT = 'Y-m-d H:i:s.u';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return self::TYPENAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSQLDeclaration(
         array $column,
         AbstractPlatform $platform,
@@ -34,9 +28,6 @@ class DateTimeMicrosecondsType extends Type
         return $platform->getDateTimeTypeDeclarationSQL($column).'(6)';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertToDatabaseValue(
         $value,
         AbstractPlatform $platform,
@@ -52,9 +43,6 @@ class DateTimeMicrosecondsType extends Type
         throw ConversionException::conversionFailedInvalidType($value, self::TYPENAME, ['null', 'DateTime']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertToPHPValue(
         $value,
         AbstractPlatform $platform,

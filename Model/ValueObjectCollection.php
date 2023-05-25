@@ -14,8 +14,6 @@ abstract class ValueObjectCollection extends Collection
     protected array $data = [];
 
     /**
-     * {@inheritDoc}
-     *
      * @param ValueObject $element
      */
     public function contains($element, bool $strict = true): bool
@@ -30,8 +28,6 @@ abstract class ValueObjectCollection extends Collection
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @param ValueObject $element
      */
     public function remove($element): bool

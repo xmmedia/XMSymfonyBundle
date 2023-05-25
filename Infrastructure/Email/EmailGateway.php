@@ -34,9 +34,6 @@ class EmailGateway implements EmailGatewayInterface
         $this->from = Email::fromString($emailFrom, $emailFromName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(
         int|string $templateIdOrAlias,
         Email|array $to,
