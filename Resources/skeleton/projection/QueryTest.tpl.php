@@ -29,7 +29,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $result = $query($<?= $id_property; ?>);
 
-        $this->assertEquals($entity, $result);
+        $this->assertSame($entity, $result);
     }
 
     public function testNotFound(): void

@@ -17,9 +17,9 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $name = Name::fromString($nameStr);
 
-        $this->assertEquals($nameStr, $name->name());
-        $this->assertEquals($nameStr, $name->toString());
-        $this->assertEquals($nameStr, (string) $name);
+        $this->assertSame($nameStr, $name->name());
+        $this->assertSame($nameStr, $name->toString());
+        $this->assertSame($nameStr, (string) $name);
     }
 
     public function testEmpty(): void

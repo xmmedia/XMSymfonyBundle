@@ -46,7 +46,7 @@ class <?= $class_name; ?> extends BaseTestCase
             '<?= $entity; ?>' => $entity,
         ];
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
 <?php } else { ?>
         $<?= $id_property; ?> = $faker->uuid();
 
@@ -62,7 +62,7 @@ class <?= $class_name; ?> extends BaseTestCase
             'success' => true,
         ];
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
 <?php } ?>
     }
 }

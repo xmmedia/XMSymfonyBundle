@@ -24,7 +24,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $result = $query();
 
-        $this->assertEquals([$entity], $result);
+        $this->assertSame([$entity], $result);
     }
 
     public function testNoneFound(): void
@@ -36,6 +36,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $query = new <?= $query_class_short; ?>($finder);
 
-        $this->assertEquals([], $query());
+        $this->assertSame([], $query());
     }
 }

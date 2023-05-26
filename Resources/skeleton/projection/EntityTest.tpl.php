@@ -27,6 +27,6 @@ class <?= $class_name; ?> extends BaseTestCase
             ->setValue($entity, $name);
 
         $this->assertSameValueAs(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>), $entity-><?= $id_property; ?>());
-        $this->assertEquals($name, $entity->name());
+        $this->assertSame($name, $entity->name());
     }
 }

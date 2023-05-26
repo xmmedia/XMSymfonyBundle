@@ -36,9 +36,9 @@ class <?= $class_name; ?> extends BaseTestCase
                     array $passedData,
                     array $passedTypes,
                 ) use ($data, $types): bool {
-                    $this->assertEquals('<?= $projection_name; ?>', $table);
-                    $this->assertEquals($data, $passedData);
-                    $this->assertEquals($types, $passedTypes);
+                    $this->assertSame('<?= $projection_name; ?>', $table);
+                    $this->assertSame($data, $passedData);
+                    $this->assertSame($types, $passedTypes);
 
                     return true;
                 },
@@ -66,10 +66,10 @@ class <?= $class_name; ?> extends BaseTestCase
                     array $passedCriteria,
                     array $passedTypes,
                 ) use ($<?= $id_property; ?>, $data, $types): bool {
-                    $this->assertEquals('<?= $projection_name; ?>', $table);
-                    $this->assertEquals($data, $passedData);
-                    $this->assertEquals(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
-                    $this->assertEquals($types, $passedTypes);
+                    $this->assertSame('<?= $projection_name; ?>', $table);
+                    $this->assertSame($data, $passedData);
+                    $this->assertSame(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
+                    $this->assertSame($types, $passedTypes);
 
                     return true;
                 },
@@ -94,8 +94,8 @@ class <?= $class_name; ?> extends BaseTestCase
                     string $table,
                     array $passedCriteria,
                 ) use ($<?= $id_property; ?>): bool {
-                    $this->assertEquals('<?= $projection_name; ?>', $table);
-                    $this->assertEquals(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
+                    $this->assertSame('<?= $projection_name; ?>', $table);
+                    $this->assertSame(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
 
                     return true;
                 },

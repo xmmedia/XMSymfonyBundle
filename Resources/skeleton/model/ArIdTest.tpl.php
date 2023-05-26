@@ -17,6 +17,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $id_property; ?> = <?= $id_class_short; ?>::fromString($uuid);
 
-        $this->assertEquals($uuid, $<?= $id_property; ?>->toString());
+        $this->assertSame($uuid, $<?= $id_property; ?>->toString());
     }
 }
