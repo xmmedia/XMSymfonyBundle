@@ -46,7 +46,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
         $method = $reflection->getMethod('insert');
-        $method->setAccessible(true);
 
         $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$data, $types]);
     }
@@ -78,7 +77,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
         $method = $reflection->getMethod('update');
-        $method->setAccessible(true);
 
         $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$<?= $id_property; ?>, $data, $types]);
     }
@@ -105,7 +103,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
         $method = $reflection->getMethod('remove');
-        $method->setAccessible(true);
 
         $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$<?= $id_property; ?>]);
     }
