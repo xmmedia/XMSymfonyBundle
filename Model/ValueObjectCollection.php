@@ -16,7 +16,7 @@ abstract class ValueObjectCollection extends Collection
     /**
      * @param ValueObject $element
      */
-    public function contains($element, bool $strict = true): bool
+    public function contains(mixed $element, bool $strict = true): bool
     {
         foreach ($this->data as $item) {
             if ($item->sameValueAs($element)) {
@@ -30,7 +30,7 @@ abstract class ValueObjectCollection extends Collection
     /**
      * @param ValueObject $element
      */
-    public function remove($element): bool
+    public function remove(mixed $element): bool
     {
         foreach ($this->data as $i => $item) {
             if ($item->sameValueAs($element)) {
