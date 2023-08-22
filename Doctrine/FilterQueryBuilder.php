@@ -18,7 +18,7 @@ abstract class FilterQueryBuilder
 
     public function reset(): static
     {
-        $ro = new \ReflectionClass(UserFilterQueryBuilder::class);
+        $ro = new \ReflectionClass(FilterQueryBuilder::class);
 
         $this->joins = $ro->getProperty('joins')->getDefaultValue();
         $this->whereClauses = $ro->getProperty('whereClauses')->getDefaultValue();
