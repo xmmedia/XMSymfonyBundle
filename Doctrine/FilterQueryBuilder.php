@@ -16,6 +16,19 @@ abstract class FilterQueryBuilder
 
     abstract public function queryParts(FiltersInterface $filters): array;
 
+    public function reset(): static
+    {
+        $ro = new \ReflectionClass(UserFilterQueryBuilder::class);
+
+        $this->joins = $ro->getProperty('joins')->getDefaultValue();
+        $this->whereClauses = $ro->getProperty('whereClauses')->getDefaultValue();
+        $this->parameters = $ro->getProperty('parameters')->getDefaultValue();
+        $this->parameterTypes = $ro->getProperty('parameterTypes')->getDefaultValue();
+        $this->order = $ro->getProperty('order')->getDefaultValue();
+
+        return $this;
+    }
+
     protected function applyBasicQ(FiltersInterface $filters, string $field, array $includeFields): void
     {
         $qParts = preg_split('/[ ,]/', trim($filters->get($field)));
