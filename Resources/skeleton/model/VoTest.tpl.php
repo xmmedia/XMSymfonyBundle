@@ -45,6 +45,18 @@ class <?= $class_name; ?> extends BaseTestCase
         Name::fromString($faker->string(51));
     }
 
+    public function testTrailingWhiteSpace(): void
+    {
+        $faker = $this->faker();
+        $nameStr = $faker->name();
+
+        $name = Name::fromString($nameStr.'   ');
+
+        $this->assertSame($nameStr, $name->name());
+        $this->assertSame($nameStr, $name->toString());
+        $this->assertSame($nameStr, (string) $name);
+    }
+
     public function testSameValueAs(): void
     {
         $faker = $this->faker();

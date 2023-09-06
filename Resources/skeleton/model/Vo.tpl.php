@@ -13,17 +13,21 @@ final readonly class <?= $class_name; ?> implements ValueObject
     public const MIN_LENGTH = 2;
     public const MAX_LENGTH = 50;
 
+    private string $name
+
     public static function fromString(string $name): self
     {
         return new self($name);
     }
 
-    private function __construct(private string $name)
+    private function __construct(string $name)
     {
         $name = StringUtil::trim($name);
 
         Assert::notEmpty($name);
         Assert::lengthBetween($name, self::MIN_LENGTH, self::MAX_LENGTH);
+
+        $this->name = $name;
     }
 
     public function name(): string
