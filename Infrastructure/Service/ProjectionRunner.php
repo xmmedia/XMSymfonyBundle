@@ -65,7 +65,7 @@ class ProjectionRunner
 
                 $state = $this->state();
                 ++$attempts;
-            } while (!$state->is(ProjectionStatus::IDLE()) && $attempts < 10);
+            } while (!$state->is(ProjectionStatus::IDLE()) && $attempts < 50);
 
             if ($state->is(ProjectionStatus::IDLE())) {
                 $this->projector->run($keepRunning);
