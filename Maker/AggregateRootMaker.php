@@ -38,6 +38,7 @@ class AggregateRootMaker extends AbstractMaker
         InputConfiguration $inputConfig,
     ): void {
         $command
+            ->setHelp('Note: it\'s best to create the projection first using make:projection.')
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,
