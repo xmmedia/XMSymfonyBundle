@@ -13,7 +13,7 @@ final readonly class <?= $class_name; ?> implements ValueObject
     public const MIN_LENGTH = 2;
     public const MAX_LENGTH = 50;
 
-    private string $name
+    private string $name;
 
     public static function fromString(string $name): self
     {
