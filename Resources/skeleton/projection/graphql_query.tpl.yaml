@@ -4,7 +4,7 @@
     config:
         fields:
             <?= $entity_class_short_plural; ?>:
-                type:        '[<?= $entity_class_short; ?>!]'
+                type:        '[<?= $entity_class_short; ?>!]!'
                 description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=query("<?= $query_multiple; ?>")'
