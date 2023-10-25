@@ -6,6 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
 use <?= $finder_class; ?>;
+use JetBrains\PhpStorm\ArrayShape;
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
 final readonly class <?= $class_name; ?> implements QueryInterface
@@ -14,9 +15,7 @@ final readonly class <?= $class_name; ?> implements QueryInterface
     {
     }
 
-    /**
-     * @return <?= $entity_class_short; ?>[]
-     */
+    #[ArrayShape([<?= $entity_class_short; ?>::class])]
     public function __invoke(): array
     {
         return $this-><?= $finder_property; ?>->findAll();
