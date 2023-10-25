@@ -409,7 +409,7 @@ class AggregateRootMaker extends AbstractMaker
         }
 
         $generator->generateFile(
-            'config/graphql/types/domain/'.$arLowerName.'.yaml',
+            'config/graphql/types/domain/'.Str::asSnakeCase($arLowerName).'.yaml',
             $skeletonPath.'graphql_domain.tpl.yaml',
             [
                 'model'       => $arClassDetails->getShortName(),
@@ -417,7 +417,7 @@ class AggregateRootMaker extends AbstractMaker
             ],
         );
         $generator->generateFile(
-            'config/graphql/types/'.$arLowerName.'.mutation.yaml',
+            'config/graphql/types/'.Str::asSnakeCase($arLowerName).'.mutation.yaml',
             $skeletonPath.'graphql_mutation.tpl.yaml',
             [
                 'model'           => $arClassDetails->getShortName(),
