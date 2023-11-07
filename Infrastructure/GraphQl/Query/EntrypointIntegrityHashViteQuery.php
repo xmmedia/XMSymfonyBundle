@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Query;
 
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
-use Pentatrion\ViteBundle\Asset\EntrypointsLookup;
+use Pentatrion\ViteBundle\Service\EntrypointsLookup;
+use Pentatrion\ViteBundle\Service\EntrypointsLookupCollection;
 
 class EntrypointIntegrityHashViteQuery implements QueryInterface
 {
     private EntrypointsLookup $lookup;
 
-    public function __construct(EntrypointsLookup $lookup)
+    public function __construct(EntrypointsLookupCollection $collection)
     {
-        $this->lookup = $lookup;
+        $this->lookup = $collection->getEntrypointsLookup(); ;
     }
 
     public function __invoke(string $entrypoint): ?string
