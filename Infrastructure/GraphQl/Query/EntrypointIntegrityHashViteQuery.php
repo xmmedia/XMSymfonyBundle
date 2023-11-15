@@ -25,6 +25,6 @@ class EntrypointIntegrityHashViteQuery implements QueryInterface
             return null;
         }
 
-        return $fileData[0]['hash'];
+        return $this->lookup->getFileHash($fileData[0]);
     }
 }
