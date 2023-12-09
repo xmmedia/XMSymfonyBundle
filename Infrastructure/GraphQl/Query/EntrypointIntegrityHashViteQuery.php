@@ -14,7 +14,7 @@ class EntrypointIntegrityHashViteQuery implements QueryInterface
 
     public function __construct(EntrypointsLookupCollection $collection)
     {
-        $this->lookup = $collection->getEntrypointsLookup(); ;
+        $this->lookup = $collection->getEntrypointsLookup();
     }
 
     public function __invoke(string $entrypoint): ?string
