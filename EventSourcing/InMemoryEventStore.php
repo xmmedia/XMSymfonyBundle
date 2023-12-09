@@ -477,6 +477,9 @@ final class InMemoryEventStore implements TransactionalEventStore
                 case 'createdAt':
                     $value = $message->createdAt()->format('Y-m-d\TH:i:s.u');
                     break;
+                // assume that all events are for the same aggregate
+                case 'aggregate_type':
+                    return true;
                 default:
                     throw new \UnexpectedValueException(\sprintf('Unexpected field "%s" given', $match['field']));
             }
