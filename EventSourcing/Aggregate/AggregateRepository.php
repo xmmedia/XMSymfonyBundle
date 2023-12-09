@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\EventSourcing\Aggregate;
 
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Exception\StreamNotFound;
+use Prooph\EventStore\Metadata\FieldType;
 use Prooph\EventStore\Metadata\MetadataMatcher;
 use Prooph\EventStore\Metadata\Operator;
 use Prooph\EventStore\StreamName;
@@ -61,14 +62,16 @@ class AggregateRepository
 
         $metadataMatcher = new MetadataMatcher();
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
-            '_aggregate_type',
+            'aggregate_type',
             Operator::EQUALS(),
             $this->aggregateType->toString(),
+            FieldType::MESSAGE_PROPERTY(),
         );
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
-            '_aggregate_id',
+            'aggregate_id',
             Operator::EQUALS(),
             $aggregateId,
+            FieldType::MESSAGE_PROPERTY(),
         );
 
         try {
