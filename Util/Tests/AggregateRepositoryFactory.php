@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Util\Tests;
 
-use Prooph\EventStore\InMemoryEventStore;
 use Prooph\EventStore\Stream;
 use Prooph\EventStore\StreamName;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateType;
+use Xm\SymfonyBundle\EventSourcing\InMemoryEventStore;
 
 trait AggregateRepositoryFactory
 {
