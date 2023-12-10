@@ -40,6 +40,11 @@ class ProjectionDeleteCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectionName = $input->getArgument(static::ARGUMENT_PROJECTION_NAME);
+        // append _projection if not present
+        if (!str_ends_with($projectionName, '_projection')) {
+            $projectionName .= '_projection';
+        }
+
         $withEvents = $input->getOption(self::OPTION_WITH_EVENTS);
 
         $message = \sprintf(
