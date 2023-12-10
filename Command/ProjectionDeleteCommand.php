@@ -21,7 +21,7 @@ class ProjectionDeleteCommand extends Command
     protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
     protected const OPTION_WITH_EVENTS = 'with-emitted-events';
 
-    public function __construct(private readonly ProjectionManager $projectionsManager)
+    public function __construct(private readonly ProjectionManager $projectionManager)
     {
         parent::__construct();
     }
@@ -49,7 +49,7 @@ class ProjectionDeleteCommand extends Command
         );
         $output->writeln($message);
 
-        $this->projectionsManager->deleteProjection($projectionName, $withEvents);
+        $this->projectionManager->deleteProjection($projectionName, $withEvents);
 
         return 0;
     }

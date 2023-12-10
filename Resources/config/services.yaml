@@ -9,7 +9,7 @@ services:
     Xm\SymfonyBundle\Command\ProjectionRunCommand: ~
     Xm\SymfonyBundle\Command\ProjectionDeleteCommand:
         arguments:
-            $projectionsManager: '@prooph_event_store.projection_manager.app'
+            $projectionManager: '@prooph_event_store.projection_manager.app'
     Xm\SymfonyBundle\Command\ProjectionRebuildCommand: ~
     Xm\SymfonyBundle\Command\PurgeCloudflareCacheCommand: ~
 
