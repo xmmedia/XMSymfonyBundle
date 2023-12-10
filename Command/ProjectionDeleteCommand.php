@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Command;
 
-use Psr\Container\ContainerInterface;
+use Prooph\EventStore\Projection\ProjectionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,7 +21,7 @@ class ProjectionDeleteCommand extends Command
     protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
     protected const OPTION_WITH_EVENTS = 'with-emitted-events';
 
-    public function __construct(private readonly ContainerInterface $projectionManagerForProjectionsLocator)
+    public function __construct(private readonly ProjectionManager $projectionsManager)
     {
         parent::__construct();
     }
@@ -49,7 +49,7 @@ class ProjectionDeleteCommand extends Command
         );
         $output->writeln($message);
 
-        $this->projectionManagerForProjectionsLocator->get($projectionName)->deleteProjection($projectionName, $withEvents);
+        $this->projectionsManager->deleteProjection($projectionName, $withEvents);
 
         return 0;
     }
