@@ -43,7 +43,7 @@ final class ProjectionRebuildCommand extends Command
         $io->title(sprintf('Rebuilding Projection "%s"', $projectionName));
 
         $this->getApplication()
-            ->find('event-store:projection:delete')
+            ->find('app:projection:delete')
             ->run(
                 new ArrayInput([
                     // for some reason the prooph command for delete requires the "command"

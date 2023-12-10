@@ -7,6 +7,9 @@ services:
     Xm\SymfonyBundle\Command\CreateEventStreamCommand: ~
     Xm\SymfonyBundle\Command\GraphQlDumpSchemaCommand: ~
     Xm\SymfonyBundle\Command\ProjectionRunCommand: ~
+    Xm\SymfonyBundle\Command\ProjectionDeleteCommand:
+        arguments:
+            $projectionManagerForProjectionsLocator: '@prooph_event_store.projection_manager_for_projections_locator'
     Xm\SymfonyBundle\Command\ProjectionRebuildCommand: ~
     Xm\SymfonyBundle\Command\PurgeCloudflareCacheCommand: ~
 
