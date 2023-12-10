@@ -48,3 +48,6 @@ services:
     Xm\SymfonyBundle\Maker\ProjectionMaker: ~
 
     Xm\SymfonyBundle\Doctrine\PdoProvider: ~
+
+    prooph_event_store:.projection_factory:
+        class: Xm\SymfonyBundle\EventSourcing\ProjectionManagerFactory
