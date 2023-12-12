@@ -754,11 +754,11 @@ SQL;
 
             if ($fieldType->is(FieldType::METADATA())) {
                 if (\is_bool($value)) {
-                    $where[] = "metadata->\"$.$field\" $operatorString " . \var_export($value, true) . ' '. $operatorStringEnd;
+                    $where[] = "metadata->'$.$field' $operatorString " . \var_export($value, true) . ' '. $operatorStringEnd;
                     continue;
                 }
 
-                $where[] = "JSON_UNQUOTE(metadata->\"$.$field\") $operatorString $parameterString $operatorStringEnd";
+                $where[] = "JSON_UNQUOTE(metadata->'$.$field') $operatorString $parameterString $operatorStringEnd";
             } else {
                 if (\is_bool($value)) {
                     $where[] = "`$field` $operatorString " . \var_export($value, true) . ' ' . $operatorStringEnd;
