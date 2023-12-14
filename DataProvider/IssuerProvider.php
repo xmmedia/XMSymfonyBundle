@@ -12,10 +12,14 @@ class IssuerProvider
     {
     }
 
-    public function getIssuer(): string
+    public function getIssuer(): ?string
     {
-        if (null === $token = $this->security->getToken()) {
-            return 'cli';
+        if (null === $this->security->getToken()) {
+            if ('cli' === php_sapi_name()) {
+                return 'cli';
+            } else {
+                return 'anonymous';
+            }
         }
 
         /** @var \Symfony\Component\Security\Core\User\UserInterface $user */
