@@ -95,6 +95,41 @@ class AggregateRepository
         return $eventSourcedAggregateRoot;
     }
 
+    public function getAggregateRootEvents(string $aggregateId, string $eventName = null): \Iterator
+    {
+        $streamName = $this->determineStreamName($aggregateId);
+
+        $metadataMatcher = new MetadataMatcher();
+        $metadataMatcher = $metadataMatcher->withMetadataMatch(
+            'aggregate_type',
+            Operator::EQUALS(),
+            $this->aggregateType->toString(),
+            FieldType::MESSAGE_PROPERTY(),
+        );
+        $metadataMatcher = $metadataMatcher->withMetadataMatch(
+            'aggregate_id',
+            Operator::EQUALS(),
+            $aggregateId,
+            FieldType::MESSAGE_PROPERTY(),
+        );
+        if ($eventName) {
+            $metadataMatcher = $metadataMatcher->withMetadataMatch(
+                'event_name',
+                Operator::EQUALS(),
+                $eventName,
+                FieldType::MESSAGE_PROPERTY(),
+            );
+        }
+
+        try {
+            $streamEvents = $this->eventStore->load($streamName, 1, null, $metadataMatcher);
+        } catch (StreamNotFound $e) {
+            return new \ArrayIterator();
+        }
+
+        return $streamEvents;
+    }
+
     public function extractAggregateVersion(object $aggregateRoot): int
     {
         return $this->aggregateTranslator->extractAggregateVersion($aggregateRoot);
