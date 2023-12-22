@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Infrastructure\Email;
 
 use Postmark\Models\PostmarkAttachment;
 use Postmark\PostmarkClient;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Xm\SymfonyBundle\Model\Email;
@@ -109,6 +110,20 @@ class EmailGateway implements EmailGatewayInterface
         );
 
         return EmailGatewayMessageId::fromString($result->getMessageID());
+    }
+
+    /**
+     * Generates a unique reference email address.
+     */
+    public function getReferencesHeader(Email $emailFrom): string
+    {
+        $email = $emailFrom->toString();
+
+        return sprintf(
+            '<%s@%s>',
+            Uuid::uuid4()->toString(),
+            substr($email, strpos($email, '@') + 1),
+        );
     }
 
     protected function removeNonWhiteListedAddresses(array $to): array
