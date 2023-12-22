@@ -41,9 +41,8 @@ class EmailGateway implements EmailGatewayInterface
         array $attachments = null,
         Email $from = null,
         Email $replyTo = null,
+        array $headers = [],
     ): EmailGatewayMessageId {
-        $headers = [];
-
         if (!\is_array($to)) {
             $to = [$to];
         }
