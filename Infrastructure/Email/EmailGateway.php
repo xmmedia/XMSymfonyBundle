@@ -108,7 +108,7 @@ class EmailGateway implements EmailGatewayInterface
             $attachments,
         );
 
-        return EmailGatewayMessageId::fromString($result->messageId);
+        return EmailGatewayMessageId::fromString($result->getMessageID());
     }
 
     protected function removeNonWhiteListedAddresses(array $to): array
