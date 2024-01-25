@@ -32,15 +32,21 @@ trait ProjectionAwareMigration
 
     protected function rebuildProjection(string $projection): void
     {
-        if (!isset($this->container)) {
-            throw new \RuntimeException(sprintf('The migration %s must implement %s to rebuild projections', self::class, ContainerAwareInterface::class));
+        if (!isset($this->kernel) && !isset($this->container)) {
+            throw new \RuntimeException(sprintf('The migration %s must have a $kernel property (Symfony >=6.4) or implement %s (Symfony <6.4) to rebuild projections', self::class, ContainerAwareInterface::class));
         }
 
         $this->write('Rebuilding projection: '.$projection);
 
         ini_set('memory_limit', '-1');
 
-        $application = new Application($this->container->get('kernel'));
+        if (isset($this->kernel)) {
+            $kernel = $this->kernel;
+        } else {
+            $kernel = $this->container->get('kernel');
+        }
+
+        $application = new Application($kernel);
         $application->setAutoExit(false);
 
         $input = new ArrayInput([
