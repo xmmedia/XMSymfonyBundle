@@ -79,6 +79,7 @@ class Date implements ValueObject
             return false;
         }
 
-        return 0 === $this->date->diffInMilliseconds($other->date);
+        // diffInMilliseconds returns a float, so this will ignore microseconds
+        return 0 == $this->date->diffInMilliseconds($other->date);
     }
 }
