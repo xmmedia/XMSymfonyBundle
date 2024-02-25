@@ -47,7 +47,7 @@ final readonly class <?= $class_name; ?> implements ValueObject
 
     public function sameValueAs(self|ValueObject $other): bool
     {
-        if (static::class !== $other::class) {
+        if (self::class !== $other::class) {
             return false;
         }
 
