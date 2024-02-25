@@ -15,9 +15,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('executeQuery')
             ->twice()
-            ->withArgs(function (string $sql): bool {
-                return (bool) strpos($sql, '`<?= $projection_name; ?>`');
-            });
+            ->withArgs(static fn (string $sql): bool => (bool) strpos($sql, '`<?= $projection_name; ?>`'));
 
         (new <?= $read_model_class_short; ?>($connection))->init();
     }
