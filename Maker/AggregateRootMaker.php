@@ -30,7 +30,7 @@ class AggregateRootMaker extends AbstractMaker
 
     public static function getCommandDescription(): string
     {
-        return 'Creates a new model with aggregate root.';
+        return 'Creates a new model with aggregate root. (Make Projection first.)';
     }
 
     public function configureCommand(
