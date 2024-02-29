@@ -8,7 +8,7 @@ use App\Util\Assert;
 use Xm\SymfonyBundle\Model\ValueObject;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-final readonly class <?= $class_name; ?> implements ValueObject
+final readonly class <?= $class_name; ?> implements ValueObject, \Stringable
 {
     public const MIN_LENGTH = 2;
     public const MAX_LENGTH = 50;
