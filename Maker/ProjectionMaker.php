@@ -108,6 +108,18 @@ class ProjectionMaker extends AbstractMaker
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
             'Tests\\GraphQl\\Query\\'.$arName.'\\',
         );
+        $countQueryClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'CountQuery',
+            'GraphQl\\Query\\'.$arName.'\\',
+        );
+        $filtersClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Filters',
+            'Projection\\'.$arName.'\\',
+        );
+        $queryBuilderClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'FilterQueryBuilder',
+            'Projection\\'.$arName.'\\',
+        );
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
             'Model\\'.$arName.'\\Exception\\',
@@ -117,38 +129,45 @@ class ProjectionMaker extends AbstractMaker
          * Variables available in the templates:
          */
         $variables = [
-            'entity'                     => Str::asLowerCamelCase($entityClassDetails->getShortName()),
-            'entity_class'               => $entityClassDetails->getFullName(),
-            'entity_class_short'         => $entityClassDetails->getShortName(),
-            'entity_class_short_plural'  => ucwords(
+            'entity'                       => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+            'entity_class'                 => $entityClassDetails->getFullName(),
+            'entity_class_short'           => $entityClassDetails->getShortName(),
+            'entity_class_short_plural'    => ucwords(
                 Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
             ),
-            'finder_class'               => $finderClassDetails->getFullName(),
-            'finder_class_short'         => $finderClassDetails->getShortName(),
-            'finder_property'            => Str::asLowerCamelCase($finderClassDetails->getShortName()),
-            'id_class'                   => $arClassDetails->getFullName() . 'Id',
-            'id_class_short'             => $arClassDetails->getShortName() . 'Id',
-            'id_field'                   => Str::asSnakeCase($idProperty),
-            'id_property'                => $idProperty,
-            'model'                      => $arClassDetails->getShortName(),
-            'model_upper'                => $modelUpper,
-            'name_class_short'           => $nameVoClassDetails->getShortName(),
-            'name_property'              => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
-            'name_field'                 => Str::asSnakeCase($nameVoClassDetails->getShortName()),
-            'not_found_class'            => $notFoundExceptionClassDetails->getFullName(),
-            'not_found_class_short'      => $notFoundExceptionClassDetails->getShortName(),
-            'projection_class'           => $projectionClassDetails->getFullName(),
-            'projection_class_short'     => $projectionClassDetails->getShortName(),
-            'projection_name'            => $projectionName,
-            'query_multiple'             => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
-            'query_multiple_class'       => $multipleQueryClassDetails->getFullName(),
-            'query_multiple_class_short' => $multipleQueryClassDetails->getShortName(),
-            'query_single'               => $this->doubleEscapeClass($queryClassDetails->getFullName()),
-            'query_single_class'         => $queryClassDetails->getFullName(),
-            'query_single_class_short'   => $queryClassDetails->getShortName(),
-            'read_model_class'           => $readModelClassDetails->getFullName(),
-            'read_model_class_short'     => $readModelClassDetails->getShortName(),
-            'stream_name'                => Str::asSnakeCase($arName),
+            'filters_class'                => $filtersClassDetails->getFullName(),
+            'filters_class_short'          => $filtersClassDetails->getShortName(),
+            'finder_class'                 => $finderClassDetails->getFullName(),
+            'finder_class_short'           => $finderClassDetails->getShortName(),
+            'finder_property'              => Str::asLowerCamelCase($finderClassDetails->getShortName()),
+            'id_class'                     => $arClassDetails->getFullName() . 'Id',
+            'id_class_short'               => $arClassDetails->getShortName() . 'Id',
+            'id_field'                     => Str::asSnakeCase($idProperty),
+            'id_property'                  => $idProperty,
+            'model'                        => $arClassDetails->getShortName(),
+            'model_upper'                  => $modelUpper,
+            'name_class_short'             => $nameVoClassDetails->getShortName(),
+            'name_property'                => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
+            'name_field'                   => Str::asSnakeCase($nameVoClassDetails->getShortName()),
+            'not_found_class'              => $notFoundExceptionClassDetails->getFullName(),
+            'not_found_class_short'        => $notFoundExceptionClassDetails->getShortName(),
+            'projection_class'             => $projectionClassDetails->getFullName(),
+            'projection_class_short'       => $projectionClassDetails->getShortName(),
+            'projection_name'              => $projectionName,
+            'projection_name_first_letter' => substr($projectionName, 0, 1),
+            'query_builder_class'          => $queryBuilderClassDetails->getFullName(),
+            'query_builder_class_short'    => $queryBuilderClassDetails->getShortName(),
+            'query_count'                  => $this->doubleEscapeClass($countQueryClassDetails->getFullName()),
+            'query_count_class'            => $countQueryClassDetails->getFullName(),
+            'query_multiple'               => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
+            'query_multiple_class'         => $multipleQueryClassDetails->getFullName(),
+            'query_multiple_class_short'   => $multipleQueryClassDetails->getShortName(),
+            'query_single'                 => $this->doubleEscapeClass($queryClassDetails->getFullName()),
+            'query_single_class'           => $queryClassDetails->getFullName(),
+            'query_single_class_short'     => $queryClassDetails->getShortName(),
+            'read_model_class'             => $readModelClassDetails->getFullName(),
+            'read_model_class_short'       => $readModelClassDetails->getShortName(),
+            'stream_name'                  => Str::asSnakeCase($arName),
         ];
 
         /*
@@ -221,6 +240,22 @@ class ProjectionMaker extends AbstractMaker
         $generator->generateClass(
             $multipleQueryTestClassDetails->getFullName(),
             $skeletonPath.'MultipleQueryTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $filtersClassDetails->getFullName(),
+            $skeletonPath.'Filters.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $queryBuilderClassDetails->getFullName(),
+            $skeletonPath.'QueryBuilder.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $countQueryClassDetails->getFullName(),
+            $skeletonPath.'CountQuery.tpl.php',
             $variables,
         );
 

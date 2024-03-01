@@ -16,13 +16,13 @@ class <?= $class_name; ?> extends BaseTestCase
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
         $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
-        $finder->shouldReceive('findAll')
+        $finder->shouldReceive('findByFilters')
             ->once()
             ->andReturn([$entity]);
 
         $query = new <?= $query_multiple_class_short; ?>($finder);
 
-        $result = $query();
+        $result = $query([]);
 
         $this->assertSame([$entity], $result);
     }
@@ -30,12 +30,12 @@ class <?= $class_name; ?> extends BaseTestCase
     public function testNoneFound(): void
     {
         $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
-        $finder->shouldReceive('findAll')
+        $finder->shouldReceive('findByFilters')
             ->once()
             ->andReturn([]);
 
         $query = new <?= $query_multiple_class_short; ?>($finder);
 
-        $this->assertSame([], $query());
+        $this->assertSame([], $query([]));
     }
 }

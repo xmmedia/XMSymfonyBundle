@@ -7,8 +7,11 @@ namespace <?= $namespace; ?>;
 use <?= $entity_class; ?>;
 use <?= $id_class; ?>;
 use <?= $not_found_class; ?>;
+use <?= $filters_class; ?>;
+use <?= $query_builder_class; ?>;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?>|string $id, int|null $lockMode = null, int|null $lockVersion = null)
@@ -44,5 +47,58 @@ class <?= $class_name; ?> extends ServiceEntityRepository
         $this->getEntityManager()->refresh($<?= $entity ?>);
 
         return $<?= $entity ?>;
+    }
+
+    #[ArrayShape([<?= $entity_class_short; ?>::class])]
+    public function findByFilters(<?= $filters_class_short; ?> $filters): array
+    {
+        $rsm = $this->createResultSetMappingBuilder('<?= $projection_name_first_letter; ?>');
+        $select = $rsm->generateSelectClause();
+        $queryParts = (new <?= $query_builder_class_short; ?>())->queryParts($filters);
+
+        $sql = <<<Query
+SELECT {$select}
+FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?>
+{$queryParts['join']}
+WHERE {$queryParts['where']}
+GROUP BY <?= $projection_name_first_letter; ?>.<?= $id_field; ?>
+ORDER BY {$queryParts['order']}
+LIMIT :offset, :maxResults
+Query;
+
+        if ($filters->applied(<?= $filters_class_short; ?>::OFFSET)) {
+            $queryParts['parameters']['offset'] = (int) $filters->get(<?= $filters_class_short; ?>::OFFSET);
+        } else {
+            $queryParts['parameters']['offset'] = 0;
+        }
+        $queryParts['parameters']['maxResults'] = 30;
+
+        $query = $this->_em->createNativeQuery($sql, $rsm);
+        $query->setParameters($queryParts['parameters']);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Retrieve the total count based on filters.
+     */
+    public function countByFilters(<?= $filters_class_short; ?> $filters): int
+    {
+        $queryParts = (new <?= $query_builder_class_short; ?>())->queryParts($filters);
+
+        $sql = <<<Query
+SELECT COUNT(DISTINCT <?= $projection_name_first_letter; ?>.<?= $id_field; ?>)
+FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?>
+{$queryParts['join']}
+WHERE {$queryParts['where']}
+Query;
+
+        return (int) $this->_em->getConnection()
+            ->executeQuery(
+                $sql,
+                $queryParts['parameters'],
+                $queryParts['parameterTypes'],
+            )
+            ->fetchNumeric()[0];
     }
 }

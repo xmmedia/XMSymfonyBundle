@@ -9,6 +9,14 @@
                 access:      '@=isAuthenticated()'
                 resolve:     '@=query("<?= $query_multiple; ?>")'
 
+            <?= $entity_class_short; ?>Count:
+                type:        Int!
+                description: 'Retrieve all <?= $entity_class_short_plural; ?> count.'
+                access:      '@=isAuthenticated()'
+                resolve:     '@=query("<?= $query_count; ?>")'
+                args:
+                    filters: <?= $entity_class_short; ?>FilterInput
+
             <?= $entity_class_short; ?>:
                 type:        <?= $entity_class_short; ?><?= "\n"; ?>
                 description: 'Retrieve a single <?= $entity_class_short; ?>.'
@@ -16,3 +24,11 @@
                 resolve:     '@=query("<?= $query_single; ?>", args["<?= $id_property; ?>"])'
                 args:
                     <?= $id_property; ?>: UUID!
+
+<?= $entity_class_short; ?>FilterInput:
+    type: input-object
+    config:
+        description: 'Available filters for querying <?= $entity_class_short_plural; ?>. Any passed fields will be applied if not empty. Exclude the key/field to skip that filter.'
+        fields:
+            q:      String
+            offset: Int
