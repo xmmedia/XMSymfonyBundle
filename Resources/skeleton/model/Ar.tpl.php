@@ -12,12 +12,12 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
 {
     use AppliesAggregateChanged;
 
-    private <?= $id_class; ?> $<?= $id_property; ?>;
+    private <?= $id_class_short; ?> $<?= $id_property; ?>;
     private Name $name;
     private bool $deleted = false;
 
     public static function add(
-        <?= $id_class; ?> $<?= $id_property; ?>,
+        <?= $id_class_short; ?> $<?= $id_property; ?>,
         Name $name,
     ): self {
         $self = new self();
@@ -85,7 +85,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         $this->deleted = true;
     }
 
-    public function <?= $id_property; ?>(): <?= $id_class; ?><?= "\n"; ?>
+    public function <?= $id_property; ?>(): <?= $id_class_short; ?><?= "\n"; ?>
     {
         return $this-><?= $id_property; ?>;
     }

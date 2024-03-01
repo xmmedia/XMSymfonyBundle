@@ -96,8 +96,8 @@ class AggregateRootMaker extends AbstractMaker
             $arClassDetails->getFullName(),
             $skeletonPath.'Ar.tpl.php',
             [
-                'id_class'    => $idClassShortName,
-                'id_property' => $idProperty,
+                'id_class_short' => $idClassShortName,
+                'id_property'    => $idProperty,
             ],
         );
         $arTestClassDetails = $generator->createClassNameDetails(
