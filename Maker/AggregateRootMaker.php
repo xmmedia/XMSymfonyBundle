@@ -175,6 +175,7 @@ class AggregateRootMaker extends AbstractMaker
         $generator->generateClass(
             $nameVoClassDetails->getFullName(),
             $skeletonPath.'Vo.tpl.php',
+            $variables,
         );
         $generator->generateClass(
             $nameVoTestClassDetails->getFullName(),
