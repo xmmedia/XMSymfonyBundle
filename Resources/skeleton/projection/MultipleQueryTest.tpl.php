@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
-use <?= $query_class; ?>;
+use <?= $query_multiple_class; ?>;
 use <?= $finder_class; ?>;
 use App\Tests\BaseTestCase;
 
@@ -20,7 +20,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->andReturn([$entity]);
 
-        $query = new <?= $query_class_short; ?>($finder);
+        $query = new <?= $query_multiple_class_short; ?>($finder);
 
         $result = $query();
 
@@ -34,7 +34,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->andReturn([]);
 
-        $query = new <?= $query_class_short; ?>($finder);
+        $query = new <?= $query_multiple_class_short; ?>($finder);
 
         $this->assertSame([], $query());
     }

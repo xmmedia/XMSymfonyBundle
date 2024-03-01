@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
-use <?= $query_class; ?>;
+use <?= $query_single_class; ?>;
 use <?= $id_class; ?>;
 use <?= $finder_class; ?>;
 use App\Tests\BaseTestCase;
@@ -25,7 +25,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($entity);
 
-        $query = new <?= $query_class_short; ?>($finder);
+        $query = new <?= $query_single_class_short; ?>($finder);
 
         $result = $query($<?= $id_property; ?>);
 
@@ -44,7 +44,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnNull();
 
-        $query = new <?= $query_class_short; ?>($finder);
+        $query = new <?= $query_single_class_short; ?>($finder);
 
         $result = $query($<?= $id_property; ?>);
 
