@@ -42,7 +42,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
             '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
         ];
 <?php } else { ?>
-    #[ArrayShape(['success' => bool])]
+    #[ArrayShape(['success' => \BOOL])]
     public function __invoke(string $<?= $id_property; ?>): array
     {
         $this->commandBus->dispatch(
