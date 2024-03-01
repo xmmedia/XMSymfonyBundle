@@ -33,7 +33,7 @@
         description: '<?= $model; ?> add & change mutation input.'
         fields:
             <?= $id_property; ?>: UUID!
-            name: String!
+            <?= $name_property ?>: String!
 
 <?= $model; ?>MutationPayload:
     type: object

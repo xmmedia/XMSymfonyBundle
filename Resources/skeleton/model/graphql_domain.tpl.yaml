@@ -4,4 +4,4 @@
         description: 'The <?= $model; ?> object.'
         fields:
             <?= $id_property; ?>: UUID!
-            name: String!
+            <?= $name_property ?>: String!

@@ -16,17 +16,17 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $id_property; ?> = $faker->uuid();
-        $name = $faker->name();
+        $<?= $name_property; ?> = $faker->name();
 
         $entity = new <?= $entity_class_short; ?>();
         $reflection = new \ReflectionClass(<?= $entity_class_short; ?>::class);
 
         $reflection->getProperty('<?= $id_property; ?>')
             ->setValue($entity, Uuid::fromString($<?= $id_property; ?>));
-        $reflection->getProperty('name')
-            ->setValue($entity, $name);
+        $reflection->getProperty('<?= $name_property; ?>')
+            ->setValue($entity, $<?= $name_property; ?>);
 
         $this->assertSameValueAs(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>), $entity-><?= $id_property; ?>());
-        $this->assertSame($name, $entity->name());
+        $this->assertSame($<?= $name_property; ?>, $entity-><?= $name_property; ?>());
     }
 }

@@ -31,7 +31,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
         $this->commandBus->dispatch(
             <?= $command_class_short; ?>::now(
                 $<?= $id_property; ?>,
-                Name::fromString($<?= $model_lower; ?>['name']),
+                <?= $name_class_short ?>::fromString($<?= $model_lower; ?>['<?= $name_property ?>']),
             ),
         );
 

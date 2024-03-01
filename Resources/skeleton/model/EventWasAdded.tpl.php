@@ -10,17 +10,17 @@ use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
 class <?= $class_name; ?> extends AggregateChanged
 {
-    private Name $name;
+    private <?= $name_class_short ?> $<?= $name_property ?>;
 
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $name,
+        <?= $name_class_short ?> $<?= $name_property ?>,
     ): self {
         $event = self::occur($<?= $id_property; ?>->toString(), [
-            'name' => $name->toString(),
+            '<?= $name_property ?>' => $<?= $name_property ?>->toString(),
         ]);
 
-        $event->name = $name;
+        $event-><?= $name_property ?> = $<?= $name_property ?>;
 
         return $event;
     }
@@ -30,12 +30,12 @@ class <?= $class_name; ?> extends AggregateChanged
         return <?= $id_class_short; ?>::fromString($this->aggregateId());
     }
 
-    public function name(): Name
+    public function <?= $name_property ?>(): <?= $name_class_short; ?>
     {
-        if (!isset($this->name)) {
-            $this->name = Name::fromString($this->payload['name']);
+        if (!isset($this-><?= $name_property ?>)) {
+            $this-><?= $name_property ?> = <?= $name_class_short ?>::fromString($this->payload['<?= $name_property ?>']);
         }
 
-        return $this->name;
+        return $this-><?= $name_property ?>;
     }
 }

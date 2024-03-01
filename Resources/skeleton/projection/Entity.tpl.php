@@ -19,15 +19,15 @@ class <?= $class_name; ?><?= "\n"; ?>
     private UuidInterface $<?= $id_property; ?>;
 
     #[ORM\Column(length: 50)]
-    private string $name;
+    private string $<?= $name_property; ?>;
 
     public function <?= $id_property; ?>(): <?= $id_class_short; ?><?= "\n"; ?>
     {
         return <?= $id_class_short; ?>::fromUuid($this-><?= $id_property; ?>);
     }
 
-    public function name(): string
+    public function <?= $name_property; ?>(): string
     {
-        return $this->name;
+        return $this-><?= $name_property; ?>;
     }
 }

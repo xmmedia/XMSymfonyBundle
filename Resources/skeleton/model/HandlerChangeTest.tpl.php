@@ -19,7 +19,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>(), Name::fromString($faker->name()));
+        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>(), <?= $name_class_short ?>::fromString($faker->name()));
 
         $<?= $model_lower; ?> = \Mockery::mock(<?= $model; ?>::class);
         $<?= $model_lower; ?>->shouldReceive('change')
@@ -40,7 +40,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>(), Name::fromString($faker->name()));
+        $command = <?= $command_class_short; ?>::now($faker-><?= $id_property; ?>(), <?= $name_class_short ?>::fromString($faker->name()));
 
         $repo = \Mockery::mock(<?= $list_class_short; ?>::class);
         $repo->shouldReceive('get')

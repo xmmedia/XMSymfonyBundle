@@ -23,7 +23,7 @@ class <?= $class_name; ?> extends BaseTestCase
 <?php if (!$delete) { ?>
         $args = [
             '<?= $id_property; ?>' => $faker->uuid(),
-            'name' => $faker->name(),
+            '<?= $name_property ?>' => $faker->name(),
         ];
 
         $commandBus = \Mockery::mock(MessageBusInterface::class);

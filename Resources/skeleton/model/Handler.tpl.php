@@ -28,11 +28,11 @@ final readonly class <?= $class_name; ?><?= "\n"; ?>
             throw <?= $model; ?>NotFound::with<?= $id_class_short; ?>($command-><?= $id_property; ?>());
         }
 
-        $<?= $model_lower; ?>->change($command->name());
+        $<?= $model_lower; ?>->change($command-><?= $name_property ?>());
 <?php } else { ?>
         $<?= $model_lower; ?> = <?= $model; ?>::add(
             $command-><?= $id_property; ?>(),
-            $command->name(),
+            $command-><?= $name_property ?>(),
         );
 <?php } ?>
 

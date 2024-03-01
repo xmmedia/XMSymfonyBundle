@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace <?= $namespace; ?>;
 
+use <?= $name_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRoot;
 use Xm\SymfonyBundle\EventSourcing\AppliesAggregateChanged;
 use Xm\SymfonyBundle\Model\Entity;
@@ -13,27 +14,27 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     use AppliesAggregateChanged;
 
     private <?= $id_class_short; ?> $<?= $id_property; ?>;
-    private Name $name;
+    private <?= $name_class_short; ?> $<?= $name_property; ?>;
     private bool $deleted = false;
 
     public static function add(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $name,
+        <?= $name_class_short; ?> $<?= $name_property; ?>,
     ): self {
         $self = new self();
         $self->recordThat(
             Event\<?= $class_name; ?>WasAdded::now(
                 $<?= $id_property; ?>,
-                $name,
+                $<?= $name_property; ?>,
             ),
         );
 
         return $self;
     }
 
-    public function change(Name $newName): void
+    public function change(<?= $name_class_short; ?> $new<?= $name_class_short; ?>): void
     {
-        if ($this->name->sameValueAs($newName)) {
+        if ($this-><?= $name_property; ?>->sameValueAs($new<?= $name_class_short; ?>)) {
             return;
         }
 
@@ -44,8 +45,8 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         $this->recordThat(
             Event\<?= $class_name; ?>WasChanged::now(
                 $this-><?= $id_property; ?>,
-                $newName,
-                $this->name,
+                $new<?= $name_class_short; ?>,
+                $this-><?= $name_property; ?>,
             ),
         );
     }
@@ -72,12 +73,12 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     protected function when<?= $class_name; ?>WasAdded(Event\<?= $class_name; ?>WasAdded $event): void
     {
         $this-><?= $id_property; ?> = $event-><?= $id_property; ?>();
-        $this->name = $event->name();
+        $this-><?= $name_property; ?> = $event-><?= $name_property; ?>();
     }
 
     protected function when<?= $class_name; ?>WasChanged(Event\<?= $class_name; ?>WasChanged $event): void
     {
-        $this->name = $event->newName();
+        $this-><?= $name_property; ?> = $event->new<?= $name_class_short; ?>();
     }
 
     protected function when<?= $class_name; ?>WasDeleted(Event\<?= $class_name; ?>WasDeleted $event): void
@@ -90,9 +91,9 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $this-><?= $id_property; ?>;
     }
 
-    public function name(): Name
+    public function <?= $name_property; ?>(): <?= $name_class_short; ?><?= "\n"; ?>
     {
-        return $this->name;
+        return $this-><?= $name_property; ?>;
     }
 
     /**

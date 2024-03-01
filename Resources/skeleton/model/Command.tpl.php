@@ -13,11 +13,11 @@ final class <?= $class_name; ?> extends Command
 {
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $name,
+        <?= $name_class_short ?> $<?= $name_property ?>,
     ): self {
         return new self([
             '<?= $id_property; ?>' => $<?= $id_property; ?>->toString(),
-            'name' => $name->toString(),
+            '<?= $name_property ?>' => $<?= $name_property ?>->toString(),
         ]);
     }
 
@@ -26,9 +26,9 @@ final class <?= $class_name; ?> extends Command
         return <?= $id_class_short; ?>::fromString($this->payload['<?= $id_property; ?>']);
     }
 
-    public function name(): Name
+    public function <?= $name_property ?>(): <?= $name_class_short ?>
     {
-        return Name::fromString($this->payload['name']);
+        return <?= $name_class_short ?>::fromString($this->payload['<?= $name_property ?>']);
     }
 
     protected function setPayload(array $payload): void
@@ -36,8 +36,8 @@ final class <?= $class_name; ?> extends Command
         Assert::keyExists($payload, '<?= $id_property; ?>');
         Assert::uuid($payload['<?= $id_property; ?>']);
 
-        Assert::keyExists($payload, 'name');
-        Assert::string($payload['name']);
+        Assert::keyExists($payload, '<?= $name_property ?>');
+        Assert::string($payload['<?= $name_property ?>']);
 
         parent::setPayload($payload);
     }

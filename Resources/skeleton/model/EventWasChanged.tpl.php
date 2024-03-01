@@ -10,21 +10,21 @@ use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 
 class <?= $class_name; ?> extends AggregateChanged
 {
-    private Name $newName;
-    private Name $oldName;
+    private <?= $name_class_short; ?> $new<?= $name_class_short; ?>;
+    private <?= $name_class_short; ?> $old<?= $name_class_short; ?>;
 
     public static function now(
         <?= $id_class_short; ?> $<?= $id_property; ?>,
-        Name $newName,
-        Name $oldName,
+        <?= $name_class_short; ?> $new<?= $name_class_short; ?>,
+        <?= $name_class_short; ?> $old<?= $name_class_short; ?>,
     ): self {
         $event = self::occur($<?= $id_property; ?>->toString(), [
-            'newName' => $newName->toString(),
-            'oldName' => $oldName->toString(),
+            'new<?= $name_class_short; ?>' => $new<?= $name_class_short; ?>->toString(),
+            'old<?= $name_class_short; ?>' => $old<?= $name_class_short; ?>->toString(),
         ]);
 
-        $event->newName = $newName;
-        $event->oldName = $oldName;
+        $event->new<?= $name_class_short; ?> = $new<?= $name_class_short; ?>;
+        $event->old<?= $name_class_short; ?> = $old<?= $name_class_short; ?>;
 
         return $event;
     }
@@ -34,21 +34,21 @@ class <?= $class_name; ?> extends AggregateChanged
         return <?= $id_class_short; ?>::fromString($this->aggregateId());
     }
 
-    public function newName(): Name
+    public function new<?= $name_class_short; ?>(): <?= $name_class_short; ?>
     {
-        if (!isset($this->newName)) {
-            $this->newName = Name::fromString($this->payload['newName']);
+        if (!isset($this->new<?= $name_class_short; ?>)) {
+            $this->new<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($this->payload['new<?= $name_class_short; ?>']);
         }
 
-        return $this->newName;
+        return $this->new<?= $name_class_short; ?>;
     }
 
-    public function oldName(): Name
+    public function old<?= $name_class_short; ?>(): <?= $name_class_short; ?>
     {
-        if (!isset($this->oldName)) {
-            $this->oldName = Name::fromString($this->payload['oldName']);
+        if (!isset($this->old<?= $name_class_short; ?>)) {
+            $this->old<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($this->payload['old<?= $name_class_short; ?>']);
         }
 
-        return $this->oldName;
+        return $this->old<?= $name_class_short; ?>;
     }
 }

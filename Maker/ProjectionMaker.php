@@ -66,6 +66,7 @@ class ProjectionMaker extends AbstractMaker
         $projectionClassName = Str::asCamelCase($projectionName);
 
         $arClassDetails = $generator->createClassNameDetails($arName, 'Model\\'.$arName.'\\');
+        $nameVoClassDetails = $generator->createClassNameDetails($arName.'Name', 'Model\\'.$arName.'\\');
         $idProperty = Str::asLowerCamelCase($arClassDetails->getShortName().'Id');
 
         /*
@@ -131,6 +132,9 @@ class ProjectionMaker extends AbstractMaker
             'id_property'                => $idProperty,
             'model'                      => $arClassDetails->getShortName(),
             'model_upper'                => $modelUpper,
+            'name_class_short'           => $nameVoClassDetails->getShortName(),
+            'name_property'              => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
+            'name_field'                 => Str::asSnakeCase($nameVoClassDetails->getShortName()),
             'not_found_class'            => $notFoundExceptionClassDetails->getFullName(),
             'not_found_class_short'      => $notFoundExceptionClassDetails->getShortName(),
             'projection_class'           => $projectionClassDetails->getFullName(),

@@ -15,11 +15,11 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
-        $name = Name::fromString($faker->name());
+        $<?= $name_property ?> = <?= $name_class_short ?>::fromString($faker->name());
 
-        $command = <?= $command_class_short; ?>::now($<?= $id_property; ?>, $name);
+        $command = <?= $command_class_short; ?>::now($<?= $id_property; ?>, $<?= $name_property ?>);
 
         $this->assertSameValueAs($<?= $id_property; ?>, $command-><?= $id_property; ?>());
-        $this->assertSameValueAs($name, $command->name());
+        $this->assertSameValueAs($<?= $name_property ?>, $command-><?= $name_property ?>());
     }
 }

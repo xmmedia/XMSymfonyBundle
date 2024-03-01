@@ -20,7 +20,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::add(
             $faker-><?= $id_property; ?>(),
-            Name::fromString($faker->name()),
+            <?= $name_class_short ?>::fromString($faker->name()),
         );
 
         $repository = $this->getRepository(<?= $repository_class_short; ?>::class, <?= $model; ?>::class);

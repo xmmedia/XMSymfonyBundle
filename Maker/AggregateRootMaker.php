@@ -96,11 +96,11 @@ class AggregateRootMaker extends AbstractMaker
         );
 
         $nameVoClassDetails = $generator->createClassNameDetails(
-            'Name',
+            $arName.'Name',
             'Model\\'.$arName.'\\',
         );
         $nameVoTestClassDetails = $generator->createClassNameDetails(
-            'NameTest',
+            $arName.'NameTest',
             'Tests\\Model\\'.$arName.'\\',
         );
 
@@ -135,6 +135,8 @@ class AggregateRootMaker extends AbstractMaker
             'model_class'            => $arClassDetails->getFullName(),
             'model_lower'            => $arLowerName,
             'name_class'             => $nameVoClassDetails->getFullName(),
+            'name_class_short'       => $nameVoClassDetails->getShortName(),
+            'name_property'          => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
             'not_found_class'        => $notFoundExceptionClassDetails->getFullName(),
             'not_found_class_short'  => $notFoundExceptionClassDetails->getShortName(),
             'repository_class'       => $repositoryClassDetails->getFullName(),

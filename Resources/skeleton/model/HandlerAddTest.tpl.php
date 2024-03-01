@@ -19,7 +19,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $command = <?= $command_class_short; ?>::now(
             $faker-><?= $id_property; ?>(),
-            Name::fromString($faker->name()),
+            <?= $name_class_short ?>::fromString($faker->name()),
         );
 
         $repo = \Mockery::mock(<?= $list_class_short; ?>::class);
