@@ -65,27 +65,93 @@ class ProjectionMaker extends AbstractMaker
 
         $projectionClassName = Str::asCamelCase($projectionName);
 
-        $arClassDetails = $generator->createClassNameDetails(
-            $arName,
-            'Model\\'.$arName.'\\',
-        );
-        $idClassShortName = $arClassDetails->getShortName().'Id';
-        $idClassFullName = $arClassDetails->getFullName().'Id';
+        $arClassDetails = $generator->createClassNameDetails($arName, 'Model\\'.$arName.'\\');
         $idProperty = Str::asLowerCamelCase($arClassDetails->getShortName().'Id');
-        $idField = Str::asSnakeCase($idProperty);
 
+        /*
+         * Create classes:
+         */
         $projectionClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Projection',
             'Projection\\'.$arName.'\\',
         );
+        $readModelClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ReadModel',
+            'Projection\\'.$arName.'\\',
+        );
+        $entityClassDetails = $generator->createClassNameDetails(
+            $projectionClassName,
+            'Entity\\',
+        );
+        $entityTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Test',
+            'Tests\\Entity\\',
+        );
+        $finderClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Finder',
+            'Projection\\'.$arName.'\\',
+        );
+        $queryClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Query',
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+        );
+        $queryTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'QueryTest',
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+        );
+        $multipleQueryClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
+            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+        );
+        $multipleQueryTestClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
+            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+        );
+        $notFoundExceptionClassDetails = $generator->createClassNameDetails(
+            $arName.'NotFound',
+            'Model\\'.$arName.'\\Exception\\',
+        );
+
+        /*
+         * Variables available in the templates:
+         */
+        $variables = [
+            'id_field'                  => Str::asSnakeCase($idProperty),
+            'id_property'               => $idProperty,
+            'model'                     => $arClassDetails->getShortName(),
+            'stream_name'               => Str::asSnakeCase($arName),
+            'projection_class'          => $projectionClassDetails->getFullName(),
+            'projection_class_short'    => $projectionClassDetails->getShortName(),
+            'model_upper'               => $modelUpper,
+            'read_model_class'          => $readModelClassDetails->getFullName(),
+            'read_model_class_short'    => $readModelClassDetails->getShortName(),
+            'projection_name'           => $projectionName,
+            'id_class'                  => $arClassDetails->getFullName() . 'Id',
+            'id_class_short'            => $arClassDetails->getShortName() . 'Id',
+            'entity_class'              => $entityClassDetails->getFullName(),
+            'entity_class_short'        => $entityClassDetails->getShortName(),
+            'entity_class_short_plural' => ucwords(
+                Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
+            ),
+            'finder_class'              => $finderClassDetails->getFullName(),
+            'finder_class_short'        => $finderClassDetails->getShortName(),
+            'finder_property'           => Str::asLowerCamelCase($finderClassDetails->getShortName()),
+            'query_single'              => $this->doubleEscapeClass($queryClassDetails->getFullName()),
+            'query_multiple'            => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
+            'query_class'               => $multipleQueryClassDetails->getFullName(),
+            'query_class_short'         => $multipleQueryClassDetails->getShortName(),
+            'entity'                    => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+            'not_found_class'           => $notFoundExceptionClassDetails->getFullName(),
+            'not_found_class_short'     => $notFoundExceptionClassDetails->getShortName(),
+        ];
+
+        /*
+         * Generate the files:
+         */
         $generator->generateClass(
             $projectionClassDetails->getFullName(),
             $skeletonPath.'Projection.tpl.php',
-            [
-                'id_field'    => $idField,
-                'model'       => $arClassDetails->getShortName(),
-                'stream_name' => Str::asSnakeCase($arName),
-            ],
+            $variables,
         );
 
         $projectionTestClassDetails = $generator->createClassNameDetails(
@@ -95,26 +161,13 @@ class ProjectionMaker extends AbstractMaker
         $generator->generateClass(
             $projectionTestClassDetails->getFullName(),
             $skeletonPath.'ProjectionTest.tpl.php',
-            [
-                'projection_class'       => $projectionClassDetails->getFullName(),
-                'projection_class_short' => $projectionClassDetails->getShortName(),
-                'model'                  => $arClassDetails->getShortName(),
-                'stream_name'            => Str::asSnakeCase($arName),
-            ],
+            $variables,
         );
 
-        $readModelClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'ReadModel',
-            'Projection\\'.$arName.'\\',
-        );
         $generator->generateClass(
             $readModelClassDetails->getFullName(),
             $skeletonPath.'ReadModel.tpl.php',
-            [
-                'id_field'    => $idField,
-                'id_property' => $idProperty,
-                'model_upper' => $modelUpper,
-            ],
+            $variables,
         );
 
         $readModelTestClassDetails = $generator->createClassNameDetails(
@@ -124,158 +177,51 @@ class ProjectionMaker extends AbstractMaker
         $generator->generateClass(
             $readModelTestClassDetails->getFullName(),
             $skeletonPath.'ReadModelTest.tpl.php',
-            [
-                'read_model_class'       => $readModelClassDetails->getFullName(),
-                'read_model_class_short' => $readModelClassDetails->getShortName(),
-                'projection_name'        => $projectionName,
-                'id_field'               => $idField,
-                'id_property'            => $idProperty,
-
-                'model_upper'            => $modelUpper,
-            ],
-        );
-
-        $entityClassDetails = $generator->createClassNameDetails(
-            $projectionClassName,
-            'Entity\\',
-        );
-        $finderClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'Finder',
-            'Projection\\'.$arName.'\\',
-        );
-        $notFoundExceptionClassDetails = $generator->createClassNameDetails(
-            $arName.'NotFound',
-            'Model\\'.$arName.'\\Exception\\',
+            $variables,
         );
 
         $generator->generateClass(
             $finderClassDetails->getFullName(),
             $skeletonPath.'Finder.tpl.php',
-            [
-                'id_class'              => $idClassFullName,
-                'id_class_short'        => $idClassShortName,
-                'entity_class'          => $entityClassDetails->getFullName(),
-                'entity_class_short'    => $entityClassDetails->getShortName(),
-                'entity'                => Str::asLowerCamelCase($entityClassDetails->getShortName()),
-                'not_found_class'       => $notFoundExceptionClassDetails->getFullName(),
-                'not_found_class_short' => $notFoundExceptionClassDetails->getShortName(),
-            ],
+            $variables,
         );
         $generator->generateClass(
             $entityClassDetails->getFullName(),
             $skeletonPath.'Entity.tpl.php',
-            [
-                'id_class'       => $idClassFullName,
-                'id_class_short' => $idClassShortName,
-                'id_property'    => $idProperty,
-                'finder_class'   => $finderClassDetails->getFullName(),
-            ],
-        );
-
-        $entityTestClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'Test',
-            'Tests\\Entity\\',
+            $variables,
         );
         $generator->generateClass(
             $entityTestClassDetails->getFullName(),
             $skeletonPath.'EntityTest.tpl.php',
-            [
-                'entity_class'       => $entityClassDetails->getFullName(),
-                'entity_class_short' => $entityClassDetails->getShortName(),
-                'id_class'           => $idClassFullName,
-                'id_class_short'     => $idClassShortName,
-                'id_property'        => $idProperty,
-            ],
+            $variables,
         );
 
-        $queryClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
-        );
         $generator->generateClass(
             $queryClassDetails->getFullName(),
             $skeletonPath.'Query.tpl.php',
-            [
-                'entity_class'       => $entityClassDetails->getFullName(),
-                'entity_class_short' => $entityClassDetails->getShortName(),
-                'id_class'           => $idClassFullName,
-                'id_class_short'     => $idClassShortName,
-                'finder_class'       => $finderClassDetails->getFullName(),
-                'finder_class_short' => $finderClassDetails->getShortName(),
-                'finder_property'    => Str::asLowerCamelCase(
-                    $finderClassDetails->getShortName(),
-                ),
-                'id_property'        => $idProperty,
-            ],
-        );
-
-        $queryTestClassDetails = $generator->createClassNameDetails(
-            $projectionClassName.'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            $variables,
         );
         $generator->generateClass(
             $queryTestClassDetails->getFullName(),
             $skeletonPath.'QueryTest.tpl.php',
-            [
-                'query_class'        => $queryClassDetails->getFullName(),
-                'query_class_short'  => $queryClassDetails->getShortName(),
-                'id_class'           => $idClassFullName,
-                'id_class_short'     => $idClassShortName,
-                'entity_class'       => $entityClassDetails->getFullName(),
-                'entity_class_short' => $entityClassDetails->getShortName(),
-                'finder_class'       => $finderClassDetails->getFullName(),
-                'finder_class_short' => $finderClassDetails->getShortName(),
-                'id_property'        => $idProperty,
-            ],
+            $variables,
         );
 
-        $multipleQueryClassDetails = $generator->createClassNameDetails(
-            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
-        );
         $generator->generateClass(
             $multipleQueryClassDetails->getFullName(),
             $skeletonPath.'MultipleQuery.tpl.php',
-            [
-                'entity_class'       => $entityClassDetails->getFullName(),
-                'entity_class_short' => $entityClassDetails->getShortName(),
-                'finder_class'       => $finderClassDetails->getFullName(),
-                'finder_class_short' => $finderClassDetails->getShortName(),
-                'finder_property'    => Str::asLowerCamelCase(
-                    $finderClassDetails->getShortName(),
-                ),
-            ],
-        );
-
-        $multipleQueryTestClassDetails = $generator->createClassNameDetails(
-            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            $variables,
         );
         $generator->generateClass(
             $multipleQueryTestClassDetails->getFullName(),
             $skeletonPath.'MultipleQueryTest.tpl.php',
-            [
-                'query_class'          => $multipleQueryClassDetails->getFullName(),
-                'query_class_short'    => $multipleQueryClassDetails->getShortName(),
-                'entity_class'         => $entityClassDetails->getFullName(),
-                'entity_class_short'   => $entityClassDetails->getShortName(),
-                'finder_class'         => $finderClassDetails->getFullName(),
-                'finder_class_short'   => $finderClassDetails->getShortName(),
-            ],
+            $variables,
         );
 
         $generator->generateFile(
             'config/graphql/types/'.$projectionName.'.query.yaml',
             $skeletonPath.'graphql_query.tpl.yaml',
-            [
-                'entity_class_short'        => $entityClassDetails->getShortName(),
-                'entity_class_short_plural' => ucwords(
-                    Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
-                ),
-                'id_property'               => $idProperty,
-                'query_single'              => $this->doubleEscapeClass($queryClassDetails->getFullName()),
-                'query_multiple'            => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
-            ],
+            $variables,
         );
 
         $generator->writeChanges();
