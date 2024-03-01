@@ -94,19 +94,19 @@ class ProjectionMaker extends AbstractMaker
         );
         $queryClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            'GraphQl\\Query\\'.$arName.'\\',
         );
         $queryTestClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            'Tests\\GraphQl\\Query\\'.$arName.'\\',
         );
         $multipleQueryClassDetails = $generator->createClassNameDetails(
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
-            'Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            'GraphQl\\Query\\'.$arName.'\\',
         );
         $multipleQueryTestClassDetails = $generator->createClassNameDetails(
             Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
-            'Tests\\Infrastructure\\GraphQl\\Query\\'.$arName.'\\',
+            'Tests\\GraphQl\\Query\\'.$arName.'\\',
         );
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',

@@ -304,7 +304,7 @@ class AggregateRootMaker extends AbstractMaker
 
             $mutationClassDetails = $generator->createClassNameDetails(
                 $arName.$command.'Mutation',
-                'Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\',
+                'GraphQl\\Mutation\\'.$arName.'\\',
             );
             $mutationClasses[$command] = $mutationClassDetails;
             $generator->generateClass(
@@ -321,7 +321,7 @@ class AggregateRootMaker extends AbstractMaker
 
             $mutationTestClassDetails = $generator->createClassNameDetails(
                 $arName.$command.'MutationTest',
-                'Tests\\Infrastructure\\GraphQl\\Mutation\\'.$arName.'\\',
+                'Tests\\GraphQl\\Mutation\\'.$arName.'\\',
             );
             $generator->generateClass(
                 $mutationTestClassDetails->getFullName(),
