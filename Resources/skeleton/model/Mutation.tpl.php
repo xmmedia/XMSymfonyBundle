@@ -8,8 +8,10 @@ use <?= $command_class; ?>;
 use <?= $id_class; ?>;
 <?php if (!$delete) { ?>
 use <?= $entity_finder_class; ?>;
+use <?= $entity_class; ?>;
 use <?= $name_class; ?>;
 <?php } ?>
+use JetBrains\PhpStorm\ArrayShape;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -24,6 +26,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
     }
 
 <?php if (!$delete) { ?>
+    #[ArrayShape(['<?= $entity; ?>' => <?= $entity_class_short; ?>::class])]
     public function __invoke(array $<?= $model_lower; ?>): array
     {
         $<?= $id_property; ?> = <?= $id_class_short; ?>::fromString($<?= $model_lower; ?>['<?= $id_property; ?>']);
@@ -39,6 +42,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
             '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
         ];
 <?php } else { ?>
+    #[ArrayShape(['success' => bool])]
     public function __invoke(string $<?= $id_property; ?>): array
     {
         $this->commandBus->dispatch(
