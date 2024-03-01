@@ -7,7 +7,7 @@ namespace <?= $namespace; ?>;
 <?php if (!$edit) { ?>
 use App\Model\<?= $model; ?>\<?= $model; ?>;
 <?php } ?>
-use App\Model\<?= $model; ?>\<?= $list_class; ?>;
+use <?= $list_class; ?>;
 use <?= $command_class; ?>;
 <?php if ($edit) { ?>
 use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
@@ -15,7 +15,7 @@ use App\Model\<?= $model; ?>\Exception\<?= $model; ?>NotFound;
 
 final readonly class <?= $class_name; ?><?= "\n"; ?>
 {
-    public function __construct(private <?= $list_class; ?> $<?= $repo_property; ?>)
+    public function __construct(private <?= $list_class_short; ?> $<?= $repo_property; ?>)
     {
     }
 

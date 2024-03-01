@@ -6,10 +6,10 @@ namespace <?= $namespace; ?>;
 
 use App\Model\<?= $model; ?>\<?= $model; ?>;
 use <?= $id_class; ?>;
-use App\Model\<?= $model; ?>\<?= $list_class; ?>;
+use <?= $list_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository;
 
-final class <?= $class_name; ?> extends AggregateRepository implements <?= $list_class; ?><?= "\n"; ?>
+final class <?= $class_name; ?> extends AggregateRepository implements <?= $list_class_short; ?><?= "\n"; ?>
 {
     public function save(<?= $model; ?> $<?= $model_lower; ?>): void
     {
