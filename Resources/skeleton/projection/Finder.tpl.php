@@ -61,7 +61,7 @@ SELECT {$select}
 FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?>
 {$queryParts['join']}
 WHERE {$queryParts['where']}
-GROUP BY <?= $projection_name_first_letter; ?>.<?= $id_field; ?>
+GROUP BY <?= $projection_name_first_letter; ?>.<?= $id_field; ?><?= "\n"; ?>
 ORDER BY {$queryParts['order']}
 LIMIT :offset, :maxResults
 Query;
