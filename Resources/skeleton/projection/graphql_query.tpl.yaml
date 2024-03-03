@@ -7,13 +7,15 @@
                 type:        '[<?= $entity_class_short; ?>!]!'
                 description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=query("<?= $query_multiple; ?>")'
+                resolve:     '@=query("<?= $query_multiple; ?>", args["filters"])'
+                args:
+                    filters: <?= $entity_class_short; ?>FilterInput
 
             <?= $entity_class_short; ?>Count:
                 type:        Int!
                 description: 'Retrieve all <?= $entity_class_short_plural; ?> count.'
                 access:      '@=isAuthenticated()'
-                resolve:     '@=query("<?= $query_count; ?>")'
+                resolve:     '@=query("<?= $query_count; ?>", args["filters"])'
                 args:
                     filters: <?= $entity_class_short; ?>FilterInput
 
