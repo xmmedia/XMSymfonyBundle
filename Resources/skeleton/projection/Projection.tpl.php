@@ -28,7 +28,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         'insert',
                         [
                             '<?= $id_field; ?>' => $event->aggregateId(),
-                            '<?= $name_property; ?>' => $event-><?= $name_property; ?>()->toString(),
+                            '<?= $name_field; ?>' => $event-><?= $name_property; ?>()->toString(),
                         ],
                     );
                 },
@@ -44,7 +44,7 @@ class <?= $class_name; ?> implements ReadModelProjection
                         'update',
                         $event->aggregateId(),
                         [
-                            '<?= $name_property; ?>' => $event->new<?= $name_class_short; ?>()->toString(),
+                            '<?= $name_field; ?>' => $event->new<?= $name_class_short; ?>()->toString(),
                         ],
                     );
                 },
