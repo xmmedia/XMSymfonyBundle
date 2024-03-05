@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Maker;
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Prooph\Bundle\EventStore\Projection\ReadModelProjection;
+use Prooph\EventStore\Projection\ReadModelProjector;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -30,7 +34,7 @@ class AggregateRootMaker extends AbstractMaker
 
     public static function getCommandDescription(): string
     {
-        return 'Creates a new model with aggregate root. (Make Projection first.)';
+        return 'Creates a new model with aggregate root.';
     }
 
     public function configureCommand(
@@ -38,7 +42,6 @@ class AggregateRootMaker extends AbstractMaker
         InputConfiguration $inputConfig,
     ): void {
         $command
-            ->setHelp('Note: it\'s best to create the projection first using make:projection.')
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,
@@ -55,6 +58,14 @@ class AggregateRootMaker extends AbstractMaker
                     Str::asClassName(Str::getRandomTerm()),
                 ),
             )
+            ->addArgument(
+                'projection',
+                InputArgument::OPTIONAL,
+                sprintf(
+                    'Choose a name of the projection (e.g. <fg=yellow>%s</>). "_projection" will be appended to the end',
+                    Str::asSnakeCase(Str::getRandomTerm()),
+                ),
+            )
         ;
     }
 
@@ -64,8 +75,11 @@ class AggregateRootMaker extends AbstractMaker
         Generator $generator,
     ): void {
         $arName = trim($input->getArgument('name'));
+        $modelUpper = strtoupper(Str::asSnakeCase($arName));
         $entityName = trim($input->getArgument('entity'));
-        $skeletonPath = $this->skeletonPath().'model/';
+        $projectionName = strtolower(trim($input->getArgument('projection')));
+
+        $projectionClassName = Str::asCamelCase($projectionName);
 
         $arClassDetails = $generator->createClassNameDetails(
             $arName,
@@ -82,7 +96,6 @@ class AggregateRootMaker extends AbstractMaker
             'Model\\'.$arName.'\\',
         );
         $idProperty = Str::asLowerCamelCase($idClass->getShortName());
-        $idField = Str::asSnakeCase($idProperty);
 
         $listClassName = $arClassDetails->getShortName().'List';
         $listClassDetails = $generator->createClassNameDetails(
@@ -93,6 +106,10 @@ class AggregateRootMaker extends AbstractMaker
         $entityClassDetails = $generator->createClassNameDetails(
             $entityName,
             'Entity\\',
+        );
+        $entityTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Test',
+            'Tests\\Entity\\',
         );
         $entityFinder = $generator->createClassNameDetails(
             $entityName.'Finder',
@@ -117,50 +134,119 @@ class AggregateRootMaker extends AbstractMaker
             'Tests\\Infrastructure\\Repository\\',
         );
 
+        $projectionClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Projection',
+            'Projection\\'.$arName.'\\',
+        );
+        $readModelClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ReadModel',
+            'Projection\\'.$arName.'\\',
+        );
+
+        $queryClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Query',
+            'GraphQl\\Query\\'.$arName.'\\',
+        );
+        $queryTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'QueryTest',
+            'Tests\\GraphQl\\Query\\'.$arName.'\\',
+        );
+        $multipleQueryClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'Query',
+            'GraphQl\\Query\\'.$arName.'\\',
+        );
+        $multipleQueryTestClassDetails = $generator->createClassNameDetails(
+            Str::singularCamelCaseToPluralCamelCase($projectionClassName).'QueryTest',
+            'Tests\\GraphQl\\Query\\'.$arName.'\\',
+        );
+
+        $filtersClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'Filters',
+            'Projection\\'.$arName.'\\',
+        );
+        $queryBuilderClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'FilterQueryBuilder',
+            'Projection\\'.$arName.'\\',
+        );
+        $countQueryClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'CountQuery',
+            'GraphQl\\Query\\'.$arName.'\\',
+        );
+
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
             'Model\\'.$arName.'\\Exception\\',
         );
 
         $variables = [
-            'entity'                 => Str::asLowerCamelCase($entityClassDetails->getShortName()),
-            'entity_class'           => $entityClassDetails->getFullName(),
-            'entity_class_short'     => $entityClassDetails->getShortName(),
-            'entity_finder'          => $entityFinder->getShortName(),
-            'entity_finder_class'    => $entityFinder->getFullName(),
-            'entity_finder_lower'    => Str::asLowerCamelCase($entityFinder->getShortName()),
-            'id_class'               => $idClass->getFullName(),
-            'id_class_short'         => $idClass->getShortName(),
-            'id_field'               => $idField,
-            'id_property'            => $idProperty,
-            'list_class'             => $listClassDetails->getFullName(),
-            'list_class_short'       => $listClassDetails->getShortName(),
-            'model'                  => $arClassDetails->getShortName(),
-            'model_class'            => $arClassDetails->getFullName(),
-            'model_lower'            => $arLowerName,
-            'name_class'             => $nameVoClassDetails->getFullName(),
-            'name_class_short'       => $nameVoClassDetails->getShortName(),
-            'name_property'          => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
-            'not_found_class'        => $notFoundExceptionClassDetails->getFullName(),
-            'not_found_class_short'  => $notFoundExceptionClassDetails->getShortName(),
-            'repository_class'       => $repositoryClassDetails->getFullName(),
-            'repository_class_short' => $repositoryClassDetails->getShortName(),
+            'entity'                       => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+            'entity_class'                 => $entityClassDetails->getFullName(),
+            'entity_class_short'           => $entityClassDetails->getShortName(),
+            'entity_class_short_plural'    => ucwords(
+                Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
+            ),
+            'entity_filter_class_short'    => $entityFinder->getShortName(),
+            'entity_finder_class'          => $entityFinder->getFullName(),
+            'entity_finder_property'       => Str::asLowerCamelCase($entityFinder->getShortName()),
+            'filters_class'                => $filtersClassDetails->getFullName(),
+            'filters_class_short'          => $filtersClassDetails->getShortName(),
+            'id_class'                     => $idClass->getFullName(),
+            'id_class_short'               => $idClass->getShortName(),
+            'id_field'                     => Str::asSnakeCase($idProperty),
+            'id_property'                  => $idProperty,
+            'list_class'                   => $listClassDetails->getFullName(),
+            'list_class_short'             => $listClassDetails->getShortName(),
+            'model'                        => $arClassDetails->getShortName(),
+            'model_class'                  => $arClassDetails->getFullName(),
+            'model_lower'                  => $arLowerName,
+            'model_upper'                  => $modelUpper,
+            'name_class'                   => $nameVoClassDetails->getFullName(),
+            'name_class_short'             => $nameVoClassDetails->getShortName(),
+            'name_field'                   => Str::asSnakeCase($nameVoClassDetails->getShortName()),
+            'name_property'                => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
+            'not_found_class'              => $notFoundExceptionClassDetails->getFullName(),
+            'not_found_class_short'        => $notFoundExceptionClassDetails->getShortName(),
+            'projection_class'             => $projectionClassDetails->getFullName(),
+            'projection_class_short'       => $projectionClassDetails->getShortName(),
+            'projection_name'              => $projectionName,
+            'projection_name_first_letter' => substr($projectionName, 0, 1),
+            'query_builder_class'          => $queryBuilderClassDetails->getFullName(),
+            'query_builder_class_short'    => $queryBuilderClassDetails->getShortName(),
+            'query_count'                  => $this->doubleEscapeClass($countQueryClassDetails->getFullName()),
+            'query_count_class'            => $countQueryClassDetails->getFullName(),
+            'query_multiple'               => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
+            'query_multiple_class'         => $multipleQueryClassDetails->getFullName(),
+            'query_multiple_class_short'   => $multipleQueryClassDetails->getShortName(),
+            'query_single'                 => $this->doubleEscapeClass($queryClassDetails->getFullName()),
+            'query_single_class'           => $queryClassDetails->getFullName(),
+            'query_single_class_short'     => $queryClassDetails->getShortName(),
+            'read_model_class'             => $readModelClassDetails->getFullName(),
+            'read_model_class_short'       => $readModelClassDetails->getShortName(),
+            'repository_class'             => $repositoryClassDetails->getFullName(),
+            'repository_class_short'       => $repositoryClassDetails->getShortName(),
+            'stream_name'                  => Str::asSnakeCase($arName),
         ];
 
+        /*
+         * Generate the files:
+         */
+        // **********************************************************
+        // Aggregate Root
+        // **********************************************************
         $generator->generateClass(
             $arClassDetails->getFullName(),
-            $skeletonPath.'Ar.tpl.php',
+            $this->skeletonPath().'model/Ar.tpl.php',
             $variables,
         );
         $generator->generateClass(
             $arTestClassDetails->getFullName(),
-            $skeletonPath.'ArTest.tpl.php',
+            $this->skeletonPath().'model/ArTest.tpl.php',
             $variables,
         );
 
         $generator->generateClass(
             $idClass->getFullName(),
-            $skeletonPath.'ArId.tpl.php',
+            $this->skeletonPath().'model/ArId.tpl.php',
         );
         $arIdTestClassDetails = $generator->createClassNameDetails(
             $idClass->getShortName().'Test',
@@ -168,41 +254,41 @@ class AggregateRootMaker extends AbstractMaker
         );
         $generator->generateClass(
             $arIdTestClassDetails->getFullName(),
-            $skeletonPath.'ArIdTest.tpl.php',
+            $this->skeletonPath().'model/ArIdTest.tpl.php',
             $variables,
         );
 
         $generator->generateClass(
             $listClassDetails->getFullName(),
-            $skeletonPath.'ArList.tpl.php',
+            $this->skeletonPath().'model/ArList.tpl.php',
             $variables,
         );
 
         $generator->generateClass(
             $nameVoClassDetails->getFullName(),
-            $skeletonPath.'Vo.tpl.php',
+            $this->skeletonPath().'model/Vo.tpl.php',
             $variables,
         );
         $generator->generateClass(
             $nameVoTestClassDetails->getFullName(),
-            $skeletonPath.'VoTest.tpl.php',
+            $this->skeletonPath().'model/VoTest.tpl.php',
             $variables,
         );
 
         $generator->generateClass(
             $repositoryClassDetails->getFullName(),
-            $skeletonPath.'Repository.tpl.php',
+            $this->skeletonPath().'model/Repository.tpl.php',
             $variables,
         );
         $generator->generateClass(
             $repositoryClassTestDetails->getFullName(),
-            $skeletonPath.'RepositoryTest.tpl.php',
+            $this->skeletonPath().'model/RepositoryTest.tpl.php',
             $variables,
         );
 
         $generator->generateClass(
             $notFoundExceptionClassDetails->getFullName(),
-            $skeletonPath.'ExceptionNotFound.tpl.php',
+            $this->skeletonPath().'model/ExceptionNotFound.tpl.php',
             $variables,
         );
 
@@ -212,7 +298,7 @@ class AggregateRootMaker extends AbstractMaker
         );
         $generator->generateClass(
             $deletedExceptionClassDetails->getFullName(),
-            $skeletonPath.'ExceptionDeleted.tpl.php',
+            $this->skeletonPath().'model/ExceptionDeleted.tpl.php',
             $variables,
         );
 
@@ -230,7 +316,7 @@ class AggregateRootMaker extends AbstractMaker
             $commandTemplate = 'Delete' !== $command ? 'Command.tpl.php' : 'CommandDelete.tpl.php';
             $generator->generateClass(
                 $commandClassDetails->getFullName(),
-                $skeletonPath.$commandTemplate,
+                $this->skeletonPath().'model/'.$commandTemplate,
                 $variables,
             );
 
@@ -241,7 +327,7 @@ class AggregateRootMaker extends AbstractMaker
             $commandTestTemplate = 'Delete' !== $command ? 'CommandTest.tpl.php' : 'CommandDeleteTest.tpl.php';
             $generator->generateClass(
                 $commandTestClassDetails->getFullName(),
-                $skeletonPath.$commandTestTemplate,
+                $this->skeletonPath().'model/'.$commandTestTemplate,
                 [
                     ...$variables,
                     'command_class'       => $commandClassDetails->getFullName(),
@@ -256,7 +342,7 @@ class AggregateRootMaker extends AbstractMaker
             $handlerTemplate = 'Delete' !== $command ? 'Handler.tpl.php' : 'HandlerDelete.tpl.php';
             $generator->generateClass(
                 $handlerClassDetails->getFullName(),
-                $skeletonPath.$handlerTemplate,
+                $this->skeletonPath().'model/'.$handlerTemplate,
                 [
                     ...$variables,
                     'edit'                => 'Add' !== $command,
@@ -272,7 +358,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $handlerTestClassDetails->getFullName(),
-                $skeletonPath.'Handler'.$command.'Test.tpl.php',
+                $this->skeletonPath().'model/Handler'.$command.'Test.tpl.php',
                 [
                     ...$variables,
                     'command_class'         => $commandClassDetails->getFullName(),
@@ -288,7 +374,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $eventClassDetails->getFullName(),
-                $skeletonPath.'Event'.$event.'.tpl.php',
+                $this->skeletonPath().'model/Event'.$event.'.tpl.php',
                 $variables,
             );
 
@@ -298,7 +384,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $eventTestClassDetails->getFullName(),
-                $skeletonPath.'Event'.$event.'Test.tpl.php',
+                $this->skeletonPath().'model/Event'.$event.'Test.tpl.php',
                 [
                     ...$variables,
                     'event_class'       => $eventClassDetails->getFullName(),
@@ -313,7 +399,7 @@ class AggregateRootMaker extends AbstractMaker
             $mutationClasses[$command] = $mutationClassDetails;
             $generator->generateClass(
                 $mutationClassDetails->getFullName(),
-                $skeletonPath.'Mutation.tpl.php',
+                $this->skeletonPath().'model/Mutation.tpl.php',
                 [
                     ...$variables,
                     'delete'              => 'Delete' === $command,
@@ -329,7 +415,7 @@ class AggregateRootMaker extends AbstractMaker
             );
             $generator->generateClass(
                 $mutationTestClassDetails->getFullName(),
-                $skeletonPath.'MutationTest.tpl.php',
+                $this->skeletonPath().'model/MutationTest.tpl.php',
                 [
                     ...$variables,
                     'delete'               => 'Delete' === $command,
@@ -344,7 +430,7 @@ class AggregateRootMaker extends AbstractMaker
 
         $generator->generateFile(
             'config/graphql/types/domain/'.Str::asSnakeCase($arLowerName).'.yaml',
-            $skeletonPath.'graphql_domain.tpl.yaml',
+            $this->skeletonPath().'model/graphql_domain.tpl.yaml',
             [
                 ...$variables,
                 'model' => $arClassDetails->getShortName(),
@@ -352,13 +438,108 @@ class AggregateRootMaker extends AbstractMaker
         );
         $generator->generateFile(
             'config/graphql/types/'.Str::asSnakeCase($arLowerName).'.mutation.yaml',
-            $skeletonPath.'graphql_mutation.tpl.yaml',
+            $this->skeletonPath().'model/graphql_mutation.tpl.yaml',
             [
                 ...$variables,
                 'mutation_add'    => $this->doubleEscapeClass($mutationClasses['Add']->getFullName()),
                 'mutation_change' => $this->doubleEscapeClass($mutationClasses['Change']->getFullName()),
                 'mutation_delete' => $this->doubleEscapeClass($mutationClasses['Delete']->getFullName()),
             ],
+        );
+
+        // **********************************************************
+        // Projection
+        // **********************************************************
+        $generator->generateClass(
+            $projectionClassDetails->getFullName(),
+            $this->skeletonPath().'projection/Projection.tpl.php',
+            $variables,
+        );
+
+        $projectionTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ProjectionTest',
+            'Tests\\Projection\\'.$arName.'\\',
+        );
+        $generator->generateClass(
+            $projectionTestClassDetails->getFullName(),
+            $this->skeletonPath().'projection/ProjectionTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $readModelClassDetails->getFullName(),
+            $this->skeletonPath().'projection/ReadModel.tpl.php',
+            $variables,
+        );
+
+        $readModelTestClassDetails = $generator->createClassNameDetails(
+            $projectionClassName.'ReadModelTest',
+            'Tests\\Projection\\'.$arName.'\\',
+        );
+        $generator->generateClass(
+            $readModelTestClassDetails->getFullName(),
+            $this->skeletonPath().'projection/ReadModelTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $entityFinder->getFullName(),
+            $this->skeletonPath().'projection/Finder.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $entityClassDetails->getFullName(),
+            $this->skeletonPath().'projection/Entity.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $entityTestClassDetails->getFullName(),
+            $this->skeletonPath().'projection/EntityTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $queryClassDetails->getFullName(),
+            $this->skeletonPath().'projection/Query.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $queryTestClassDetails->getFullName(),
+            $this->skeletonPath().'projection/QueryTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $multipleQueryClassDetails->getFullName(),
+            $this->skeletonPath().'projection/MultipleQuery.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $multipleQueryTestClassDetails->getFullName(),
+            $this->skeletonPath().'projection/MultipleQueryTest.tpl.php',
+            $variables,
+        );
+
+        $generator->generateClass(
+            $filtersClassDetails->getFullName(),
+            $this->skeletonPath().'projection/Filters.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $queryBuilderClassDetails->getFullName(),
+            $this->skeletonPath().'projection/QueryBuilder.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $countQueryClassDetails->getFullName(),
+            $this->skeletonPath().'projection/CountQuery.tpl.php',
+            $variables,
+        );
+
+        $generator->generateFile(
+            'config/graphql/types/'.$projectionName.'.query.yaml',
+            $this->skeletonPath().'projection/graphql_query.tpl.yaml',
+            $variables,
         );
 
         $generator->writeChanges();
@@ -389,11 +570,45 @@ class AggregateRootMaker extends AbstractMaker
             '- Update permissions in GraphQL config',
             '- Add ID class to UuidFakerProvider (for tests)',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
+
+
+            sprintf(
+                '- Add <info>public const %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
+                strtoupper(Str::asSnakeCase($projectionName)),
+                $projectionName,
+            ),
+            '- Add the projection to list in your <info>config/packages/prooph_event_store.yaml</info> file:',
+            sprintf(
+                "<info>\t%s_projection:\n\t    read_model: %s\n\t    projection: %s</info>",
+                $projectionName,
+                $readModelClassDetails->getFullName(),
+                $projectionClassDetails->getFullName(),
+            ),
+            '- Add to <info>App\\Messenger\\RunProjectionMiddleware</info>:',
+            sprintf(
+                "<info>\tprivate const %s = '%s';</info>",
+                $modelUpper,
+                $projectionName.'_projection',
+            ),
+            '- Add to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
+            sprintf(
+                "<info>\t'%s\\Event' => [\n\t    self::%s,\n\t],</info>",
+                Str::getNamespace($arClassDetails->getFullName()),
+                $modelUpper,
+            ),
+            sprintf(
+                '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
+                $projectionName,
+            ),
+            '- Update permissions in GraphQL config',
+            '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
+            '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
         ]);
     }
 
     public function configureDependencies(DependencyBuilder $dependencies): void
     {
+        // @todo update
         $dependencies->addClassDependency(
             \Xm\SymfonyBundle\Messaging\Command::class,
             'xm/symfony',
@@ -431,6 +646,25 @@ class AggregateRootMaker extends AbstractMaker
         $dependencies->addClassDependency(
             AggregateRepository::class,
             'xm/symfony',
+        );
+
+        $dependencies->addClassDependency(
+            ReadModelProjection::class,
+            'prooph/event-store-symfony-bundle',
+        );
+        $dependencies->addClassDependency(
+            ReadModelProjector::class,
+            'prooph/event-store',
+        );
+
+        $dependencies->addClassDependency(
+            DoctrineBundle::class,
+            'orm-pack',
+        );
+
+        $dependencies->addClassDependency(
+            QueryInterface::class,
+            'overblog/graphql-bundle',
         );
     }
 }

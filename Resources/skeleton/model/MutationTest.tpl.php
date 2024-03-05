@@ -34,13 +34,13 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
-        $<?= $entity_finder_lower; ?> = \Mockery::mock(<?= $entity_finder; ?>::class);
-        $<?= $entity_finder_lower; ?>->shouldReceive('<?= $add ? 'find' : 'findRefreshed' ?>')
+        $<?= $entity_finder_property; ?> = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
+        $<?= $entity_finder_property; ?>->shouldReceive('<?= $add ? 'find' : 'findRefreshed' ?>')
             ->once()
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturn($entity);
 
-        $result = (new <?= $mutation_class_short; ?>($commandBus, $<?= $entity_finder_lower; ?>))($args);
+        $result = (new <?= $mutation_class_short; ?>($commandBus, $<?= $entity_finder_property; ?>))($args);
 
         $expected = [
             '<?= $entity; ?>' => $entity,

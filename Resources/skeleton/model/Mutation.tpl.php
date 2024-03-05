@@ -18,7 +18,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class <?= $class_name; ?> implements MutationInterface
 {
 <?php if (!$delete) { ?>
-    public function __construct(private MessageBusInterface $commandBus, private <?= $entity_finder; ?> $<?= $entity_finder_lower; ?>)
+    public function __construct(private MessageBusInterface $commandBus, private <?= $entity_filter_class_short; ?> $<?= $entity_finder_property; ?>)
 <?php } else { ?>
     public function __construct(private MessageBusInterface $commandBus)
 <?php } ?>
@@ -39,7 +39,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
         );
 
         return [
-            '<?= $entity; ?>' => $this-><?= $entity_finder_lower; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
+            '<?= $entity; ?>' => $this-><?= $entity_finder_property; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $id_property; ?>),
         ];
 <?php } else { ?>
     #[ArrayShape(['success' => \BOOL])]

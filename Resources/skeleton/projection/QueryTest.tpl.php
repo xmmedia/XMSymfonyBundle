@@ -7,7 +7,7 @@ namespace <?= $namespace; ?>;
 use <?= $entity_class; ?>;
 use <?= $query_single_class; ?>;
 use <?= $id_class; ?>;
-use <?= $finder_class; ?>;
+use <?= $entity_finder_class; ?>;
 use App\Tests\BaseTestCase;
 
 class <?= $class_name; ?> extends BaseTestCase
@@ -19,7 +19,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $<?= $id_property; ?> = $faker->uuid();
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
-        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('find')
             ->once()
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
@@ -38,7 +38,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $id_property; ?> = $faker->uuid();
 
-        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('find')
             ->once()
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))

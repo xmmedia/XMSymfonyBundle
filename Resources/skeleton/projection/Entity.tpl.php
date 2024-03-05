@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $id_class; ?>;
+use <?= $entity_finder_class; ?>;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
-#[ORM\Entity(repositoryClass: \<?= $finder_class; ?>::class, readOnly: true)]
+#[ORM\Entity(repositoryClass: <?= $entity_filter_class_short; ?>::class, readOnly: true)]
 class <?= $class_name; ?><?= "\n"; ?>
 {
     /**

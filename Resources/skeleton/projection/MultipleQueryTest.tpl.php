@@ -6,7 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $entity_class; ?>;
 use <?= $query_multiple_class; ?>;
-use <?= $finder_class; ?>;
+use <?= $entity_finder_class; ?>;
 use App\Tests\BaseTestCase;
 
 class <?= $class_name; ?> extends BaseTestCase
@@ -15,7 +15,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
-        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('findByFilters')
             ->once()
             ->andReturn([$entity]);
@@ -29,7 +29,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
     public function testNoneFound(): void
     {
-        $finder = \Mockery::mock(<?= $finder_class_short; ?>::class);
+        $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('findByFilters')
             ->once()
             ->andReturn([]);
