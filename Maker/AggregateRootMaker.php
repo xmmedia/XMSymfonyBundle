@@ -76,10 +76,14 @@ class AggregateRootMaker extends AbstractMaker
             'Tests\\Model\\'.$arName.'\\',
         );
         $arLowerName = Str::asLowerCamelCase($arName);
-        $idClassShortName = $arClassDetails->getShortName().'Id';
-        $idClassFullName = $arClassDetails->getFullName().'Id';
-        $idProperty = Str::asLowerCamelCase($arClassDetails->getShortName().'Id');
+
+        $idClass = $generator->createClassNameDetails(
+            $arName.'Id',
+            'Model\\'.$arName.'\\',
+        );
+        $idProperty = Str::asLowerCamelCase($idClass->getShortName());
         $idField = Str::asSnakeCase($idProperty);
+
         $listClassName = $arClassDetails->getShortName().'List';
         $listClassDetails = $generator->createClassNameDetails(
             $listClassName,
@@ -125,8 +129,8 @@ class AggregateRootMaker extends AbstractMaker
             'entity_finder'          => $entityFinder->getShortName(),
             'entity_finder_class'    => $entityFinder->getFullName(),
             'entity_finder_lower'    => Str::asLowerCamelCase($entityFinder->getShortName()),
-            'id_class'               => $idClassFullName,
-            'id_class_short'         => $idClassShortName,
+            'id_class'               => $idClass->getFullName(),
+            'id_class_short'         => $idClass->getShortName(),
             'id_field'               => $idField,
             'id_property'            => $idProperty,
             'list_class'             => $listClassDetails->getFullName(),
@@ -155,11 +159,11 @@ class AggregateRootMaker extends AbstractMaker
         );
 
         $generator->generateClass(
-            $arClassDetails->getFullName().'Id',
+            $idClass->getFullName(),
             $skeletonPath.'ArId.tpl.php',
         );
         $arIdTestClassDetails = $generator->createClassNameDetails(
-            $arName.'IdTest',
+            $idClass->getShortName().'Test',
             'Tests\\Model\\'.$arName.'\\',
         );
         $generator->generateClass(
