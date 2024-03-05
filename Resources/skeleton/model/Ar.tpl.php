@@ -39,7 +39,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         }
 
         if ($this->deleted) {
-            throw Exception\<?= $class_name; ?>IsDeleted::triedToChange($this-><?= $id_property; ?>);
+            throw Exception\<?= $class_name; ?>IsDeleted::triedTo($this-><?= $id_property; ?>, 'change');
         }
 
         $this->recordThat(
