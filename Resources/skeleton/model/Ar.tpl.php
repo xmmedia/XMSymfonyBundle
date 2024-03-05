@@ -34,12 +34,12 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
 
     public function change(<?= $name_class_short; ?> $new<?= $name_class_short; ?>): void
     {
-        if ($this-><?= $name_property; ?>->sameValueAs($new<?= $name_class_short; ?>)) {
-            return;
-        }
-
         if ($this->deleted) {
             throw Exception\<?= $class_name; ?>IsDeleted::triedTo($this-><?= $id_property; ?>, 'change');
+        }
+
+        if ($this-><?= $name_property; ?>->sameValueAs($new<?= $name_class_short; ?>)) {
+            return;
         }
 
         $this->recordThat(
