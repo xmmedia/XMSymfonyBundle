@@ -559,23 +559,9 @@ class AggregateRootMaker extends AbstractMaker
                 Str::asSnakeCase($arLowerName),
             ),
             sprintf(
-                '- Add the repository service <info>%s: \'@%s\'</info> to your <info>config/packages/event_sourcing.yaml</info> file',
+                '- Also add the repository service <info>%s: \'@%s\'</info> to your <info>config/packages/event_sourcing.yaml</info> file',
                 $arClassDetails->getFullName().'List',
                 $modelListServiceName,
-            ),
-            sprintf(
-                '- Create the stream: <info>bin/console event-store:event-stream:create %s</info>',
-                Str::asSnakeCase($arLowerName),
-            ),
-            '- Update permissions in GraphQL config',
-            '- Add ID class to UuidFakerProvider (for tests)',
-            '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
-
-
-            sprintf(
-                '- Add <info>public const %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
-                strtoupper(Str::asSnakeCase($projectionName)),
-                $projectionName,
             ),
             '- Add the projection to list in your <info>config/packages/prooph_event_store.yaml</info> file:',
             sprintf(
@@ -584,25 +570,35 @@ class AggregateRootMaker extends AbstractMaker
                 $readModelClassDetails->getFullName(),
                 $projectionClassDetails->getFullName(),
             ),
+            sprintf(
+                '- Add <info>public const %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
+                strtoupper(Str::asSnakeCase($projectionName)),
+                $projectionName,
+            ),
             '- Add to <info>App\\Messenger\\RunProjectionMiddleware</info>:',
             sprintf(
                 "<info>\tprivate const %s = '%s';</info>",
                 $modelUpper,
                 $projectionName.'_projection',
             ),
-            '- Add to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
+            '- Also add the following to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
             sprintf(
                 "<info>\t'%s\\Event' => [\n\t    self::%s,\n\t],</info>",
                 Str::getNamespace($arClassDetails->getFullName()),
                 $modelUpper,
             ),
+            '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
+            sprintf(
+                '- Create the stream: <info>bin/console event-store:event-stream:create %s</info>',
+                Str::asSnakeCase($arLowerName),
+            ),
             sprintf(
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
+            '- Add ID class to UuidFakerProvider (for tests)',
             '- Update permissions in GraphQL config',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
-            '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
         ]);
     }
 
