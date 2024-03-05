@@ -14,7 +14,9 @@ class EntrypointIntegrityHashQuery implements QueryInterface
 
     public function __construct(EntrypointLookupCollectionInterface $collection = null)
     {
-        $this->entrypointLookup = $collection->getEntrypointLookup();
+        if (null !== $collection) {
+            $this->entrypointLookup = $collection->getEntrypointLookup();
+        }
     }
 
     public function __invoke(string $entrypoint): ?string
