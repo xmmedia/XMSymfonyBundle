@@ -5,3 +5,7 @@
         fields:
             <?= $id_property; ?>: UUID!
             <?= $name_property ?>: String!
+            canBeDeleted:
+                type:    Boolean!
+                resolve: '@=query("<?= $can_be_deleted; ?>", value)'
+                access:  '@=hasRole("ROLE_ADMIN")'

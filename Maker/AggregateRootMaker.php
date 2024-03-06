@@ -173,58 +173,75 @@ class AggregateRootMaker extends AbstractMaker
             'GraphQl\\Query\\'.$arName.'\\',
         );
 
+        $canBeDeletedClassInterface = $generator->createClassNameDetails(
+            $arName.'CanBeDeleted',
+            'Model\\'.$arName.'\\Service\\',
+        );
+        $canBeDeletedClassService = $generator->createClassNameDetails(
+            $arName.'CanBeDeleted',
+            'Infrastructure\\Service\\',
+        );
+        $canBeDeletedQueryClass = $generator->createClassNameDetails(
+            $arName.'CanBeDeletedQuery',
+            'GraphQl\\Query\\'.$arName.'\\',
+        );
+
         $notFoundExceptionClassDetails = $generator->createClassNameDetails(
             $arName.'NotFound',
             'Model\\'.$arName.'\\Exception\\',
         );
 
         $variables = [
-            'entity'                       => Str::asLowerCamelCase($entityClassDetails->getShortName()),
-            'entity_class'                 => $entityClassDetails->getFullName(),
-            'entity_class_short'           => $entityClassDetails->getShortName(),
-            'entity_class_short_plural'    => ucwords(
+            'can_be_deleted_interface_class'       => $canBeDeletedClassInterface->getFullName(),
+            'can_be_deleted_interface_class_short' => $canBeDeletedClassInterface->getShortName(),
+            'entity'                               => Str::asLowerCamelCase($entityClassDetails->getShortName()),
+            'entity_class'                         => $entityClassDetails->getFullName(),
+            'entity_class_short'                   => $entityClassDetails->getShortName(),
+            'entity_class_short_plural'            => ucwords(
                 Str::singularCamelCaseToPluralCamelCase($entityClassDetails->getShortName()),
             ),
-            'entity_filter_class_short'    => $entityFinder->getShortName(),
-            'entity_finder_class'          => $entityFinder->getFullName(),
-            'entity_finder_property'       => Str::asLowerCamelCase($entityFinder->getShortName()),
-            'filters_class'                => $filtersClassDetails->getFullName(),
-            'filters_class_short'          => $filtersClassDetails->getShortName(),
-            'id_class'                     => $idClass->getFullName(),
-            'id_class_short'               => $idClass->getShortName(),
-            'id_field'                     => Str::asSnakeCase($idProperty),
-            'id_property'                  => $idProperty,
-            'list_class'                   => $listClassDetails->getFullName(),
-            'list_class_short'             => $listClassDetails->getShortName(),
-            'model'                        => $arClassDetails->getShortName(),
-            'model_class'                  => $arClassDetails->getFullName(),
-            'model_lower'                  => $arLowerName,
-            'model_upper'                  => $modelUpper,
-            'name_class'                   => $nameVoClassDetails->getFullName(),
-            'name_class_short'             => $nameVoClassDetails->getShortName(),
-            'name_field'                   => Str::asSnakeCase($nameVoClassDetails->getShortName()),
-            'name_property'                => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
-            'not_found_class'              => $notFoundExceptionClassDetails->getFullName(),
-            'not_found_class_short'        => $notFoundExceptionClassDetails->getShortName(),
-            'projection_class'             => $projectionClassDetails->getFullName(),
-            'projection_class_short'       => $projectionClassDetails->getShortName(),
-            'projection_name'              => $projectionName,
-            'projection_name_first_letter' => substr($projectionName, 0, 1),
-            'query_builder_class'          => $queryBuilderClassDetails->getFullName(),
-            'query_builder_class_short'    => $queryBuilderClassDetails->getShortName(),
-            'query_count'                  => $this->doubleEscapeClass($countQueryClassDetails->getFullName()),
-            'query_count_class'            => $countQueryClassDetails->getFullName(),
-            'query_multiple'               => $this->doubleEscapeClass($multipleQueryClassDetails->getFullName()),
-            'query_multiple_class'         => $multipleQueryClassDetails->getFullName(),
-            'query_multiple_class_short'   => $multipleQueryClassDetails->getShortName(),
-            'query_single'                 => $this->doubleEscapeClass($queryClassDetails->getFullName()),
-            'query_single_class'           => $queryClassDetails->getFullName(),
-            'query_single_class_short'     => $queryClassDetails->getShortName(),
-            'read_model_class'             => $readModelClassDetails->getFullName(),
-            'read_model_class_short'       => $readModelClassDetails->getShortName(),
-            'repository_class'             => $repositoryClassDetails->getFullName(),
-            'repository_class_short'       => $repositoryClassDetails->getShortName(),
-            'stream_name'                  => Str::asSnakeCase($arName),
+            'entity_filter_class_short'            => $entityFinder->getShortName(),
+            'entity_finder_class'                  => $entityFinder->getFullName(),
+            'entity_finder_property'               => Str::asLowerCamelCase($entityFinder->getShortName()),
+            'filters_class'                        => $filtersClassDetails->getFullName(),
+            'filters_class_short'                  => $filtersClassDetails->getShortName(),
+            'id_class'                             => $idClass->getFullName(),
+            'id_class_short'                       => $idClass->getShortName(),
+            'id_field'                             => Str::asSnakeCase($idProperty),
+            'id_property'                          => $idProperty,
+            'list_class'                           => $listClassDetails->getFullName(),
+            'list_class_short'                     => $listClassDetails->getShortName(),
+            'model'                                => $arClassDetails->getShortName(),
+            'model_class'                          => $arClassDetails->getFullName(),
+            'model_lower'                          => $arLowerName,
+            'model_upper'                          => $modelUpper,
+            'name_class'                           => $nameVoClassDetails->getFullName(),
+            'name_class_short'                     => $nameVoClassDetails->getShortName(),
+            'name_field'                           => Str::asSnakeCase($nameVoClassDetails->getShortName()),
+            'name_property'                        => Str::asLowerCamelCase($nameVoClassDetails->getShortName()),
+            'not_found_class'                      => $notFoundExceptionClassDetails->getFullName(),
+            'not_found_class_short'                => $notFoundExceptionClassDetails->getShortName(),
+            'projection_class'                     => $projectionClassDetails->getFullName(),
+            'projection_class_short'               => $projectionClassDetails->getShortName(),
+            'projection_name'                      => $projectionName,
+            'projection_name_first_letter'         => substr($projectionName, 0, 1),
+            'query_builder_class'                  => $queryBuilderClassDetails->getFullName(),
+            'query_builder_class_short'            => $queryBuilderClassDetails->getShortName(),
+            'query_count'                          => $this->doubleEscapeClass($countQueryClassDetails->getFullName()),
+            'query_count_class'                    => $countQueryClassDetails->getFullName(),
+            'query_multiple'                       => $this->doubleEscapeClass(
+                $multipleQueryClassDetails->getFullName(),
+            ),
+            'query_multiple_class'                 => $multipleQueryClassDetails->getFullName(),
+            'query_multiple_class_short'           => $multipleQueryClassDetails->getShortName(),
+            'query_single'                         => $this->doubleEscapeClass($queryClassDetails->getFullName()),
+            'query_single_class'                   => $queryClassDetails->getFullName(),
+            'query_single_class_short'             => $queryClassDetails->getShortName(),
+            'read_model_class'                     => $readModelClassDetails->getFullName(),
+            'read_model_class_short'               => $readModelClassDetails->getShortName(),
+            'repository_class'                     => $repositoryClassDetails->getFullName(),
+            'repository_class_short'               => $repositoryClassDetails->getShortName(),
+            'stream_name'                          => Str::asSnakeCase($arName),
         ];
 
         /*
@@ -433,7 +450,8 @@ class AggregateRootMaker extends AbstractMaker
             $this->skeletonPath().'model/graphql_domain.tpl.yaml',
             [
                 ...$variables,
-                'model' => $arClassDetails->getShortName(),
+                'model'          => $arClassDetails->getShortName(),
+                'can_be_deleted' => $this->doubleEscapeClass($canBeDeletedQueryClass->getFullName()),
             ],
         );
         $generator->generateFile(
@@ -445,6 +463,22 @@ class AggregateRootMaker extends AbstractMaker
                 'mutation_change' => $this->doubleEscapeClass($mutationClasses['Change']->getFullName()),
                 'mutation_delete' => $this->doubleEscapeClass($mutationClasses['Delete']->getFullName()),
             ],
+        );
+
+        $generator->generateClass(
+            $canBeDeletedClassInterface->getFullName(),
+            $this->skeletonPath().'model/CanBeDeletedInterface.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $canBeDeletedClassService->getFullName(),
+            $this->skeletonPath().'model/CanBeDeletedService.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $canBeDeletedQueryClass->getFullName(),
+            $this->skeletonPath().'model/CanBeDeletedQuery.tpl.php',
+            $variables,
         );
 
         // **********************************************************
