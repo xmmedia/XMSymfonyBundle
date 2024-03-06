@@ -378,10 +378,10 @@ class AggregateRootMaker extends AbstractMaker
                 $this->skeletonPath().'model/Handler'.$command.'Test.tpl.php',
                 [
                     ...$variables,
-                    'command_class'         => $commandClassDetails->getFullName(),
-                    'command_class_short'   => $commandClassDetails->getShortName(),
-                    'handler_class'         => $handlerClassDetails->getFullName(),
-                    'handler_class_short'   => $handlerClassDetails->getShortName(),
+                    'command_class'       => $commandClassDetails->getFullName(),
+                    'command_class_short' => $commandClassDetails->getShortName(),
+                    'handler_class'       => $handlerClassDetails->getFullName(),
+                    'handler_class_short' => $handlerClassDetails->getShortName(),
                 ],
             );
 
