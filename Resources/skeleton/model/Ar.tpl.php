@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $name_class; ?>;
+use <?= $can_be_deleted_interface_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRoot;
 use Xm\SymfonyBundle\EventSourcing\AppliesAggregateChanged;
 use Xm\SymfonyBundle\Model\Entity;
@@ -51,10 +52,14 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         );
     }
 
-    public function delete(): void
+    public function delete(<?= $can_be_deleted_interface_class_short; ?> $canBeDeleted): void
     {
         if ($this->deleted) {
             throw Exception\<?= $class_name; ?>IsDeleted::triedToDelete($this-><?= $id_property; ?>);
+        }
+
+        if (!$canBeDeleted($this-><?= $id_property; ?>)) {
+            throw Exception\<?= $can_be_deleted_interface_class_short; ?>::triedToDelete($this-><?= $id_property; ?>);
         }
 
         $this->recordThat(

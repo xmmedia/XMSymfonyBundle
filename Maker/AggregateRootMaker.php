@@ -190,10 +190,16 @@ class AggregateRootMaker extends AbstractMaker
             $arName.'NotFound',
             'Model\\'.$arName.'\\Exception\\',
         );
+        $cannotBeDeletedClassDetails = $generator->createClassNameDetails(
+            $arName.'CannotBeDeleted',
+            'Model\\'.$arName.'\\Exception\\',
+        );
 
         $variables = [
             'can_be_deleted_interface_class'       => $canBeDeletedClassInterface->getFullName(),
             'can_be_deleted_interface_class_short' => $canBeDeletedClassInterface->getShortName(),
+            'cannot_be_deleted_class'              => $cannotBeDeletedClassDetails->getFullName(),
+            'cannot_be_deleted_class_short'        => $cannotBeDeletedClassDetails->getShortName(),
             'entity'                               => Str::asLowerCamelCase($entityClassDetails->getShortName()),
             'entity_class'                         => $entityClassDetails->getFullName(),
             'entity_class_short'                   => $entityClassDetails->getShortName(),
@@ -306,6 +312,11 @@ class AggregateRootMaker extends AbstractMaker
         $generator->generateClass(
             $notFoundExceptionClassDetails->getFullName(),
             $this->skeletonPath().'model/ExceptionNotFound.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $cannotBeDeletedClassDetails->getFullName(),
+            $this->skeletonPath().'model/ExceptionCannotBeDeleted.tpl.php',
             $variables,
         );
 

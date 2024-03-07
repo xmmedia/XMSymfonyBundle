@@ -10,6 +10,7 @@ use <?= $model_class; ?>;
 use <?= $id_class; ?>;
 use <?= $list_class; ?>;
 use <?= $not_found_class; ?>;
+use <?= $can_be_deleted_interface_class; ?>;
 use App\Tests\BaseTestCase;
 
 class <?= $class_name; ?> extends BaseTestCase
@@ -32,7 +33,12 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->with(\Mockery::type(<?= $model; ?>::class));
 
-        (new <?= $handler_class_short; ?>($repo))($command);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->andReturnTrue();
+
+        (new <?= $handler_class_short; ?>($repo, $canBeDeleted))($command);
     }
 
     public function testNotFound(): void
@@ -46,8 +52,13 @@ class <?= $class_name; ?> extends BaseTestCase
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnNull();
 
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->andReturnTrue();
+
         $this->expectException(<?= $not_found_class_short; ?>::class);
 
-        (new <?= $handler_class_short; ?>($repo))($command);
+        (new <?= $handler_class_short; ?>($repo, $canBeDeleted))($command);
     }
 }

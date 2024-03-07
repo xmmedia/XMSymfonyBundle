@@ -86,7 +86,13 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
-        $<?= $model_lower; ?>->delete();
+
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->andReturnTrue();
+
+        $<?= $model_lower; ?>->delete($canBeDeleted);
         $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->expectException(Exception\<?= $model; ?>IsDeleted::class);
@@ -98,7 +104,13 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $<?= $model_lower; ?>->delete();
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->once()
+            ->andReturnTrue();
+
+        $<?= $model_lower; ?>->delete($canBeDeleted);
 
         $events = $this->popRecordedEvent($<?= $model_lower; ?>);
 
@@ -115,12 +127,32 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $<?= $model_lower; ?>->delete();
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->andReturnTrue();
+
+        $<?= $model_lower; ?>->delete($canBeDeleted);
         $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->expectException(Exception\<?= $model; ?>IsDeleted::class);
 
-        $<?= $model_lower; ?>->delete();
+        $<?= $model_lower; ?>->delete($canBeDeleted);
+    }
+
+    public function testDeleteCannotBeDeleted(): void
+    {
+        $<?= $model_lower; ?> = $this->get<?= $model; ?>();
+
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted->shouldReceive('__invoke')
+            ->with(\Mockery::type(<?= $id_class_short; ?>::class))
+            ->once()
+            ->andReturnFalse();
+
+        $this->expectException(Exception\<?= $model; ?>CannotBeDeleted::class);
+
+        $<?= $model_lower; ?>->delete($canBeDeleted);
     }
 
     public function testSameIdentityAs(): void
