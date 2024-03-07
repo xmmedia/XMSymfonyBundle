@@ -6,7 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $id_class; ?>;
 
-interface <?= $class_name; ?>
+interface <?= $class_name; ?><?= "\n"; ?>
 {
     public function __invoke(<?= $id_class_short; ?> $<?= $id_property; ?>): bool;
 }
