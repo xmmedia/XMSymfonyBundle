@@ -33,7 +33,7 @@ class <?= $class_name; ?> extends BaseTestCase
             ->once()
             ->with(\Mockery::type(<?= $model; ?>::class));
 
-        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class_short; ?>::class);
         $canBeDeleted->shouldReceive('__invoke')
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnTrue();

@@ -8,6 +8,8 @@ use App\Model\<?= $model; ?>\Event;
 use App\Model\<?= $model; ?>\Exception;
 use <?= $name_class; ?>;
 use <?= $model_class; ?>;
+use <?= $id_class; ?>;
+use <?= $can_be_deleted_interface_class; ?>;
 use App\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\FakeAr;
 
@@ -87,7 +89,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class_short; ?>::class);
         $canBeDeleted->shouldReceive('__invoke')
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnTrue();
@@ -104,7 +106,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class_short; ?>::class);
         $canBeDeleted->shouldReceive('__invoke')
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->once()
@@ -127,7 +129,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class_short; ?>::class);
         $canBeDeleted->shouldReceive('__invoke')
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->andReturnTrue();
@@ -144,7 +146,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $<?= $model_lower; ?> = $this->get<?= $model; ?>();
 
-        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class; ?>::class);
+        $canBeDeleted = \Mockery::mock(<?= $can_be_deleted_interface_class_short; ?>::class);
         $canBeDeleted->shouldReceive('__invoke')
             ->with(\Mockery::type(<?= $id_class_short; ?>::class))
             ->once()

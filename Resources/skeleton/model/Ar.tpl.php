@@ -59,7 +59,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         }
 
         if (!$canBeDeleted($this-><?= $id_property; ?>)) {
-            throw Exception\<?= $can_be_deleted_interface_class_short; ?>::triedToDelete($this-><?= $id_property; ?>);
+            throw Exception\<?= $cannot_be_deleted_class_short; ?>::triedToDelete($this-><?= $id_property; ?>);
         }
 
         $this->recordThat(
