@@ -29,10 +29,9 @@ final class Email implements ValueObject
         $name = StringUtil::trim($name);
 
         Assert::notEmpty($email);
-        Assert::true(
-            (new EmailValidator())->isValid($email, new NoRFCWarningsValidation()),
-            sprintf('The email "%s" is invalid.', $email),
-        );
+        if (!(new EmailValidator())->isValid($email, new NoRFCWarningsValidation())) {
+            throw new \InvalidArgumentException(sprintf('The email "%s" is invalid.', $email));
+        }
 
         Assert::nullOrMaxLength($name, 50, 'The name must be less than 50 characters.');
 
