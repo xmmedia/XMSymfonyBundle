@@ -58,7 +58,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
 
         $sql = <<<Query
 SELECT {$select}
-FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?>
+FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?><?= "\n"; ?>
 {$queryParts['join']}
 WHERE {$queryParts['where']}
 GROUP BY <?= $projection_name_first_letter; ?>.<?= $id_field; ?><?= "\n"; ?>
@@ -88,7 +88,7 @@ Query;
 
         $sql = <<<Query
 SELECT COUNT(DISTINCT <?= $projection_name_first_letter; ?>.<?= $id_field; ?>)
-FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?>
+FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?><?= "\n"; ?>
 {$queryParts['join']}
 WHERE {$queryParts['where']}
 Query;
