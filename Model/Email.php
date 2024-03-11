@@ -33,7 +33,9 @@ final class Email implements ValueObject
             throw new \InvalidArgumentException(sprintf('The email "%s" is invalid.', $email));
         }
 
-        Assert::nullOrMaxLength($name, 50, 'The name must be less than 50 characters.');
+        if (mb_strlen((string) $email) > 100) {
+            $name = mb_substr($name, 0, 97).'…';
+        }
 
         $this->email = $email;
         $this->name = $name;
