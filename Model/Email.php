@@ -20,7 +20,7 @@ final class Email implements ValueObject
      */
     public static function fromString(string $email, string $name = null): self
     {
-        return new static($email, $name);
+        return new self($email, $name);
     }
 
     private function __construct(string $email, string $name = null)
@@ -91,7 +91,7 @@ final class Email implements ValueObject
      */
     public function sameValueAs(ValueObject $other): bool
     {
-        if (static::class !== $other::class) {
+        if (self::class !== $other::class) {
             return false;
         }
 
