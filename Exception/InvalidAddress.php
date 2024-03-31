@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Exception;
 
-final class InvalidAddress extends \InvalidArgumentException
+class InvalidAddress extends \InvalidArgumentException
 {
     public static function line1(string $line1, \Throwable $previous): self
     {
