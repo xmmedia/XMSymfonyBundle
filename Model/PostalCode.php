@@ -28,8 +28,20 @@ class PostalCode implements ValueObject
 
     private function __construct(string $postalCode)
     {
-        $postalCode = strtoupper(str_replace(' ', '', $postalCode));
+        $postalCode = static::clean($postalCode);
 
+        static::validate($postalCode);
+
+        $this->postalCode = self::format($postalCode);
+    }
+
+    protected static function clean(string $postalCode): string
+    {
+        return strtoupper(str_replace([' ', '-'], '', $postalCode));
+    }
+
+    protected static function validate(string $postalCode): void
+    {
         try {
             Assert::lengthBetween(
                 $postalCode,
@@ -39,8 +51,6 @@ class PostalCode implements ValueObject
         } catch (\InvalidArgumentException $e) {
             throw InvalidPostalCode::invalid($postalCode);
         }
-
-        $this->postalCode = self::format($postalCode);
     }
 
     public static function format(string $postalCode): string
