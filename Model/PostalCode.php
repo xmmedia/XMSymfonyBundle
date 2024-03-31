@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Exception\InvalidPostalCode;
 
 /**
- * Canada: 6 alphanumeric (without spaces)
+ * Canada: 6 alphanumeric (without space(s))
  * US: 5 or 10 numbers (5+4 digits plus dash).
  */
 class PostalCode implements ValueObject
