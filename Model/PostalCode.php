@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Model;
 
 use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Exception\InvalidPostalCode;
+use Xm\SymfonyBundle\Util\StringUtil;
 
 /**
  * Canada: 6 alphanumeric (without space(s))
@@ -37,7 +38,7 @@ class PostalCode implements ValueObject
 
     protected static function clean(string $postalCode): string
     {
-        return strtoupper(str_replace([' ', '-'], '', $postalCode));
+        return strtoupper(str_replace([' ', '-'], '', StringUtil::trim($postalCode)));
     }
 
     protected static function validate(string $postalCode): void
