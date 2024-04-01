@@ -72,7 +72,7 @@ class PostalCode implements ValueObject
 
     public function toString(): string
     {
-        return (string) $this->postalCode;
+        return $this->postalCode;
     }
 
     public function __toString(): string
