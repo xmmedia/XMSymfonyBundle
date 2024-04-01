@@ -29,6 +29,6 @@ class CountryProvider
 
     public static function name(string $country): string
     {
-        return array_search($country, self::$countries);
+        return array_search(strtoupper($country), self::$countries, true);
     }
 }
