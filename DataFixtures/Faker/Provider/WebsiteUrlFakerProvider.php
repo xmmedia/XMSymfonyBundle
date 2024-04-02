@@ -6,16 +6,16 @@ namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
 use Faker;
 use Xm\SymfonyBundle\Model\Date;
-use Xm\SymfonyBundle\Model\Url;
+use Xm\SymfonyBundle\Model\WebsiteUrl;
 
 /**
  * @codeCoverageIgnore
  */
-class UrlFakerProvider extends Faker\Provider\Base
+class WebsiteUrlFakerProvider extends Faker\Provider\Base
 {
-    public function urlVo(): Url {
+    public function websiteUrlVo(): WebsiteUrl {
         $faker = Faker\Factory::create('en_CA');
 
-        return Url::fromString($faker->url());
+        return WebsiteUrl::fromString($faker->url());
     }
 }

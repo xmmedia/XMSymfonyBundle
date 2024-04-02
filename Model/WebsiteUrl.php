@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Model;
 use Xm\SymfonyBundle\Util\Assert;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-class Url implements ValueObject
+class WebsiteUrl implements ValueObject
 {
     public const MAX_LENGTH = 2000;
 
@@ -23,7 +23,7 @@ class Url implements ValueObject
         $url = StringUtil::trim($url);
 
         Assert::notEmpty($url);
-        Assert::url($url);
+        Assert::url($url, ['https', 'http']);
         Assert::maxLength($url, static::MAX_LENGTH);
 
         $this->url = $url;
