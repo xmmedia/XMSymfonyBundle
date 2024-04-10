@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Command;
 
 use Prooph\EventStore\Pdo\Projection\PdoEventStoreProjector;
+use Prooph\EventStore\Projection\Projector;
 use Prooph\EventStore\Projection\ReadModelProjector;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,6 +27,7 @@ final class ProjectionRunCommand extends Command
     protected const OPTION_RUN_ALL = 'run-all';
     protected const OPTION_RUN_ONCE = 'run-once';
     protected const OPTION_SLEEP = 'sleep';
+    protected const OPTION_LOAD_COUNT = 'load-count';
 
     private string $projectionName;
     private ReadModelProjector $projector;
@@ -63,6 +65,13 @@ final class ProjectionRunCommand extends Command
                 'The sleep time of the projector in microseconds',
                 1000000, // 1 second
             )
+            ->addOption(
+                static::OPTION_LOAD_COUNT,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The number of events to load and process at once. Default is unlimited.',
+                null,
+            )
         ;
     }
 
@@ -84,6 +93,10 @@ final class ProjectionRunCommand extends Command
         }
         $keepRunning = !$input->getOption(static::OPTION_RUN_ONCE);
         $sleep = (int) $input->getOption(static::OPTION_SLEEP);
+        $loadCount = $input->getOption(static::OPTION_LOAD_COUNT);
+        if (null !== $loadCount) {
+            $loadCount = (int) $loadCount;
+        }
 
         if (!isset($this->projectionName) && !$runAll) {
             throw new RuntimeException('A projection name or --all for run all projections are required.');
@@ -92,19 +105,20 @@ final class ProjectionRunCommand extends Command
         if ($runAll) {
             $this->runAllProjections();
         } else {
-            $this->runProjection($keepRunning, $sleep);
+            $this->runProjection($keepRunning, $sleep, $loadCount);
         }
 
         return 0;
     }
 
-    private function runProjection(bool $keepRunning, int $sleep): void
+    private function runProjection(bool $keepRunning, int $sleep, ?int $loadCount): void
     {
         $this->projector = $this->projectionRunner->configure(
             $this->projectionName,
             [
-                PdoEventStoreProjector::OPTION_SLEEP          => $sleep,
-                PdoEventStoreProjector::OPTION_PCNTL_DISPATCH => true,
+                Projector::OPTION_SLEEP                   => $sleep,
+                Projector::OPTION_PCNTL_DISPATCH          => true,
+                PdoEventStoreProjector::OPTION_LOAD_COUNT => $loadCount,
             ],
         );
 
@@ -127,6 +141,9 @@ final class ProjectionRunCommand extends Command
                 'Keep running %s',
                 true === $keepRunning ? 'enabled' : 'disabled',
             ),
+        );
+        $this->io->text(
+            sprintf('Running with %s', null === $loadCount ? 'unlimited events' : $loadCount . ' events'),
         );
 
         $this->setupPcntl();
