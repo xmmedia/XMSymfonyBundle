@@ -34,12 +34,7 @@ EOT;
 
     protected function update(string $<?= $id_property; ?>, array $data, array $types = []): void
     {
-        $this->connection->update(
-            self::TABLE,
-            $data,
-            ['<?= $id_field; ?>' => $<?= $id_property; ?>],
-            $types,
-        );
+        $this->connection->update(self::TABLE, $data, ['<?= $id_field; ?>' => $<?= $id_property; ?>], $types);
     }
 
     protected function remove(string $<?= $id_property; ?>): void
