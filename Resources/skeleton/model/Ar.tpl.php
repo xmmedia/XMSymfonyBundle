@@ -101,10 +101,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $this-><?= $name_property; ?>;
     }
 
-    /**
-     * @param <?= $class_name; ?>|Entity $other
-     */
-    public function sameIdentityAs(Entity $other): bool
+    public function sameIdentityAs(self|Entity $other): bool
     {
         if (static::class !== $other::class) {
             return false;
