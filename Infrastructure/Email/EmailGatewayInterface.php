@@ -22,5 +22,6 @@ interface EmailGatewayInterface
         Email $from = null,
         Email $replyTo = null,
         array $headers = [],
+        array $options = [],
     ): EmailGatewayMessageId;
 }

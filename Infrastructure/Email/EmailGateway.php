@@ -42,6 +42,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         Email $from = null,
         Email $replyTo = null,
         array $headers = [],
+        array $options = [],
     ): EmailGatewayMessageId {
         if (!\is_array($to)) {
             $to = [$to];
@@ -64,6 +65,10 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
             );
 
             $to = $this->removeNonWhiteListedAddresses($to);
+        }
+
+        if ($options['prevent_gmail_threading'] ?? false) {
+            $headers['References'] = $this->getReferencesEmail($this->from);
         }
 
         $toString = implode(
