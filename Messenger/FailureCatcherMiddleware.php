@@ -19,6 +19,11 @@ class FailureCatcherMiddleware implements MiddlewareInterface
         try {
             $returnedEnvelope = $stack->next()->handle($envelope, $stack);
         } catch (HandlerFailedException $e) {
+            if (method_exists($e, 'getWrappedExceptions')) {
+                throw $e->getWrappedExceptions()[0];
+            }
+
+            // deprecated in Symfony 6.4
             throw $e->getNestedExceptions()[0];
         }
 
