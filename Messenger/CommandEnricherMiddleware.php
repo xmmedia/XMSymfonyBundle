@@ -9,6 +9,7 @@ use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Messaging\DomainEvent;
+use Xm\SymfonyBundle\Messaging\DomainMessage;
 
 class CommandEnricherMiddleware implements MiddlewareInterface
 {
@@ -18,10 +19,10 @@ class CommandEnricherMiddleware implements MiddlewareInterface
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
-        /** @var DomainEvent $message */
+        /** @var DomainEvent|DomainMessage $message */
         $message = $envelope->getMessage();
 
-        if (!$message instanceof DomainEvent) {
+        if (!method_exists($message, 'withAddedMetadata')) {
             return $stack->next()->handle($envelope, $stack);
         }
 
