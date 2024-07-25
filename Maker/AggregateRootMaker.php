@@ -143,6 +143,10 @@ class AggregateRootMaker extends AbstractMaker
             'Projection\\'.$arName.'\\',
         );
 
+        $graphqlIdClassDetails = $generator->createClassNameDetails(
+            $arName.'IdType',
+            'GraphQl\\Type\\',
+        );
         $queryClassDetails = $generator->createClassNameDetails(
             $projectionClassName.'Query',
             'GraphQl\\Query\\'.$arName.'\\',
@@ -231,6 +235,7 @@ class AggregateRootMaker extends AbstractMaker
             'projection_class_short'               => $projectionClassDetails->getShortName(),
             'projection_name'                      => $projectionName,
             'projection_name_first_letter'         => substr($projectionName, 0, 1),
+            'graphql_id_type'                      => $graphqlIdClassDetails->getShortName(),
             'query_builder_class'                  => $queryBuilderClassDetails->getFullName(),
             'query_builder_class_short'            => $queryBuilderClassDetails->getShortName(),
             'query_count'                          => $this->doubleEscapeClass($countQueryClassDetails->getFullName()),
@@ -565,6 +570,11 @@ class AggregateRootMaker extends AbstractMaker
             $variables,
         );
 
+        $generator->generateClass(
+            $graphqlIdClassDetails->getFullName(),
+            $this->skeletonPath().'projection/IdType.tpl.php',
+            $variables,
+        );
         $generator->generateClass(
             $filtersClassDetails->getFullName(),
             $this->skeletonPath().'projection/Filters.tpl.php',

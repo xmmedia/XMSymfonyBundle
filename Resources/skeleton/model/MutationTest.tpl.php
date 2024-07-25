@@ -22,7 +22,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $faker = $this->faker();
 <?php if (!$delete) { ?>
         $args = [
-            '<?= $id_property; ?>' => $faker->uuid(),
+            '<?= $id_property; ?>' => $faker-><?= $id_property; ?>(),
             '<?= $name_property ?>' => $faker->name(),
         ];
 
@@ -48,7 +48,7 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $this->assertSame($expected, $result);
 <?php } else { ?>
-        $<?= $id_property; ?> = $faker->uuid();
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         $commandBus = \Mockery::mock(MessageBusInterface::class);
         $commandBus->shouldReceive('dispatch')

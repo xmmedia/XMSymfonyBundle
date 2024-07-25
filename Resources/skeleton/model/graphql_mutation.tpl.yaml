@@ -25,14 +25,14 @@
                 access:      '@=isAuthenticated()'
                 resolve:     '@=mutation("<?= $mutation_delete; ?>", args["<?= $id_property; ?>"])'
                 args:
-                    <?= $id_property; ?>: UUID!
+                    <?= $id_property; ?>: <?= $id_class_short; ?>!
 
 <?= $model; ?>Input:
     type: input-object
     config:
         description: '<?= $model; ?> add & change mutation input.'
         fields:
-            <?= $id_property; ?>: UUID!
+            <?= $id_property; ?>: <?= $id_class_short; ?>!
             <?= $name_property ?>: String!
 
 <?= $model; ?>MutationPayload:

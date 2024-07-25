@@ -16,7 +16,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker->uuid();
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
         $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
 
         $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
@@ -36,7 +36,7 @@ class <?= $class_name; ?> extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $<?= $id_property; ?> = $faker->uuid();
+        $<?= $id_property; ?> = $faker-><?= $id_property; ?>();
 
         $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('find')

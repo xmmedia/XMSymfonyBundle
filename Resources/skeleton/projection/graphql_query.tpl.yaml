@@ -25,7 +25,7 @@
                 access:      '@=isAuthenticated()'
                 resolve:     '@=query("<?= $query_single; ?>", args["<?= $id_property; ?>"])'
                 args:
-                    <?= $id_property; ?>: UUID!
+                    <?= $id_property; ?>: <?= $id_class_short; ?>!
 
 <?= $entity_class_short; ?>FilterInput:
     type: input-object

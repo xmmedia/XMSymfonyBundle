@@ -15,8 +15,8 @@ final readonly class <?= $class_name; ?> implements QueryInterface
     {
     }
 
-    public function __invoke(string $<?= $id_property; ?>): ?<?= $entity_class_short; ?><?= "\n"; ?>
+    public function __invoke(<?= $id_class_short; ?> $<?= $id_property; ?>): ?<?= $entity_class_short; ?><?= "\n"; ?>
     {
-        return $this-><?= $entity_finder_property; ?>->find(<?= $id_class_short; ?>::fromString($<?= $id_property; ?>));
+        return $this-><?= $entity_finder_property; ?>->find($<?= $id_property; ?>);
     }
 }

@@ -3,7 +3,7 @@
     config:
         description: 'The <?= $model; ?> object.'
         fields:
-            <?= $id_property; ?>: UUID!
+            <?= $id_property; ?>: <?= $id_class_short; ?>!
             <?= $name_property ?>: String!
             canBeDeleted:
                 type:    Boolean!
