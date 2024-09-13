@@ -26,7 +26,7 @@ final class <?= $class_name; ?> extends Command
         return <?= $id_class_short; ?>::fromString($this->payload['<?= $id_property; ?>']);
     }
 
-    public function <?= $name_property ?>(): <?= $name_class_short ?>
+    public function <?= $name_property ?>(): <?= $name_class_short ?><?= "\n"; ?>
     {
         return <?= $name_class_short ?>::fromString($this->payload['<?= $name_property ?>']);
     }
