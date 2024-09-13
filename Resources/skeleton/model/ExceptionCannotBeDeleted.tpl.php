@@ -11,7 +11,7 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
     public static function triedToDelete(<?= $id_class_short; ?> $<?= $id_property; ?>): self
     {
         return new self(
-            sprintf(
+            \sprintf(
                 'Tried to delete an <?= $model; ?> with ID "%s" that cannot be deleted.',
                 $<?= $id_property; ?>,
             ),
