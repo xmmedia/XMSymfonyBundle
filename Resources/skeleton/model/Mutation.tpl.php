@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use <?= $command_class; ?>;
-use <?= $id_class; ?>;
 <?php if (!$delete) { ?>
 use <?= $entity_finder_class; ?>;
 use <?= $entity_class; ?>;
 use <?= $name_class; ?>;
+<?php } else { ?>
+use <?= $id_class; ?>;
 <?php } ?>
 use JetBrains\PhpStorm\ArrayShape;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
