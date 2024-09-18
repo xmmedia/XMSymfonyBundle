@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace <?= $namespace; ?>;
 
-use <?= $name_class; ?>;
 use <?= $can_be_deleted_interface_class; ?>;
 use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRoot;
 use Xm\SymfonyBundle\EventSourcing\AppliesAggregateChanged;
