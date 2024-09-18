@@ -1,6 +1,6 @@
 <?= $model; ?>Mutation:
     decorator: true
-    heirs: [Mutation]
+    heirs: [ Mutation ]
     config:
         fields:
             <?= $model; ?>Add:
