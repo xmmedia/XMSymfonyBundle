@@ -7,8 +7,6 @@ namespace <?= $namespace; ?>;
 use <?= $entity_class; ?>;
 use <?= $id_class; ?>;
 use <?= $not_found_class; ?>;
-use <?= $filters_class; ?>;
-use <?= $query_builder_class; ?>;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use JetBrains\PhpStorm\ArrayShape;
