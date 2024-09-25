@@ -142,13 +142,14 @@ class Address implements ValueObject
     public function toString(bool $html = false, bool $includeCountry = true): string
     {
         $br = $html ? '<br>' : "\n";
+        $escape = fn (string $str) => $html ? htmlspecialchars($str, \ENT_QUOTES | \ENT_SUBSTITUTE) : $str;
 
-        $str = $this->line1;
+        $str = $escape($this->line1);
         if (null !== $this->line2) {
-            $str .= $br.$this->line2;
+            $str .= $br.$escape($this->line2);
         }
-        $str .= $br.$this->city.', '.$this->province->abbreviation();
-        $str .= ($html ? ' &nbsp;' : '  ').$this->postalCode;
+        $str .= $br.$escape($this->city).', '.$this->province->abbreviation();
+        $str .= ($html ? ' &nbsp;' : '  ').$escape($this->postalCode->toString());
         if ($includeCountry) {
             $str .= $br.$this->country->name();
         }

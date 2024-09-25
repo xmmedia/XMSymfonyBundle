@@ -380,6 +380,37 @@ class AddressTest extends BaseTestCase
         $this->assertSame($string, $address->toString(true, false));
     }
 
+    public function testToStringHtmlSpecialCharacters(): void
+    {
+        $faker = $this->faker();
+        $xss = '<script>alert("xss");</script>';
+
+        $line1 = $faker->streetAddress();
+        $line2 = $faker->streetAddress();
+        $city = $faker->city();
+        $province = $faker->stateAbbr();
+        $postalCode = 'T4D 84K';
+
+        $address = Address::fromStrings(
+            $line1.$xss,
+            $line2.$xss,
+            $city.$xss,
+            $province,
+            $postalCode,
+            'CA',
+        );
+
+        $escapedXss = htmlspecialchars($xss, \ENT_QUOTES | \ENT_SUBSTITUTE);
+        $string = $line1.$escapedXss.'<br>'.
+            $line2.$escapedXss.'<br>'.
+            $city.$escapedXss.', '.
+            $province.' &nbsp;'.
+            $postalCode.'<br>'.
+            'Canada';
+
+        $this->assertSame($string, $address->toString(true));
+    }
+
     /**
      * @dataProvider addressArrayProvider
      */
