@@ -7,12 +7,13 @@ namespace Xm\SymfonyBundle\Tests\Model;
 use PHPUnit\Framework\TestCase;
 use Xm\SymfonyBundle\Exception\InvalidPostalCode;
 use Xm\SymfonyBundle\Model\PostalCode;
+use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\FakeVo;
 
-class PostalCodeTest extends TestCase
+class PostalCodeTest extends BaseTestCase
 {
     /**
-     * @dataProvider countryProvider
+     * @dataProvider postalCodeProvider
      */
     public function testFromString(string $code, string $expected): void
     {
@@ -22,7 +23,7 @@ class PostalCodeTest extends TestCase
         $this->assertEquals($expected, (string) $province);
     }
 
-    public function countryProvider(): \Generator
+    public function postalCodeProvider(): \Generator
     {
         yield ['T9D 8K2', 'T9D 8K2'];
         yield ['T9D8K2', 'T9D 8K2'];
@@ -30,7 +31,7 @@ class PostalCodeTest extends TestCase
 
         yield ['50301', '50301'];
 
-        yield ['20521-9000', '20521-9000'];
+        yield ['20521-9000', '205219000'];
     }
 
     /**
@@ -47,7 +48,7 @@ class PostalCodeTest extends TestCase
     {
         yield ['2332'];
         yield [''];
-        yield ['32333-32333'];
+        yield ['32333-323333'];
     }
 
     public function testSameValueAs(): void

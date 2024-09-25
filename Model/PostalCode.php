@@ -36,12 +36,18 @@ class PostalCode implements ValueObject
         $this->postalCode = self::format($postalCode);
     }
 
-    protected static function clean(string $postalCode): string
+    protected static function clean(string $postalCode): ?string
     {
-        return strtoupper(str_replace([' ', '-'], '', StringUtil::trim($postalCode)));
+        $postalCode = StringUtil::trim($postalCode);
+
+        if (null === $postalCode) {
+            return null;
+        }
+
+        return strtoupper(str_replace([' ', '-'], '', $postalCode));
     }
 
-    protected static function validate(string $postalCode): void
+    protected static function validate(?string $postalCode): void
     {
         try {
             Assert::lengthBetween(
