@@ -47,7 +47,7 @@ class AddressTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             $faker->streetAddress(),
             $faker->streetAddress(),
@@ -58,7 +58,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             $faker->streetAddress(),
             null,
@@ -69,7 +69,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             $faker->streetAddress(),
             '', // empty string is changed to null
@@ -103,7 +103,7 @@ class AddressTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -116,7 +116,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -129,7 +129,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -142,7 +142,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $faker->postcode();
+        $postalCode = $this->postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -283,7 +283,7 @@ class AddressTest extends BaseTestCase
             '',
             $faker->city(),
             $faker->stateAbbr(),
-            $faker->postcode(),
+            $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
         $string = $address->line1()."\n".
@@ -305,7 +305,7 @@ class AddressTest extends BaseTestCase
             $faker->streetAddress(),
             $faker->city(),
             $faker->stateAbbr(),
-            $faker->postcode(),
+            $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
         $string = $address->line1().'<br>'.
@@ -327,7 +327,7 @@ class AddressTest extends BaseTestCase
             '',
             $faker->city(),
             $faker->stateAbbr(),
-            $faker->postcode(),
+            $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
         $string = $address->line1().'<br>'.
@@ -348,7 +348,7 @@ class AddressTest extends BaseTestCase
             '',
             $faker->city(),
             $faker->stateAbbr(),
-            $faker->postcode(),
+            $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
         $string = $address->line1()."\n".
@@ -368,7 +368,7 @@ class AddressTest extends BaseTestCase
             $faker->streetAddress(),
             $faker->city(),
             $faker->stateAbbr(),
-            $faker->postcode(),
+            $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
         $string = $address->line1().'<br>'.
@@ -409,5 +409,10 @@ class AddressTest extends BaseTestCase
         $address = $faker->addressVo();
 
         $this->assertFalse($address->sameValueAs(FakeVo::create()));
+    }
+
+    private function postalCode(): string
+    {
+        return str_replace('-', ' ', $this->faker()->postcode());
     }
 }
