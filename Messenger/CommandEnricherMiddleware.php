@@ -22,7 +22,7 @@ class CommandEnricherMiddleware implements MiddlewareInterface
         /** @var DomainEvent|DomainMessage $message */
         $message = $envelope->getMessage();
 
-        if (!method_exists($message, 'withAddedMetadata') || array_key_exists('issuedBy', $message->metadata())) {
+        if (!method_exists($message, 'withAddedMetadata') || \array_key_exists('issuedBy', $message->metadata())) {
             return $stack->next()->handle($envelope, $stack);
         }
 
