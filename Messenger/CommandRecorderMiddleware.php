@@ -8,6 +8,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
+use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 use Xm\SymfonyBundle\Messaging\Command;
 
 class CommandRecorderMiddleware implements MiddlewareInterface
@@ -18,6 +19,10 @@ class CommandRecorderMiddleware implements MiddlewareInterface
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
+        if (null !== $envelope->last(ReceivedStamp::class)) {
+            return $stack->next()->handle($envelope, $stack);
+        }
+
         $message = $envelope->getMessage();
 
         if ($message instanceof Command) {
