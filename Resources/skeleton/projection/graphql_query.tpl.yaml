@@ -5,7 +5,7 @@
         fields:
             <?= $entity_class_short_plural; ?>:
                 type:        '[<?= $entity_class_short; ?>!]!'
-                description: 'Retrieve all <?= $entity_class_short_plural; ?>.'
+                description: 'Retrieve all <?= $entity_class_short_plural; ?> optionally filtered by filters.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=query("<?= $query_multiple; ?>", args["filters"])'
                 args:
@@ -13,7 +13,7 @@
 
             <?= $entity_class_short; ?>Count:
                 type:        Int!
-                description: 'Retrieve all <?= $entity_class_short_plural; ?> count.'
+                description: 'Retrieve all <?= $entity_class_short_plural; ?> count optionally restricted by filters.'
                 access:      '@=isAuthenticated()'
                 resolve:     '@=query("<?= $query_count; ?>", args["filters"])'
                 args:
