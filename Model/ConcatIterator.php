@@ -17,8 +17,6 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * Build an iterator over multiple iterators
      * Unlike a LimitIterator, the $end defines the last index, not the count.
-     *
-     * @param \Iterator $iterator,... Concat iterators in order
      */
     public function __construct()
     {
