@@ -78,6 +78,18 @@ class Assert extends \Webmozart\Assert\Assert
         );
     }
 
+    public static function nullOrUrl(
+        $value,
+        $protocols = ['https', 'https'],
+        string $message = '',
+    ): void {
+        if (null === $value) {
+            return;
+        }
+
+        self::url($value, $protocols, $message);
+    }
+
     public static function allScalarRecursive(array $value, string $message = ''): void
     {
         foreach ($value as $key => $_value) {
