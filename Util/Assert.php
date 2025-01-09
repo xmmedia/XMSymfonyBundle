@@ -66,7 +66,7 @@ class Assert extends \Webmozart\Assert\Assert
 
     public static function url(
         $value,
-        $protocols = ['https', 'https'],
+        $protocols = ['http', 'https'],
         string $message = '',
     ): void {
         self::notEmpty($protocols, 'At least 1 protocol is required. Got 0.');
