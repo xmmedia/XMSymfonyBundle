@@ -80,7 +80,7 @@ class Assert extends \Webmozart\Assert\Assert
 
     public static function nullOrUrl(
         $value,
-        $protocols = ['https', 'https'],
+        $protocols = ['http', 'https'],
         string $message = '',
     ): void {
         if (null === $value) {
