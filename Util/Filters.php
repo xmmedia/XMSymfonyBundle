@@ -36,6 +36,7 @@ abstract class Filters implements FiltersInterface
             Assert::oneOf(
                 $key,
                 $this->availableFields,
+                '"%s" is not an available filter.',
             );
         }
 
