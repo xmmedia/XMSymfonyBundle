@@ -57,6 +57,21 @@ abstract class Filters implements FiltersInterface
         return $this->filters[$field] ?? null;
     }
 
+    public function set(string $field, mixed $value): static
+    {
+        Assert::oneOf(
+            $field,
+            $this->availableFields,
+            '"%s" is not an available filter.',
+        );
+
+        $filters = $this->filters;
+
+        $filters[$field] = $value;
+
+        return new static($filters);
+    }
+
     public function toArray(): array
     {
         return $this->filters;
