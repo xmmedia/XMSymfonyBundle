@@ -651,7 +651,7 @@ class AggregateRootMaker extends AbstractMaker
                 '- Run projection once (optional): <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
-            '- Add ID class to UuidFakerProvider (for tests)',
+            '- Add ID class to `UuidFakerProvider` (for tests)',
             '- Update permissions in GraphQL config',
             '- Update GraphQL schema: <info>bin/console app:graphql:dump-schema <username></info>',
             '- Run code checks and tests',
