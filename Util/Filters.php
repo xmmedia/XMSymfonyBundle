@@ -10,6 +10,8 @@ abstract class Filters implements FiltersInterface
 {
     protected array $filters;
 
+    protected array $availableFields;
+
     /**
      * @return static
      */
@@ -20,10 +22,10 @@ abstract class Filters implements FiltersInterface
 
     protected function __construct(array $filters)
     {
-        $availableFields = $this->getFields();
-        if (empty($availableFields)) {
+        $this->availableFields = $this->getFields();
+        if (empty($this->availableFields)) {
             Assert::notEmpty(
-                $availableFields,
+                $this->availableFields,
                 'The filter class must have at least 1 filter constant.',
             );
         }
@@ -33,8 +35,7 @@ abstract class Filters implements FiltersInterface
         foreach ($filters as $key => $value) {
             Assert::oneOf(
                 $key,
-                $availableFields,
-                '%s is not an available filter.',
+                $this->availableFields,
             );
         }
 
