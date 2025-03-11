@@ -22,7 +22,7 @@ class <?= $class_name; ?> extends ScalarType implements AliasedInterface
     {
         parent::__construct([
             'name'        => self::NAME,
-            'description' => 'A UUID for a <?= $model; ?> represented as string.',
+            'description' => 'A UUID v4 for a <?= $model; ?> represented as string.',
         ]);
     }
 

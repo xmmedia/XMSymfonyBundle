@@ -21,7 +21,7 @@ final class UuidType extends ScalarType implements AliasedInterface
     {
         parent::__construct([
             'name'        => self::NAME,
-            'description' => 'A UUID represented as string.',
+            'description' => 'A UUID v4 represented as string.',
         ]);
     }
 
