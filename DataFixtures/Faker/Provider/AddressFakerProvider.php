@@ -25,7 +25,7 @@ class AddressFakerProvider extends FakerAddress
     {
         return [
             'line1'      => parent::streetAddress(),
-            'line2'      => parent::streetAddress(),
+            'line2'      => $this->generator->boolean(25) ? 'Suite '.parent::buildingNumber() : null,
             'city'       => parent::city(),
             'province'   => parent::provinceAbbr(),
             // make sure the postal code doesn't come with a dash
