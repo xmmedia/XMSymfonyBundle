@@ -645,27 +645,27 @@ class AggregateRootMaker extends AbstractMaker
             '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
             '- Create the stream:',
             sprintf(
-                '    <info>bin/console event-store:event-stream:create %s</info>',
+                '    With bin/console: <info>bin/console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
             sprintf(
-                '    Lando: <info>lando console event-store:event-stream:create %s</info>',
+                '    Or with Lando: <info>lando console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
             '- Run projection once (optional):',
             sprintf(
-                '    <info>bin/console event-store:projection:run %s_projection -o</info>',
+                '    With bin/console: <info>bin/console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
             sprintf(
-                '    Lando: <info>lando console event-store:projection:run %s_projection -o</info>',
+                '    Or with Lando: <info>lando console event-store:projection:run %s_projection -o</info>',
                 $projectionName,
             ),
             '- Add ID class to `UuidFakerProvider` (for tests)',
             '- Update permissions in GraphQL config',
             '- Update GraphQL schema:',
             '    <info>bin/console app:graphql:dump-schema <username - optional></info>',
-            '    Lando: <info>lando console app:graphql:dump-schema <username - optional></info>',
+            '    Or with Lando: <info>lando console app:graphql:dump-schema <username - optional></info>',
             '- Run code checks and tests',
         ]);
     }
