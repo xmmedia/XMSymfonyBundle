@@ -15,6 +15,6 @@ class NameFakerProvider extends Faker\Provider\Person
     {
         $faker = Faker\Factory::create();
 
-        return substr($faker->name($gender), 0, 25);
+        return trim(substr($faker->name($gender), 0, 25));
     }
 }
