@@ -32,6 +32,10 @@ abstract class FilterQueryBuilder
         return $this;
     }
 
+    /**
+     * Apply a basic filter to the query searching anywhere in the field.
+     * Breaks apart the filter/query string by spaces and commas, and applies each part separately to the query using LIKE.
+     */
     protected function applyBasicQ(FiltersInterface $filters, string $field, array $includeFields): void
     {
         $qParts = preg_split('/[ ,]/', trim($filters->get($field)));
