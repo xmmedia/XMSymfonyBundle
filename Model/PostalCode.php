@@ -50,6 +50,7 @@ class PostalCode implements ValueObject
     protected static function validate(?string $postalCode): void
     {
         try {
+            Assert::notNull($postalCode);
             Assert::lengthBetween(
                 $postalCode,
                 self::MIN_LENGTH,
