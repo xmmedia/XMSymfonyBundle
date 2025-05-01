@@ -62,10 +62,10 @@ class ProjectionRunner
                     throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
                 }
 
-                if ($attempts % 5 > 0 && $this->logger) {
+                if ($attempts > 1 && 0 === $attempts % 5 && $this->logger) {
                     $this->logger->warning(
                         sprintf(
-                            'Projection "%s" was not idle. It\'s state is "%s". Attempted %d times.',
+                            'Projection "%s" could not be run. When checked, it\'s state was "%s". Attempted to run %d times.',
                             $projectionName,
                             $state->getValue(),
                             $attempts,
