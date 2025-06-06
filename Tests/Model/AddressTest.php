@@ -264,7 +264,7 @@ class AddressTest extends BaseTestCase
         $address = $faker->addressVo();
 
         $string = $address->line1()."\n".
-            $address->line2()."\n".
+            (null !== $address->line2() ? $address->line2()."\n" : '').
             $address->city().', '.
             $address->province()->toString().'  '.
             $address->postalCode()->toString()."\n".
