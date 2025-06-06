@@ -71,7 +71,7 @@ Query;
         }
         $queryParts['parameters']['maxResults'] = 30;
 
-        $query = $this->_em->createNativeQuery($sql, $rsm);
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameters($queryParts['parameters']);
 
         return $query->getResult();
@@ -91,7 +91,7 @@ FROM `<?= $projection_name; ?>` <?= $projection_name_first_letter; ?><?= "\n"; ?
 WHERE {$queryParts['where']}
 Query;
 
-        return (int) $this->_em->getConnection()
+        return (int) $this->getEntityManager()->getConnection()
             ->executeQuery(
                 $sql,
                 $queryParts['parameters'],
