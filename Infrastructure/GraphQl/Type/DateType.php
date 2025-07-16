@@ -8,6 +8,8 @@ use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Error\UserError;
+use Xm\SymfonyBundle\Util\StringUtil;
+use Xm\SymfonyBundle\Util\Utils;
 
 final class DateType extends ScalarType implements AliasedInterface
 {
@@ -43,18 +45,20 @@ final class DateType extends ScalarType implements AliasedInterface
      */
     public function parseValue($value): ?\DateTimeImmutable
     {
-        if (null === empty($value)) {
+        $value = StringUtil::trim($value);
+
+        if (null === $value) {
             return null;
         }
 
         if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $value)) {
-            throw new UserError('The date is not in the format of YYYY-MM-DD. Received: '.$value);
+            throw new UserError('The date is not in the format of YYYY-MM-DD. Received: "'.Utils::printSafe($value).'"');
         }
 
         $date = \DateTimeImmutable::createFromFormat(self::FORMAT, $value);
 
         if (!$date) {
-            throw new UserError('Unable to parse Date. Ensure format is '.self::FORMAT.'.');
+            throw new UserError('Unable to parse Date. Ensure format is '.self::FORMAT.'. Received: "'.Utils::printSafe($value).'"');
         }
 
         return $date;
