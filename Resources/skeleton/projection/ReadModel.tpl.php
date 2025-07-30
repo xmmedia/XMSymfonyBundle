@@ -9,7 +9,7 @@ use Xm\SymfonyBundle\EventStore\Projection\AbstractReadModel;
 
 final class <?= $class_name; ?> extends AbstractReadModel
 {
-    protected const TABLE = Table::<?= $model_upper; ?>;
+    protected const string TABLE = Table::<?= $model_upper; ?>;
 
     public function init(): void
     {

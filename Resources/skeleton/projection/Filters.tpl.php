@@ -9,6 +9,6 @@ use Xm\SymfonyBundle\Util\Filters;
 class <?= $class_name; ?> extends Filters
 {
     /** @var string General query, queries text fields on <?= $projection_name; ?>. */
-    public const Q = 'q';
-    public const OFFSET = 'offset';
+    public const string Q = 'q';
+    public const string OFFSET = 'offset';
 }

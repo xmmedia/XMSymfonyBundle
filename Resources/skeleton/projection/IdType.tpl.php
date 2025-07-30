@@ -16,7 +16,7 @@ class <?= $class_name; ?> extends ScalarType implements AliasedInterface
 {
     use UuidTypeTrait;
 
-    private const NAME = '<?= $id_class_short; ?>';
+    private const string NAME = '<?= $id_class_short; ?>';
 
     public function __construct()
     {
