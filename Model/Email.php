@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Model;
 
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\NoRFCWarningsValidation;
+use JetBrains\PhpStorm\ArrayShape;
 use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Util\StringUtil;
 
@@ -21,6 +22,10 @@ final class Email implements ValueObject
     public static function fromString(string $email, string $name = null): self
     {
         return new self($email, $name);
+    }
+    public static function fromArray(array $data): self
+    {
+        return new self($data['email'], $data['name'] ?? null);
     }
 
     private function __construct(string $email, string $name = null)
@@ -59,6 +64,15 @@ final class Email implements ValueObject
     public function __toString(): string
     {
         return $this->toString();
+    }
+
+    #[ArrayShape(['email' => 'string', 'name' => 'null|string'])]
+    public function toArray(): array
+    {
+        return [
+            'email' => $this->email,
+            'name'  => $this->name,
+        ];
     }
 
     public function withName(): string
