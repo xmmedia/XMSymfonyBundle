@@ -38,7 +38,7 @@ final class Email implements ValueObject
             throw new \InvalidArgumentException(sprintf('The email "%s" is invalid.', $email));
         }
 
-        if (mb_strlen((string) $email) > 100) {
+        if (mb_strlen((string) $name) > 100) {
             $name = mb_substr($name, 0, 97).'…';
         }
 
