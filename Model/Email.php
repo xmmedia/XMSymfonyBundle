@@ -39,7 +39,7 @@ final class Email implements ValueObject
         }
 
         if (mb_strlen((string) $name) > 100) {
-            $name = mb_substr($name, 0, 97).'…';
+            $name = mb_substr($name, 0, 99).'…';
         }
 
         $this->email = $email;
