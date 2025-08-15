@@ -25,6 +25,19 @@ class EmailTest extends BaseTestCase
         $this->assertEquals($name, $vo->name());
     }
 
+    public function testFromArray(): void
+    {
+        $faker = $this->faker();
+
+        $email = $faker->email();
+        $name = $faker->name();
+
+        $vo = Email::fromArray(['email' => $email, 'name' => $name]);
+
+        $this->assertEquals(['email' => $email, 'name' => $name], $vo->toArray());
+    }
+
+
     public function testFromStringWithoutName(): void
     {
         $faker = $this->faker();
@@ -36,6 +49,19 @@ class EmailTest extends BaseTestCase
         $this->assertEquals($email, $vo->toString());
         $this->assertEquals($email, (string) $vo);
         $this->assertNull($vo->name());
+    }
+
+    public function testNameSubStr(): void
+    {
+        $faker = $this->faker();
+
+        $email = $faker->email();
+        $name = $faker->string(120); // over 100 characters long
+
+        $vo = Email::fromString($email, $name);
+
+        $this->assertEquals($email, $vo->email());
+        $this->assertEquals($email, $vo->toString());
     }
 
     public function testNullName(): void
