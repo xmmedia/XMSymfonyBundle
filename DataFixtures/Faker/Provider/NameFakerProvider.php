@@ -11,7 +11,7 @@ use Faker;
  */
 class NameFakerProvider extends Faker\Provider\Person
 {
-    public function name(null|string $gender = null): string
+    public function name($gender = null): string
     {
         $faker = Faker\Factory::create();
 
