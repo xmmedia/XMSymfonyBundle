@@ -67,7 +67,7 @@ trait ProjectionAwareMigration
     /**
      * @deprecated use ContainerAwareTrait instead
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
     {
         if (null === $container) {
             throw new \RuntimeException('The container must be set for the migration to work. NULL received.');
