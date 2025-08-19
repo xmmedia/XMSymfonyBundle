@@ -95,7 +95,7 @@ class AggregateRepository
         return $eventSourcedAggregateRoot;
     }
 
-    public function getAggregateRootEvents(string $aggregateId, string $eventName = null): \Iterator
+    public function getAggregateRootEvents(string $aggregateId, ?string $eventName = null): \Iterator
     {
         $streamName = $this->determineStreamName($aggregateId);
 
