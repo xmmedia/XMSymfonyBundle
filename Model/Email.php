@@ -39,7 +39,8 @@ final class Email implements ValueObject
         }
 
         if (mb_strlen((string) $name) > 100) {
-            $name = mb_substr($name, 0, 99).'…';
+            // not StringUtil::trim because we don't want to accidentally up with null
+            $name = trim(mb_substr($name, 0, 99)).'…';
         }
 
         $this->email = $email;

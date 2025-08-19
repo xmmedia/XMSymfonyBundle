@@ -10,7 +10,7 @@ use Xm\SymfonyBundle\Tests\FakeVo;
 
 class EmailTest extends BaseTestCase
 {
-    public function testFromString(): void
+    public function testFromStrings(): void
     {
         $faker = $this->faker();
 
@@ -23,6 +23,7 @@ class EmailTest extends BaseTestCase
         $this->assertEquals($email, $vo->toString());
         $this->assertEquals($email, (string) $vo);
         $this->assertEquals($name, $vo->name());
+        $this->assertEquals(['email' => $email, 'name' => $name], $vo->toArray());
     }
 
     public function testFromArray(): void
@@ -37,8 +38,7 @@ class EmailTest extends BaseTestCase
         $this->assertEquals(['email' => $email, 'name' => $name], $vo->toArray());
     }
 
-
-    public function testFromStringWithoutName(): void
+    public function testFromStringsWithoutName(): void
     {
         $faker = $this->faker();
 
@@ -49,19 +49,22 @@ class EmailTest extends BaseTestCase
         $this->assertEquals($email, $vo->toString());
         $this->assertEquals($email, (string) $vo);
         $this->assertNull($vo->name());
+        $this->assertEquals($email, $vo->email());
+        $this->assertEquals($email, $vo->withName());
+        $this->assertEquals(['email' => $email, 'name' => null], $vo->toArray());
     }
 
-    public function testNameSubStr(): void
+    public function testNameTruncate(): void
     {
         $faker = $this->faker();
 
         $email = $faker->email();
-        $name = $faker->string(120); // over 100 characters long
+        $name = trim($faker->words(100, true)); // over 100 characters long
 
         $vo = Email::fromString($email, $name);
 
-        $this->assertEquals($email, $vo->email());
-        $this->assertEquals($email, $vo->toString());
+        $this->assertEquals(trim(mb_substr($name, 0, 99)).'…', $vo->name());
+        $this->assertEquals(trim(mb_substr($name, 0, 20)).' <'.$email.'>', $vo->withName());
     }
 
     public function testNullName(): void
@@ -98,42 +101,42 @@ class EmailTest extends BaseTestCase
         Email::fromString('Name Name Name Name Name Name Name Name Name Name Name Name Name');
     }
 
-    public function testFromStringWithNameMethod(): void
+    public function testFromStringsWithNameMethod(): void
     {
         $vo = Email::fromString('email@email.com', 'Name');
 
         $this->assertEquals('Name <email@email.com>', $vo->withName());
     }
 
-    public function testFromStringWithNameMethodWithoutName(): void
+    public function testFromStringsWithNameMethodWithoutName(): void
     {
         $vo = Email::fromString('email@email.com');
 
         $this->assertEquals('email@email.com', $vo->withName());
     }
 
-    public function testFromStringWithNameMethodTooLong(): void
+    public function testFromStringsWithNameMethodTooLong(): void
     {
         $vo = Email::fromString('email@email.com', 'Name Name Name Name Name Name Name Name');
 
         $this->assertEquals('Name Name Name Name <email@email.com>', $vo->withName());
     }
 
-    public function testFromStringWithNameMethodWithComma(): void
+    public function testFromStringsWithNameMethodWithComma(): void
     {
         $vo = Email::fromString('email@email.com', 'Name, Name');
 
         $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
     }
 
-    public function testFromStringWithNameMethodWithSemicolon(): void
+    public function testFromStringsWithNameMethodWithSemicolon(): void
     {
         $vo = Email::fromString('email@email.com', 'Name; Name');
 
         $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
     }
 
-    public function testFromStringWithNameMethodWithCommaAndSemicolon(): void
+    public function testFromStringsWithNameMethodWithCommaAndSemicolon(): void
     {
         $vo = Email::fromString('email@email.com', 'Name; Name, Name');
 
@@ -151,6 +154,16 @@ class EmailTest extends BaseTestCase
     {
         $vo1 = Email::fromString('email@email.com');
         $vo2 = Email::fromString('email@email.com');
+
+        $this->assertTrue($vo1->sameValueAs($vo2));
+    }
+
+    public function testSameAsWithName(): void
+    {
+        $faker = $this->faker();
+
+        $vo1 = Email::fromString('email@email.com', $faker->unique()->name());
+        $vo2 = Email::fromString('email@email.com', $faker->unique()->name());
 
         $this->assertTrue($vo1->sameValueAs($vo2));
     }
