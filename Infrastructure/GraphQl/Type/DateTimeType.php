@@ -51,7 +51,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
     /**
      * @param StringValueNode $valueNode
      */
-    public function parseLiteral($valueNode, array $variables = null): ?\DateTimeImmutable
+    public function parseLiteral($valueNode, ?array $variables = null): ?\DateTimeImmutable
     {
         if (!$valueNode instanceof StringValueNode) {
             return null;

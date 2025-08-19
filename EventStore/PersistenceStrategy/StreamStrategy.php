@@ -19,7 +19,7 @@ final class StreamStrategy implements MySqlPersistenceStrategy, HasQueryHint
 {
     private MessageConverter $messageConverter;
 
-    public function __construct(MessageConverter $messageConverter = null)
+    public function __construct(?MessageConverter $messageConverter = null)
     {
         $this->messageConverter = $messageConverter ?? new DefaultMessageConverter();
     }

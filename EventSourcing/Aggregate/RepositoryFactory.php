@@ -14,7 +14,7 @@ class RepositoryFactory
         EventStore $eventStore,
         string $aggregateType,
         AggregateTranslator $aggregateTranslator,
-        string $streamName = null,
+        ?string $streamName = null,
     ) {
         return new $repositoryClass(
             $eventStore,

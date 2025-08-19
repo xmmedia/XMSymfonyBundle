@@ -82,7 +82,7 @@ final class MySqlEventStore implements PdoEventStore
         int $loadBatchSize = 10000,
         string $eventStreamsTable = 'event_streams',
         bool $disableTransactionHandling = false,
-        WriteLockStrategy $writeLockStrategy = null
+        ?WriteLockStrategy $writeLockStrategy = null,
     ) {
         if (! \extension_loaded('pdo_mysql')) {
             throw ExtensionNotLoaded::with('pdo_mysql');
@@ -309,7 +309,7 @@ EOT;
         StreamName $streamName,
         int $fromNumber = 1,
         int $count = null,
-        MetadataMatcher $metadataMatcher = null
+        ?MetadataMatcher $metadataMatcher = null,
     ): Iterator {
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` >= :fromNumber';
@@ -389,7 +389,7 @@ EOT;
         StreamName $streamName,
         int $fromNumber = null,
         int $count = null,
-        MetadataMatcher $metadataMatcher = null
+        ?MetadataMatcher $metadataMatcher = null,
     ): Iterator {
         if (null === $fromNumber) {
             $fromNumber = PHP_INT_MAX;

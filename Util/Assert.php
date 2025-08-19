@@ -14,8 +14,8 @@ class Assert extends \Webmozart\Assert\Assert
     public static function passwordComplexity(
         string $password,
         array $userData,
-        int $minimum = null,
-        PasswordStrengthInterface $passwordStrength = null,
+        ?int $minimum = null,
+        ?PasswordStrengthInterface $passwordStrength = null,
     ): void {
         if (null === $minimum) {
             $minimum = 2;
@@ -33,7 +33,7 @@ class Assert extends \Webmozart\Assert\Assert
 
     public static function compromisedPassword(
         string $password,
-        HttpClientInterface $httpClient = null,
+        ?HttpClientInterface $httpClient = null,
     ): void {
         $endpoint = 'https://api.pwnedpasswords.com/range/%s';
         if (null === $httpClient) {
