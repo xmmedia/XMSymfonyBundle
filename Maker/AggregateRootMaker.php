@@ -626,7 +626,7 @@ class AggregateRootMaker extends AbstractMaker
                 $projectionClassDetails->getFullName(),
             ),
             sprintf(
-                '- Add <info>public const %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
+                '- Add <info>public const string %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
                 strtoupper(Str::asSnakeCase($projectionName)),
                 $projectionName,
             ),
