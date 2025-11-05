@@ -12,7 +12,7 @@ class IssuerProvider
     {
     }
 
-    public function getIssuer(): ?string
+    public function getIssuer(): string|int|null
     {
         if (null === $this->security->getToken()) {
             if ('cli' === php_sapi_name()) {
@@ -29,6 +29,10 @@ class IssuerProvider
             return 'anonymous';
         }
 
-        return $user->userId()->toString();
+        if (is_int($user->userId())) {
+            return $user->userId();
+        }
+
+        return (string) $user->userId();
     }
 }

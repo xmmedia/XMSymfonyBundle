@@ -13,10 +13,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\TestUserEntity as User;
+use Xm\SymfonyBundle\Tests\UsesFaker;
 
 class IssuerProviderTest extends BaseTestCase
 {
-    public function testLoggedIn(): void
+    use UsesFaker;
+
+    public function testLoggedInUuidInterface(): void
     {
         $userId = Uuid::uuid4();
 
@@ -27,14 +30,28 @@ class IssuerProviderTest extends BaseTestCase
 
         $provider = new IssuerProvider($this->createSecurity($user));
 
-        $this->assertEquals($userId->toString(), $provider->getIssuer());
+        $this->assertSame($userId->toString(), $provider->getIssuer());
+    }
+
+    public function testLoggedInInt(): void
+    {
+        $userId = $this->faker()->numberBetween();
+
+        $user = new User();
+        $reflection = new \ReflectionClass(User::class);
+        $reflection->getProperty('userId')
+            ->setValue($user, $userId);
+
+        $provider = new IssuerProvider($this->createSecurity($user));
+
+        $this->assertSame($userId, $provider->getIssuer());
     }
 
     public function testNotLoggedIn(): void
     {
         $provider = new IssuerProvider($this->createSecurity(null));
 
-        $this->assertEquals('anonymous', $provider->getIssuer());
+        $this->assertSame('anonymous', $provider->getIssuer());
     }
 
     public function testCli(): void
@@ -49,7 +66,7 @@ class IssuerProviderTest extends BaseTestCase
 
         $provider = new IssuerProvider($security);
 
-        $this->assertEquals('cli', $provider->getIssuer());
+        $this->assertSame('cli', $provider->getIssuer());
     }
 
     /**
