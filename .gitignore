@@ -32,6 +32,8 @@ vendor/
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 .idea/webServers.xml
+.idea/copilot
+.idea/copilot*
 ###< phpstorm ###
 
 ###> phpunit/phpunit ###
