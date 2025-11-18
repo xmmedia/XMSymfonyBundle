@@ -27,7 +27,7 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
         'reason'      => 'null|string',
         'reasonHuman' => 'null|string',
         'dateAdded'   => CarbonImmutable::class.'|null',
-        'postmarkUrl' => 'string',
+        'espUrl'      => 'string',
     ])]
     public function check(Email $email): array
     {
@@ -47,7 +47,7 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
                 'reason'      => null,
                 'reasonHuman' => null,
                 'dateAdded'   => null,
-                'postmarkUrl' => null,
+                'espUrl'      => null,
             ];
         }
 
@@ -65,7 +65,7 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
             'reason'      => $suppression->getSuppressionReason(),
             'reasonHuman' => $this->formatReason($suppression),
             'dateAdded'   => CarbonImmutable::createFromFormat('c', $suppression->getCreatedAt()),
-            'postmarkUrl' => $postmarkUrl,
+            'espUrl'      => $postmarkUrl,
         ];
     }
 

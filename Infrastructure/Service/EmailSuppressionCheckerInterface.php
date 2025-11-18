@@ -15,7 +15,7 @@ interface EmailSuppressionCheckerInterface
         'reason'      => 'null|string',
         'reasonHuman' => 'null|string',
         'dateAdded'   => CarbonImmutable::class.'|null',
-        'postmarkUrl' => 'null|string',
+        'espUrl'      => 'null|string',
     ])]
     public function check(Email $email): array;
 }

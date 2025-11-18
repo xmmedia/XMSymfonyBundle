@@ -63,8 +63,8 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
         $this->assertSame('Hard Bounce - Email address is invalid or does not exist', $result['reasonHuman']);
         $this->assertInstanceOf(CarbonImmutable::class, $result['dateAdded']);
         $this->assertSame($dateAdded, $result['dateAdded']->format('c'));
-        $this->assertStringContainsString((string) $serverId, $result['postmarkUrl']);
-        $this->assertStringContainsString(urlencode($email->toString()), $result['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result['espUrl']);
+        $this->assertStringContainsString(urlencode($email->toString()), $result['espUrl']);
     }
 
     public function testEmailNotSuppressed(): void
@@ -96,7 +96,7 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
         $this->assertNull($result['reason']);
         $this->assertNull($result['reasonHuman']);
         $this->assertNull($result['dateAdded']);
-        $this->assertNull($result['postmarkUrl']);
+        $this->assertNull($result['espUrl']);
     }
 
     public function testSpamComplaintReason(): void
@@ -145,8 +145,8 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
         $this->assertSame('Spam Complaint - Recipient marked email as spam', $result['reasonHuman']);
         $this->assertInstanceOf(CarbonImmutable::class, $result['dateAdded']);
         $this->assertSame($dateAdded, $result['dateAdded']->format('c'));
-        $this->assertStringContainsString((string) $serverId, $result['postmarkUrl']);
-        $this->assertStringContainsString(urlencode($email->toString()), $result['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result['espUrl']);
+        $this->assertStringContainsString(urlencode($email->toString()), $result['espUrl']);
     }
 
     public function testManualSuppressionReason(): void
@@ -195,8 +195,8 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
         $this->assertSame('Manual Suppression - Manually added to suppression list', $result['reasonHuman']);
         $this->assertInstanceOf(CarbonImmutable::class, $result['dateAdded']);
         $this->assertSame($dateAdded, $result['dateAdded']->format('c'));
-        $this->assertStringContainsString((string) $serverId, $result['postmarkUrl']);
-        $this->assertStringContainsString(urlencode($email->toString()), $result['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result['espUrl']);
+        $this->assertStringContainsString(urlencode($email->toString()), $result['espUrl']);
     }
 
     public function testUnknownSuppressionReason(): void
@@ -246,8 +246,8 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
         $this->assertSame($unknownReason, $result['reasonHuman']);
         $this->assertInstanceOf(CarbonImmutable::class, $result['dateAdded']);
         $this->assertSame($dateAdded, $result['dateAdded']->format('c'));
-        $this->assertStringContainsString((string) $serverId, $result['postmarkUrl']);
-        $this->assertStringContainsString(urlencode($email->toString()), $result['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result['espUrl']);
+        $this->assertStringContainsString(urlencode($email->toString()), $result['espUrl']);
     }
 
     public function testServerIdCaching(): void
@@ -312,10 +312,10 @@ class PostmarkSuppressionCheckerTest extends BaseTestCase
 
         // First call - should fetch server ID
         $result1 = $checker->check($email1);
-        $this->assertStringContainsString((string) $serverId, $result1['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result1['espUrl']);
 
         // Second call - should use cached server ID
         $result2 = $checker->check($email2);
-        $this->assertStringContainsString((string) $serverId, $result2['postmarkUrl']);
+        $this->assertStringContainsString((string) $serverId, $result2['espUrl']);
     }
 }

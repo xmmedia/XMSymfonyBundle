@@ -15,7 +15,7 @@ final class EmailSuppressionQuery implements QueryInterface
     {
     }
 
-    #[ArrayShape(['suppressed' => 'bool', 'reason' => 'null|string', 'dateAdded' => 'null|string', 'postmarkUrl' => 'string'])]
+    #[ArrayShape(['suppressed' => 'bool', 'reason' => 'null|string', 'dateAdded' => 'null|string', 'espUrl' => 'string'])]
     public function __invoke(string $email): array
     {
         return $this->suppressionChecker->check(Email::fromString($email));
