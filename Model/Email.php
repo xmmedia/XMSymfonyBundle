@@ -23,6 +23,7 @@ final class Email implements ValueObject
     {
         return new self($email, $name);
     }
+
     public static function fromArray(array $data): self
     {
         return new self($data['email'], $data['name'] ?? null);
