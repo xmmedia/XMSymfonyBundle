@@ -182,4 +182,116 @@ class EmailTest extends BaseTestCase
 
         $this->assertFalse($vo->sameValueAs(FakeVo::create()));
     }
+
+    public function testFromAddressStringSimpleEmail(): void
+    {
+        $vo = Email::fromAddressString('email@example.com');
+
+        $this->assertEquals('email@example.com', $vo->email());
+        $this->assertNull($vo->name());
+    }
+
+    public function testFromAddressStringWithAngleBrackets(): void
+    {
+        $vo = Email::fromAddressString('<email@example.com>');
+
+        $this->assertEquals('email@example.com', $vo->email());
+        $this->assertNull($vo->name());
+    }
+
+    public function testFromAddressStringWithName(): void
+    {
+        $vo = Email::fromAddressString('John Doe <email@example.com>');
+
+        $this->assertEquals('email@example.com', $vo->email());
+        $this->assertEquals('John Doe', $vo->name());
+    }
+
+    public function testFromAddressStringWithQuotedName(): void
+    {
+        $vo = Email::fromAddressString('"John Doe" <email@example.com>');
+
+        $this->assertEquals('email@example.com', $vo->email());
+        $this->assertEquals('John Doe', $vo->name());
+    }
+
+    public function testFromAddressStringWithNameNoQuotes(): void
+    {
+        $vo = Email::fromAddressString('Jane Smith <jane@example.com>');
+
+        $this->assertEquals('jane@example.com', $vo->email());
+        $this->assertEquals('Jane Smith', $vo->name());
+    }
+
+    public function testFromAddressStringWithNameNoAngleBrackets(): void
+    {
+        $vo = Email::fromAddressString('John Doe email@example.com');
+
+        $this->assertEquals('email@example.com', $vo->email());
+        $this->assertEquals('John Doe', $vo->name());
+    }
+
+    public function testFromAddressStringWithComplexName(): void
+    {
+        $vo = Email::fromAddressString('"Dr. John A. Doe, Jr." <john.doe@example.com>');
+
+        $this->assertEquals('john.doe@example.com', $vo->email());
+        $this->assertEquals('Dr. John A. Doe, Jr.', $vo->name());
+    }
+
+    public function testFromAddressStringWithWhitespace(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Email::fromAddressString('  John Doe  <  email@example.com  >  ');
+    }
+
+    public function testFromAddressStringEmpty(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Email::fromAddressString('');
+    }
+
+    public function testFromAddressStringInvalid(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Email::fromAddressString('invalid-email');
+    }
+
+    public function testToAddressStringWithoutName(): void
+    {
+        $vo = Email::fromString('email@example.com');
+
+        $this->assertEquals('email@example.com', $vo->toAddressString());
+    }
+
+    public function testToAddressStringWithName(): void
+    {
+        $vo = Email::fromString('email@example.com', 'John Doe');
+
+        $this->assertEquals('"John Doe" <email@example.com>', $vo->toAddressString());
+    }
+
+    public function testToAddressStringWithComplexName(): void
+    {
+        $vo = Email::fromString('john.doe@example.com', 'Dr. John A. Doe, Jr.');
+
+        $this->assertEquals('"Dr. John A. Doe, Jr." <john.doe@example.com>', $vo->toAddressString());
+    }
+
+    public function testToAddressStringWithLongName(): void
+    {
+        $vo = Email::fromString('email@example.com', 'Name Name Name Name Name Name Name Name');
+
+        $this->assertEquals('"Name Name Name Name Name Name Name Name" <email@example.com>', $vo->toAddressString());
+    }
+
+    public function testToAddressStringWithNullName(): void
+    {
+        $vo = Email::fromString('email@example.com', null);
+
+        $this->assertEquals('email@example.com', $vo->toAddressString());
+    }
 }

@@ -29,6 +29,23 @@ final class Email implements ValueObject
         return new self($data['email'], $data['name'] ?? null);
     }
 
+    /**
+     * For RFC 5322 address strings like: "John Doe" <johndoe@examle.com>
+     */
+    public static function fromAddressString(string $address): self
+    {
+        $address = StringUtil::trim($address);
+        Assert::notEmpty($address);
+
+        // Use regex to extract name and email from address string (RFC 5322/RFC 822)
+        // Pattern expects no whitespace inside angle brackets
+        if (preg_match('/^(?:"?([^"]*)"?\s+)?<?([^\s<>]+)>?$/', $address, $matches)) {
+            return new self($matches[2], $matches[1] ?: null);
+        }
+
+        return self::fromString($address);
+    }
+
     private function __construct(string $email, ?string $name = null)
     {
         $email = StringUtil::trim($email);
@@ -66,6 +83,18 @@ final class Email implements ValueObject
     public function __toString(): string
     {
         return $this->toString();
+    }
+
+    /**
+     * If the name is not empty, it will return an address strings like: "John Doe" <johndoe@examle.com>
+     */
+    public function toAddressString(): string
+    {
+        if (null === $this->name) {
+            return $this->email;
+        }
+
+        return sprintf('"%s" <%s>', $this->name, $this->email);
     }
 
     #[ArrayShape(['email' => 'string', 'name' => 'null|string'])]
