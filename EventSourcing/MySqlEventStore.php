@@ -308,7 +308,7 @@ EOT;
     public function load(
         StreamName $streamName,
         int $fromNumber = 1,
-        int $count = null,
+        ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
     ): Iterator {
         [$where, $values] = $this->createWhereClause($metadataMatcher);
@@ -387,8 +387,8 @@ EOT;
 
     public function loadReverse(
         StreamName $streamName,
-        int $fromNumber = null,
-        int $count = null,
+        ?int $fromNumber = null,
+        ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
     ): Iterator {
         if (null === $fromNumber) {
