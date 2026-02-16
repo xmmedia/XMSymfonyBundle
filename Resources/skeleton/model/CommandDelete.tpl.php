@@ -22,6 +22,7 @@ final class <?= $class_name; ?> extends Command
         return <?= $id_class_short; ?>::fromString($this->payload['<?= $id_property; ?>']);
     }
 
+    #[\Override]
     protected function setPayload(array $payload): void
     {
         Assert::keyExists($payload, '<?= $id_property; ?>');
