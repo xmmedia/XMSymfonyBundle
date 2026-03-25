@@ -158,4 +158,12 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
 
         return $commandBus;
     }
+
+    /**
+     * Set a property on an object using reflection.
+     */
+    protected function setProp(object $object, string $property, mixed $value): void
+    {
+        (new \ReflectionProperty($object, $property))->setValue($object, $value);
+    }
 }
