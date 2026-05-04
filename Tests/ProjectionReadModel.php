@@ -38,7 +38,7 @@ trait ProjectionReadModel
         return $projector;
     }
 
-    private function getReadModelStack(AbstractReadModel $readModel)
+    private function getReadModelStack(AbstractReadModel $readModel): mixed
     {
         // Use reflection to access the protected stack property from parent class
         $reflection = new \ReflectionClass(\Prooph\EventStore\Projection\AbstractReadModel::class);
