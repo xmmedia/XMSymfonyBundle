@@ -38,7 +38,7 @@ abstract class FilterQueryBuilder
      */
     protected function applyBasicQ(FiltersInterface $filters, string $field, array $includeFields): void
     {
-        $qParts = preg_split('/[ ,]/', trim($filters->get($field)));
+        $qParts = preg_split('/[ ,]+/', trim($filters->get($field)));
         $qCriteria = [];
 
         foreach ($qParts as $i => $part) {
