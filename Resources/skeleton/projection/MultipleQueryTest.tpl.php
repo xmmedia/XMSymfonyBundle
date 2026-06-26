@@ -7,6 +7,7 @@ namespace <?= $namespace; ?>;
 use <?= $entity_class; ?>;
 use <?= $query_multiple_class; ?>;
 use <?= $entity_finder_class; ?>;
+use <?= $filters_class; ?>;
 use App\Tests\BaseTestCase;
 
 class <?= $class_name; ?> extends BaseTestCase
@@ -18,6 +19,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('findByFilters')
             ->once()
+            ->with(\Mockery::type(<?= $filters_class_short; ?>::class))
             ->andReturn([$entity]);
 
         $query = new <?= $query_multiple_class_short; ?>($finder);
@@ -27,11 +29,32 @@ class <?= $class_name; ?> extends BaseTestCase
         $this->assertSame([$entity], $result);
     }
 
+    public function testWithFilters(): void
+    {
+        $entity = \Mockery::mock(<?= $entity_class_short; ?>::class);
+
+        $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
+        $finder->shouldReceive('findByFilters')
+            ->once()
+            ->with(\Mockery::type(<?= $filters_class_short; ?>::class))
+            ->andReturn([$entity]);
+
+        $query = new <?= $query_multiple_class_short; ?>($finder);
+
+        $result = $query([
+            'limit'  => 10,
+            'offset' => 5,
+        ]);
+
+        $this->assertSame([$entity], $result);
+    }
+
     public function testNoneFound(): void
     {
         $finder = \Mockery::mock(<?= $entity_filter_class_short; ?>::class);
         $finder->shouldReceive('findByFilters')
             ->once()
+            ->with(\Mockery::type(<?= $filters_class_short; ?>::class))
             ->andReturn([]);
 
         $query = new <?= $query_multiple_class_short; ?>($finder);
