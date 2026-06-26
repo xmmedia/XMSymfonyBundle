@@ -597,6 +597,23 @@ class AggregateRootMaker extends AbstractMaker
             $variables,
         );
 
+        $rootDir = $generator->getRootDirectory();
+        $dateStr = date('Ymd');
+        $migrationNumber = '001';
+        for ($i = 1; $i <= 999; $i++) {
+            $num = str_pad((string) $i, 3, '0', STR_PAD_LEFT);
+            if (!file_exists($rootDir.'/migrations/Version'.$dateStr.$num.'.php')) {
+                $migrationNumber = $num;
+                break;
+            }
+        }
+
+        $generator->generateFile(
+            'migrations/Version'.$dateStr.$migrationNumber.'.php',
+            $this->skeletonPath().'model/Migration.tpl.php',
+            [...$variables, 'migration_number' => $migrationNumber],
+        );
+
         $generator->writeChanges();
 
         $this->writeSuccessMessage($io);
