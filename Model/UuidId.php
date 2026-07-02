@@ -9,7 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 
 trait UuidId
 {
-    private UuidInterface $uuid;
+    private readonly UuidInterface $uuid;
 
     /**
      * @return static
