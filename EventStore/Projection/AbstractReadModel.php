@@ -8,8 +8,8 @@ use Doctrine\DBAL\Connection;
 
 abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractReadModel
 {
-    /** @var string The table for this read model */
-    protected const TABLE = null;
+    /** @var string|null The table for this read model */
+    protected const string|null TABLE = null;
 
     protected Connection $connection;
 
