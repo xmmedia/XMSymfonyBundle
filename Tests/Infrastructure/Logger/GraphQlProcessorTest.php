@@ -57,6 +57,28 @@ class GraphQlProcessorTest extends BaseTestCase
         $this->assertEquals($queryString, $result->extra['query']);
     }
 
+    public function testInvokeWithEventButNullSource(): void
+    {
+        $processor = new GraphQlProcessor();
+
+        $error = new Error('Test error');
+
+        $event = new ErrorFormattingEvent($error, []);
+
+        $processor->onGraphQlError($event);
+
+        $record = new LogRecord(
+            datetime: new \DateTimeImmutable(),
+            channel: 'test',
+            level: Level::Error,
+            message: 'GraphQL error',
+        );
+
+        $result = $processor($record);
+
+        $this->assertArrayNotHasKey('query', $result->extra);
+    }
+
     public function testGetSubscribedEvents(): void
     {
         $events = GraphQlProcessor::getSubscribedEvents();

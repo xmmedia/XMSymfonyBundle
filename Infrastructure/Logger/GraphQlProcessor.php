@@ -17,7 +17,10 @@ class GraphQlProcessor implements ProcessorInterface, EventSubscriberInterface
     public function __invoke(LogRecord $record): LogRecord
     {
         if (isset($this->event)) {
-            $record->extra['query'] = $this->event->getError()->getSource()->body;
+            $source = $this->event->getError()->getSource();
+            if (null !== $source) {
+                $record->extra['query'] = $source->body;
+            }
         }
 
         return $record;
