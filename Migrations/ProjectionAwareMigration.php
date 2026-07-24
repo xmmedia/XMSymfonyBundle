@@ -51,7 +51,7 @@ trait ProjectionAwareMigration
 
         $this->runCommand(
             [
-                'command'         => 'event-store:projection:run',
+                'command'         => 'run:projection:run',
                 'projection-name' => $projection,
                 '--run-once'      => true,
             ],

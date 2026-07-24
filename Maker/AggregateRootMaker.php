@@ -671,11 +671,11 @@ class AggregateRootMaker extends AbstractMaker
             ),
             '- Run projection once (optional):',
             sprintf(
-                '    With bin/console: <info>bin/console event-store:projection:run %s_projection -o</info>',
+                '    With bin/console: <info>bin/console app:projection:run %s -o</info>',
                 $projectionName,
             ),
             sprintf(
-                '    Or with Lando: <info>lando console event-store:projection:run %s_projection -o</info>',
+                '    Or with Lando: <info>lando console app:projection:run %s -o</info>',
                 $projectionName,
             ),
             '- Add ID class to `UuidFakerProvider` (for tests)',
