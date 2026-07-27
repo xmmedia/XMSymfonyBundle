@@ -13,7 +13,7 @@ class FakeVo implements ValueObject
         return new self();
     }
 
-    public function sameValueAs(ValueObject $other): bool
+    public function sameValueAs(self|ValueObject $other): bool
     {
         return false;
     }

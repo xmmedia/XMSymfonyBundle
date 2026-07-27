@@ -87,10 +87,7 @@ class PostalCode implements ValueObject
         return $this->toString();
     }
 
-    /**
-     * @param self|ValueObject $other
-     */
-    public function sameValueAs(ValueObject $other): bool
+    public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {
             return false;

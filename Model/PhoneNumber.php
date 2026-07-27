@@ -104,10 +104,7 @@ class PhoneNumber implements ValueObject
         return $this->e164();
     }
 
-    /**
-     * @param self|ValueObject $other
-     */
-    public function sameValueAs(ValueObject $other): bool
+    public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {
             return false;
