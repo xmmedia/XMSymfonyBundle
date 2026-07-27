@@ -162,7 +162,7 @@ final class ProjectionRunCommand extends Command
         foreach ($projections as $projectionName) {
             $this->projectionName = $projectionName;
 
-            $this->runProjection(false, 1000000);
+            $this->runProjection(false, 1000000, null);
         }
     }
 
