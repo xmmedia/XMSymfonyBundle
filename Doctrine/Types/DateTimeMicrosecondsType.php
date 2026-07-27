@@ -6,6 +6,8 @@ namespace Xm\SymfonyBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
 
 /**
@@ -40,7 +42,17 @@ class DateTimeMicrosecondsType extends Type
             return $value->format(self::FORMAT);
         }
 
-        throw ConversionException::conversionFailedInvalidType($value, self::TYPENAME, ['null', 'DateTime']);
+        // DBAL 4 moved the named constructors onto dedicated exception classes
+        if (class_exists(InvalidType::class)) {
+            throw InvalidType::new($value, self::TYPENAME, ['null', \DateTimeInterface::class]);
+        }
+
+        // @phpstan-ignore staticMethod.notFound (DBAL 3 only)
+        throw ConversionException::conversionFailedInvalidType(
+            $value,
+            self::TYPENAME,
+            ['null', \DateTimeInterface::class],
+        );
     }
 
     public function convertToPHPValue(
@@ -58,7 +70,17 @@ class DateTimeMicrosecondsType extends Type
         }
 
         if (!$val) {
-            throw ConversionException::conversionFailedFormat($value, self::TYPENAME, self::FORMAT);
+            // DBAL 4 moved the named constructors onto dedicated exception classes
+            if (class_exists(InvalidFormat::class)) {
+                throw InvalidFormat::new($value, self::TYPENAME, self::FORMAT);
+            }
+
+            // @phpstan-ignore staticMethod.notFound (DBAL 3 only)
+            throw ConversionException::conversionFailedFormat(
+                $value,
+                self::TYPENAME,
+                self::FORMAT,
+            );
         }
 
         return $val;
