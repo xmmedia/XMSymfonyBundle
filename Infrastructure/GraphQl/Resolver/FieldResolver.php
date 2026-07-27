@@ -8,7 +8,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use JetBrains\PhpStorm\Deprecated;
 
 #[Deprecated]
-class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
+class FieldResolver
 {
     /**
      * Allowed method prefixes.
@@ -32,6 +32,24 @@ class FieldResolver extends \Overblog\GraphQLBundle\Resolver\FieldResolver
             return $objectOrArray->$fieldName();
         }
 
-        return parent::valueFromObjectOrArray($objectOrArray, $fieldName);
+        if (\is_array($objectOrArray) && isset($objectOrArray[$fieldName])) {
+            return $objectOrArray[$fieldName];
+        }
+
+        if (\is_object($objectOrArray)) {
+            foreach (static::PREFIXES as $prefix) {
+                $method = $prefix.str_replace('_', '', $fieldName);
+
+                if (\is_callable([$objectOrArray, $method])) {
+                    return $objectOrArray->$method();
+                }
+            }
+
+            if (isset($objectOrArray->$fieldName)) {
+                return $objectOrArray->$fieldName;
+            }
+        }
+
+        return null;
     }
 }
