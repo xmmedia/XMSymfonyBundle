@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EventStore;
+namespace Xm\SymfonyBundle\Tests\EventStore;
 
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 use Xm\SymfonyBundle\EventStore\MetadataUserAgentEnricher;

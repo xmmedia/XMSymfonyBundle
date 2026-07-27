@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\GraphQl\Type;
+namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Type;
 
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\DateType;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
