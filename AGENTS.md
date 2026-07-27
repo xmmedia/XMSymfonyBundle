@@ -21,7 +21,7 @@ This is a Symfony bundle (`xm/symfony-bundle`) that provides classes and service
 
 ### Static Analysis
 - Run PHPStan: `composer static`
-- Config: `phpstan.neon.dist`
+- Config: `phpstan.dist.neon`
 
 ### Refactoring
 - Analyze with Rector (dry-run): `composer rector`

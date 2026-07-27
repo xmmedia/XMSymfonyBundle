@@ -6,6 +6,7 @@ includes:
     - vendor/phpstan/phpstan-mockery/extension.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/ekino/phpstan-banned-code/extension.neon
+    - vendor/marc-mabe/php-enum-phpstan/extension.neon
 
 parameters:
     level: 0
@@ -14,5 +15,12 @@ parameters:
     excludePaths:
         - Resources/skeleton
         - vendor
+    banned_code:
+        # errors emitted by the extension are non-ignorable by default, so they cannot accidentally be put into the baseline.
+        non_ignorable: false
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
+        # the Faker provider intentionally uses the FakeId test helper
+        -
+            message: '#Should not use Xm\\SymfonyBundle\\Tests\\FakeId in the non-test file#'
+            path: DataFixtures/Faker/Provider/UuidFakerProvider.php
