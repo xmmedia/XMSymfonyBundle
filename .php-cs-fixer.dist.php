@@ -15,12 +15,9 @@ return (new PhpCsFixer\Config())
         '@Symfony:risky'              => true,
         '@PSR2'                       => true,
         '@DoctrineAnnotation'         => true,
-        '@PHP71Migration'             => true,
-        '@PHP73Migration'             => true,
-        '@PHP74Migration'             => true,
-        '@PHP80Migration'             => true,
-        '@PHP81Migration'             => true,
-        '@PHPUnit60Migration:risky'   => true,
+        // this will include all the rules for earlier PHP versions
+        '@PHP8x1Migration'            => true,
+        '@PHPUnit11x0Migration:risky' => true,
         'array_syntax'                => [
            'syntax' => 'short',
         ],
