@@ -10,6 +10,8 @@ use Doctrine\DBAL\Connection;
 
 class <?= $class_name; ?> extends BaseTestCase
 {
+    private const array TYPES = [];
+
     public function testInit(): void
     {
         $connection = \Mockery::mock(Connection::class);
@@ -23,7 +25,7 @@ class <?= $class_name; ?> extends BaseTestCase
     public function testInsert(): void
     {
         $faker = $this->faker();
-        $data = $types = ['key' => $faker->string(5)];
+        $data = ['key' => $faker->string(5)];
 
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
@@ -33,10 +35,10 @@ class <?= $class_name; ?> extends BaseTestCase
                     string $table,
                     array $passedData,
                     array $passedTypes,
-                ) use ($data, $types): bool {
+                ) use ($data): bool {
                     $this->assertSame('<?= $projection_name; ?>', $table);
                     $this->assertSame($data, $passedData);
-                    $this->assertSame($types, $passedTypes);
+                    $this->assertSame(self::TYPES, $passedTypes);
 
                     return true;
                 },
@@ -45,14 +47,14 @@ class <?= $class_name; ?> extends BaseTestCase
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
         $method = $reflection->getMethod('insert');
 
-        $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$data, $types]);
+        $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$data]);
     }
 
     public function testUpdate(): void
     {
         $faker = $this->faker();
         $<?= $id_property; ?> = $faker->uuid();
-        $data = $types = ['key' => $faker->string(5)];
+        $data = ['key' => $faker->string(5)];
 
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('update')
@@ -63,11 +65,11 @@ class <?= $class_name; ?> extends BaseTestCase
                     array $passedData,
                     array $passedCriteria,
                     array $passedTypes,
-                ) use ($<?= $id_property; ?>, $data, $types): bool {
+                ) use ($<?= $id_property; ?>, $data): bool {
                     $this->assertSame('<?= $projection_name; ?>', $table);
                     $this->assertSame($data, $passedData);
                     $this->assertSame(['<?= $id_field; ?>' => $<?= $id_property; ?>], $passedCriteria);
-                    $this->assertSame($types, $passedTypes);
+                    $this->assertSame(self::TYPES, $passedTypes);
 
                     return true;
                 },
@@ -76,7 +78,7 @@ class <?= $class_name; ?> extends BaseTestCase
         $reflection = new \ReflectionClass(<?= $read_model_class_short; ?>::class);
         $method = $reflection->getMethod('update');
 
-        $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$<?= $id_property; ?>, $data, $types]);
+        $method->invokeArgs(new <?= $read_model_class_short; ?>($connection), [$<?= $id_property; ?>, $data]);
     }
 
     public function testRemove(): void

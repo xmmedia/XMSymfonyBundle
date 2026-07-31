@@ -11,6 +11,8 @@ final class <?= $class_name; ?> extends AbstractReadModel
 {
     protected const string TABLE = Table::<?= $model_upper; ?>;
 
+    private const array TYPES = [];
+
     public function init(): void
     {
         $tableName = self::TABLE;
@@ -27,14 +29,14 @@ EOT;
         $this->connection->executeQuery($sql);
     }
 
-    protected function insert(array $data, array $types = []): void
+    protected function insert(array $data): void
     {
-        $this->connection->insert(self::TABLE, $data, $types);
+        $this->connection->insert(self::TABLE, $data, self::TYPES);
     }
 
-    protected function update(string $<?= $id_property; ?>, array $data, array $types = []): void
+    protected function update(string $<?= $id_property; ?>, array $data): void
     {
-        $this->connection->update(self::TABLE, $data, ['<?= $id_field; ?>' => $<?= $id_property; ?>], $types);
+        $this->connection->update(self::TABLE, $data, ['<?= $id_field; ?>' => $<?= $id_property; ?>], self::TYPES);
     }
 
     protected function remove(string $<?= $id_property; ?>): void
