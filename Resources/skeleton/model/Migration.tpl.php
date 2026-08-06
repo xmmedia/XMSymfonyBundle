@@ -15,6 +15,7 @@ final class Version<?= date('Ymd'); ?><?= $migration_number; ?> extends Abstract
 
     private Kernel $kernel;
 
+    #[\Override]
     public function getDescription(): string
     {
         return 'Create <?= $stream_name; ?> event stream, then run projection.';
