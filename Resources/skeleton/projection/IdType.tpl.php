@@ -29,7 +29,7 @@ class <?= $class_name; ?> extends ScalarType implements AliasedInterface
     /**
      * @param string|mixed $value
      */
-    public function parseValue($value): ?<?= $id_class_short; ?><?= "\n"; ?>
+    public function parseValue($value): <?= $id_class_short; ?><?= "\n"; ?>
     {
         if (\is_string($value) && Uuid::isValid($value)) {
             return <?= $id_class_short; ?>::fromString($value);
