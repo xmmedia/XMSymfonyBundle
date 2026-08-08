@@ -10,9 +10,7 @@ use Xm\SymfonyBundle\Tests\FakeVo;
 
 class DateTest extends BaseTestCase
 {
-    /**
-     * @dataProvider dateStringProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dateStringProvider')]
     public function testFromStringAndToString(
         string $string,
         string $expectedDateString,
@@ -70,9 +68,7 @@ class DateTest extends BaseTestCase
         $this->assertEquals('America/Edmonton', $date->date()->timezone->getName());
     }
 
-    /**
-     * @dataProvider dateTimeProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dateTimeProvider')]
     public function testFromDateTime(\DateTimeInterface $dateTime): void
     {
         $date = Date::fromDateTime($dateTime);
@@ -107,9 +103,7 @@ class DateTest extends BaseTestCase
         $this->assertEquals($dateString, (string) $date);
     }
 
-    /**
-     * @dataProvider sameValueAsProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('sameValueAsProvider')]
     public function testSameValueAs(string $date1, string $date2, bool $expected): void
     {
         $date1 = Date::fromString($date1);

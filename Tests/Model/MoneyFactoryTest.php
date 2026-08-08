@@ -9,9 +9,7 @@ use Xm\SymfonyBundle\Model\MoneyFactory;
 
 class MoneyFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider intDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('intDataProvider')]
     public function testFromInt(int $cents, string $expected): void
     {
         $res = MoneyFactory::fromInt($cents);
@@ -31,9 +29,7 @@ class MoneyFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider floatDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('floatDataProvider')]
     public function testFromFloat(float $cents, string $expected): void
     {
         $res = MoneyFactory::fromFloat($cents);

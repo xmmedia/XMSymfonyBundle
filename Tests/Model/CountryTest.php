@@ -11,9 +11,7 @@ use Xm\SymfonyBundle\Tests\FakeVo;
 
 class CountryTest extends TestCase
 {
-    /**
-     * @dataProvider countryProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('countryProvider')]
     public function testFromString(
         string $abbreviation,
         string $expected,
@@ -36,9 +34,7 @@ class CountryTest extends TestCase
         yield ['us', 'US', 'United States'];
     }
 
-    /**
-     * @dataProvider invalidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidProvider')]
     public function testInvalid(?string $value): void
     {
         $this->expectException(InvalidCountry::class);

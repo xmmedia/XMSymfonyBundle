@@ -12,9 +12,7 @@ use Xm\SymfonyBundle\Util\Assert;
 
 class AssertTest extends BaseTestCase
 {
-    /**
-     * @dataProvider okayPasswordProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('okayPasswordProvider')]
     public function testPasswordComplexityOkay(string $password): void
     {
         Assert::passwordComplexity(
@@ -35,9 +33,7 @@ class AssertTest extends BaseTestCase
         yield ['oh98yih87tg8ybo97c976c98'];
     }
 
-    /**
-     * @dataProvider badPasswordProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('badPasswordProvider')]
     public function testPasswordComplexityBad(
         string $password,
         array $userData,

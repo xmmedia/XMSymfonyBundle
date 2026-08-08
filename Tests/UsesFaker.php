@@ -12,28 +12,31 @@ trait UsesFaker
     private static Faker\Generator $faker;
 
     /**
+     * Static so that it can also be used from data providers,
+     * which must be static as of PHPUnit 10.
+     *
      * @return Faker\Generator|Provider\AddressFakerProvider|Provider\DateFakerProvider|Provider\EmailFakerProvider|Provider\GenderFakerProvider|Provider\InternetFakerProvider|Provider\NameFakerProvider|Provider\PhoneNumberFakerProvider|Provider\StringFakerProvider|Provider\UuidFakerProvider
      */
     protected static function faker(): Faker\Generator
     {
-        return !isset($this->faker) ? $this->makeFaker() : $this->faker;
+        return !isset(self::$faker) ? self::makeFaker() : self::$faker;
     }
 
     private static function makeFaker(): Faker\Generator
     {
         $locales = ['en_CA', 'en_US'];
 
-        $this->faker = Faker\Factory::create($locales[array_rand($locales)]);
-        $this->faker->addProvider(new Provider\AddressFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\DateFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\EmailFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\GenderFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\InternetFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\NameFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\PhoneNumberFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\StringFakerProvider($this->faker));
-        $this->faker->addProvider(new Provider\UuidFakerProvider($this->faker));
+        self::$faker = Faker\Factory::create($locales[array_rand($locales)]);
+        self::$faker->addProvider(new Provider\AddressFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\DateFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\EmailFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\GenderFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\InternetFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\NameFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\PhoneNumberFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\StringFakerProvider(self::$faker));
+        self::$faker->addProvider(new Provider\UuidFakerProvider(self::$faker));
 
-        return $this->faker;
+        return self::$faker;
     }
 }

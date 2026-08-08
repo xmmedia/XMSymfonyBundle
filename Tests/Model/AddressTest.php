@@ -14,9 +14,7 @@ use Xm\SymfonyBundle\Tests\FakeVo;
 
 class AddressTest extends BaseTestCase
 {
-    /**
-     * @dataProvider addressStringProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addressStringProvider')]
     public function testFromStrings(
         string $line1,
         ?string $line2,
@@ -47,7 +45,7 @@ class AddressTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             $faker->streetAddress(),
             $faker->streetAddress(),
@@ -58,7 +56,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             $faker->streetAddress(),
             null,
@@ -69,7 +67,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             $faker->streetAddress(),
             '', // empty string is changed to null
@@ -81,9 +79,7 @@ class AddressTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider addressArrayProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addressArrayProvider')]
     public function testFromArray(array $data, string $expectedPostalCode): void
     {
         $address = Address::fromArray($data);
@@ -103,7 +99,7 @@ class AddressTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -116,7 +112,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -129,7 +125,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -142,7 +138,7 @@ class AddressTest extends BaseTestCase
             PostalCode::format($postalCode),
         ];
 
-        $postalCode = $this->postalCode();
+        $postalCode = self::postalCode();
         yield [
             [
                 'line1'      => $faker->streetAddress(),
@@ -160,9 +156,8 @@ class AddressTest extends BaseTestCase
 
     /**
      * Only tests exceptions through directly in Address VO, not Province, etc.
-     *
-     * @dataProvider addressInvalidProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addressInvalidProvider')]
     public function testInvalid(
         string $line1,
         ?string $line2,
@@ -411,9 +406,7 @@ class AddressTest extends BaseTestCase
         $this->assertSame($string, $address->toString(true));
     }
 
-    /**
-     * @dataProvider addressArrayProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addressArrayProvider')]
     public function testSameAs(array $data): void
     {
         $address1 = Address::fromArray($data);
@@ -422,9 +415,7 @@ class AddressTest extends BaseTestCase
         $this->assertTrue($address1->sameValueAs($address2));
     }
 
-    /**
-     * @dataProvider addressArrayProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addressArrayProvider')]
     public function testSameAsFalse(array $data): void
     {
         $address1 = Address::fromArray($data);

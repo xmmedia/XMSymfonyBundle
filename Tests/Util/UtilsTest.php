@@ -9,9 +9,7 @@ use Xm\SymfonyBundle\Util\Utils;
 
 class UtilsTest extends BaseTestCase
 {
-    /**
-     * @dataProvider serializeValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('serializeValidProvider')]
     public function testSerializeValid(null|bool|string|float|int|array|ClassWithToString|ClassWithGetValue|ClassWithToArray $input, null|bool|string|float|int|array $expected): void
     {
         $this->assertSame($expected, Utils::serialize($input));
@@ -30,9 +28,7 @@ class UtilsTest extends BaseTestCase
         yield [new ClassWithToArray(), ['array']];
     }
 
-    /**
-     * @dataProvider serializeInvalidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('serializeInvalidProvider')]
     public function testSerializeInvalid(\stdClass $input): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -45,9 +41,7 @@ class UtilsTest extends BaseTestCase
         yield [new \stdClass()];
     }
 
-    /**
-     * @dataProvider printSafeProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('printSafeProvider')]
     public function testPrintSafe(\stdClass|\Closure|array|string|null|bool|int|float $var, string $type): void
     {
         $this->assertSame($type, Utils::printSafe($var));

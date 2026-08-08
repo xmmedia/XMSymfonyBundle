@@ -19,9 +19,7 @@ class DateTypeTest extends BaseTestCase
         $this->assertSame($date, $result->format('Y-m-d'));
     }
 
-    /**
-     * @dataProvider emptyProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('emptyProvider')]
     public function testParseValueEmpty($empty): void
     {
         $type = new DateType();
@@ -134,9 +132,7 @@ class DateTypeTest extends BaseTestCase
         $this->assertSame(['Date'], $result);
     }
 
-    /**
-     * @dataProvider invalidDateFormatProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidDateFormatProvider')]
     public function testParseValueWithInvalidFormats(string $invalidDate): void
     {
         $type = new DateType();

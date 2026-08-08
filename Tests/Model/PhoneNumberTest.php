@@ -13,9 +13,7 @@ class PhoneNumberTest extends BaseTestCase
 {
     use PhoneNumberDataProvider;
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testFromArray(string $void, array $data): void
     {
         $phoneNumber = PhoneNumber::fromArray($data);
@@ -25,9 +23,7 @@ class PhoneNumberTest extends BaseTestCase
         $this->assertEquals($data['extension'], $phoneNumber->extension());
     }
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testToArrayFromArray(string $void, array $data): void
     {
         $phoneNumber = PhoneNumber::fromArray(
@@ -39,9 +35,7 @@ class PhoneNumberTest extends BaseTestCase
         $this->assertEquals($data['extension'], $phoneNumber->extension());
     }
 
-    /**
-     * @dataProvider phoneNumberInvalidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberInvalidProvider')]
     public function testFromArrayInvalid(string $string): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -51,9 +45,7 @@ class PhoneNumberTest extends BaseTestCase
         ]);
     }
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testFromString(string $string, array $expected): void
     {
         $phoneNumber = PhoneNumber::fromString($string);
@@ -63,9 +55,7 @@ class PhoneNumberTest extends BaseTestCase
         $this->assertEquals($expected['extension'], $phoneNumber->extension());
     }
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testToString(string $string, array $expected): void
     {
         $phoneNumber = PhoneNumber::fromString($string);
@@ -73,9 +63,7 @@ class PhoneNumberTest extends BaseTestCase
         $this->assertEquals($expected['phoneNumber'], (string) $phoneNumber);
     }
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testFromObject(string $string, array $expected): void
     {
         $util = PhoneNumberUtil::getInstance();
@@ -87,9 +75,7 @@ class PhoneNumberTest extends BaseTestCase
         $this->assertEquals($expected['extension'], $phoneNumber->extension());
     }
 
-    /**
-     * @dataProvider phoneNumberInvalidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberInvalidProvider')]
     public function testFromStringInvalid(string $string): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -97,9 +83,7 @@ class PhoneNumberTest extends BaseTestCase
         PhoneNumber::fromString($string);
     }
 
-    /**
-     * @dataProvider phoneNumberValidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
     public function testSameValueAs(string $string): void
     {
         $phoneNumber1 = PhoneNumber::fromString($string);

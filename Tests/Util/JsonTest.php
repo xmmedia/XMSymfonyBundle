@@ -9,17 +9,13 @@ use Xm\SymfonyBundle\Util\Json;
 
 class JsonTest extends TestCase
 {
-    /**
-     * @dataProvider provider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provider')]
     public function testEncode(string|float|int|bool|array $value, string $expected): void
     {
         $this->assertEquals($expected, Json::encode($value));
     }
 
-    /**
-     * @dataProvider provider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provider')]
     public function testDecode(string|float|int|bool|array $expected, string $json): void
     {
         $this->assertEquals($expected, Json::decode($json));

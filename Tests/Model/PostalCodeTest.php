@@ -12,9 +12,7 @@ use Xm\SymfonyBundle\Tests\FakeVo;
 
 class PostalCodeTest extends BaseTestCase
 {
-    /**
-     * @dataProvider postalCodeProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('postalCodeProvider')]
     public function testFromString(string $code, string $expected): void
     {
         $province = PostalCode::fromString($code);
@@ -34,9 +32,7 @@ class PostalCodeTest extends BaseTestCase
         yield ['20521-9000', '205219000'];
     }
 
-    /**
-     * @dataProvider invalidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidProvider')]
     public function testInvalid(?string $value): void
     {
         $this->expectException(InvalidPostalCode::class);

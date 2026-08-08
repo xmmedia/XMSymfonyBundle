@@ -11,9 +11,7 @@ use Xm\SymfonyBundle\Tests\BaseTestCase;
 
 class UuidTypeTest extends BaseTestCase
 {
-    /**
-     * @dataProvider uuidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('uuidProvider')]
     public function testSerialize($value, ?string $expected): void
     {
         $result = (new UuidType())->serialize($value);
@@ -21,9 +19,7 @@ class UuidTypeTest extends BaseTestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidUuidProvider')]
     public function testSerializeInvalid(string|null|array $value): void
     {
         $this->expectException(Error::class);
@@ -41,9 +37,7 @@ class UuidTypeTest extends BaseTestCase
         $this->assertEquals($fakeId->toString(), $result);
     }
 
-    /**
-     * @dataProvider uuidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('uuidProvider')]
     public function testParseValue($value, ?string $expected): void
     {
         $result = (new UuidType())->parseValue($value);
@@ -68,9 +62,7 @@ class UuidTypeTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidUuidProvider')]
     public function testParseValueInvalid(string|null|array $value): void
     {
         $this->expectException(Error::class);

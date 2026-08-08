@@ -11,9 +11,7 @@ use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\DateTimeType;
 
 class DateTimeTypeTest extends TestCase
 {
-    /**
-     * @dataProvider dateProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dateProvider')]
     public function testSerialize(?\DateTimeInterface $value, ?string $expected): void
     {
         $result = (new DateTimeType())->serialize($value);
@@ -21,9 +19,7 @@ class DateTimeTypeTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider dateProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dateProvider')]
     public function testParseValue(?\DateTimeInterface $expected, ?string $value): void
     {
         $result = (new DateTimeType())->parseValue($value);
@@ -61,9 +57,7 @@ class DateTimeTypeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dateProviderParseLiteral
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dateProviderParseLiteral')]
     public function testParseLiteral(?\DateTimeInterface $expected, string $value): void
     {
         $valueNode = new StringValueNode([]);
