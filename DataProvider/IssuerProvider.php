@@ -17,9 +17,9 @@ class IssuerProvider
         if (null === $this->security->getToken()) {
             if ('cli' === php_sapi_name()) {
                 return 'cli';
-            } else {
-                return 'anonymous';
             }
+
+            return 'anonymous';
         }
 
         /** @var \Symfony\Component\Security\Core\User\UserInterface $user */

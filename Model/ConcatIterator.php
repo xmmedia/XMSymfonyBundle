@@ -63,9 +63,8 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
             [$it, $idx] = $this->getIteratorByIndex($offset);
 
             return $it->offsetGet($idx);
-        } else {
-            throw new \RuntimeException(self::INVALID_INDEX);
         }
+        throw new \RuntimeException(self::INVALID_INDEX);
     }
 
     public function offsetSet($offset, $value): void
