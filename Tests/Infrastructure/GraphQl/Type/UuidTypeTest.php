@@ -47,7 +47,7 @@ class UuidTypeTest extends BaseTestCase
 
     public static function uuidProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         $fakeId = $faker->fakeId();
 
@@ -95,20 +95,11 @@ class UuidTypeTest extends BaseTestCase
 
     public static function invalidUuidProvider(): \Generator
     {
-        yield [
-            'string',
-            null,
-        ];
+        yield ['string'];
 
-        yield [
-            null,
-            null,
-        ];
+        yield [null];
 
-        yield [
-            [],
-            null,
-        ];
+        yield [[]];
     }
 
     public function testParseLiteralNotStringValueNode(): void

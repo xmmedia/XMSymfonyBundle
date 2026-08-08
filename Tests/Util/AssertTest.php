@@ -27,7 +27,7 @@ class AssertTest extends BaseTestCase
 
     public static function okayPasswordProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         yield [$faker->password()];
         yield ['oh98yih87tg8ybo97c976c98'];
@@ -50,7 +50,7 @@ class AssertTest extends BaseTestCase
 
     public static function badPasswordProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         yield ['123456', []];
         yield ['asdf@asdf.com'.substr($faker->password(), 0, 5), ['asdf@asdf.com']];
@@ -68,7 +68,7 @@ class AssertTest extends BaseTestCase
     public function testCompromisedPasswordCompromisedRealCallCompromised(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The entered password has been compromised.');
+        $this->expectExceptionMessageIsOrContains('The entered password has been compromised.');
 
         Assert::compromisedPassword('123456');
     }
@@ -95,7 +95,7 @@ class AssertTest extends BaseTestCase
         ]);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unable to check for compromised password.');
+        $this->expectExceptionMessageIsOrContains('Unable to check for compromised password.');
 
         Assert::compromisedPassword($faker->password(), $httpClient);
     }
@@ -128,7 +128,7 @@ class AssertTest extends BaseTestCase
         ]);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The entered password has been compromised.');
+        $this->expectExceptionMessageIsOrContains('The entered password has been compromised.');
 
         Assert::compromisedPassword($password, $httpClient);
     }
@@ -145,7 +145,7 @@ class AssertTest extends BaseTestCase
         ]);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unable to check for compromised password.');
+        $this->expectExceptionMessageIsOrContains('Unable to check for compromised password.');
 
         Assert::compromisedPassword($faker->password(), $httpClient);
     }

@@ -43,7 +43,7 @@ class AddressTest extends BaseTestCase
 
     public static function addressStringProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         $postalCode = self::postalCode();
         yield [
@@ -97,7 +97,7 @@ class AddressTest extends BaseTestCase
 
     public static function addressArrayProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         $postalCode = self::postalCode();
         yield [
@@ -169,7 +169,7 @@ class AddressTest extends BaseTestCase
         string $message,
     ): void {
         $this->expectException($exception);
-        $this->expectExceptionMessage($message);
+        $this->expectExceptionMessageIsOrContains($message);
 
         Address::fromStrings(
             $line1,
@@ -183,7 +183,7 @@ class AddressTest extends BaseTestCase
 
     public static function addressInvalidProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
 
         yield [
             'a',
@@ -407,7 +407,7 @@ class AddressTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('addressArrayProvider')]
-    public function testSameAs(array $data): void
+    public function testSameAs(array $data, string $void): void
     {
         $address1 = Address::fromArray($data);
         $address2 = Address::fromArray($data);
@@ -416,7 +416,7 @@ class AddressTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('addressArrayProvider')]
-    public function testSameAsFalse(array $data): void
+    public function testSameAsFalse(array $data, string $void): void
     {
         $address1 = Address::fromArray($data);
         $address2 = Address::fromArray(['line1' => 'diff'] + $data);
@@ -435,6 +435,6 @@ class AddressTest extends BaseTestCase
 
     private static function postalCode(): string
     {
-        return str_replace('-', ' ', $this->faker()->postcode());
+        return str_replace('-', ' ', self::faker()->postcode());
     }
 }

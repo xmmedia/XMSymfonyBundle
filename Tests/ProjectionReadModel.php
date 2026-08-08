@@ -23,8 +23,8 @@ trait ProjectionReadModel
         $projector->shouldReceive('when')
             ->once()
             ->andReturnUsing(function ($handlers) use ($event, $readModel, $projector) {
-                $this->assertArrayHasKey(get_class($event), $handlers);
-                $handler = $handlers[get_class($event)];
+                $this->assertArrayHasKey($event::class, $handlers);
+                $handler = $handlers[$event::class];
 
                 $projectorMock = \Mockery::mock(ReadModelProjector::class);
                 $projectorMock->shouldReceive('readModel')

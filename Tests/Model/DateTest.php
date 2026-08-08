@@ -26,7 +26,7 @@ class DateTest extends BaseTestCase
 
     public static function dateStringProvider(): \Generator
     {
-        $faker = $this->faker();
+        $faker = self::faker();
         $max = '+5 years';
 
         $str = $faker->iso8601($max);

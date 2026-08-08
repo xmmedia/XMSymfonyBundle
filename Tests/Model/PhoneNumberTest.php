@@ -84,7 +84,7 @@ class PhoneNumberTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('phoneNumberValidProvider')]
-    public function testSameValueAs(string $string): void
+    public function testSameValueAs(string $string, array $void): void
     {
         $phoneNumber1 = PhoneNumber::fromString($string);
         $phoneNumber2 = PhoneNumber::fromString($string);

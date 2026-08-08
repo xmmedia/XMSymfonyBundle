@@ -60,7 +60,7 @@ class UuidTypeTraitTest extends BaseTestCase
     public function testSerializeWithInvalidStringThrowsError(): void
     {
         $this->expectException(Error::class);
-        $this->expectExceptionMessage('Cannot serialize value as UUID');
+        $this->expectExceptionMessageIsOrContains('Cannot serialize value as UUID');
 
         $trait = $this->createTraitInstance();
         $trait->serialize('not-a-uuid');
@@ -69,7 +69,7 @@ class UuidTypeTraitTest extends BaseTestCase
     public function testSerializeWithInvalidTypeThrowsError(): void
     {
         $this->expectException(Error::class);
-        $this->expectExceptionMessage('Cannot serialize value as UUID');
+        $this->expectExceptionMessageIsOrContains('Cannot serialize value as UUID');
 
         $trait = $this->createTraitInstance();
         $trait->serialize(12345);
@@ -78,7 +78,7 @@ class UuidTypeTraitTest extends BaseTestCase
     public function testSerializeWithNullThrowsError(): void
     {
         $this->expectException(Error::class);
-        $this->expectExceptionMessage('Cannot serialize value as UUID');
+        $this->expectExceptionMessageIsOrContains('Cannot serialize value as UUID');
 
         $trait = $this->createTraitInstance();
         $trait->serialize(null);

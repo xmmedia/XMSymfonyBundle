@@ -37,7 +37,7 @@ class PdoProviderTest extends BaseTestCase
         $provider = new PdoProvider($connection);
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Expecting \PDO, but got stdClass');
+        $this->expectExceptionMessageIsOrContains('Expecting \PDO, but got stdClass');
 
         $provider();
     }

@@ -44,7 +44,7 @@ class DateTypeTest extends BaseTestCase
         $type = new DateType();
 
         $this->expectException(\Overblog\GraphQLBundle\Error\UserError::class);
-        $this->expectExceptionMessage('The date is not in the format of YYYY-MM-DD. Received: "2023-13-1"');
+        $this->expectExceptionMessageIsOrContains('The date is not in the format of YYYY-MM-DD. Received: "2023-13-1"');
 
         $type->parseValue('2023-13-1');
     }
