@@ -40,7 +40,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
                     $this->assertEquals(
                         $payload,
                         $event->payload(),
-                        sprintf(
+                        \sprintf(
                             'Payload of recorded event %s does not match with expected payload.',
                             $eventName,
                         ),
@@ -52,12 +52,12 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         if ($assertNotRecorded) {
             $this->assertFalse(
                 $isRecorded,
-                sprintf('Event %s was recorded.', $eventName),
+                \sprintf('Event %s was recorded.', $eventName),
             );
         } else {
             $this->assertTrue(
                 $isRecorded,
-                sprintf('Event %s was not recorded.', $eventName),
+                \sprintf('Event %s was not recorded.', $eventName),
             );
         }
     }
@@ -72,7 +72,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         try {
             \Webmozart\Assert\Assert::uuid($uuid);
         } catch (\InvalidArgumentException $e) {
-            $this->assertTrue(false, sprintf('The "%s" is not a UUID.', $uuid));
+            $this->assertTrue(false, \sprintf('The "%s" is not a UUID.', $uuid));
         }
     }
 

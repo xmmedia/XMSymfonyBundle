@@ -62,7 +62,7 @@ final class GraphQlDumpSchemaCommand extends Command
 
         $arguments = [
             'command'             => 'graphql:dump-schema',
-            '--file'              => sprintf(
+            '--file'              => \sprintf(
                 'graphql%s.schema.json',
                 $schemaName ? '.'.$schemaName : '',
             ),
@@ -83,7 +83,7 @@ final class GraphQlDumpSchemaCommand extends Command
         $user = $userFinder->findOneByEmail(Email::fromString($userEmail));
 
         if (!$user) {
-            throw new \InvalidArgumentException(sprintf('The user with email "%s" cannot be found.', $userEmail));
+            throw new \InvalidArgumentException(\sprintf('The user with email "%s" cannot be found.', $userEmail));
         }
 
         return new PostAuthenticationToken(

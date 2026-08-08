@@ -41,15 +41,15 @@ final class InMemoryEventStore implements TransactionalEventStore
         }
 
         if ($this->inTransaction) {
-            $this->cachedStreams[$streamNameString]['events'] = \iterator_to_array($stream->streamEvents());
+            $this->cachedStreams[$streamNameString]['events'] = iterator_to_array($stream->streamEvents());
             $this->cachedStreams[$streamNameString]['metadata'] = $stream->metadata();
         } else {
-            $this->streams[$streamNameString]['events'] = \iterator_to_array($stream->streamEvents());
+            $this->streams[$streamNameString]['events'] = iterator_to_array($stream->streamEvents());
             $this->streams[$streamNameString]['metadata'] = $stream->metadata();
         }
     }
 
-    public function appendTo(StreamName $streamName, Iterator $streamEvents): void
+    public function appendTo(StreamName $streamName, \Iterator $streamEvents): void
     {
         $streamNameString = $streamName->toString();
 
@@ -79,7 +79,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         int $fromNumber = 1,
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null
-    ): Iterator {
+    ): \Iterator {
         Assertion::greaterOrEqualThan($fromNumber, 1);
         Assertion::nullOrGreaterOrEqualThan($count, 1);
 
@@ -121,9 +121,9 @@ final class InMemoryEventStore implements TransactionalEventStore
         ?int $fromNumber = null,
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
-    ): Iterator {
+    ): \Iterator {
         if (null === $fromNumber) {
-            $fromNumber = PHP_INT_MAX;
+            $fromNumber = \PHP_INT_MAX;
         }
 
         Assertion::greaterOrEqualThan($fromNumber, 1);
@@ -140,7 +140,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $found = 0;
         $streamEvents = [];
 
-        foreach (\array_reverse($this->streams[$streamName->toString()]['events'], true) as $key => $streamEvent) {
+        foreach (array_reverse($this->streams[$streamName->toString()]['events'], true) as $key => $streamEvent) {
             /* @var Message $streamEvent */
             if (($key + 1) <= $fromNumber
                 && $this->matchesMetadata($metadataMatcher, $streamEvent->metadata())
@@ -283,7 +283,7 @@ final class InMemoryEventStore implements TransactionalEventStore
             return [$filter];
         }
 
-        \ksort($streams);
+        ksort($streams);
 
         foreach ($streams as $streamName => $data) {
             if (null === $filter || $filter === $streamName) {
@@ -314,7 +314,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         int $limit = 20,
         int $offset = 0
     ): array {
-        if (false === @\preg_match("/$filter/", '')) {
+        if (false === @preg_match("/$filter/", '')) {
             throw new InvalidArgumentException('Invalid regex pattern given');
         }
 
@@ -324,7 +324,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $found = 0;
 
         $streams = $this->streams;
-        \ksort($streams);
+        ksort($streams);
 
         foreach ($streams as $streamName => $data) {
             if (! \preg_match("/$filter/", $streamName)) {
@@ -353,10 +353,10 @@ final class InMemoryEventStore implements TransactionalEventStore
         $skipped = 0;
         $found = 0;
 
-        $categories = \array_unique(\array_reduce(
-            \array_keys($this->streams),
+        $categories = array_unique(array_reduce(
+            array_keys($this->streams),
             function (array $result, string $streamName): array {
-                if (\preg_match('/^(.+)-.+$/', $streamName, $matches)) {
+                if (preg_match('/^(.+)-.+$/', $streamName, $matches)) {
                     $result[] = $matches[1];
                 }
 
@@ -369,7 +369,7 @@ final class InMemoryEventStore implements TransactionalEventStore
             return [$filter];
         }
 
-        \ksort($categories);
+        ksort($categories);
 
         foreach ($categories as $category) {
             if (null === $filter || $filter === $category) {
@@ -392,7 +392,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     public function fetchCategoryNamesRegex(string $filter, int $limit = 20, int $offset = 0): array
     {
-        if (false === @\preg_match("/$filter/", '')) {
+        if (false === @preg_match("/$filter/", '')) {
             throw new InvalidArgumentException('Invalid regex pattern given');
         }
 
@@ -401,10 +401,10 @@ final class InMemoryEventStore implements TransactionalEventStore
         $skipped = 0;
         $found = 0;
 
-        $categories = \array_unique(\array_reduce(
-            \array_keys($this->streams),
+        $categories = array_unique(array_reduce(
+            array_keys($this->streams),
             function (array $result, string $streamName): array {
-                if (\preg_match('/^(.+)-.+$/', $streamName, $matches)) {
+                if (preg_match('/^(.+)-.+$/', $streamName, $matches)) {
                     $result[] = $matches[1];
                 }
 
@@ -413,7 +413,7 @@ final class InMemoryEventStore implements TransactionalEventStore
             []
         ));
 
-        \ksort($categories);
+        ksort($categories);
 
         foreach ($categories as $category) {
             if (! \preg_match("/$filter/", $category)) {

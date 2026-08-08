@@ -123,7 +123,7 @@ final class ProjectionRunCommand extends Command
         );
 
         $this->io->text(
-            sprintf('Initialized projection "%s"', $this->projectionName),
+            \sprintf('Initialized projection "%s"', $this->projectionName),
         );
 
         try {
@@ -131,19 +131,19 @@ final class ProjectionRunCommand extends Command
         } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
             $state = 'unknown';
         }
-        $this->io->text(sprintf('Current status: %s', $state));
+        $this->io->text(\sprintf('Current status: %s', $state));
 
         $this->io->text(
-            sprintf('Starting projection "%s"', $this->projectionName),
+            \sprintf('Starting projection "%s"', $this->projectionName),
         );
         $this->io->text(
-            sprintf(
+            \sprintf(
                 'Keep running %s',
                 true === $keepRunning ? 'enabled' : 'disabled',
             ),
         );
         $this->io->text(
-            sprintf('Running with %s', null === $loadCount ? 'unlimited events' : $loadCount . ' events'),
+            \sprintf('Running with %s', null === $loadCount ? 'unlimited events' : $loadCount.' events'),
         );
 
         $this->setupPcntl();
@@ -152,7 +152,7 @@ final class ProjectionRunCommand extends Command
 
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
         $this->io->success(
-            sprintf('Projection %s completed.', $this->projectionName),
+            \sprintf('Projection %s completed.', $this->projectionName),
         );
     }
 
@@ -177,7 +177,7 @@ final class ProjectionRunCommand extends Command
     public function signalHandler(): void
     {
         $this->io->success(
-            sprintf('Projection %s stopped.', $this->projectionName),
+            \sprintf('Projection %s stopped.', $this->projectionName),
         );
         $this->projector->stop();
     }

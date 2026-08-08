@@ -77,7 +77,7 @@ trait ProjectionAwareMigration
     private function runCommand(array $parameters, string $errorMessage): void
     {
         if (!isset($this->kernel) && !isset($this->container)) {
-            throw new \RuntimeException(sprintf('The migration %s must have a $kernel property (Symfony >=6.4) or implement %s (Symfony <6.4) to rebuild projections', self::class, ContainerAwareInterface::class));
+            throw new \RuntimeException(\sprintf('The migration %s must have a $kernel property (Symfony >=6.4) or implement %s (Symfony <6.4) to rebuild projections', self::class, ContainerAwareInterface::class));
         }
 
         $kernel = $this->kernel ?? $this->container->get('kernel');

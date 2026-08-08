@@ -59,12 +59,12 @@ class ProjectionRunner
                         }
                     }
                 } else if ($attempts > 50) {
-                    throw new \RuntimeException(sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
+                    throw new \RuntimeException(\sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
                 }
 
                 if ($attempts > 1 && 0 === $attempts % 5 && $this->logger) {
                     $this->logger->warning(
-                        sprintf(
+                        \sprintf(
                             'Projection "%s" could not be run. When checked, it\'s state was "%s". Attempted to run %d times.',
                             $projectionName,
                             $state->getValue(),
@@ -88,19 +88,19 @@ class ProjectionRunner
         $this->projectionName = $projectionName;
 
         if (!$this->projectionManagerForProjectionsLocator->has($this->projectionName)) {
-            throw new \RuntimeException(sprintf('ProjectionManager for "%s" not found', $this->projectionName));
+            throw new \RuntimeException(\sprintf('ProjectionManager for "%s" not found', $this->projectionName));
         }
         $this->projectionManager = $this->projectionManagerForProjectionsLocator
             ->get($this->projectionName);
 
         if (!$this->projectionsLocator->has($this->projectionName)) {
-            throw new \RuntimeException(sprintf('Projection "%s" not found', $this->projectionName));
+            throw new \RuntimeException(\sprintf('Projection "%s" not found', $this->projectionName));
         }
         /** @var ReadModelProjection $projection */
         $projection = $this->projectionsLocator->get($this->projectionName);
 
         if (!$this->projectionReadModelLocator->has($this->projectionName)) {
-            throw new \RuntimeException(sprintf('ReadModel for "%s" not found', $this->projectionName));
+            throw new \RuntimeException(\sprintf('ReadModel for "%s" not found', $this->projectionName));
         }
         /** @var ReadModel $readModel */
         $readModel = $this->projectionReadModelLocator->get($this->projectionName);

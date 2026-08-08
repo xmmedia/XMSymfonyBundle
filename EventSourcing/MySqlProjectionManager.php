@@ -30,7 +30,7 @@ final class MySqlProjectionManager implements ProjectionManager
     private $eventStore;
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $connection;
 
@@ -46,7 +46,7 @@ final class MySqlProjectionManager implements ProjectionManager
 
     public function __construct(
         EventStore $eventStore,
-        PDO $connection,
+        \PDO $connection,
         string $eventStreamsTable = 'event_streams',
         string $projectionsTable = 'projections'
     ) {
@@ -135,7 +135,7 @@ EOT;
                 $status,
                 $name,
             ]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -150,7 +150,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (PDOException $exception) {
+            } catch (\PDOException $exception) {
                 // ignore and check error code
             }
 
@@ -176,7 +176,7 @@ EOT;
                 ProjectionStatus::RESETTING()->getValue(),
                 $name,
             ]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -191,7 +191,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (PDOException $exception) {
+            } catch (\PDOException $exception) {
                 // ignore and check error code
             }
 
@@ -217,7 +217,7 @@ EOT;
                 ProjectionStatus::STOPPING()->getValue(),
                 $name,
             ]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -232,7 +232,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (PDOException $exception) {
+            } catch (\PDOException $exception) {
                 // ignore and check error code
             }
 
@@ -277,10 +277,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -318,7 +318,7 @@ SQL;
             );
         }
 
-        if (empty($filter) || false === @\preg_match("/$filter/", '')) {
+        if (empty($filter) || false === @preg_match("/$filter/", '')) {
             throw new Exception\InvalidArgumentException('Invalid regex pattern given');
         }
 
@@ -336,10 +336,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -372,10 +372,10 @@ LIMIT 1
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -401,10 +401,10 @@ LIMIT 1
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 
@@ -430,10 +430,10 @@ LIMIT 1
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (PDOException $exception) {
+        } catch (\PDOException $exception) {
             // ignore and check error code
         }
 

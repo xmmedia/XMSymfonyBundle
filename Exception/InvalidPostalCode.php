@@ -10,6 +10,6 @@ final class InvalidPostalCode extends \InvalidArgumentException
 {
     public static function invalid(?string $postalCode): self
     {
-        return new self(sprintf('The postal code "%s" is invalid.', Utils::printSafe($postalCode)));
+        return new self(\sprintf('The postal code "%s" is invalid.', Utils::printSafe($postalCode)));
     }
 }

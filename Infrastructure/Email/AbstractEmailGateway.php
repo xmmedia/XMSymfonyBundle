@@ -16,7 +16,7 @@ abstract class AbstractEmailGateway implements EmailGatewayInterface
     {
         $email = $emailFrom->toString();
 
-        return sprintf(
+        return \sprintf(
             '<%s@%s>',
             Uuid::uuid4()->toString(),
             substr($email, strpos($email, '@') + 1),

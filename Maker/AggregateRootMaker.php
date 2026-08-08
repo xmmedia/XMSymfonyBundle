@@ -45,7 +45,7 @@ class AggregateRootMaker extends AbstractMaker
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,
-                sprintf(
+                \sprintf(
                     'Choose a name for your aggregate root (model) (e.g. <fg=yellow>%s</>)',
                     Str::asClassName(Str::getRandomTerm()),
                 ),
@@ -53,7 +53,7 @@ class AggregateRootMaker extends AbstractMaker
             ->addArgument(
                 'entity',
                 InputArgument::OPTIONAL,
-                sprintf(
+                \sprintf(
                     'Enter the name of the related entity (e.g. <fg=yellow>%s</>)',
                     Str::asClassName(Str::getRandomTerm()),
                 ),
@@ -61,7 +61,7 @@ class AggregateRootMaker extends AbstractMaker
             ->addArgument(
                 'projection',
                 InputArgument::OPTIONAL,
-                sprintf(
+                \sprintf(
                     'Choose a name of the projection (e.g. <fg=yellow>%s</>). "_projection" will be appended to the end',
                     Str::asSnakeCase(Str::getRandomTerm()),
                 ),
@@ -601,7 +601,7 @@ class AggregateRootMaker extends AbstractMaker
         $dateStr = date('Ymd');
         $migrationNumber = '001';
         for ($i = 1; $i <= 999; $i++) {
-            $num = str_pad((string) $i, 3, '0', STR_PAD_LEFT);
+            $num = str_pad((string) $i, 3, '0', \STR_PAD_LEFT);
             if (!file_exists($rootDir.'/migrations/Version'.$dateStr.$num.'.php')) {
                 $migrationNumber = $num;
                 break;
@@ -622,7 +622,7 @@ class AggregateRootMaker extends AbstractMaker
         $io->text([
             'Next:',
             '- Add the repository to list in your <info>config/packages/event_sourcing.yaml</info> file:',
-            sprintf(
+            \sprintf(
                 "<info>\t%s:\n\t    repository_class:     %s\n\t    aggregate_type:       %s\n\t    aggregate_translator: %s\n\t    stream_name:          '%s'</info>",
                 $modelListServiceName,
                 $repositoryClassDetails->getFullName(),
@@ -630,51 +630,51 @@ class AggregateRootMaker extends AbstractMaker
                 AggregateTranslator::class,
                 Str::asSnakeCase($arLowerName),
             ),
-            sprintf(
+            \sprintf(
                 '- Also add the repository service <info>%s: \'@%s\'</info> to your <info>config/packages/event_sourcing.yaml</info> file',
                 $arClassDetails->getFullName().'List',
                 $modelListServiceName,
             ),
             '- Add the projection to list in your <info>config/packages/prooph_event_store.yaml</info> file:',
-            sprintf(
+            \sprintf(
                 "<info>\t%s_projection:\n\t    read_model: %s\n\t    projection: %s</info>",
                 $projectionName,
                 $readModelClassDetails->getFullName(),
                 $projectionClassDetails->getFullName(),
             ),
-            sprintf(
+            \sprintf(
                 '- Add <info>public const string %s = \'%s\';</info> to <info>App\\Projection\\Table</info>',
                 strtoupper(Str::asSnakeCase($projectionName)),
                 $projectionName,
             ),
             '- Add to <info>App\\Messenger\\RunProjectionMiddleware</info>:',
-            sprintf(
+            \sprintf(
                 "<info>\tprivate const %s = '%s';</info>",
                 $modelUpper,
                 $projectionName.'_projection',
             ),
             '- Also add the following to <info>App\\Messenger\\RunProjectionMiddleware::$namespaceToProjection</info>:',
-            sprintf(
+            \sprintf(
                 "<info>\t'%s\\Event' => [\n\t    self::%s,\n\t],</info>",
                 Str::getNamespace($arClassDetails->getFullName()),
                 $modelUpper,
             ),
             '- Add event to <info>RunProjectionMiddlewareTest::messageDataProvider</info>',
             '- Create the stream:',
-            sprintf(
+            \sprintf(
                 '    With bin/console: <info>bin/console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
-            sprintf(
+            \sprintf(
                 '    Or with Lando: <info>lando console event-store:event-stream:create %s</info>',
                 Str::asSnakeCase($arLowerName),
             ),
             '- Run projection once (optional):',
-            sprintf(
+            \sprintf(
                 '    With bin/console: <info>bin/console app:projection:run %s -o</info>',
                 $projectionName,
             ),
-            sprintf(
+            \sprintf(
                 '    Or with Lando: <info>lando console app:projection:run %s -o</info>',
                 $projectionName,
             ),

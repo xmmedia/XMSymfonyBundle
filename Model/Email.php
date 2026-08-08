@@ -53,7 +53,7 @@ final class Email implements ValueObject
 
         Assert::notEmpty($email);
         if (!(new EmailValidator())->isValid($email, new NoRFCWarningsValidation())) {
-            throw new \InvalidArgumentException(sprintf('The email "%s" is invalid.', $email));
+            throw new \InvalidArgumentException(\sprintf('The email "%s" is invalid.', $email));
         }
 
         if (mb_strlen((string) $name) > 100) {
@@ -94,7 +94,7 @@ final class Email implements ValueObject
             return $this->email;
         }
 
-        return sprintf('"%s" <%s>', $this->name, $this->email);
+        return \sprintf('"%s" <%s>', $this->name, $this->email);
     }
 
     #[ArrayShape(['email' => 'string', 'name' => 'null|string'])]
@@ -115,7 +115,7 @@ final class Email implements ValueObject
         // replace commas and semicolons with space because email services will assume it's multiple email addresses
         $name = StringUtil::trim(substr(str_replace([',', ';'], ' ', $this->name), 0, 20));
 
-        return sprintf('%s <%s>', $name, $this->email);
+        return \sprintf('%s <%s>', $name, $this->email);
     }
 
     /**
@@ -123,7 +123,7 @@ final class Email implements ValueObject
      */
     public function obfuscated(): string
     {
-        return sprintf(
+        return \sprintf(
             '%s…@%s….%s',
             substr($this->email, 0, 2),
             substr($this->email, strpos($this->email, '@') + 1, 1),

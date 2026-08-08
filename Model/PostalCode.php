@@ -67,7 +67,7 @@ class PostalCode implements ValueObject
         if (ctype_alpha(substr($postalCode, 0, 1))) {
             $postalCode = strtoupper(str_replace([' ', '-'], '', $postalCode));
 
-            $postalCode = sprintf(
+            $postalCode = \sprintf(
                 '%s %s',
                 substr($postalCode, 0, 3),
                 substr($postalCode, 3, 3),

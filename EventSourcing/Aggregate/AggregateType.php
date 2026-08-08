@@ -17,7 +17,7 @@ class AggregateType
     public static function fromAggregateRoot(object $eventSourcedAggregateRoot): self
     {
         if (!\is_object($eventSourcedAggregateRoot)) {
-            throw new Exception\AggregateTypeException(sprintf('Aggregate root must be an object but type of %s given', \gettype($eventSourcedAggregateRoot)));
+            throw new Exception\AggregateTypeException(\sprintf('Aggregate root must be an object but type of %s given', \gettype($eventSourcedAggregateRoot)));
         }
 
         if ($eventSourcedAggregateRoot instanceof AggregateTypeProvider) {
@@ -39,7 +39,7 @@ class AggregateType
     public static function fromAggregateRootClass(string $aggregateRootClass): self
     {
         if (!class_exists($aggregateRootClass)) {
-            throw new Exception\InvalidArgumentException(sprintf('Aggregate root class %s can not be found', $aggregateRootClass));
+            throw new Exception\InvalidArgumentException(\sprintf('Aggregate root class %s can not be found', $aggregateRootClass));
         }
 
         $self = new static();
@@ -100,7 +100,7 @@ class AggregateType
         $otherAggregateType = self::fromAggregateRoot($aggregateRoot);
 
         if (!$this->equals($otherAggregateType)) {
-            throw new Exception\AggregateTypeException(sprintf('Aggregate types must be equal. %s != %s', $this->toString(), $otherAggregateType->toString()));
+            throw new Exception\AggregateTypeException(\sprintf('Aggregate types must be equal. %s != %s', $this->toString(), $otherAggregateType->toString()));
         }
     }
 

@@ -40,7 +40,7 @@ final class ProjectionRebuildCommand extends Command
         }
 
         $io = new SymfonyStyle($input, $output);
-        $io->title(sprintf('Rebuilding Projection "%s"', $projectionName));
+        $io->title(\sprintf('Rebuilding Projection "%s"', $projectionName));
 
         $this->getApplication()
             ->find('app:projection:delete')

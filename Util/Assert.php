@@ -27,7 +27,7 @@ class Assert extends \Webmozart\Assert\Assert
         $score = $passwordStrength($password, $userData)['score'];
 
         if ($score <= $minimum) {
-            throw new \InvalidArgumentException(sprintf('The password complexity is %d out of 4 (minimum: %d).', $score, $minimum));
+            throw new \InvalidArgumentException(\sprintf('The password complexity is %d out of 4 (minimum: %d).', $score, $minimum));
         }
     }
 
@@ -42,12 +42,12 @@ class Assert extends \Webmozart\Assert\Assert
 
         $hash = strtoupper(sha1($password));
         $hashPrefix = substr($hash, 0, 5);
-        $url = sprintf($endpoint, $hashPrefix);
+        $url = \sprintf($endpoint, $hashPrefix);
 
         try {
             $result = $httpClient->request('GET', $url)->getContent();
         } catch (ExceptionInterface $e) {
-            throw new \InvalidArgumentException(sprintf('Unable to check for compromised password. HTTP error: %s', $e->getMessage()), 0, $e);
+            throw new \InvalidArgumentException(\sprintf('Unable to check for compromised password. HTTP error: %s', $e->getMessage()), 0, $e);
         }
 
         foreach (explode("\r\n", $result) as $line) {
@@ -73,7 +73,7 @@ class Assert extends \Webmozart\Assert\Assert
 
         self::regex(
             $value,
-            sprintf(UrlValidator::PATTERN, implode('|', $protocols)),
+            \sprintf(UrlValidator::PATTERN, implode('|', $protocols)),
             $message ?: 'Expected a value to be a URL with protocol(s) '.implode(',', $protocols).'. Got: %s',
         );
     }

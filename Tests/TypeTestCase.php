@@ -74,7 +74,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
         $strings = [];
 
         if ($errors['root'] ?? false) {
-            $strings[] = sprintf('ROOT [%s]', implode(', ', $errors['root']));
+            $strings[] = \sprintf('ROOT [%s]', implode(', ', $errors['root']));
         }
 
         foreach ($errors['children'] as $field => $childErrors) {
@@ -89,7 +89,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
                 );
 
                 if ($all) {
-                    $strings[] = sprintf(
+                    $strings[] = \sprintf(
                         '%s [%s]',
                         $field,
                         implode(', ', $all),

@@ -29,7 +29,7 @@ class IssuerProvider
             return 'anonymous';
         }
 
-        if (is_int($user->userId())) {
+        if (\is_int($user->userId())) {
             return $user->userId();
         }
 

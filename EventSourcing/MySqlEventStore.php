@@ -38,7 +38,7 @@ final class MySqlEventStore implements PdoEventStore
     private $messageFactory;
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $connection;
 
@@ -77,7 +77,7 @@ final class MySqlEventStore implements PdoEventStore
      */
     public function __construct(
         MessageFactory $messageFactory,
-        PDO $connection,
+        \PDO $connection,
         PersistenceStrategy $persistenceStrategy,
         int $loadBatchSize = 10000,
         string $eventStreamsTable = 'event_streams',
@@ -89,12 +89,12 @@ final class MySqlEventStore implements PdoEventStore
         }
 
         if (! $persistenceStrategy instanceof MySqlPersistenceStrategy) {
-            @\trigger_error(\sprintf(
+            @trigger_error(\sprintf(
                 '"%s" will expect an instance of "%s" from v2.0.0, please migrate your custom "%s" class.',
                 __CLASS__,
                 MySqlPersistenceStrategy::class,
                 \get_class($persistenceStrategy)
-            ), E_USER_DEPRECATED);
+            ), \E_USER_DEPRECATED);
         }
 
         if (null === $writeLockStrategy) {
@@ -122,7 +122,7 @@ EOT;
         $statement = $this->connection->prepare($sql);
         try {
             $statement->execute(['streamName' => $streamName->toString()]);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -130,7 +130,7 @@ EOT;
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
-        $stream = $statement->fetch(PDO::FETCH_OBJ);
+        $stream = $statement->fetch(\PDO::FETCH_OBJ);
 
         if (! $stream) {
             throw StreamNotFound::with($streamName);
@@ -155,7 +155,7 @@ EOT;
                 'streamName' => $streamName->toString(),
                 'metadata' => Json::encode($newMetadata),
             ]);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -179,7 +179,7 @@ EOT;
 
         try {
             $statement->execute(['streamName' => $streamName->toString()]);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -228,7 +228,7 @@ EOT;
         }
     }
 
-    public function appendTo(StreamName $streamName, Iterator $streamEvents): void
+    public function appendTo(StreamName $streamName, \Iterator $streamEvents): void
     {
         $data = $this->persistenceStrategy->prepareData($streamEvents);
 
@@ -236,7 +236,7 @@ EOT;
             return;
         }
 
-        $countEntries = \iterator_count($streamEvents);
+        $countEntries = iterator_count($streamEvents);
         $columnNames = $this->persistenceStrategy->columnNames();
 
         $tableName = $this->persistenceStrategy->generateTableName($streamName);
@@ -247,7 +247,7 @@ EOT;
         }
 
         $rowPlaces = '(' . \implode(', ', \array_fill(0, \count($columnNames), '?')) . ')';
-        $allPlaces = \implode(', ', \array_fill(0, $countEntries, $rowPlaces));
+        $allPlaces = implode(', ', array_fill(0, $countEntries, $rowPlaces));
 
         $sql = 'INSERT INTO `' . $tableName . '` (' . \implode(', ', $columnNames) . ') VALUES ' . $allPlaces;
 
@@ -258,7 +258,7 @@ EOT;
         $statement = $this->connection->prepare($sql);
         try {
             $statement->execute($data);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -310,7 +310,7 @@ EOT;
         int $fromNumber = 1,
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
-    ): Iterator {
+    ): \Iterator {
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` >= :fromNumber';
 
@@ -319,13 +319,13 @@ EOT;
         if (null === $count) {
             $limit = $this->loadBatchSize;
         } else {
-            $limit = \min($count, $this->loadBatchSize);
+            $limit = min($count, $this->loadBatchSize);
         }
 
         $tableName = $this->persistenceStrategy->generateTableName($streamName);
 
         // only add index hint when querying on aggregate_type, aggregate_id and no
-        if ($this->persistenceStrategy instanceof HasQueryHint && 3 === count($where)) {
+        if ($this->persistenceStrategy instanceof HasQueryHint && 3 === \count($where)) {
             $indexName = $this->persistenceStrategy->indexName();
             $queryHint = "USE INDEX($indexName)";
         } else {
@@ -345,24 +345,24 @@ $whereCondition
 EOT;
 
         $selectStatement = $this->connection->prepare($selectQuery);
-        $selectStatement->setFetchMode(PDO::FETCH_OBJ);
+        $selectStatement->setFetchMode(\PDO::FETCH_OBJ);
 
-        $selectStatement->bindValue(':fromNumber', $fromNumber, PDO::PARAM_INT);
-        $selectStatement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $selectStatement->bindValue(':fromNumber', $fromNumber, \PDO::PARAM_INT);
+        $selectStatement->bindValue(':limit', $limit, \PDO::PARAM_INT);
 
         $countStatement = $this->connection->prepare($countQuery);
-        $countStatement->setFetchMode(PDO::FETCH_OBJ);
+        $countStatement->setFetchMode(\PDO::FETCH_OBJ);
 
-        $countStatement->bindValue(':fromNumber', $fromNumber, PDO::PARAM_INT);
+        $countStatement->bindValue(':fromNumber', $fromNumber, \PDO::PARAM_INT);
 
         foreach ($values as $parameter => $value) {
-            $selectStatement->bindValue($parameter, $value, \is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
-            $countStatement->bindValue($parameter, $value, \is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $selectStatement->bindValue($parameter, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
+            $countStatement->bindValue($parameter, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
         }
 
         try {
             $selectStatement->execute();
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -390,9 +390,9 @@ EOT;
         ?int $fromNumber = null,
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
-    ): Iterator {
+    ): \Iterator {
         if (null === $fromNumber) {
-            $fromNumber = PHP_INT_MAX;
+            $fromNumber = \PHP_INT_MAX;
         }
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` <= :fromNumber';
@@ -402,13 +402,13 @@ EOT;
         if (null === $count) {
             $limit = $this->loadBatchSize;
         } else {
-            $limit = \min($count, $this->loadBatchSize);
+            $limit = min($count, $this->loadBatchSize);
         }
 
         $tableName = $this->persistenceStrategy->generateTableName($streamName);
 
         // only add index hint when querying on aggregate_type, aggregate_id and no
-        if ($this->persistenceStrategy instanceof HasQueryHint && 3 === count($where)) {
+        if ($this->persistenceStrategy instanceof HasQueryHint && 3 === \count($where)) {
             $indexName = $this->persistenceStrategy->indexName();
             $queryHint = "USE INDEX($indexName)";
         } else {
@@ -428,25 +428,25 @@ $whereCondition
 EOT;
 
         $selectStatement = $this->connection->prepare($selectQuery);
-        $selectStatement->setFetchMode(PDO::FETCH_OBJ);
+        $selectStatement->setFetchMode(\PDO::FETCH_OBJ);
 
-        $selectStatement->bindValue(':fromNumber', $fromNumber, PDO::PARAM_INT);
-        $selectStatement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $selectStatement->bindValue(':fromNumber', $fromNumber, \PDO::PARAM_INT);
+        $selectStatement->bindValue(':limit', $limit, \PDO::PARAM_INT);
 
         $countStatement = $this->connection->prepare($countQuery);
-        $countStatement->setFetchMode(PDO::FETCH_OBJ);
+        $countStatement->setFetchMode(\PDO::FETCH_OBJ);
 
-        $countStatement->bindValue(':fromNumber', $fromNumber, PDO::PARAM_INT);
+        $countStatement->bindValue(':fromNumber', $fromNumber, \PDO::PARAM_INT);
 
         foreach ($values as $parameter => $value) {
-            $selectStatement->bindValue($parameter, $value, \is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
-            $countStatement->bindValue($parameter, $value, \is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $selectStatement->bindValue($parameter, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
+            $countStatement->bindValue($parameter, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
         }
 
         try {
             $selectStatement->execute();
             $countStatement->execute();
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -456,7 +456,7 @@ EOT;
 
         $counted = (int) $countStatement->fetchColumn();
 
-        if (0 === (null === $count ? $counted : \min($counted, $count))) {
+        if (0 === (null === $count ? $counted : min($counted, $count))) {
             return new EmptyStreamIterator();
         }
 
@@ -496,7 +496,7 @@ EOT;
         $statement = $this->connection->prepare($deleteEventStreamSql);
         try {
             $statement->execute();
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -522,7 +522,7 @@ EOT;
             $values[':filter'] = $filter;
         }
 
-        $whereCondition = \implode(' AND ', $where);
+        $whereCondition = implode(' AND ', $where);
 
         if (! empty($whereCondition)) {
             $whereCondition = 'WHERE ' . $whereCondition;
@@ -536,10 +536,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -569,7 +569,7 @@ SQL;
         int $limit = 20,
         int $offset = 0
     ): array {
-        if (empty($filter) || false === @\preg_match("/$filter/", '')) {
+        if (empty($filter) || false === @preg_match("/$filter/", '')) {
             throw new ProophPdoException\InvalidArgumentException('Invalid regex pattern given');
         }
         [$where, $values] = $this->createWhereClause($metadataMatcher);
@@ -587,10 +587,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -634,10 +634,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -663,7 +663,7 @@ SQL;
 
     public function fetchCategoryNamesRegex(string $filter, int $limit = 20, int $offset = 0): array
     {
-        if (empty($filter) || false === @\preg_match("/$filter/", '')) {
+        if (empty($filter) || false === @preg_match("/$filter/", '')) {
             throw new ProophPdoException\InvalidArgumentException('Invalid regex pattern given');
         }
 
@@ -680,10 +680,10 @@ LIMIT $offset, $limit
 SQL;
 
         $statement = $this->connection->prepare($query);
-        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -736,7 +736,7 @@ SQL;
                 $parameters = [':metadata_' . $key];
             }
 
-            $parameterString = \implode(', ', $parameters);
+            $parameterString = implode(', ', $parameters);
 
             $operatorStringEnd = '';
 
@@ -784,10 +784,10 @@ SQL;
     {
         $realStreamName = $stream->streamName()->toString();
 
-        $pos = \strpos($realStreamName, '-');
+        $pos = strpos($realStreamName, '-');
 
         if (false !== $pos && $pos > 0) {
-            $category = \substr($realStreamName, 0, $pos);
+            $category = substr($realStreamName, 0, $pos);
         } else {
             $category = null;
         }
@@ -808,7 +808,7 @@ EOT;
                 ':metadata' => $metadata,
                 ':category' => $category,
             ]);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             $result = false;
         }
 
@@ -835,7 +835,7 @@ EOT;
         $statement = $this->connection->prepare($deleteEventStreamTableEntrySql);
         try {
             $statement->execute([$streamName->toString()]);
-        } catch (PDOException) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -856,7 +856,7 @@ EOT;
             $statement = $this->connection->prepare($command);
             try {
                 $result = $statement->execute();
-            } catch (PDOException) {
+            } catch (\PDOException) {
                 $result = false;
             }
 

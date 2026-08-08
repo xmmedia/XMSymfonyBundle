@@ -20,11 +20,11 @@ class ProjectionManagerFactory
 {
     public function createProjectionManager(
         EventStore $eventStore,
-        ?PDO $connection = null,
+        ?\PDO $connection = null,
         string $eventStreamsTable = 'event_streams',
         string $projectionsTable = 'projections'
     ): ProjectionManager {
-        $checkConnection = static function () use ($connection): PDO {
+        $checkConnection = static function () use ($connection): \PDO {
             if (! $connection instanceof PDO) {
                 throw new RuntimeException('PDO connection missing');
             }
