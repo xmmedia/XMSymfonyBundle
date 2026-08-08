@@ -24,4 +24,9 @@ interface EmailGatewayInterface
         array $headers = [],
         array $options = [],
     ): EmailGatewayMessageId;
+
+    /**
+     * Generates a unique reference email address.
+     */
+    public function getReferencesEmail(Email $emailFrom): string;
 }
