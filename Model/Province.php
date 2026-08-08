@@ -14,7 +14,7 @@ class Province implements ValueObject
 
     private string $name;
 
-    private \Xm\SymfonyBundle\Model\Country $country;
+    private Country $country;
 
     /**
      * @return static
