@@ -22,7 +22,7 @@ class ProjectionManagerFactory
         EventStore $eventStore,
         ?\PDO $connection = null,
         string $eventStreamsTable = 'event_streams',
-        string $projectionsTable = 'projections'
+        string $projectionsTable = 'projections',
     ): ProjectionManager {
         $checkConnection = static function () use ($connection): \PDO {
             if (! $connection instanceof PDO) {

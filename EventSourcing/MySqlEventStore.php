@@ -241,17 +241,17 @@ EOT;
 
         $tableName = $this->persistenceStrategy->generateTableName($streamName);
 
-        $lockName = '_' . $tableName . '_write_lock';
-        if (! $this->writeLockStrategy->getLock($lockName)) {
+        $lockName = '_'.$tableName.'_write_lock';
+        if (!$this->writeLockStrategy->getLock($lockName)) {
             throw ConcurrencyExceptionFactory::failedToAcquireLock();
         }
 
-        $rowPlaces = '(' . \implode(', ', \array_fill(0, \count($columnNames), '?')) . ')';
+        $rowPlaces = '('.implode(', ', array_fill(0, \count($columnNames), '?')).')';
         $allPlaces = implode(', ', array_fill(0, $countEntries, $rowPlaces));
 
-        $sql = 'INSERT INTO `' . $tableName . '` (' . \implode(', ', $columnNames) . ') VALUES ' . $allPlaces;
+        $sql = 'INSERT INTO `'.$tableName.'` ('.implode(', ', $columnNames).') VALUES '.$allPlaces;
 
-        if (! $this->disableTransactionHandling && ! $this->connection->inTransaction()) {
+        if (!$this->disableTransactionHandling && !$this->connection->inTransaction()) {
             $this->connection->beginTransaction();
         }
 
@@ -263,7 +263,7 @@ EOT;
         }
 
         if ('42S02' === $statement->errorInfo()[0]) {
-            if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
+            if (!$this->disableTransactionHandling && $this->connection->inTransaction() && !$this->duringCreate) {
                 $this->connection->rollBack();
             }
 
@@ -273,7 +273,7 @@ EOT;
         }
 
         if ('23000' === $statement->errorCode()) {
-            if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
+            if (!$this->disableTransactionHandling && $this->connection->inTransaction() && !$this->duringCreate) {
                 $this->connection->rollBack();
             }
 
@@ -283,7 +283,7 @@ EOT;
         }
 
         if ('00000' !== $statement->errorCode()) {
-            if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
+            if (!$this->disableTransactionHandling && $this->connection->inTransaction() && !$this->duringCreate) {
                 $this->connection->rollBack();
             }
 
@@ -293,12 +293,12 @@ EOT;
                 \sprintf(
                     "Error %s. Maybe the event streams table is not setup?\nError-Info: %s",
                     $statement->errorCode(),
-                    $statement->errorInfo()[2]
-                )
+                    $statement->errorInfo()[2],
+                ),
             );
         }
 
-        if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
+        if (!$this->disableTransactionHandling && $this->connection->inTransaction() && !$this->duringCreate) {
             $this->connection->commit();
         }
 
@@ -812,7 +812,7 @@ EOT;
             $result = false;
         }
 
-        if (! $result) {
+        if (!$result) {
             if ('23000' === $statement->errorCode()) {
                 throw StreamExistsAlready::with($stream->streamName());
             }
