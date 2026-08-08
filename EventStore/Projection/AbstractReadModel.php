@@ -20,7 +20,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
      * If the array is empty on construct,
      * the TABLE constant will be put in the array.
      */
-    protected array|null $tables;
+    protected ?array $tables;
 
     public function __construct(Connection $connection)
     {

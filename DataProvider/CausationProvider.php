@@ -8,7 +8,7 @@ use Ramsey\Uuid\UuidInterface;
 
 class CausationProvider
 {
-    private UuidInterface|null $causationId = null;
+    private ?UuidInterface $causationId = null;
 
     public function storeCausationId(UuidInterface $uuid): void
     {

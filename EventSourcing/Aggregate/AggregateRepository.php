@@ -20,7 +20,7 @@ class AggregateRepository
         private readonly EventStore $eventStore,
         private readonly AggregateType $aggregateType,
         private readonly AggregateTranslator $aggregateTranslator,
-        private StreamName|null $streamName = null,
+        private ?StreamName $streamName = null,
     ) {
     }
 
@@ -52,7 +52,7 @@ class AggregateRepository
     /**
      * Returns null if no stream events can be found for aggregate root otherwise the reconstituted aggregate root.
      */
-    public function getAggregateRoot(string $aggregateId): object|null
+    public function getAggregateRoot(string $aggregateId): ?object
     {
         if (isset($this->identityMap[$aggregateId])) {
             return $this->identityMap[$aggregateId];

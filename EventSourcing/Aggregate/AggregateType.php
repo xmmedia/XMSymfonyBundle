@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\EventSourcing\Aggregate;
 
 class AggregateType
 {
-    protected string|null $aggregateType;
+    protected ?string $aggregateType;
     protected array $mapping = [];
 
     /**
