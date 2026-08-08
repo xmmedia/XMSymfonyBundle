@@ -90,7 +90,7 @@ final class MySqlEventStore implements PdoEventStore
                 '"%s" will expect an instance of "%s" from v2.0.0, please migrate your custom "%s" class.',
                 __CLASS__,
                 MySqlPersistenceStrategy::class,
-                \get_class($persistenceStrategy)
+                $persistenceStrategy::class,
             ), \E_USER_DEPRECATED);
         }
 
