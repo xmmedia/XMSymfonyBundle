@@ -15,7 +15,7 @@ class IssuerProvider
     public function getIssuer(): string|int|null
     {
         if (null === $this->security->getToken()) {
-            if ('cli' === php_sapi_name()) {
+            if ('cli' === \PHP_SAPI) {
                 return 'cli';
             }
 
