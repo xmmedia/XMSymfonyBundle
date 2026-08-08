@@ -126,7 +126,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -159,7 +159,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -183,7 +183,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -262,7 +262,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorInfo()[0] === '42S02') {
+        if ('42S02' === $statement->errorInfo()[0]) {
             if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
                 $this->connection->rollBack();
             }
@@ -272,7 +272,7 @@ EOT;
             throw StreamNotFound::with($streamName);
         }
 
-        if ($statement->errorCode() === '23000') {
+        if ('23000' === $statement->errorCode()) {
             if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
                 $this->connection->rollBack();
             }
@@ -282,7 +282,7 @@ EOT;
             throw ConcurrencyExceptionFactory::fromStatementErrorInfo($statement->errorInfo());
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             if (! $this->disableTransactionHandling && $this->connection->inTransaction() && ! $this->duringCreate) {
                 $this->connection->rollBack();
             }
@@ -366,11 +366,11 @@ EOT;
             // ignore and check error code
         }
 
-        if ($selectStatement->errorCode() === '42S22') {
+        if ('42S22' === $selectStatement->errorCode()) {
             throw new \UnexpectedValueException('Unknown field given in metadata matcher');
         }
 
-        if ($selectStatement->errorCode() !== '00000') {
+        if ('00000' !== $selectStatement->errorCode()) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -450,7 +450,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($selectStatement->errorCode() !== '00000') {
+        if ('00000' !== $selectStatement->errorCode()) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -500,7 +500,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -543,7 +543,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -594,7 +594,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -641,7 +641,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -687,7 +687,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -813,7 +813,7 @@ EOT;
         }
 
         if (! $result) {
-            if ($statement->errorCode() === '23000') {
+            if ('23000' === $statement->errorCode()) {
                 throw StreamExistsAlready::with($stream->streamName());
             }
 
@@ -839,7 +839,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 

@@ -139,7 +139,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -154,7 +154,7 @@ EOT;
                 // ignore and check error code
             }
 
-            if ($statement->errorCode() !== '00000') {
+            if ('00000' !== $statement->errorCode()) {
                 throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
             }
 
@@ -180,7 +180,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -195,7 +195,7 @@ EOT;
                 // ignore and check error code
             }
 
-            if ($statement->errorCode() !== '00000') {
+            if ('00000' !== $statement->errorCode()) {
                 throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
             }
 
@@ -221,7 +221,7 @@ EOT;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -236,7 +236,7 @@ EOT;
                 // ignore and check error code
             }
 
-            if ($statement->errorCode() !== '00000') {
+            if ('00000' !== $statement->errorCode()) {
                 throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
             }
 
@@ -284,7 +284,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -343,7 +343,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             $errorCode = $statement->errorCode();
             $errorInfo = $statement->errorInfo()[2];
 
@@ -379,7 +379,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -408,7 +408,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
@@ -437,7 +437,7 @@ SQL;
             // ignore and check error code
         }
 
-        if ($statement->errorCode() !== '00000') {
+        if ('00000' !== $statement->errorCode()) {
             throw Exception\RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 

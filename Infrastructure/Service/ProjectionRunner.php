@@ -54,7 +54,7 @@ class ProjectionRunner
                         $ranSuccessfully = true;
                     } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
                         // if the projection is already running, we can ignore this exception
-                        if ($attempts >= 50 || $e->getMessage() !== 'Another projection process is already running') {
+                        if ($attempts >= 50 || 'Another projection process is already running' !== $e->getMessage()) {
                             throw $e;
                         }
                     }
