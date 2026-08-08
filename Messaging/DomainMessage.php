@@ -44,7 +44,7 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
 
         $messageRef = new \ReflectionClass(static::class);
 
-        /** @var $message DomainMessage */
+        /** @var DomainMessage $message */
         $message = $messageRef->newInstanceWithoutConstructor();
 
         $message->uuid = Uuid::fromString($messageData['uuid']);

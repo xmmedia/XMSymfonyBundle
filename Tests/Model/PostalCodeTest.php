@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Model;
 
-use PHPUnit\Framework\TestCase;
 use Xm\SymfonyBundle\Exception\InvalidPostalCode;
 use Xm\SymfonyBundle\Model\PostalCode;
 use Xm\SymfonyBundle\Tests\BaseTestCase;

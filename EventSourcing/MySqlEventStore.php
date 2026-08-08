@@ -84,11 +84,11 @@ final class MySqlEventStore implements PdoEventStore
         bool $disableTransactionHandling = false,
         ?WriteLockStrategy $writeLockStrategy = null,
     ) {
-        if (! \extension_loaded('pdo_mysql')) {
+        if (!\extension_loaded('pdo_mysql')) {
             throw ExtensionNotLoaded::with('pdo_mysql');
         }
 
-        if (! $persistenceStrategy instanceof MySqlPersistenceStrategy) {
+        if (!$persistenceStrategy instanceof MySqlPersistenceStrategy) {
             @trigger_error(\sprintf(
                 '"%s" will expect an instance of "%s" from v2.0.0, please migrate your custom "%s" class.',
                 __CLASS__,
@@ -132,7 +132,7 @@ EOT;
 
         $stream = $statement->fetch(\PDO::FETCH_OBJ);
 
-        if (! $stream) {
+        if (!$stream) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -153,7 +153,7 @@ EOT;
         try {
             $statement->execute([
                 'streamName' => $streamName->toString(),
-                'metadata' => Json::encode($newMetadata),
+                'metadata'   => Json::encode($newMetadata),
             ]);
         } catch (\PDOException) {
             // ignore and check error code
@@ -206,7 +206,7 @@ EOT;
             throw $exception;
         }
 
-        if (! $this->disableTransactionHandling) {
+        if (!$this->disableTransactionHandling) {
             $this->connection->beginTransaction();
             $this->duringCreate = true;
         }
@@ -214,7 +214,7 @@ EOT;
         try {
             $this->appendTo($streamName, $stream->streamEvents());
         } catch (\Throwable $e) {
-            if (! $this->disableTransactionHandling) {
+            if (!$this->disableTransactionHandling) {
                 $this->connection->rollBack();
                 $this->duringCreate = false;
             }
@@ -222,7 +222,7 @@ EOT;
             throw $e;
         }
 
-        if (! $this->disableTransactionHandling) {
+        if (!$this->disableTransactionHandling) {
             $this->connection->commit();
             $this->duringCreate = false;
         }
@@ -314,7 +314,7 @@ EOT;
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` >= :fromNumber';
 
-        $whereCondition = 'WHERE ' . \implode(' AND ', $where);
+        $whereCondition = 'WHERE '.implode(' AND ', $where);
 
         if (null === $count) {
             $limit = $this->loadBatchSize;
@@ -381,7 +381,7 @@ EOT;
             $this->loadBatchSize,
             $fromNumber,
             $count,
-            true
+            true,
         );
     }
 
@@ -397,7 +397,7 @@ EOT;
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` <= :fromNumber';
 
-        $whereCondition = 'WHERE ' . \implode(' AND ', $where);
+        $whereCondition = 'WHERE '.implode(' AND ', $where);
 
         if (null === $count) {
             $limit = $this->loadBatchSize;
@@ -467,20 +467,20 @@ EOT;
             $this->loadBatchSize,
             $fromNumber,
             $count,
-            false
+            false,
         );
     }
 
     public function delete(StreamName $streamName): void
     {
-        if (! $this->disableTransactionHandling && ! $this->connection->inTransaction()) {
+        if (!$this->disableTransactionHandling && !$this->connection->inTransaction()) {
             $this->connection->beginTransaction();
         }
 
         try {
             $this->removeStreamFromStreamsTable($streamName);
         } catch (StreamNotFound $exception) {
-            if (! $this->disableTransactionHandling && $this->connection->inTransaction()) {
+            if (!$this->disableTransactionHandling && $this->connection->inTransaction()) {
                 $this->connection->rollBack();
             }
 
@@ -504,7 +504,7 @@ EOT;
             throw RuntimeException::fromStatementErrorInfo($statement->errorInfo());
         }
 
-        if (! $this->disableTransactionHandling && $this->connection->inTransaction()) {
+        if (!$this->disableTransactionHandling && $this->connection->inTransaction()) {
             $this->connection->commit();
         }
     }
@@ -513,7 +513,7 @@ EOT;
         ?string $filter,
         ?MetadataMatcher $metadataMatcher,
         int $limit = 20,
-        int $offset = 0
+        int $offset = 0,
     ): array {
         [$where, $values] = $this->createWhereClause($metadataMatcher);
 
@@ -524,8 +524,8 @@ EOT;
 
         $whereCondition = implode(' AND ', $where);
 
-        if (! empty($whereCondition)) {
-            $whereCondition = 'WHERE ' . $whereCondition;
+        if (!empty($whereCondition)) {
+            $whereCondition = 'WHERE '.$whereCondition;
         }
 
         $query = <<<SQL
@@ -548,7 +548,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 
@@ -567,7 +567,7 @@ SQL;
         string $filter,
         ?MetadataMatcher $metadataMatcher,
         int $limit = 20,
-        int $offset = 0
+        int $offset = 0,
     ): array {
         if (empty($filter) || false === @preg_match("/$filter/", '')) {
             throw new ProophPdoException\InvalidArgumentException('Invalid regex pattern given');
@@ -577,7 +577,7 @@ SQL;
         $where[] = '`real_stream_name` REGEXP :filter';
         $values[':filter'] = $filter;
 
-        $whereCondition = 'WHERE ' . \implode(' AND ', $where);
+        $whereCondition = 'WHERE '.implode(' AND ', $where);
 
         $query = <<<SQL
 SELECT `real_stream_name` FROM `$this->eventStreamsTable`
@@ -599,7 +599,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 
@@ -646,7 +646,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 
@@ -692,7 +692,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 
@@ -712,7 +712,7 @@ SQL;
         $where = [];
         $values = [];
 
-        if (! $metadataMatcher) {
+        if (!$metadataMatcher) {
             return [
                 $where,
                 $values,
@@ -730,10 +730,10 @@ SQL;
 
             if (\is_array($value)) {
                 foreach ($value as $k => $v) {
-                    $parameters[] = ':metadata_' . $key . '_' . $k;
+                    $parameters[] = ':metadata_'.$key.'_'.$k;
                 }
             } else {
-                $parameters = [':metadata_' . $key];
+                $parameters = [':metadata_'.$key];
             }
 
             $parameterString = implode(', ', $parameters);
@@ -754,14 +754,14 @@ SQL;
 
             if ($fieldType->is(FieldType::METADATA())) {
                 if (\is_bool($value)) {
-                    $where[] = "metadata->'$.$field' $operatorString " . \var_export($value, true) . ' '. $operatorStringEnd;
+                    $where[] = "metadata->'$.$field' $operatorString ".var_export($value, true).' '.$operatorStringEnd;
                     continue;
                 }
 
                 $where[] = "JSON_UNQUOTE(metadata->'$.$field') $operatorString $parameterString $operatorStringEnd";
             } else {
                 if (\is_bool($value)) {
-                    $where[] = "`$field` $operatorString " . \var_export($value, true) . ' ' . $operatorStringEnd;
+                    $where[] = "`$field` $operatorString ".var_export($value, true).' '.$operatorStringEnd;
                     continue;
                 }
 
@@ -804,9 +804,9 @@ EOT;
         try {
             $result = $statement->execute([
                 ':realStreamName' => $realStreamName,
-                ':streamName' => $streamName,
-                ':metadata' => $metadata,
-                ':category' => $category,
+                ':streamName'     => $streamName,
+                ':metadata'       => $metadata,
+                ':category'       => $category,
             ]);
         } catch (\PDOException) {
             $result = false;
@@ -821,7 +821,7 @@ EOT;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
     }
@@ -860,8 +860,8 @@ EOT;
                 $result = false;
             }
 
-            if (! $result) {
-                throw new RuntimeException('Error during createSchemaFor: ' . \implode('; ', $statement->errorInfo()));
+            if (!$result) {
+                throw new RuntimeException('Error during createSchemaFor: '.implode('; ', $statement->errorInfo()));
             }
         }
     }

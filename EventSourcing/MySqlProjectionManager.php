@@ -48,7 +48,7 @@ final class MySqlProjectionManager implements ProjectionManager
         EventStore $eventStore,
         \PDO $connection,
         string $eventStreamsTable = 'event_streams',
-        string $projectionsTable = 'projections'
+        string $projectionsTable = 'projections',
     ) {
         $this->eventStore = $eventStore;
         $this->connection = $connection;
@@ -59,7 +59,7 @@ final class MySqlProjectionManager implements ProjectionManager
             $eventStore = $eventStore->getInnerEventStore();
         }
 
-        if (! $eventStore instanceof MySqlEventStore) {
+        if (!$eventStore instanceof MySqlEventStore) {
             throw new Exception\InvalidArgumentException('Unknown event store instance given');
         }
     }
@@ -70,13 +70,13 @@ final class MySqlProjectionManager implements ProjectionManager
             $this->eventStore,
             $this->connection,
             $this->eventStreamsTable,
-            $options[Query::OPTION_PCNTL_DISPATCH] ?? Query::DEFAULT_PCNTL_DISPATCH
+            $options[Query::OPTION_PCNTL_DISPATCH] ?? Query::DEFAULT_PCNTL_DISPATCH,
         );
     }
 
     public function createProjection(
         string $name,
-        array $options = []
+        array $options = [],
     ): Projector {
         return new PdoEventStoreProjector(
             $this->eventStore,
@@ -91,14 +91,14 @@ final class MySqlProjectionManager implements ProjectionManager
             $options[PdoEventStoreProjector::OPTION_LOAD_COUNT] ?? PdoEventStoreProjector::DEFAULT_LOAD_COUNT,
             $options[PdoEventStoreProjector::OPTION_PCNTL_DISPATCH] ?? PdoEventStoreProjector::DEFAULT_PCNTL_DISPATCH,
             $options[PdoEventStoreProjector::OPTION_UPDATE_LOCK_THRESHOLD] ?? PdoEventStoreProjector::DEFAULT_UPDATE_LOCK_THRESHOLD,
-            $options[PdoEventStoreProjector::OPTION_GAP_DETECTION] ?? null
+            $options[PdoEventStoreProjector::OPTION_GAP_DETECTION] ?? null,
         );
     }
 
     public function createReadModelProjection(
         string $name,
         ReadModel $readModel,
-        array $options = []
+        array $options = [],
     ): ReadModelProjector {
         return new PdoEventStoreReadModelProjector(
             $this->eventStore,
@@ -113,7 +113,7 @@ final class MySqlProjectionManager implements ProjectionManager
             $options[PdoEventStoreReadModelProjector::OPTION_LOAD_COUNT] ?? PdoEventStoreReadModelProjector::DEFAULT_LOAD_COUNT,
             $options[PdoEventStoreReadModelProjector::OPTION_PCNTL_DISPATCH] ?? PdoEventStoreReadModelProjector::DEFAULT_PCNTL_DISPATCH,
             $options[PdoEventStoreReadModelProjector::OPTION_UPDATE_LOCK_THRESHOLD] ?? PdoEventStoreReadModelProjector::DEFAULT_UPDATE_LOCK_THRESHOLD,
-            $options[PdoEventStoreReadModelProjector::OPTION_GAP_DETECTION] ?? null
+            $options[PdoEventStoreReadModelProjector::OPTION_GAP_DETECTION] ?? null,
         );
     }
 
@@ -250,13 +250,13 @@ EOT;
     {
         if (1 > $limit) {
             throw new OutOfRangeException(
-                'Invalid limit "'.$limit.'" given. Must be greater than 0.'
+                'Invalid limit "'.$limit.'" given. Must be greater than 0.',
             );
         }
 
         if (0 > $offset) {
             throw new OutOfRangeException(
-                'Invalid offset "'.$offset.'" given. Must be greater or equal than 0.'
+                'Invalid offset "'.$offset.'" given. Must be greater or equal than 0.',
             );
         }
 
@@ -289,7 +289,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new Exception\RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 
@@ -308,13 +308,13 @@ SQL;
     {
         if (1 > $limit) {
             throw new OutOfRangeException(
-                'Invalid limit "'.$limit.'" given. Must be greater than 0.'
+                'Invalid limit "'.$limit.'" given. Must be greater than 0.',
             );
         }
 
         if (0 > $offset) {
             throw new OutOfRangeException(
-                'Invalid offset "'.$offset.'" given. Must be greater or equal than 0.'
+                'Invalid offset "'.$offset.'" given. Must be greater or equal than 0.',
             );
         }
 
@@ -348,7 +348,7 @@ SQL;
             $errorInfo = $statement->errorInfo()[2];
 
             throw new Exception\RuntimeException(
-                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo"
+                "Error $errorCode. Maybe the event streams table is not setup?\nError-Info: $errorInfo",
             );
         }
 

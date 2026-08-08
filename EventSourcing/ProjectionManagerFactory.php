@@ -56,10 +56,6 @@ class ProjectionManagerFactory
     /**
      * Gets the "real" event store in case we were provided with an EventStoreDecorator.
      * That's the one that will really perfom the actions.
-     *
-     * @param EventStore $eventStore
-     *
-     * @return EventStore
      */
     private function getTheRealEventStore(EventStore $eventStore): EventStore
     {

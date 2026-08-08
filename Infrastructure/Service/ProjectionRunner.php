@@ -73,7 +73,6 @@ class ProjectionRunner
                     );
                 }
             } while (!$ranSuccessfully && !$state->is(ProjectionStatus::IDLE()) && $attempts < 50);
-
         } catch (\Prooph\EventStore\Exception\ProjectionNotFound $e) {
             // try running
             // the likely case is the projection has not been initialized

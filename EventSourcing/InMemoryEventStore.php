@@ -53,14 +53,14 @@ final class InMemoryEventStore implements TransactionalEventStore
     {
         $streamNameString = $streamName->toString();
 
-        if (! isset($this->streams[$streamNameString])
-            && ! isset($this->cachedStreams[$streamNameString])
+        if (!isset($this->streams[$streamNameString])
+            && !isset($this->cachedStreams[$streamNameString])
         ) {
             throw StreamNotFound::with($streamName);
         }
 
         if ($this->inTransaction) {
-            if (! isset($this->cachedStreams[$streamNameString])) {
+            if (!isset($this->cachedStreams[$streamNameString])) {
                 $this->cachedStreams[$streamNameString]['events'] = [];
             }
 
@@ -78,12 +78,12 @@ final class InMemoryEventStore implements TransactionalEventStore
         StreamName $streamName,
         int $fromNumber = 1,
         ?int $count = null,
-        ?MetadataMatcher $metadataMatcher = null
+        ?MetadataMatcher $metadataMatcher = null,
     ): \Iterator {
         Assertion::greaterOrEqualThan($fromNumber, 1);
         Assertion::nullOrGreaterOrEqualThan($count, 1);
 
-        if (! isset($this->streams[$streamName->toString()])) {
+        if (!isset($this->streams[$streamName->toString()])) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -129,7 +129,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         Assertion::greaterOrEqualThan($fromNumber, 1);
         Assertion::nullOrGreaterOrEqualThan($count, 1);
 
-        if (! isset($this->streams[$streamName->toString()])) {
+        if (!isset($this->streams[$streamName->toString()])) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -180,7 +180,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     public function fetchStreamMetadata(StreamName $streamName): array
     {
-        if (! isset($this->streams[$streamName->toString()])) {
+        if (!isset($this->streams[$streamName->toString()])) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -189,7 +189,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     public function updateStreamMetadata(StreamName $streamName, array $newMetadata): void
     {
-        if (! isset($this->streams[$streamName->toString()])) {
+        if (!isset($this->streams[$streamName->toString()])) {
             throw StreamNotFound::with($streamName);
         }
 
@@ -207,7 +207,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     public function commit(): void
     {
-        if (! $this->inTransaction) {
+        if (!$this->inTransaction) {
             throw new TransactionNotStarted();
         }
 
@@ -227,7 +227,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     public function rollback(): void
     {
-        if (! $this->inTransaction) {
+        if (!$this->inTransaction) {
             throw new TransactionNotStarted();
         }
 
@@ -242,8 +242,6 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     /**
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function transactional(callable $callable)
     {
@@ -264,7 +262,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         ?string $filter,
         ?MetadataMatcher $metadataMatcher,
         int $limit = 20,
-        int $offset = 0
+        int $offset = 0,
     ): array {
         $result = [];
 
@@ -276,7 +274,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         if ($filter
             && \array_key_exists($filter, $streams)
             && (
-                ! $metadataMatcher
+                !$metadataMatcher
                 || $metadataMatcher && $this->matchesMetadata($metadataMatcher, $streams[$filter]['metadata'])
             )
         ) {
@@ -292,7 +290,7 @@ final class InMemoryEventStore implements TransactionalEventStore
                     continue;
                 }
 
-                if ($metadataMatcher && ! $this->matchesMetadata($metadataMatcher, $data['metadata'])) {
+                if ($metadataMatcher && !$this->matchesMetadata($metadataMatcher, $data['metadata'])) {
                     continue;
                 }
 
@@ -312,7 +310,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         string $filter,
         ?MetadataMatcher $metadataMatcher,
         int $limit = 20,
-        int $offset = 0
+        int $offset = 0,
     ): array {
         if (false === @preg_match("/$filter/", '')) {
             throw new InvalidArgumentException('Invalid regex pattern given');
@@ -327,11 +325,11 @@ final class InMemoryEventStore implements TransactionalEventStore
         ksort($streams);
 
         foreach ($streams as $streamName => $data) {
-            if (! \preg_match("/$filter/", $streamName)) {
+            if (!preg_match("/$filter/", $streamName)) {
                 continue;
             }
 
-            if ($metadataMatcher && ! $this->matchesMetadata($metadataMatcher, $data['metadata'])) {
+            if ($metadataMatcher && !$this->matchesMetadata($metadataMatcher, $data['metadata'])) {
                 continue;
             }
 
@@ -362,7 +360,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
                 return $result;
             },
-            []
+            [],
         ));
 
         if ($filter && \in_array($filter, $categories, true)) {
@@ -410,13 +408,13 @@ final class InMemoryEventStore implements TransactionalEventStore
 
                 return $result;
             },
-            []
+            [],
         ));
 
         ksort($categories);
 
         foreach ($categories as $category) {
-            if (! \preg_match("/$filter/", $category)) {
+            if (!preg_match("/$filter/", $category)) {
                 continue;
             }
 
@@ -439,17 +437,17 @@ final class InMemoryEventStore implements TransactionalEventStore
     private function matchesMetadata(MetadataMatcher $metadataMatcher, array $metadata): bool
     {
         foreach ($metadataMatcher->data() as $match) {
-            if (! FieldType::METADATA()->is($match['fieldType'])) {
+            if (!FieldType::METADATA()->is($match['fieldType'])) {
                 continue;
             }
 
             $field = $match['field'];
 
-            if (! isset($metadata[$field])) {
+            if (!isset($metadata[$field])) {
                 return false;
             }
 
-            if (! $this->match($match['operator'], $metadata[$field], $match['value'])) {
+            if (!$this->match($match['operator'], $metadata[$field], $match['value'])) {
                 return false;
             }
         }
@@ -460,7 +458,7 @@ final class InMemoryEventStore implements TransactionalEventStore
     private function matchesMessagesProperty(MetadataMatcher $metadataMatcher, Message $message): bool
     {
         foreach ($metadataMatcher->data() as $match) {
-            if (! FieldType::MESSAGE_PROPERTY()->is($match['fieldType'])) {
+            if (!FieldType::MESSAGE_PROPERTY()->is($match['fieldType'])) {
                 continue;
             }
 
@@ -484,7 +482,7 @@ final class InMemoryEventStore implements TransactionalEventStore
                     throw new \UnexpectedValueException(\sprintf('Unexpected field "%s" given', $match['field']));
             }
 
-            if (! $this->match($match['operator'], $value, $match['value'])) {
+            if (!$this->match($match['operator'], $value, $match['value'])) {
                 return false;
             }
         }
@@ -511,7 +509,7 @@ final class InMemoryEventStore implements TransactionalEventStore
                 }
                 break;
             case Operator::IN():
-                if (! \in_array($value, $expected, true)) {
+                if (!\in_array($value, $expected, true)) {
                     return false;
                 }
                 break;
@@ -536,7 +534,7 @@ final class InMemoryEventStore implements TransactionalEventStore
                 }
                 break;
             case Operator::REGEX():
-                if (! \preg_match('/' . $expected . '/', $value)) {
+                if (!preg_match('/'.$expected.'/', $value)) {
                     return false;
                 }
                 break;

@@ -13,7 +13,8 @@ use Xm\SymfonyBundle\Model\WebsiteUrl;
  */
 class WebsiteUrlFakerProvider extends Faker\Provider\Base
 {
-    public function websiteUrlVo(): WebsiteUrl {
+    public function websiteUrlVo(): WebsiteUrl
+    {
         $faker = Faker\Factory::create('en_CA');
 
         return WebsiteUrl::fromString($faker->url());

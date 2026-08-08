@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Infrastructure\Service;
 
-use Xm\SymfonyBundle\Infrastructure\Service\PostmarkSuppressionChecker;
 use Carbon\CarbonImmutable;
 use Postmark\Models\PostmarkServer;
 use Postmark\Models\Suppressions\PostmarkSuppression;
 use Postmark\Models\Suppressions\PostmarkSuppressionList;
 use Postmark\PostmarkClient;
+use Xm\SymfonyBundle\Infrastructure\Service\PostmarkSuppressionChecker;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 

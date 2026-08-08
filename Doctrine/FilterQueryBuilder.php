@@ -12,7 +12,7 @@ abstract class FilterQueryBuilder
     protected array $whereClauses = [1];
     protected array $parameters = [];
     /**
-     * @var array If using arrays, should one of the \Doctrine\DBAL\ArrayParameterType constants.
+     * @var array if using arrays, should one of the \Doctrine\DBAL\ArrayParameterType constants
      */
     protected array $parameterTypes = [];
     protected string $order = '';

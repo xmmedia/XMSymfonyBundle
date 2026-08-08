@@ -30,7 +30,7 @@ final class Email implements ValueObject
     }
 
     /**
-     * For RFC 5322 address strings like: "John Doe" <johndoe@examle.com>
+     * For RFC 5322 address strings like: "John Doe" <johndoe@examle.com>.
      */
     public static function fromAddressString(string $address): self
     {
@@ -86,7 +86,7 @@ final class Email implements ValueObject
     }
 
     /**
-     * If the name is not empty, it will return an address strings like: "John Doe" <johndoe@examle.com>
+     * If the name is not empty, it will return an address strings like: "John Doe" <johndoe@examle.com>.
      */
     public function toAddressString(): string
     {
