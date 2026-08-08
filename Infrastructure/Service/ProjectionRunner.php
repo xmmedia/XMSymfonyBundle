@@ -58,7 +58,7 @@ class ProjectionRunner
                             throw $e;
                         }
                     }
-                } else if ($attempts > 50) {
+                } elseif ($attempts > 50) {
                     throw new \RuntimeException(\sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
                 }
 
