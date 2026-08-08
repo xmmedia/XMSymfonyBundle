@@ -12,9 +12,6 @@ use Ramsey\Uuid\UuidInterface;
 #[ORM\Entity(repositoryClass: <?= $entity_filter_class_short; ?>::class, readOnly: true)]
 class <?= $class_name; ?><?= "\n"; ?>
 {
-    /**
-     * @var \Ramsey\Uuid\Uuid
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private UuidInterface $<?= $id_property; ?>;
