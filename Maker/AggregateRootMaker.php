@@ -678,7 +678,12 @@ class AggregateRootMaker extends AbstractMaker
                 '    Or with Lando: <info>lando console app:projection:run %s -o</info>',
                 $projectionName,
             ),
-            '- Add ID class to `UuidFakerProvider` (for tests)',
+            '- Add ID class to <info>App\\DataFixtures\\Faker\\Provider\\UuidFakerProvider</info> (for tests)',
+            \sprintf(
+                '- Add <info>@method %s %s()</info> to the doc block on <info>App\\DataFixtures\\Faker\\FakerGenerator</info>',
+                $idClass->getShortName(),
+                $idProperty,
+            ),
             '- Update permissions in GraphQL config',
             '- Update GraphQL schema:',
             '    <info>bin/console app:graphql:dump-schema <username - optional></info>',
