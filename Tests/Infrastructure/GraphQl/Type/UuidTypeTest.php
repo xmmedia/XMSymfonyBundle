@@ -20,7 +20,7 @@ class UuidTypeTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('invalidUuidProvider')]
-    public function testSerializeInvalid(string|null|array $value): void
+    public function testSerializeInvalid(string|array|null $value): void
     {
         $this->expectException(Error::class);
 
@@ -63,7 +63,7 @@ class UuidTypeTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('invalidUuidProvider')]
-    public function testParseValueInvalid(string|null|array $value): void
+    public function testParseValueInvalid(string|array|null $value): void
     {
         $this->expectException(Error::class);
 
