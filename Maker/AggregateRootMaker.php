@@ -600,7 +600,7 @@ class AggregateRootMaker extends AbstractMaker
         $rootDir = $generator->getRootDirectory();
         $dateStr = date('Ymd');
         $migrationNumber = '001';
-        for ($i = 1; $i <= 999; $i++) {
+        for ($i = 1; $i <= 999; ++$i) {
             $num = str_pad((string) $i, 3, '0', \STR_PAD_LEFT);
             if (!file_exists($rootDir.'/migrations/Version'.$dateStr.$num.'.php')) {
                 $migrationNumber = $num;
