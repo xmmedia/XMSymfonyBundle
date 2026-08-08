@@ -43,7 +43,7 @@ class AddressTest extends BaseTestCase
         $this->assertEquals($country, $address->country()->toString());
     }
 
-    public function addressStringProvider(): \Generator
+    public static function addressStringProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -99,7 +99,7 @@ class AddressTest extends BaseTestCase
         $this->assertEquals($data, $address->toArray());
     }
 
-    public function addressArrayProvider(): \Generator
+    public static function addressArrayProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -186,7 +186,7 @@ class AddressTest extends BaseTestCase
         );
     }
 
-    public function addressInvalidProvider(): \Generator
+    public static function addressInvalidProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -442,7 +442,7 @@ class AddressTest extends BaseTestCase
         $this->assertFalse($address->sameValueAs(FakeVo::create()));
     }
 
-    private function postalCode(): string
+    private static function postalCode(): string
     {
         return str_replace('-', ' ', $this->faker()->postcode());
     }

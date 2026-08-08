@@ -27,7 +27,7 @@ class AssertTest extends BaseTestCase
         $this->assertTrue(true);
     }
 
-    public function okayPasswordProvider(): \Generator
+    public static function okayPasswordProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -52,7 +52,7 @@ class AssertTest extends BaseTestCase
         );
     }
 
-    public function badPasswordProvider(): \Generator
+    public static function badPasswordProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -141,7 +141,7 @@ class AssertTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        $body = function (): \Generator {
+        $body = static function (): \Generator {
             yield '';
         };
         $httpClient = new MockHttpClient([

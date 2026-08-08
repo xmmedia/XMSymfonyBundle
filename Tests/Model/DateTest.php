@@ -26,7 +26,7 @@ class DateTest extends BaseTestCase
         $this->assertEquals($timezone, $date->date()->timezone->getName());
     }
 
-    public function dateStringProvider(): \Generator
+    public static function dateStringProvider(): \Generator
     {
         $faker = $this->faker();
         $max = '+5 years';
@@ -84,7 +84,7 @@ class DateTest extends BaseTestCase
         $this->assertEquals('UTC', $date->date()->timezone->getName());
     }
 
-    public function dateTimeProvider(): \Generator
+    public static function dateTimeProvider(): \Generator
     {
         yield [new \DateTime()];
         yield [new \DateTimeImmutable()];
@@ -118,7 +118,7 @@ class DateTest extends BaseTestCase
         $this->assertEquals($expected, $date1->sameValueAs($date2));
     }
 
-    public function sameValueAsProvider(): \Generator
+    public static function sameValueAsProvider(): \Generator
     {
         yield ['2000-01-01', '2000-01-01', true];
         yield ['2000-01-01 00:00:00', '2000-01-01 00:00:00', true];

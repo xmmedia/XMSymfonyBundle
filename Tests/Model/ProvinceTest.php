@@ -30,7 +30,7 @@ class ProvinceTest extends TestCase
         $this->assertEquals($expected, (string) $province);
     }
 
-    public function provinceProvider(): \Generator
+    public static function provinceProvider(): \Generator
     {
         yield ['SK', 'SK', 'Saskatchewan', Country::fromString('CA')];
         yield ['sk', 'SK', 'Saskatchewan', Country::fromString('CA')];
@@ -49,7 +49,7 @@ class ProvinceTest extends TestCase
         Province::fromString($value);
     }
 
-    public function invalidProvider(): \Generator
+    public static function invalidProvider(): \Generator
     {
         yield ['UK'];
         yield [''];

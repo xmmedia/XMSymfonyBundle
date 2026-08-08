@@ -15,7 +15,7 @@ class CountryQuery implements QueryInterface
      */
     public function __invoke(): array
     {
-        return array_values(array_map(function (string $country): Country {
+        return array_values(array_map(static function (string $country): Country {
             return Country::fromString($country);
         }, CountryProvider::all()));
     }

@@ -51,7 +51,7 @@ class UuidTypeTest extends BaseTestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function uuidProvider(): \Generator
+    public static function uuidProvider(): \Generator
     {
         $faker = $this->faker();
 
@@ -101,7 +101,7 @@ class UuidTypeTest extends BaseTestCase
         (new UuidType())->parseLiteral($node);
     }
 
-    public function invalidUuidProvider(): \Generator
+    public static function invalidUuidProvider(): \Generator
     {
         yield [
             'string',

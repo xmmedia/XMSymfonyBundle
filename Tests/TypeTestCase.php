@@ -83,7 +83,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 
                 array_walk_recursive(
                     $childErrors,
-                    function ($a) use (&$all): void {
+                    static function ($a) use (&$all): void {
                         $all[] = $a;
                     },
                 );

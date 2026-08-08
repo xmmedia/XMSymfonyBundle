@@ -28,7 +28,7 @@ class DateTypeTest extends BaseTestCase
         $this->assertNull($type->parseValue($empty));
     }
 
-    public function emptyProvider(): array
+    public static function emptyProvider(): array
     {
         return [
             [null],
@@ -146,7 +146,7 @@ class DateTypeTest extends BaseTestCase
         $type->parseValue($invalidDate);
     }
 
-    public function invalidDateFormatProvider(): array
+    public static function invalidDateFormatProvider(): array
     {
         return [
             'invalid month'        => ['2023-13-01'],

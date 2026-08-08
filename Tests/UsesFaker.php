@@ -9,17 +9,17 @@ use Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
 trait UsesFaker
 {
-    private Faker\Generator $faker;
+    private static Faker\Generator $faker;
 
     /**
      * @return Faker\Generator|Provider\AddressFakerProvider|Provider\DateFakerProvider|Provider\EmailFakerProvider|Provider\GenderFakerProvider|Provider\InternetFakerProvider|Provider\NameFakerProvider|Provider\PhoneNumberFakerProvider|Provider\StringFakerProvider|Provider\UuidFakerProvider
      */
-    protected function faker(): Faker\Generator
+    protected static function faker(): Faker\Generator
     {
         return !isset($this->faker) ? $this->makeFaker() : $this->faker;
     }
 
-    private function makeFaker(): Faker\Generator
+    private static function makeFaker(): Faker\Generator
     {
         $locales = ['en_CA', 'en_US'];
 

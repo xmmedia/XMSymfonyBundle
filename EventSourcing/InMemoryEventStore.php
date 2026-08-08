@@ -355,7 +355,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
         $categories = array_unique(array_reduce(
             array_keys($this->streams),
-            function (array $result, string $streamName): array {
+            static function (array $result, string $streamName): array {
                 if (preg_match('/^(.+)-.+$/', $streamName, $matches)) {
                     $result[] = $matches[1];
                 }
@@ -403,7 +403,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
         $categories = array_unique(array_reduce(
             array_keys($this->streams),
-            function (array $result, string $streamName): array {
+            static function (array $result, string $streamName): array {
                 if (preg_match('/^(.+)-.+$/', $streamName, $matches)) {
                     $result[] = $matches[1];
                 }

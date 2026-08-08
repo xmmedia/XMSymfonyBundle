@@ -27,7 +27,7 @@ class CountryTest extends TestCase
         $this->assertEquals($expected, (string) $country);
     }
 
-    public function countryProvider(): \Generator
+    public static function countryProvider(): \Generator
     {
         yield ['CA', 'CA', 'Canada'];
         yield ['ca', 'CA', 'Canada'];
@@ -46,7 +46,7 @@ class CountryTest extends TestCase
         Country::fromString($value);
     }
 
-    public function invalidProvider(): \Generator
+    public static function invalidProvider(): \Generator
     {
         yield ['UK'];
         yield [''];

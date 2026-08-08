@@ -17,7 +17,7 @@ class UtilsTest extends BaseTestCase
         $this->assertSame($expected, Utils::serialize($input));
     }
 
-    public function serializeValidProvider(): \Generator
+    public static function serializeValidProvider(): \Generator
     {
         yield [null, null];
         yield [true, true];
@@ -40,7 +40,7 @@ class UtilsTest extends BaseTestCase
         Utils::serialize($input);
     }
 
-    public function serializeInvalidProvider(): \Generator
+    public static function serializeInvalidProvider(): \Generator
     {
         yield [new \stdClass()];
     }
@@ -53,11 +53,11 @@ class UtilsTest extends BaseTestCase
         $this->assertSame($type, Utils::printSafe($var));
     }
 
-    public function printSafeProvider(): \Generator
+    public static function printSafeProvider(): \Generator
     {
         yield [new \stdClass(), 'instance of stdClass'];
         yield [
-            function (): void {
+            static function (): void {
             },
             'instance of Closure',
         ];

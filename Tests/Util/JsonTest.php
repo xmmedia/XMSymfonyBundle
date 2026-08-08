@@ -25,7 +25,7 @@ class JsonTest extends TestCase
         $this->assertEquals($expected, Json::decode($json));
     }
 
-    public function provider(): \Generator
+    public static function provider(): \Generator
     {
         yield ['😱', '"😱"'];
         yield ['/', '"/"'];

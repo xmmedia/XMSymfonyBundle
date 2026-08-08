@@ -24,7 +24,7 @@ class EmailSuppressionQueryTest extends BaseTestCase
         $suppressionChecker = \Mockery::mock(EmailSuppressionCheckerInterface::class);
         $suppressionChecker->shouldReceive('check')
             ->once()
-            ->with(\Mockery::on(function ($arg) use ($email) {
+            ->with(\Mockery::on(static function ($arg) use ($email) {
                 return $arg instanceof Email && $arg->toString() === $email;
             }))
             ->andReturn($expectedResult);
@@ -48,7 +48,7 @@ class EmailSuppressionQueryTest extends BaseTestCase
         $suppressionChecker = \Mockery::mock(EmailSuppressionCheckerInterface::class);
         $suppressionChecker->shouldReceive('check')
             ->once()
-            ->with(\Mockery::on(function ($arg) use ($email) {
+            ->with(\Mockery::on(static function ($arg) use ($email) {
                 return $arg instanceof Email && $arg->toString() === $email;
             }))
             ->andReturn($expectedResult);

@@ -8,7 +8,7 @@ trait ProjectionWhenArgs
 {
     private function whenArgs(array $projectedEvents): callable
     {
-        return function ($eventHandlers) use ($projectedEvents): bool {
+        return static function ($eventHandlers) use ($projectedEvents): bool {
             if (!\is_array($eventHandlers)) {
                 return false;
             }

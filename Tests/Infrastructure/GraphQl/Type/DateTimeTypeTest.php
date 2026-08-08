@@ -38,7 +38,7 @@ class DateTimeTypeTest extends TestCase
         $this->assertEquals(new \DateTimeImmutable('2019-01-01 17:53:32'), $result);
     }
 
-    public function dateProvider(): \Generator
+    public static function dateProvider(): \Generator
     {
         yield [
             new \DateTime('2019-01-01'),
@@ -74,7 +74,7 @@ class DateTimeTypeTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function dateProviderParseLiteral(): \Generator
+    public static function dateProviderParseLiteral(): \Generator
     {
         yield [
             new \DateTime('2019-01-01'),

@@ -22,7 +22,7 @@ class CommandRecorderMiddlewareTest extends BaseTestCase
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
             ->once()
-            ->withArgs(function ($tableName): bool {
+            ->withArgs(static function ($tableName): bool {
                 return 'command_log' === $tableName;
             });
 

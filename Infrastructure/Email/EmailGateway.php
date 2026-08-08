@@ -59,7 +59,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         if (!$this->isProduction()) {
             $headers['X-Original-To'] = implode(
                 ', ',
-                array_map(function (Email $email): string {
+                array_map(static function (Email $email): string {
                     return $email->withName();
                 }, $to),
             );
@@ -73,7 +73,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
 
         $toString = implode(
             ', ',
-            array_map(function (Email $email): string {
+            array_map(static function (Email $email): string {
                 return $email->withName();
             }, $to),
         );
