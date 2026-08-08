@@ -9,10 +9,10 @@ This is a Symfony bundle (`xm/symfony-bundle`) that provides classes and service
 ## Development Commands
 
 ### Testing
-- Run all tests: `composer test` or `vendor/bin/simple-phpunit`
+- Run all tests: `composer test` or `vendor/bin/phpunit`
 - Run tests with coverage: `composer test:coverage` (generates HTML coverage in `coverage/`)
-- Run a single test: `vendor/bin/simple-phpunit Tests/Path/To/TestFile.php`
-- Run a single test method: `vendor/bin/simple-phpunit --filter testMethodName`
+- Run a single test: `vendor/bin/phpunit Tests/Path/To/TestFile.php`
+- Run a single test method: `vendor/bin/phpunit --filter testMethodName`
 
 ### Code Style
 - Check code style: `composer cs`
@@ -125,6 +125,6 @@ The `AggregateRootMaker` (`Maker/AggregateRootMaker.php`) scaffolds a complete C
 
 **Array Alignment**: Binary operator `=>` is aligned in arrays (enforced by php-cs-fixer)
 
-**Testing**: PHPUnit 9.6 is used. Tests extend PHPUnit\Framework\TestCase and use Mockery for mocking.
+**Testing**: PHPUnit 13 is used. Tests extend PHPUnit\Framework\TestCase and use Mockery for mocking. Test metadata uses attributes (e.g. `#[DataProvider]`), not doc-comment annotations, and data providers must be static.
 
 **Namespace**: All code is under `Xm\SymfonyBundle\`

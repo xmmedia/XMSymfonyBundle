@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<!-- https://docs.phpunit.de/en/13.0/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="vendor/autoload.php">
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnPhpunitDeprecations="true">
 
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="SHELL_VERBOSITY" value="-1" />
-        <env name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
     </php>
 
-    <coverage>
+    <source>
         <include>
             <directory>./</directory>
         </include>
@@ -22,7 +27,7 @@
             <directory>./Tests</directory>
             <directory>./vendor</directory>
         </exclude>
-    </coverage>
+    </source>
 
     <testsuites>
         <testsuite name="XM Symfony Bundle Test Suite">

@@ -51,12 +51,11 @@
     "phpstan/phpstan-phpunit": "^2.0",
     "phpstan/phpstan-symfony": "^2.0",
     "phpstan/phpstan-webmozart-assert": "^2.0",
-    "phpunit/phpunit": "^9.0",
+    "phpunit/phpunit": "^13.0",
     "rector/rector": "^2.0",
     "symfony/debug-pack": "^1.0.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/phpunit-bridge": "^7.0",
-    "symfony/test-pack": "^1.0",
     "symfony/webpack-encore-bundle": "^1.0"
   },
   "config": {
@@ -71,8 +70,8 @@
     ]
   },
   "scripts": {
-    "test": "vendor/bin/simple-phpunit",
-    "test:coverage": "vendor/bin/simple-phpunit --coverage-html coverage",
+    "test": "vendor/bin/phpunit",
+    "test:coverage": "vendor/bin/phpunit --coverage-html coverage",
     "cs": "php-cs-fixer fix -v --dry-run --config=./.php-cs-fixer.dist.php",
     "cs:fix": "php-cs-fixer fix -v --config=./.php-cs-fixer.dist.php",
     "static": "php -d memory_limit=-1 vendor/bin/phpstan analyse",
