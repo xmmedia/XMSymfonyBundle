@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\EventSourcing;
 
-use Iterator;
-use PDO;
-use PDOException;
 use Prooph\Common\Messaging\MessageFactory;
 use Prooph\EventStore\Exception\StreamExistsAlready;
 use Prooph\EventStore\Exception\StreamNotFound;
 use Prooph\EventStore\Metadata\FieldType;
 use Prooph\EventStore\Metadata\MetadataMatcher;
 use Prooph\EventStore\Metadata\Operator;
+use Prooph\EventStore\Pdo\Exception as ProophPdoException;
 use Prooph\EventStore\Pdo\Exception\ConcurrencyExceptionFactory;
 use Prooph\EventStore\Pdo\Exception\ExtensionNotLoaded;
 use Prooph\EventStore\Pdo\Exception\RuntimeException;
@@ -28,7 +26,6 @@ use Prooph\EventStore\Stream;
 use Prooph\EventStore\StreamIterator\EmptyStreamIterator;
 use Prooph\EventStore\StreamName;
 use Prooph\EventStore\Util\Assertion;
-use Prooph\EventStore\Pdo\Exception as ProophPdoException;
 
 final class MySqlEventStore implements PdoEventStore
 {

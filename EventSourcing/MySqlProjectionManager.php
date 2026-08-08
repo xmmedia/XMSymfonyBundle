@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\EventSourcing;
 
-use PDO;
-use PDOException;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\EventStoreDecorator;
 use Prooph\EventStore\Exception\OutOfRangeException;

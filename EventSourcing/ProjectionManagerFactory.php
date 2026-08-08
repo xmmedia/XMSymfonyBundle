@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\EventSourcing;
 
-use PDO;
 use Prooph\Bundle\EventStore\Exception\RuntimeException;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\EventStoreDecorator;
@@ -25,7 +24,7 @@ class ProjectionManagerFactory
         string $projectionsTable = 'projections',
     ): ProjectionManager {
         $checkConnection = static function () use ($connection): \PDO {
-            if (! $connection instanceof PDO) {
+            if (!$connection instanceof \PDO) {
                 throw new RuntimeException('PDO connection missing');
             }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
 use Faker;
-use Xm\SymfonyBundle\Model\Date;
 use Xm\SymfonyBundle\Model\WebsiteUrl;
 
 /**
