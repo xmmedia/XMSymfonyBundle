@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Type;
 
 use GraphQL\Error\Error;
+use GraphQL\Language\AST\IntValueNode;
 use GraphQL\Language\AST\StringValueNode;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\UuidType;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
@@ -104,7 +105,7 @@ class UuidTypeTest extends BaseTestCase
 
     public function testParseLiteralNotStringValueNode(): void
     {
-        $result = (new UuidType())->parseLiteral('string');
+        $result = (new UuidType())->parseLiteral(new IntValueNode(['value' => '1']));
 
         $this->assertNull($result);
     }

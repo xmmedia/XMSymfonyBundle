@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Type;
 
 use GraphQL\Error\Error;
+use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Utils\Utils;
 use Ramsey\Uuid\Uuid;
@@ -28,10 +29,7 @@ trait UuidTypeTrait
         throw new Error('Cannot serialize value as UUID: '.Utils::printSafe($value));
     }
 
-    /**
-     * @param StringValueNode $valueNode
-     */
-    public function parseLiteral($valueNode, ?array $variables = null): ?string
+    public function parseLiteral(Node $valueNode, ?array $variables = null): ?string
     {
         if (!$valueNode instanceof StringValueNode) {
             return null;
