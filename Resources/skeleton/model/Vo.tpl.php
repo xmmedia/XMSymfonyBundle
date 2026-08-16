@@ -45,7 +45,7 @@ final readonly class <?= $class_name; ?> implements ValueObject, \Stringable
         return $this->toString();
     }
 
-    public function sameValueAs(self|ValueObject $other): bool
+    public function sameValueAs(ValueObject $other): bool
     {
         if (self::class !== $other::class) {
             return false;
