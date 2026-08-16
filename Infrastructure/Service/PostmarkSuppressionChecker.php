@@ -10,6 +10,9 @@ use Postmark\Models\Suppressions\PostmarkSuppression;
 use Postmark\PostmarkClient;
 use Xm\SymfonyBundle\Model\Email;
 
+/**
+ * @phpstan-import-type EmailSuppressionResult from EmailSuppressionCheckerInterface
+ */
 final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterface
 {
     private ?PostmarkClient $client = null;
@@ -21,13 +24,15 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
 
     /**
      * Check if an email address is in Postmark's suppression list.
+     *
+     * @return EmailSuppressionResult
      */
     #[ArrayShape([
         'suppressed'  => 'bool',
         'reason'      => 'null|string',
         'reasonHuman' => 'null|string',
         'dateAdded'   => CarbonImmutable::class.'|null',
-        'espUrl'      => 'string',
+        'espUrl'      => 'null|string',
     ])]
     public function check(Email $email): array
     {

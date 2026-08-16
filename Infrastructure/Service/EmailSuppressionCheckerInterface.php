@@ -8,8 +8,20 @@ use Carbon\CarbonImmutable;
 use JetBrains\PhpStorm\ArrayShape;
 use Xm\SymfonyBundle\Model\Email;
 
+/**
+ * @phpstan-type EmailSuppressionResult array{
+ *     suppressed: bool,
+ *     reason: string|null,
+ *     reasonHuman: string|null,
+ *     dateAdded: CarbonImmutable|null,
+ *     espUrl: string|null,
+ * }
+ */
 interface EmailSuppressionCheckerInterface
 {
+    /**
+     * @return EmailSuppressionResult
+     */
     #[ArrayShape([
         'suppressed'  => 'bool',
         'reason'      => 'null|string',

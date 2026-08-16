@@ -7,6 +7,9 @@ namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Resolver;
 use GraphQL\Type\Definition\ResolveInfo;
 use JetBrains\PhpStorm\Deprecated;
 
+/**
+ * @deprecated
+ */
 #[Deprecated]
 class FieldResolver
 {

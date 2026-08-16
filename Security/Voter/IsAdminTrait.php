@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @property \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface $decisionManager
+ *
+ * @deprecated
  */
 #[Deprecated]
 trait IsAdminTrait

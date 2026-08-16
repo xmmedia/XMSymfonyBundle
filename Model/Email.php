@@ -97,6 +97,9 @@ final class Email implements ValueObject
         return \sprintf('"%s" <%s>', $this->name, $this->email);
     }
 
+    /**
+     * @return array{email: string, name: string|null}
+     */
     #[ArrayShape(['email' => 'string', 'name' => 'null|string'])]
     public function toArray(): array
     {
