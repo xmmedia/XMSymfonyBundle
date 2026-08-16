@@ -36,7 +36,6 @@ class <?= $class_name; ?> extends BaseTestCase
         $new<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($faker->name());
         $old<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($faker->name());
 
-        /** @var <?= $event_class_short; ?> $event */
         $event = $this->createEventFromArray(
             <?= $event_class_short; ?>::class,
             $<?= $id_property; ?>->toString(),
