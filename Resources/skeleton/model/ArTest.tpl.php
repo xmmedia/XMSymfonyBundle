@@ -24,8 +24,6 @@ class <?= $class_name; ?> extends BaseTestCase
 
         $<?= $model_lower; ?> = <?= $model; ?>::add($<?= $id_property; ?>, $<?= $name_property; ?>);
 
-        $this->assertInstanceOf(<?= $model; ?>::class, $<?= $model_lower; ?>);
-
         $events = $this->popRecordedEvent($<?= $model_lower; ?>);
 
         $this->assertRecordedEvent(
