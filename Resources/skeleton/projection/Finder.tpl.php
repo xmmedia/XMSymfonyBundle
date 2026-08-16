@@ -50,6 +50,9 @@ class <?= $class_name; ?> extends ServiceEntityRepository
         return $<?= $entity ?>;
     }
 
+    /**
+     * @return <?= $entity_class_short; ?>[]
+     */
     #[ArrayShape([<?= $entity_class_short; ?>::class])]
     public function findByFilters(<?= $filters_class_short; ?> $filters): array
     {

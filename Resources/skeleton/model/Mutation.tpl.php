@@ -27,7 +27,12 @@ final readonly class <?= $class_name; ?> implements MutationInterface
     }
 
 <?php if (!$delete) { ?>
-    #[ArrayShape(['<?= $entity; ?>' => <?= $entity_class_short; ?>::class])]
+    /**
+     * @param array<string, mixed> $<?= $model_lower; ?>
+     *
+     * @return array{<?= $entity; ?>: <?= $entity_class_short; ?>|null}
+     */
+    #[ArrayShape(['<?= $entity; ?>' => <?= $entity_class_short; ?>::class.'|null'])]
     public function __invoke(array $<?= $model_lower; ?>): array
     {
         $this->commandBus->dispatch(
@@ -41,7 +46,10 @@ final readonly class <?= $class_name; ?> implements MutationInterface
             '<?= $entity; ?>' => $this-><?= $entity_finder_property; ?>-><?= $add ? 'find' : 'findRefreshed' ?>($<?= $model_lower; ?>['<?= $id_property; ?>']),
         ];
 <?php } else { ?>
-    #[ArrayShape(['success' => 'boolean'])]
+    /**
+     * @return array{success: bool}
+     */
+    #[ArrayShape(['success' => 'bool'])]
     public function __invoke(<?= $id_class_short; ?> $<?= $id_property; ?>): array
     {
         $this->commandBus->dispatch(

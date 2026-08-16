@@ -16,6 +16,11 @@ final readonly class <?= $class_name; ?> implements QueryInterface
     {
     }
 
+    /**
+     * @param array<string, mixed>|null $filters
+     *
+     * @return <?= $entity_class_short; ?>[]
+     */
     #[ArrayShape([<?= $entity_class_short; ?>::class])]
     public function __invoke(?array $filters): array
     {
