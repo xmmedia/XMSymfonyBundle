@@ -19,6 +19,8 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
      * all the tables in this array are checked, truncated, or deleted.
      * If the array is empty on construct,
      * the TABLE constant will be put in the array.
+     *
+     * @var list<string>|null
      */
     protected ?array $tables;
 

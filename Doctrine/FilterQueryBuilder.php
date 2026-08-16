@@ -17,6 +17,10 @@ abstract class FilterQueryBuilder
     protected array $parameterTypes = [];
     protected string $order = '';
 
+    /**
+     * @return array{join: string, where: string, order: string,
+     *     parameters: array<string, mixed>, parameterTypes: array<string, mixed>}
+     */
     abstract public function queryParts(FiltersInterface $filters): array;
 
     public function reset(): static

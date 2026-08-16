@@ -36,6 +36,9 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
      */
     protected $metadata = [];
 
+    /**
+     * @param array<string, mixed> $payload
+     */
     abstract protected function setPayload(array $payload): void;
 
     public static function fromArray(array $messageData): BaseDomainMessage

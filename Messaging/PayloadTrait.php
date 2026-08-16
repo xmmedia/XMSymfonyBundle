@@ -35,6 +35,9 @@ trait PayloadTrait
         return $this->payload;
     }
 
+    /**
+     * @param array<string, mixed> $payload
+     */
     protected function setPayload(array $payload): void
     {
         $this->payload = $payload;

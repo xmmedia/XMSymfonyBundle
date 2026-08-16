@@ -82,6 +82,11 @@ abstract class Filters implements FiltersInterface
         return true === $value || 'true' === $value;
     }
 
+    /**
+     * @param array<string, mixed> $filters
+     *
+     * @return array<string, mixed>
+     */
     protected function parseFilters(array $filters): array
     {
         return $filters;
