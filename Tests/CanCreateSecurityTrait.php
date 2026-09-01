@@ -34,7 +34,7 @@ trait CanCreateSecurityTrait
     }
 
     /**
-     * @return ContainerInterface|\Mockery\MockInterface
+     * @return ContainerInterface&\Mockery\MockInterface
      */
     private function createContainer(
         string $serviceId,

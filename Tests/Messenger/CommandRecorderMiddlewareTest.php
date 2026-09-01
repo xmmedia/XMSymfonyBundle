@@ -18,7 +18,7 @@ class CommandRecorderMiddlewareTest extends BaseTestCase
     {
         $faker = $this->faker();
 
-        /** @var Connection|\Mockery\MockInterface $connection */
+        /** @var Connection&\Mockery\MockInterface $connection */
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('insert')
             ->once()

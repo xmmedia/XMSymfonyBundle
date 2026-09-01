@@ -15,7 +15,7 @@ trait UsesFaker
      * Static so that it can also be used from data providers,
      * which must be static as of PHPUnit 10.
      *
-     * @return Faker\Generator|Provider\AddressFakerProvider|Provider\DateFakerProvider|Provider\EmailFakerProvider|Provider\GenderFakerProvider|Provider\InternetFakerProvider|Provider\NameFakerProvider|Provider\PhoneNumberFakerProvider|Provider\StringFakerProvider|Provider\UuidFakerProvider
+     * @return Faker\Generator&Provider\AddressFakerProvider&Provider\DateFakerProvider&Provider\EmailFakerProvider&Provider\GenderFakerProvider&Provider\InternetFakerProvider&Provider\NameFakerProvider&Provider\PhoneNumberFakerProvider&Provider\StringFakerProvider&Provider\UuidFakerProvider
      */
     protected static function faker(): Faker\Generator
     {
