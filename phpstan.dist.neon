@@ -9,6 +9,9 @@ includes:
     - vendor/marc-mabe/php-enum-phpstan/extension.neon
 
 parameters:
+    phpVersion:
+        min: 80300
+        max: 80500
     level: 0
     paths:
         - .

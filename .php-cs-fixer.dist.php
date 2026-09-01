@@ -16,7 +16,7 @@ return (new PhpCsFixer\Config())
         '@PSR2'                       => true,
         '@DoctrineAnnotation'         => true,
         // this will include all the rules for earlier PHP versions
-        '@PHP8x1Migration'            => true,
+        '@PHP8x3Migration'            => true,
         '@PHPUnit11x0Migration:risky' => true,
         'array_syntax'                => [
            'syntax' => 'short',
