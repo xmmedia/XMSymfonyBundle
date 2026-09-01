@@ -8,11 +8,8 @@ use Xm\SymfonyBundle\Util\PasswordStrengthInterface;
 
 class PasswordStrengthFake implements PasswordStrengthInterface
 {
-    private int $score;
-
-    public function __construct(int $score = 4)
+    public function __construct(private readonly int $score = 4)
     {
-        $this->score = $score;
     }
 
     public function __invoke(string $password, array $userInputs = []): array

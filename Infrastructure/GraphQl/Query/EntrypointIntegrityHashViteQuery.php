@@ -10,7 +10,7 @@ use Pentatrion\ViteBundle\Service\EntrypointsLookupCollection;
 
 class EntrypointIntegrityHashViteQuery implements QueryInterface
 {
-    private EntrypointsLookup $lookup;
+    private readonly EntrypointsLookup $lookup;
 
     public function __construct(EntrypointsLookupCollection $collection)
     {

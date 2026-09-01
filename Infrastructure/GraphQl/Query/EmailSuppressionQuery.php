@@ -15,7 +15,7 @@ use Xm\SymfonyBundle\Model\Email;
  */
 final class EmailSuppressionQuery implements QueryInterface
 {
-    public function __construct(private readonly EmailSuppressionCheckerInterface $suppressionChecker)
+    public function __construct(private EmailSuppressionCheckerInterface $suppressionChecker)
     {
     }
 

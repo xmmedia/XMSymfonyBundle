@@ -20,7 +20,7 @@ class AggregateRepository
         private readonly EventStore $eventStore,
         private readonly AggregateType $aggregateType,
         private readonly AggregateTranslator $aggregateTranslator,
-        private ?StreamName $streamName = null,
+        private readonly ?StreamName $streamName = null,
     ) {
     }
 

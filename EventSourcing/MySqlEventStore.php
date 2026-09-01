@@ -29,56 +29,27 @@ use Prooph\EventStore\Util\Assertion;
 
 final class MySqlEventStore implements PdoEventStore
 {
-    /**
-     * @var MessageFactory
-     */
-    private $messageFactory;
+    private readonly PersistenceStrategy $persistenceStrategy;
 
-    /**
-     * @var \PDO
-     */
-    private $connection;
-
-    /**
-     * @var PersistenceStrategy
-     */
-    private $persistenceStrategy;
-
-    /**
-     * @var int
-     */
-    private $loadBatchSize;
-
-    /**
-     * @var string
-     */
-    private $eventStreamsTable;
+    private readonly int $loadBatchSize;
 
     /**
      * @var bool
      */
     private $duringCreate = false;
 
-    /**
-     * @var bool
-     */
-    private $disableTransactionHandling;
-
-    /**
-     * @var WriteLockStrategy
-     */
-    private $writeLockStrategy;
+    private readonly ?WriteLockStrategy $writeLockStrategy;
 
     /**
      * @throws ExtensionNotLoaded
      */
     public function __construct(
-        MessageFactory $messageFactory,
-        \PDO $connection,
+        private readonly MessageFactory $messageFactory,
+        private readonly \PDO $connection,
         PersistenceStrategy $persistenceStrategy,
         int $loadBatchSize = 10000,
-        string $eventStreamsTable = 'event_streams',
-        bool $disableTransactionHandling = false,
+        private readonly string $eventStreamsTable = 'event_streams',
+        private readonly bool $disableTransactionHandling = false,
         ?WriteLockStrategy $writeLockStrategy = null,
     ) {
         if (!\extension_loaded('pdo_mysql')) {
@@ -99,13 +70,8 @@ final class MySqlEventStore implements PdoEventStore
         }
 
         Assertion::min($loadBatchSize, 1);
-
-        $this->messageFactory = $messageFactory;
-        $this->connection = $connection;
         $this->persistenceStrategy = $persistenceStrategy;
         $this->loadBatchSize = $loadBatchSize;
-        $this->eventStreamsTable = $eventStreamsTable;
-        $this->disableTransactionHandling = $disableTransactionHandling;
         $this->writeLockStrategy = $writeLockStrategy;
     }
 

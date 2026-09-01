@@ -8,8 +8,6 @@ use Webmozart\Assert\Assert;
 
 class NotificationGatewayId implements ValueObject
 {
-    private string $id;
-
     /**
      * @return static
      */
@@ -20,9 +18,8 @@ class NotificationGatewayId implements ValueObject
         return new static($id);
     }
 
-    private function __construct(string $id)
+    private function __construct(private readonly string $id)
     {
-        $this->id = $id;
     }
 
     public function toString(): string

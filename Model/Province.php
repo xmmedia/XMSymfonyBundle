@@ -10,11 +10,11 @@ use Xm\SymfonyBundle\Exception\InvalidProvince;
 
 class Province implements ValueObject
 {
-    private string $abbreviation;
+    private readonly string $abbreviation;
 
-    private string $name;
+    private readonly string $name;
 
-    private Country $country;
+    private readonly Country $country;
 
     /**
      * @return static

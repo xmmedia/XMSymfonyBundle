@@ -28,7 +28,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         private readonly string $companyName,
         private readonly string $companyAddress,
         private readonly array $whitelist,
-        private ?string $devEmail = null,
+        private readonly ?string $devEmail = null,
     ) {
         $this->client = new PostmarkClient($postmarkApiKey);
         $this->from = Email::fromString($emailFrom, $emailFromName);

@@ -22,42 +22,17 @@ use Prooph\EventStore\Projection\ReadModelProjector;
 
 final class MySqlProjectionManager implements ProjectionManager
 {
-    /**
-     * @var EventStore
-     */
-    private $eventStore;
-
-    /**
-     * @var \PDO
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $eventStreamsTable;
-
-    /**
-     * @var string
-     */
-    private $projectionsTable;
-
     public function __construct(
-        EventStore $eventStore,
-        \PDO $connection,
-        string $eventStreamsTable = 'event_streams',
-        string $projectionsTable = 'projections',
+        private EventStore $eventStore,
+        private readonly \PDO $connection,
+        private readonly string $eventStreamsTable = 'event_streams',
+        private readonly string $projectionsTable = 'projections',
     ) {
-        $this->eventStore = $eventStore;
-        $this->connection = $connection;
-        $this->eventStreamsTable = $eventStreamsTable;
-        $this->projectionsTable = $projectionsTable;
-
-        while ($eventStore instanceof EventStoreDecorator) {
-            $eventStore = $eventStore->getInnerEventStore();
+        while ($this->eventStore instanceof EventStoreDecorator) {
+            $this->eventStore = $this->eventStore->getInnerEventStore();
         }
 
-        if (!$eventStore instanceof MySqlEventStore) {
+        if (!$this->eventStore instanceof MySqlEventStore) {
             throw new Exception\InvalidArgumentException('Unknown event store instance given');
         }
     }
