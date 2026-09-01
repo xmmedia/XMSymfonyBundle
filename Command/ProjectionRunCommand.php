@@ -42,31 +42,31 @@ final class ProjectionRunCommand extends Command
     {
         $this
             ->addArgument(
-                static::ARGUMENT_PROJECTION_NAME,
+                self::ARGUMENT_PROJECTION_NAME,
                 InputArgument::OPTIONAL,
                 'The name of the Projection',
             )
             ->addOption(
-                static::OPTION_RUN_ALL,
+                self::OPTION_RUN_ALL,
                 null,
                 InputOption::VALUE_NONE,
                 'Run all projections once',
             )
             ->addOption(
-                static::OPTION_RUN_ONCE,
+                self::OPTION_RUN_ONCE,
                 'o',
                 InputOption::VALUE_NONE,
                 'Loop the projection only once, then exit. Not supported when running all',
             )
             ->addOption(
-                static::OPTION_SLEEP,
+                self::OPTION_SLEEP,
                 's',
                 InputOption::VALUE_REQUIRED,
                 'The sleep time of the projector in microseconds',
                 1000000, // 1 second
             )
             ->addOption(
-                static::OPTION_LOAD_COUNT,
+                self::OPTION_LOAD_COUNT,
                 null,
                 InputOption::VALUE_REQUIRED,
                 'The number of events to load and process at once. Default is unlimited.',
@@ -81,19 +81,19 @@ final class ProjectionRunCommand extends Command
         $this->io->title('Running Projection(s)');
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
 
-        $runAll = $input->getOption(static::OPTION_RUN_ALL);
+        $runAll = $input->getOption(self::OPTION_RUN_ALL);
         if (!$runAll) {
             $this->projectionName = $input->getArgument(
-                static::ARGUMENT_PROJECTION_NAME,
+                self::ARGUMENT_PROJECTION_NAME,
             );
             // append _projection if not present
             if (!str_ends_with($this->projectionName, '_projection')) {
                 $this->projectionName .= '_projection';
             }
         }
-        $keepRunning = !$input->getOption(static::OPTION_RUN_ONCE);
-        $sleep = (int) $input->getOption(static::OPTION_SLEEP);
-        $loadCount = $input->getOption(static::OPTION_LOAD_COUNT);
+        $keepRunning = !$input->getOption(self::OPTION_RUN_ONCE);
+        $sleep = (int) $input->getOption(self::OPTION_SLEEP);
+        $loadCount = $input->getOption(self::OPTION_LOAD_COUNT);
         if (null !== $loadCount) {
             $loadCount = (int) $loadCount;
         }

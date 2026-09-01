@@ -59,7 +59,7 @@ final class MySqlEventStore implements PdoEventStore
         if (!$persistenceStrategy instanceof MySqlPersistenceStrategy) {
             @trigger_error(\sprintf(
                 '"%s" will expect an instance of "%s" from v2.0.0, please migrate your custom "%s" class.',
-                __CLASS__,
+                self::class,
                 MySqlPersistenceStrategy::class,
                 $persistenceStrategy::class,
             ), \E_USER_DEPRECATED);
