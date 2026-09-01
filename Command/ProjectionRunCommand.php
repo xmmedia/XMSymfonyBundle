@@ -139,7 +139,7 @@ final class ProjectionRunCommand extends Command
         $this->io->text(
             \sprintf(
                 'Keep running %s',
-                true === $keepRunning ? 'enabled' : 'disabled',
+                $keepRunning ? 'enabled' : 'disabled',
             ),
         );
         $this->io->text(
