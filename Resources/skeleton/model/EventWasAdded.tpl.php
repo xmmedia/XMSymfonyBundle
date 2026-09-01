@@ -32,9 +32,7 @@ class <?= $class_name; ?> extends AggregateChanged
 
     public function <?= $name_property ?>(): <?= $name_class_short; ?><?= "\n"; ?>
     {
-        if (!isset($this-><?= $name_property ?>)) {
-            $this-><?= $name_property ?> = <?= $name_class_short ?>::fromString($this->payload['<?= $name_property ?>']);
-        }
+        $this-><?= $name_property ?> ??= <?= $name_class_short ?>::fromString($this->payload['<?= $name_property ?>']);
 
         return $this-><?= $name_property ?>;
     }

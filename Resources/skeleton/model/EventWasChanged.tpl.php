@@ -36,18 +36,14 @@ class <?= $class_name; ?> extends AggregateChanged
 
     public function new<?= $name_class_short; ?>(): <?= $name_class_short; ?><?= "\n"; ?>
     {
-        if (!isset($this->new<?= $name_class_short; ?>)) {
-            $this->new<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($this->payload['new<?= $name_class_short; ?>']);
-        }
+        $this->new<?= $name_class_short; ?> ??= <?= $name_class_short ?>::fromString($this->payload['new<?= $name_class_short; ?>']);
 
         return $this->new<?= $name_class_short; ?>;
     }
 
     public function old<?= $name_class_short; ?>(): <?= $name_class_short; ?><?= "\n"; ?>
     {
-        if (!isset($this->old<?= $name_class_short; ?>)) {
-            $this->old<?= $name_class_short; ?> = <?= $name_class_short ?>::fromString($this->payload['old<?= $name_class_short; ?>']);
-        }
+        $this->old<?= $name_class_short; ?> ??= <?= $name_class_short ?>::fromString($this->payload['old<?= $name_class_short; ?>']);
 
         return $this->old<?= $name_class_short; ?>;
     }
