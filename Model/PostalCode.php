@@ -12,7 +12,7 @@ use Xm\SymfonyBundle\Util\StringUtil;
  * Canada: 6 alphanumeric (without space(s))
  * US: 5 or 10 numbers (5+4 digits plus dash).
  */
-class PostalCode implements ValueObject
+class PostalCode implements ValueObject, \Stringable
 {
     public const MIN_LENGTH = 5;
     public const MAX_LENGTH = 10;

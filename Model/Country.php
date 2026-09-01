@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\DataProvider\CountryProvider;
 use Xm\SymfonyBundle\Exception\InvalidCountry;
 
-class Country implements ValueObject
+class Country implements ValueObject, \Stringable
 {
     private readonly string $abbreviation;
 

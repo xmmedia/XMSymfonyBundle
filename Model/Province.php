@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\DataProvider\ProvinceProvider;
 use Xm\SymfonyBundle\Exception\InvalidProvince;
 
-class Province implements ValueObject
+class Province implements ValueObject, \Stringable
 {
     private readonly string $abbreviation;
 

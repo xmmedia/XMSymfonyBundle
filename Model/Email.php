@@ -10,7 +10,7 @@ use JetBrains\PhpStorm\ArrayShape;
 use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-final class Email implements ValueObject
+final class Email implements ValueObject, \Stringable
 {
     private string $email;
 

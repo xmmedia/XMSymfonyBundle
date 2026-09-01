@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\EventSourcing\Aggregate;
 
-class AggregateType
+class AggregateType implements \Stringable
 {
     protected ?string $aggregateType;
     protected array $mapping = [];

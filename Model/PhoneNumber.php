@@ -9,7 +9,7 @@ use libphonenumber\PhoneNumber as LibPhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
-class PhoneNumber implements ValueObject
+class PhoneNumber implements ValueObject, \Stringable
 {
     private static string $defaultRegion = 'CA';
 

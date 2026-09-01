@@ -66,7 +66,7 @@ class UtilsTest extends BaseTestCase
     }
 }
 
-class ClassWithToString
+class ClassWithToString implements \Stringable
 {
     public function __toString(): string
     {

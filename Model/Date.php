@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Model;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 
-class Date implements ValueObject
+class Date implements ValueObject, \Stringable
 {
     public const STRING_FORMAT = 'Y-m-d';
     public const TZ = 'UTC';

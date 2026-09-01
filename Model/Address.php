@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Exception\InvalidAddress;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-class Address implements ValueObject
+class Address implements ValueObject, \Stringable
 {
     public const LINE_MIN_LENGTH = 3;
     public const LINE_MAX_LENGTH = 100;

@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Model;
 
 use Webmozart\Assert\Assert;
 
-class NotificationGatewayId implements ValueObject
+class NotificationGatewayId implements ValueObject, \Stringable
 {
     /**
      * @return static

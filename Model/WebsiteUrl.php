@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Model;
 use Xm\SymfonyBundle\Util\Assert;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-class WebsiteUrl implements ValueObject
+class WebsiteUrl implements ValueObject, \Stringable
 {
     public const MAX_LENGTH = 2000;
 
