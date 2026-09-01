@@ -30,7 +30,7 @@ abstract class Filters implements FiltersInterface
             );
         }
 
-        $filters = array_map([StringUtil::class, 'trim'], $filters);
+        $filters = array_map(StringUtil::trim(...), $filters);
 
         foreach ($filters as $key => $value) {
             Assert::oneOf(
@@ -42,7 +42,7 @@ abstract class Filters implements FiltersInterface
 
         $filters = $this->parseFilters($filters);
 
-        $filters = array_filter($filters, [$this, 'notEmpty']);
+        $filters = array_filter($filters, $this->notEmpty(...));
 
         $this->filters = $filters;
     }

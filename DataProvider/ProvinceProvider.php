@@ -100,9 +100,7 @@ class ProvinceProvider
      */
     public static function abbreviations(bool $byCountry = true): array
     {
-        $abbreviations = array_map(static function (array $provinces): array {
-            return array_values($provinces);
-        }, self::$provincesByCountry);
+        $abbreviations = array_map(array_values(...), self::$provincesByCountry);
 
         if ($byCountry) {
             return $abbreviations;

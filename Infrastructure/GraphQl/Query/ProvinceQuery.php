@@ -15,8 +15,6 @@ class ProvinceQuery implements QueryInterface
      */
     public function __invoke(): array
     {
-        return array_values(array_map(static function (string $province): Province {
-            return Province::fromString($province);
-        }, ProvinceProvider::all(false)));
+        return array_values(array_map(Province::fromString(...), ProvinceProvider::all(false)));
     }
 }
