@@ -10,15 +10,12 @@ use JetBrains\PhpStorm\ArrayShape;
 use Webmozart\Assert\Assert;
 use Xm\SymfonyBundle\Util\StringUtil;
 
-final class Email implements ValueObject, \Stringable
+final readonly class Email implements ValueObject, \Stringable
 {
     private string $email;
 
     private ?string $name;
 
-    /**
-     * @return static
-     */
     public static function fromString(string $email, ?string $name = null): self
     {
         return new self($email, $name);
