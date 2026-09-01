@@ -108,7 +108,7 @@ final class ProjectionRunCommand extends Command
             $this->runProjection($keepRunning, $sleep, $loadCount);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function runProjection(bool $keepRunning, int $sleep, ?int $loadCount): void

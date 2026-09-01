@@ -49,6 +49,6 @@ final class CreateEventStreamCommand extends Command
 
         $output->writeln('<info>Event stream "'.$streamName.'" was created successfully.</info>');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
