@@ -65,9 +65,7 @@ final class MySqlEventStore implements PdoEventStore
             ), \E_USER_DEPRECATED);
         }
 
-        if (null === $writeLockStrategy) {
-            $writeLockStrategy = new NoLockStrategy();
-        }
+        $writeLockStrategy ??= new NoLockStrategy();
 
         Assertion::min($loadBatchSize, 1);
         $this->persistenceStrategy = $persistenceStrategy;
@@ -354,9 +352,7 @@ EOT;
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
     ): \Iterator {
-        if (null === $fromNumber) {
-            $fromNumber = \PHP_INT_MAX;
-        }
+        $fromNumber ??= \PHP_INT_MAX;
         [$where, $values] = $this->createWhereClause($metadataMatcher);
         $where[] = '`no` <= :fromNumber';
 

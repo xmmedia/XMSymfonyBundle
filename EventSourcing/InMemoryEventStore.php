@@ -86,9 +86,7 @@ final class InMemoryEventStore implements TransactionalEventStore
             throw StreamNotFound::with($streamName);
         }
 
-        if (null === $metadataMatcher) {
-            $metadataMatcher = new MetadataMatcher();
-        }
+        $metadataMatcher ??= new MetadataMatcher();
 
         $found = 0;
         $streamEvents = [];
@@ -121,9 +119,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         ?int $count = null,
         ?MetadataMatcher $metadataMatcher = null,
     ): \Iterator {
-        if (null === $fromNumber) {
-            $fromNumber = \PHP_INT_MAX;
-        }
+        $fromNumber ??= \PHP_INT_MAX;
 
         Assertion::greaterOrEqualThan($fromNumber, 1);
         Assertion::nullOrGreaterOrEqualThan($count, 1);
@@ -132,9 +128,7 @@ final class InMemoryEventStore implements TransactionalEventStore
             throw StreamNotFound::with($streamName);
         }
 
-        if (null === $metadataMatcher) {
-            $metadataMatcher = new MetadataMatcher();
-        }
+        $metadataMatcher ??= new MetadataMatcher();
 
         $found = 0;
         $streamEvents = [];

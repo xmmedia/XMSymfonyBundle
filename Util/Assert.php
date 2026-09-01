@@ -17,12 +17,8 @@ class Assert extends \Webmozart\Assert\Assert
         ?int $minimum = null,
         ?PasswordStrengthInterface $passwordStrength = null,
     ): void {
-        if (null === $minimum) {
-            $minimum = 2;
-        }
-        if (null === $passwordStrength) {
-            $passwordStrength = new PasswordStrength();
-        }
+        $minimum ??= 2;
+        $passwordStrength ??= new PasswordStrength();
 
         $score = $passwordStrength($password, $userData)['score'];
 
@@ -36,9 +32,7 @@ class Assert extends \Webmozart\Assert\Assert
         ?HttpClientInterface $httpClient = null,
     ): void {
         $endpoint = 'https://api.pwnedpasswords.com/range/%s';
-        if (null === $httpClient) {
-            $httpClient = HttpClient::create();
-        }
+        $httpClient ??= HttpClient::create();
 
         $hash = strtoupper(sha1($password));
         $hashPrefix = substr($hash, 0, 5);

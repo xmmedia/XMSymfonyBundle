@@ -137,9 +137,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
 
     private function getAggregateTranslator(): AggregateTranslator
     {
-        if (null === $this->aggregateTranslator) {
-            $this->aggregateTranslator = new AggregateTranslator();
-        }
+        $this->aggregateTranslator ??= new AggregateTranslator();
 
         return $this->aggregateTranslator;
     }

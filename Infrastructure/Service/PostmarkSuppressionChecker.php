@@ -100,8 +100,6 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
 
     private function createClient(): void
     {
-        if (null === $this->client) {
-            $this->client = new PostmarkClient($this->postmarkApiKey);
-        }
+        $this->client ??= new PostmarkClient($this->postmarkApiKey);
     }
 }
