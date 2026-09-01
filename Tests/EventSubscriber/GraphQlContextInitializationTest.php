@@ -24,8 +24,7 @@ class GraphQlContextInitializationTest extends BaseTestCase
     {
         $request = Request::create('/graphql', 'POST');
 
-        $requestStack = new RequestStack();
-        $requestStack->push($request);
+        $requestStack = new RequestStack([$request]);
 
         $subscriber = new GraphQlContextInitialization($requestStack);
 

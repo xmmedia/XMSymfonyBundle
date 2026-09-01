@@ -106,7 +106,7 @@ class ProvinceProvider
             return $abbreviations;
         }
 
-        return \call_user_func_array('array_merge', array_values($abbreviations));
+        return array_merge(...array_values($abbreviations));
     }
 
     public static function name(string $province): string

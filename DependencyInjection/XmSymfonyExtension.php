@@ -47,7 +47,7 @@ class XmSymfonyExtension extends Extension
                 $container
                     ->setDefinition(
                         $repositoryName,
-                        new ChildDefinition('Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository'),
+                        new ChildDefinition(\Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository::class),
                     )
                     ->setArguments(
                         [
