@@ -12,6 +12,7 @@ use Symfony\Component\Form\Test\Traits\ValidatorExtensionTrait;
 use Symfony\Component\Validator\ContainerConstraintValidatorFactory;
 use Symfony\Component\Validator\Validation;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 {
     use MockeryPHPUnitIntegration;
@@ -101,7 +102,12 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
         return $strings;
     }
 
-    private function invalidFields(FormInterface $data)
+    /**
+     * Recursively collects the error messages for a form & its children.
+     *
+     * @return array<int|string, mixed>
+     */
+    private function invalidFields(FormInterface $data): array
     {
         $form = $errors = [];
 
