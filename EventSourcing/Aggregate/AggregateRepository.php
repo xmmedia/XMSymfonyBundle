@@ -166,9 +166,8 @@ class AggregateRepository
     protected function enrichEventMetadata(Message $domainEvent, string $aggregateId): Message
     {
         $domainEvent = $domainEvent->withAddedMetadata('_aggregate_id', $aggregateId);
-        $domainEvent = $domainEvent->withAddedMetadata('_aggregate_type', $this->aggregateType->toString());
 
-        return $domainEvent;
+        return $domainEvent->withAddedMetadata('_aggregate_type', $this->aggregateType->toString());
     }
 
     protected function assertAggregateType(object $eventSourcedAggregateRoot): void

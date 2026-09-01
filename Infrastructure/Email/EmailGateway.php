@@ -121,7 +121,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         }
 
         if ([] === $to) {
-            $to = [Email::fromString($this->devEmail)];
+            return [Email::fromString($this->devEmail)];
         }
 
         return $to;
