@@ -53,6 +53,9 @@ return RectorConfig::configure()
         Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector::class,
         // from set "deadCode"
         Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector::class,
+        // "@return static" is not duplicated by a native "self" return type:
+        // these classes are extended & the factories return "new static"
+        Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector::class,
         // temporarily disabled because it adds newlines between traits
         Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector::class,
     ])
