@@ -11,8 +11,6 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     /** @var string|null The table for this read model */
     protected const string|null TABLE = null;
 
-    protected Connection $connection;
-
     /**
      * The tables that make up the read model.
      * During the initialization check, reset and delete,
@@ -24,10 +22,8 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
      */
     protected ?array $tables;
 
-    public function __construct(Connection $connection)
+    public function __construct(protected Connection $connection)
     {
-        $this->connection = $connection;
-
         $this->tables ??= null !== static::TABLE ? [static::TABLE] : [];
     }
 
