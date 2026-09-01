@@ -13,7 +13,7 @@ use Xm\SymfonyBundle\Model\Province;
 
 class ProvinceInputType extends EnumType implements AliasedInterface
 {
-    private const NAME = 'ProvinceInput';
+    private const string NAME = 'ProvinceInput';
 
     public function __construct()
     {

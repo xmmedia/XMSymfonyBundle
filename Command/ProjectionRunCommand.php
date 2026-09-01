@@ -23,11 +23,11 @@ use Xm\SymfonyBundle\Infrastructure\Service\ProjectionRunner;
 )]
 final class ProjectionRunCommand extends Command
 {
-    protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
-    protected const OPTION_RUN_ALL = 'run-all';
-    protected const OPTION_RUN_ONCE = 'run-once';
-    protected const OPTION_SLEEP = 'sleep';
-    protected const OPTION_LOAD_COUNT = 'load-count';
+    protected const string ARGUMENT_PROJECTION_NAME = 'projection-name';
+    protected const string OPTION_RUN_ALL = 'run-all';
+    protected const string OPTION_RUN_ONCE = 'run-once';
+    protected const string OPTION_SLEEP = 'sleep';
+    protected const string OPTION_LOAD_COUNT = 'load-count';
 
     private string $projectionName;
     private ReadModelProjector $projector;

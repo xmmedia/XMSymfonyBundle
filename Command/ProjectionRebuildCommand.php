@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class ProjectionRebuildCommand extends Command
 {
-    protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
+    protected const string ARGUMENT_PROJECTION_NAME = 'projection-name';
 
     protected function configure(): void
     {

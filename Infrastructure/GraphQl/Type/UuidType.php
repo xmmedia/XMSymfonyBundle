@@ -15,7 +15,7 @@ final class UuidType extends ScalarType implements AliasedInterface
 {
     use UuidTypeTrait;
 
-    private const NAME = 'UUID';
+    private const string NAME = 'UUID';
 
     public function __construct()
     {

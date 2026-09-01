@@ -16,7 +16,7 @@ use Doctrine\DBAL\Types\Type;
 class DateTimeMicrosecondsType extends Type
 {
     public const TYPENAME = 'datetime_microseconds';
-    private const FORMAT = 'Y-m-d H:i:s.u';
+    private const string FORMAT = 'Y-m-d H:i:s.u';
 
     public function getName(): string
     {

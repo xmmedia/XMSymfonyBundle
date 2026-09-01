@@ -12,7 +12,7 @@ use Xm\SymfonyBundle\Model\Gender;
 
 class GenderType extends EnumType implements AliasedInterface
 {
-    private const NAME = 'Gender';
+    private const string NAME = 'Gender';
 
     public function __construct()
     {

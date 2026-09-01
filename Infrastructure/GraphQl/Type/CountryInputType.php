@@ -13,7 +13,7 @@ use Xm\SymfonyBundle\Model\Country;
 
 class CountryInputType extends EnumType implements AliasedInterface
 {
-    private const NAME = 'CountryInput';
+    private const string NAME = 'CountryInput';
 
     public function __construct()
     {

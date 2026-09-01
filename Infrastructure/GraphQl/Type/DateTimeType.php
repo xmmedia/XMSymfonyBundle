@@ -10,7 +10,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
 final class DateTimeType extends ScalarType implements AliasedInterface
 {
-    private const NAME = 'DateTime';
+    private const string NAME = 'DateTime';
 
     public function __construct()
     {

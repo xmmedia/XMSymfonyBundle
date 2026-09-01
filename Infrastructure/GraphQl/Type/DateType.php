@@ -13,8 +13,8 @@ use Xm\SymfonyBundle\Util\Utils;
 
 final class DateType extends ScalarType implements AliasedInterface
 {
-    private const NAME = 'Date';
-    private const FORMAT = 'Y-m-d';
+    private const string NAME = 'Date';
+    private const string FORMAT = 'Y-m-d';
 
     public function __construct()
     {
