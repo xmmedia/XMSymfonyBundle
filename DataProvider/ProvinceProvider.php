@@ -111,7 +111,7 @@ class ProvinceProvider
 
     public static function name(string $province): string
     {
-        return array_search($province, self::all(false));
+        return array_search($province, self::all(false), true);
     }
 
     public static function country(string $province): Country

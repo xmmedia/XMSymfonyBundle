@@ -22,7 +22,7 @@ trait ProjectionWhenArgs
 
             // make sure there are not extra events
             foreach ($eventHandlers as $event => $handler) {
-                if (false === array_search($event, $projectedEvents)) {
+                if (!\in_array($event, $projectedEvents, true)) {
                     return false;
                 }
             }
