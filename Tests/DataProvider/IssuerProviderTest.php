@@ -9,7 +9,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 use Xm\SymfonyBundle\Tests\TestUserEntity as User;
@@ -70,24 +69,18 @@ class IssuerProviderTest extends BaseTestCase
     }
 
     /**
-     * $user: false = no token storage within container, null = no user.
-     *
-     * @param UserInterface|bool|null $user
+     * $user: null = no user.
      */
     private function createSecurity(?User $user): Security
     {
         $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
-
-        if (false !== $user) {
-            $token = \Mockery::mock(TokenInterface::class);
-            $token->shouldReceive('getUser')
-                ->andReturn($user)
-            ;
-
-            $tokenStorage->shouldReceive('getToken')
-                ->andReturn($token)
-            ;
-        }
+        $token = \Mockery::mock(TokenInterface::class);
+        $token->shouldReceive('getUser')
+            ->andReturn($user)
+        ;
+        $tokenStorage->shouldReceive('getToken')
+            ->andReturn($token)
+        ;
 
         $container = $this->createContainer('security.token_storage', $tokenStorage);
 
