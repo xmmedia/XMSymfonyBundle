@@ -88,7 +88,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
                     },
                 );
 
-                if ($all) {
+                if ([] !== $all) {
                     $strings[] = \sprintf(
                         '%s [%s]',
                         $field,
@@ -109,7 +109,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
             $errors[] = $error->getMessage();
         }
 
-        if ($errors) {
+        if ([] !== $errors) {
             if ($data->isRoot()) {
                 $form['root'] = $errors;
             } else {
@@ -124,7 +124,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
             }
         }
 
-        if ($children) {
+        if ([] !== $children) {
             $form['children'] = $children;
         }
 

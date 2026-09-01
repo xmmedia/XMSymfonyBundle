@@ -193,7 +193,7 @@ EOT;
     {
         $data = $this->persistenceStrategy->prepareData($streamEvents);
 
-        if (empty($data)) {
+        if ([] === $data) {
             return;
         }
 

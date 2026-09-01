@@ -79,12 +79,12 @@ class AggregateType implements \Stringable
 
     public function mappedClass(): ?string
     {
-        return empty($this->mapping) ? null : current($this->mapping);
+        return [] === $this->mapping ? null : current($this->mapping);
     }
 
     public function toString(): string
     {
-        return empty($this->mapping) ? $this->aggregateType : key($this->mapping);
+        return [] === $this->mapping ? $this->aggregateType : key($this->mapping);
     }
 
     public function __toString(): string

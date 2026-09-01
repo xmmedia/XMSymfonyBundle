@@ -21,7 +21,7 @@ class EntrypointIntegrityHashViteQuery implements QueryInterface
     {
         $fileData = $this->lookup->getJSFiles($entrypoint);
 
-        if (empty($fileData)) {
+        if ([] === $fileData) {
             return null;
         }
 

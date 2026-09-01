@@ -23,7 +23,7 @@ abstract class Filters implements FiltersInterface
     protected function __construct(array $filters)
     {
         $this->availableFields = $this->getFields();
-        if (empty($this->availableFields)) {
+        if ([] === $this->availableFields) {
             Assert::notEmpty(
                 $this->availableFields,
                 'The filter class must have at least 1 filter constant.',
