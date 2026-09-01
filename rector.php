@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\PHPUnit\Set\PHPUnitSetList;
 
 return RectorConfig::configure()
     ->withParallel()
@@ -40,18 +39,13 @@ return RectorConfig::configure()
         __DIR__.'/Util',
         __DIR__.'/XmSymfonyBundle.php',
     ])
-    ->withSets([
-        PHPUnitSetList::PHPUNIT_90,
-    ])
     ->withSkip([
         // the skeleton files are templates, not valid PHP
         __DIR__.'/Resources/skeleton',
         // we may not want the property to have a default value
         Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector::class,
-        Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector::class,
         // from set "codingStyle"
         Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector::class,
-        Rector\CodingStyle\Rector\If_\NullableCompareToNullRector::class,
         Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector::class,
         Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class,
         Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector::class,
