@@ -99,7 +99,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
      *
      * @return [ArrayAccess, int] The iterator and interior index
      */
-    protected function getIteratorByIndex($index = 0)
+    protected function getIteratorByIndex($index = 0): ?array
     {
         $runningCount = 0;
         foreach ($this->getArrayIterator() as $innerIt) {
