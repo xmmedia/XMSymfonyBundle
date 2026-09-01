@@ -45,8 +45,6 @@ abstract class ValueObjectCollection extends Collection
 
     protected function getComparator(): \Closure
     {
-        return static function (ValueObject $a, ValueObject $b): int {
-            return $a->sameValueAs($b) ? 0 : -1;
-        };
+        return static fn (ValueObject $a, ValueObject $b): int => $a->sameValueAs($b) ? 0 : -1;
     }
 }

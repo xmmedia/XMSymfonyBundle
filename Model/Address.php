@@ -142,7 +142,7 @@ class Address implements ValueObject, \Stringable
     public function toString(bool $html = false, bool $includeCountry = true): string
     {
         $br = $html ? '<br>' : "\n";
-        $escape = static fn (string $str) => $html ? htmlspecialchars($str, \ENT_QUOTES | \ENT_SUBSTITUTE) : $str;
+        $escape = static fn (string $str): string => $html ? htmlspecialchars($str, \ENT_QUOTES | \ENT_SUBSTITUTE) : $str;
 
         $str = $escape($this->line1);
         if (null !== $this->line2) {

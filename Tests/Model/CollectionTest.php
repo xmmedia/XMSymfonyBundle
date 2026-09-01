@@ -47,9 +47,7 @@ class CollectionTest extends TestCase
 
         $collection = Collection::fromArray($arr);
 
-        $res = $collection->find(static function ($i): bool {
-            return 1 === $i;
-        });
+        $res = $collection->find(static fn ($i): bool => 1 === $i);
 
         $this->assertEquals(1, $res);
     }
@@ -60,9 +58,7 @@ class CollectionTest extends TestCase
 
         $collection = Collection::fromArray($arr);
 
-        $res = $collection->find(static function ($i): bool {
-            return 0 === $i;
-        });
+        $res = $collection->find(static fn ($i): bool => 0 === $i);
 
         $this->assertNull($res);
     }

@@ -38,9 +38,7 @@ class AggregateRepository
             return;
         }
 
-        $enrichedEvents = array_map(function ($event) use ($aggregateId): Message {
-            return $this->enrichEventMetadata($event, $aggregateId);
-        }, $domainEvents);
+        $enrichedEvents = array_map(fn ($event): Message => $this->enrichEventMetadata($event, $aggregateId), $domainEvents);
 
         $this->eventStore->appendTo($streamName, new \ArrayIterator($enrichedEvents));
 

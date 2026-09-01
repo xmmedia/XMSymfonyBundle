@@ -59,9 +59,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         if (!$this->isProduction()) {
             $headers['X-Original-To'] = implode(
                 ', ',
-                array_map(static function (Email $email): string {
-                    return $email->withName();
-                }, $to),
+                array_map(static fn (Email $email): string => $email->withName(), $to),
             );
 
             $to = $this->removeNonWhiteListedAddresses($to);
@@ -73,9 +71,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
 
         $toString = implode(
             ', ',
-            array_map(static function (Email $email): string {
-                return $email->withName();
-            }, $to),
+            array_map(static fn (Email $email): string => $email->withName(), $to),
         );
 
         if (null === $from) {

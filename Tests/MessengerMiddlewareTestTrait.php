@@ -17,9 +17,7 @@ trait MessengerMiddlewareTestTrait
         $nextMiddleware->shouldReceive('handle')
             ->once()
             ->andReturnUsing(
-                static function (Envelope $envelope, StackInterface $stack): Envelope {
-                    return $envelope;
-                },
+                static fn (Envelope $envelope, StackInterface $stack): Envelope => $envelope,
             );
 
         return new StackMiddleware($nextMiddleware);
