@@ -13,7 +13,7 @@ use Xm\SymfonyBundle\Model\Email;
 /**
  * @phpstan-import-type EmailSuppressionResult from EmailSuppressionCheckerInterface
  */
-final class EmailSuppressionQuery implements QueryInterface
+final readonly class EmailSuppressionQuery implements QueryInterface
 {
     public function __construct(private EmailSuppressionCheckerInterface $suppressionChecker)
     {
