@@ -74,7 +74,7 @@ class AggregateRepository
 
         try {
             $streamEvents = $this->eventStore->load($streamName, 1, null, $metadataMatcher);
-        } catch (StreamNotFound $e) {
+        } catch (StreamNotFound) {
             return null;
         }
 
@@ -121,7 +121,7 @@ class AggregateRepository
 
         try {
             $streamEvents = $this->eventStore->load($streamName, 1, null, $metadataMatcher);
-        } catch (StreamNotFound $e) {
+        } catch (StreamNotFound) {
             return new \ArrayIterator();
         }
 

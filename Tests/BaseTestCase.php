@@ -71,7 +71,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
     {
         try {
             \Webmozart\Assert\Assert::uuid($uuid);
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             $this->assertTrue(false, \sprintf('The "%s" is not a UUID.', $uuid));
         }
     }

@@ -128,7 +128,7 @@ final class ProjectionRunCommand extends Command
 
         try {
             $state = $this->projectionRunner->state()->getValue();
-        } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
+        } catch (\Prooph\EventStore\Exception\RuntimeException) {
             $state = 'unknown';
         }
         $this->io->text(\sprintf('Current status: %s', $state));

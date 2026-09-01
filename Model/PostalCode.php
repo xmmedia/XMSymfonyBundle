@@ -56,7 +56,7 @@ class PostalCode implements ValueObject, \Stringable
                 self::MIN_LENGTH,
                 self::MAX_LENGTH,
             );
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             throw InvalidPostalCode::invalid($postalCode);
         }
     }

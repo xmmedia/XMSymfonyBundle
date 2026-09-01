@@ -108,7 +108,7 @@ EOT;
                 $status,
                 $name,
             ]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -123,7 +123,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (\PDOException $exception) {
+            } catch (\PDOException) {
                 // ignore and check error code
             }
 
@@ -149,7 +149,7 @@ EOT;
                 ProjectionStatus::RESETTING()->getValue(),
                 $name,
             ]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -164,7 +164,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (\PDOException $exception) {
+            } catch (\PDOException) {
                 // ignore and check error code
             }
 
@@ -190,7 +190,7 @@ EOT;
                 ProjectionStatus::STOPPING()->getValue(),
                 $name,
             ]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -205,7 +205,7 @@ EOT;
             $statement = $this->connection->prepare($sql);
             try {
                 $statement->execute([$name]);
-            } catch (\PDOException $exception) {
+            } catch (\PDOException) {
                 // ignore and check error code
             }
 
@@ -253,7 +253,7 @@ SQL;
         $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -312,7 +312,7 @@ SQL;
         $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute($values);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -348,7 +348,7 @@ SQL;
         $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -377,7 +377,7 @@ SQL;
         $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
@@ -406,7 +406,7 @@ SQL;
         $statement->setFetchMode(\PDO::FETCH_OBJ);
         try {
             $statement->execute([$name]);
-        } catch (\PDOException $exception) {
+        } catch (\PDOException) {
             // ignore and check error code
         }
 
