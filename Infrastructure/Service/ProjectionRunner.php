@@ -14,6 +14,10 @@ use Psr\Log\LoggerInterface;
 
 class ProjectionRunner
 {
+    public const DEFAULT_MAX_ATTEMPTS = 50;
+    /** 1/2 second */
+    public const DEFAULT_RETRY_DELAY = 500000;
+
     private string $projectionName;
     private ProjectionManager $projectionManager;
     private ReadModelProjector $projector;
@@ -24,6 +28,9 @@ class ProjectionRunner
         private readonly ContainerInterface $projectionsLocator,
         private readonly ContainerInterface $projectionReadModelLocator,
         private readonly ?LoggerInterface $logger = null,
+        private readonly int $maxAttempts = self::DEFAULT_MAX_ATTEMPTS,
+        // in microseconds
+        private readonly int $retryDelay = self::DEFAULT_RETRY_DELAY,
     ) {
     }
 
@@ -41,8 +48,7 @@ class ProjectionRunner
             $attempts = 0;
             do {
                 if ($attempts > 0) {
-                    // 1/2 second
-                    usleep(500000);
+                    usleep($this->retryDelay);
                 }
 
                 $state = $this->state();
@@ -53,13 +59,14 @@ class ProjectionRunner
                         $this->projector->run($keepRunning);
                         $ranSuccessfully = true;
                     } catch (\Prooph\EventStore\Exception\RuntimeException $e) {
-                        // if the projection is already running, we can ignore this exception
-                        if ($attempts >= 50 || 'Another projection process is already running' !== $e->getMessage()) {
+                        // the status is only checked against the status column,
+                        // while the lock is acquired on the locked_until column,
+                        // so another process can acquire the lock between the two:
+                        // retry until the projection can be run
+                        if ($attempts >= $this->maxAttempts || 'Another projection process is already running' !== $e->getMessage()) {
                             throw $e;
                         }
                     }
-                } elseif ($attempts > 50) {
-                    throw new \RuntimeException(\sprintf('Projection "%s" is not idle. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
                 }
 
                 if ($attempts > 1 && 0 === $attempts % 5 && $this->logger) {
@@ -72,7 +79,11 @@ class ProjectionRunner
                         ),
                     );
                 }
-            } while (!$ranSuccessfully && !$state->is(ProjectionStatus::IDLE()) && $attempts < 50);
+            } while (!$ranSuccessfully && $attempts < $this->maxAttempts);
+
+            if (!$ranSuccessfully) {
+                throw new \RuntimeException(\sprintf('Projection "%s" could not be run. It\'s state is "%s". Attempted %d times.', $projectionName, $state->getValue(), $attempts));
+            }
         } catch (\Prooph\EventStore\Exception\ProjectionNotFound) {
             // try running
             // the likely case is the projection has not been initialized
