@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\EventSourcing\Aggregate;
 
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Exception\StreamNotFound;
+use Prooph\EventStore\Metadata\FieldType;
 use Prooph\EventStore\Metadata\MetadataMatcher;
 use Prooph\EventStore\Metadata\Operator;
 use Prooph\EventStore\StreamName;
@@ -81,16 +82,22 @@ class AggregateRepository
 
         $streamName = $this->determineStreamName($aggregateId);
 
+        // match on the stored generated columns rather than the JSON metadata
+        // expressions: the optimiser does not reliably substitute the indexed
+        // generated columns for the expressions, leaving the load to walk the
+        // primary key across every aggregate in the stream
         $metadataMatcher = new MetadataMatcher();
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
-            '_aggregate_type',
+            'aggregate_type',
             Operator::EQUALS(),
-            $this->aggregateType->toString()
+            $this->aggregateType->toString(),
+            FieldType::MESSAGE_PROPERTY()
         );
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
-            '_aggregate_id',
+            'aggregate_id',
             Operator::EQUALS(),
-            $aggregateId
+            $aggregateId,
+            FieldType::MESSAGE_PROPERTY()
         );
 
         try {
