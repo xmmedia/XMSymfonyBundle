@@ -6,16 +6,19 @@ namespace Xm\SymfonyBundle\EventStore\PersistenceStrategy;
 
 use Prooph\Common\Messaging\MessageConverter;
 use Prooph\EventStore\Pdo\DefaultMessageConverter;
-use Prooph\EventStore\Pdo\HasQueryHint;
 use Prooph\EventStore\Pdo\PersistenceStrategy\MySqlPersistenceStrategy;
 use Prooph\EventStore\StreamName;
 use Xm\SymfonyBundle\Util\Json;
 
 /**
  * THIS IS A COPY of \Prooph\EventStore\Pdo\PersistenceStrategy\MySqlSingleStreamStrategy
- * EXCEPT for generateTableName().
+ * EXCEPT for generateTableName() and it does not implement HasQueryHint.
+ *
+ * The USE INDEX hint forces the projection read (`no` >= position) into a
+ * full table scan, so this class is hint-free for the projection event store
+ * and HintedStreamStrategy adds the hint back for aggregate loads.
  */
-final class StreamStrategy implements MySqlPersistenceStrategy, HasQueryHint
+class StreamStrategy implements MySqlPersistenceStrategy
 {
     /** @var MessageConverter */
     private $messageConverter;

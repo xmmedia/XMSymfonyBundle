@@ -26,6 +26,7 @@ services:
 
     Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateTranslator: ~
     Xm\SymfonyBundle\EventStore\PersistenceStrategy\StreamStrategy: ~
+    Xm\SymfonyBundle\EventStore\PersistenceStrategy\HintedStreamStrategy: ~
 
     Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
