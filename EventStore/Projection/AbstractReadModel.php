@@ -25,6 +25,13 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
      */
     protected $tables;
 
+    /**
+     * Shadows the parent's private stack so persist() can be made atomic.
+     *
+     * @var array<int, array{0: string, 1: array}>
+     */
+    private $stack = [];
+
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -34,11 +41,39 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
         }
     }
 
+    public function stack(string $operation, ...$args): void
+    {
+        $this->stack[] = [$operation, $args];
+    }
+
+    /**
+     * Applies the stacked operations all-or-nothing.
+     *
+     * The projector only advances its stream position after this returns,
+     * so if any operation fails nothing may remain written: otherwise the next
+     * run replays the same events against the partial writes and fails again
+     * on duplicate keys. The stack is always cleared, even on failure, because
+     * this read model instance is shared by every projection run in the same
+     * process and leftover operations would poison the next run.
+     */
+    public function persist(): void
+    {
+        try {
+            $this->connection->transactional(function (): void {
+                foreach ($this->stack as [$operation, $args]) {
+                    $this->{$operation}(...$args);
+                }
+            });
+        } finally {
+            $this->stack = [];
+        }
+    }
+
     public function isInitialized(): bool
     {
         foreach ($this->tables as $table) {
             $result = $this->connection->fetchOne(
-                sprintf("SHOW TABLES LIKE '%s';", $table)
+                \sprintf("SHOW TABLES LIKE '%s';", $table)
             );
 
             if (false === $result) {
@@ -53,7 +88,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     {
         foreach ($this->tables as $table) {
             $this->connection->executeQuery(
-                sprintf('TRUNCATE TABLE `%s`;', $table)
+                \sprintf('TRUNCATE TABLE `%s`;', $table)
             );
         }
     }
@@ -62,7 +97,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
     {
         foreach ($this->tables as $table) {
             $this->connection->executeQuery(
-                sprintf('DROP TABLE IF EXISTS `%s`;', $table)
+                \sprintf('DROP TABLE IF EXISTS `%s`;', $table)
             );
         }
     }
