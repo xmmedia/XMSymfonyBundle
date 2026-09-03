@@ -58,6 +58,10 @@ class AggregateRepository
 
         $streamName = $this->determineStreamName($aggregateId);
 
+        // match on the stored generated columns rather than the JSON metadata
+        // expressions: the optimiser does not reliably substitute the indexed
+        // generated columns for the expressions, leaving the load to walk the
+        // primary key across every aggregate in the stream
         $metadataMatcher = new MetadataMatcher();
         $metadataMatcher = $metadataMatcher->withMetadataMatch(
             'aggregate_type',
