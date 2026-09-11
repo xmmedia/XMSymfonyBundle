@@ -90,6 +90,8 @@ This bundle implements event sourcing using Prooph Event Store:
 - Custom GraphQL types in `Infrastructure/GraphQl/Type/` (DateType, UuidType, GenderType, etc.)
 - GraphQL config files generated in `config/graphql/types/`
 
+**Session Expiry** (`Security/SessionExpiry.php`, `EventSubscriber/SessionExpirySubscriber.php`): on by default; disable with `xm_symfony.session_expiry: false`. Signs out users idle for longer than `framework.session.gc_maxlifetime`, since PHP's file session GC doesn't check a session's age when reading it. Every request by a signed in user extends the session, except routes with `_extend_session: false` in their defaults (`SessionExpiry::EXTEND_ATTRIBUTE`), eg an endpoint reporting the time remaining. Sessions with a remember-me cookie don't expire: `SessionExpiryPass` reads the cookie names from each firewall's remember-me config (the options of the `security.remember_me_handler` tagged services SecurityBundle creates — there's no public API for it), so nothing needs configuring. The services are only registered when enabled. It needs sessions & SecurityBundle, which every project using the bundle has.
+
 **Metadata Enrichment**: Events are enriched with metadata (IP address, user agent, issuer, causation) via `EventStore/Metadata*Enricher.php` classes.
 
 ### Code Generation with `make:model`

@@ -56,7 +56,8 @@
     "symfony/debug-pack": "^1.0.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/phpunit-bridge": "^7.0",
-    "symfony/webpack-encore-bundle": "^1.0"
+    "symfony/webpack-encore-bundle": "^1.0",
+    "symfony/yaml": "^6.2 || ^6.3 || ^6.4 || ^7.0"
   },
   "config": {
     "sort-packages": true

@@ -7,6 +7,7 @@ namespace Xm\SymfonyBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Xm\SymfonyBundle\DependencyInjection\Compiler\EmailSuppressionQueryPass;
+use Xm\SymfonyBundle\DependencyInjection\Compiler\SessionExpiryPass;
 
 class XmSymfonyBundle extends Bundle
 {
@@ -15,5 +16,6 @@ class XmSymfonyBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new EmailSuppressionQueryPass());
+        $container->addCompilerPass(new SessionExpiryPass());
     }
 }

@@ -22,6 +22,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->append($this->addRepositoriesSection())
+                ->append($this->addSessionExpirySection())
             ->end();
 
         return $treeBuilder;
@@ -53,5 +54,17 @@ final class Configuration implements ConfigurationInterface
             ->end();
 
         return $repositoriesNode;
+    }
+
+    private function addSessionExpirySection(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('session_expiry');
+        $sessionExpiryNode = $treeBuilder->getRootNode();
+
+        $sessionExpiryNode
+            ->info('Signs out users idle for longer than framework.session.gc_maxlifetime.')
+            ->canBeDisabled();
+
+        return $sessionExpiryNode;
     }
 }

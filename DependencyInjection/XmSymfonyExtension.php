@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Security\SessionExpiry;
 
 class XmSymfonyExtension extends Extension
 {
@@ -29,6 +31,20 @@ class XmSymfonyExtension extends Extension
         if (!empty($config['repositories'])) {
             $this->loadRepositories($config, $container);
         }
+
+        if ($config['session_expiry']['enabled']) {
+            $this->loadSessionExpiry($container);
+        }
+    }
+
+    private function loadSessionExpiry(ContainerBuilder $container): void
+    {
+        $container->register(SessionExpiry::class)
+            ->setAutowired(true);
+
+        $container->register(SessionExpirySubscriber::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true);
     }
 
     private function loadRepositories(
