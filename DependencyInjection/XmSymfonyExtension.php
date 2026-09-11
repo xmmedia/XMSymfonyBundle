@@ -62,8 +62,7 @@ class XmSymfonyExtension extends Extension
 
         $container->register(MaintenanceSubscriber::class)
             ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setArgument('$debug', '%kernel.debug%');
+            ->setAutoconfigured(true);
 
         $container->register(MaintenanceWorkerSubscriber::class)
             ->setAutowired(true)

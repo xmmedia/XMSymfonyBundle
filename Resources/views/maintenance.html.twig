@@ -73,7 +73,7 @@
             setInterval(async () => {
                 try {
                     const response = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
-                    if (!response.headers.has('{{ constant('Xm\\SymfonyBundle\\EventSubscriber\\MaintenanceSubscriber::HEADER') }}')) {
+                    if (!response.headers.has('{{ constant('Xm\\SymfonyBundle\\Infrastructure\\Service\\MaintenanceGate::HEADER') }}')) {
                         window.location.replace(window.location.href);
                     }
                 } catch (e) {

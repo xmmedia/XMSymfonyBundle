@@ -52,8 +52,6 @@ class XmSymfonyExtensionTest extends BaseTestCase
             $this->assertTrue($definition->isAutoconfigured());
         }
 
-        $subscriber = $container->getDefinition(MaintenanceSubscriber::class);
-        $this->assertSame('%kernel.debug%', $subscriber->getArgument('$debug'));
         $this->assertTrue($container->hasDefinition(MaintenanceGate::class));
         $this->assertNull($container->getDefinition(MaintenancePage::class)->getArgument('$timeZone'));
     }

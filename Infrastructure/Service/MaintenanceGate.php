@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
  * failure.
  *
  * It only needs the autoloader, so the front controller runs it before the kernel's created
- * (handleGlobals()) & it works even if the app won't boot. MaintenanceSubscriber runs it too,
- * for front controllers that don't.
+ * (handleGlobals()) & it works even if the app won't boot. MaintenanceSubscriber runs it again
+ * on the kernel's request.
  */
 final readonly class MaintenanceGate
 {
@@ -35,7 +35,7 @@ final readonly class MaintenanceGate
     public const string KEY_HEADER = 'X-Maintenance-Key';
 
     private const string GRAPHQL_PATH = '/graphql';
-    // when the page hasn't been rendered (the file was created by hand) & there's no app to render it
+    // when the page hasn't been rendered (the file was created by hand)
     private const string FALLBACK_PAGE = <<<'HTML'
         <!DOCTYPE html>
         <html lang="en">
@@ -67,12 +67,9 @@ final readonly class MaintenanceGate
     }
 
     /**
-     * @param (callable(MaintenanceSettings): string)|null $renderPage for when the page hasn't been
-     *                                                                 rendered to a file
-     *
      * @return Response|null null if the request can carry on: it's off, or they're allowed
      */
-    public function handle(Request $request, ?callable $renderPage = null): ?Response
+    public function handle(Request $request): ?Response
     {
         $settings = $this->maintenanceMode->settings();
         if (null === $settings) {
@@ -95,12 +92,10 @@ final readonly class MaintenanceGate
         if ($this->wantsJson($request)) {
             $response = $this->jsonResponse($settings);
         } else {
-            $page = $this->maintenanceMode->page();
-            if (null === $page && null !== $renderPage) {
-                $page = $renderPage($settings);
-            }
-
-            $response = new Response($page ?? self::FALLBACK_PAGE, Response::HTTP_SERVICE_UNAVAILABLE);
+            $response = new Response(
+                $this->maintenanceMode->page() ?? self::FALLBACK_PAGE,
+                Response::HTTP_SERVICE_UNAVAILABLE,
+            );
         }
 
         $response->headers->set(self::HEADER, '1');

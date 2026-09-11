@@ -35,23 +35,6 @@ class MaintenanceGateTest extends BaseTestCase
         $this->assertStringContainsString('no-store', $response->headers->get('Cache-Control'));
     }
 
-    public function testPageRenderedWhenThereIsNoFile(): void
-    {
-        $page = $this->faker()->randomHtml();
-        $settings = new MaintenanceSettings($this->faker()->sentence());
-
-        $response = $this->gate($settings)->handle(
-            Request::create('/'),
-            function (MaintenanceSettings $given) use ($settings, $page): string {
-                $this->assertSame($settings, $given);
-
-                return $page;
-            },
-        );
-
-        $this->assertSame($page, $response->getContent());
-    }
-
     public function testFallbackPage(): void
     {
         $response = $this->gate(new MaintenanceSettings())->handle(Request::create('/'));

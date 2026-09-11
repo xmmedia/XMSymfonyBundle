@@ -7,13 +7,12 @@ namespace Xm\SymfonyBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Routing\RequestContext;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
-use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 
 /**
- * Runs MaintenanceGate, for front controllers that don't run it before the kernel's created, &
- * so requests that are allowed through get MaintenanceGate::BYPASS_ATTRIBUTE.
+ * Runs MaintenanceGate again once the kernel has the request, so requests that are allowed
+ * through get MaintenanceGate::BYPASS_ATTRIBUTE (the front controller's run is on its own
+ * request), & to catch it being turned on in between.
  *
  * Runs after ValidateRequestListener (256), so the client IP has been checked against the
  * trusted proxies, but before the session (128), routing (32) & the firewall (8), so it doesn't
@@ -21,18 +20,8 @@ use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
  */
 final readonly class MaintenanceSubscriber implements EventSubscriberInterface
 {
-    // kept for templates & code that used them here
-    public const string HEADER = MaintenanceGate::HEADER;
-    public const string BYPASS_ATTRIBUTE = MaintenanceGate::BYPASS_ATTRIBUTE;
-    public const string ERROR_CODE = MaintenanceGate::ERROR_CODE;
-    public const string TEMPLATE = MaintenancePage::TEMPLATE;
-
-    public function __construct(
-        private MaintenanceGate $gate,
-        private MaintenancePage $page,
-        private bool $debug,
-        private ?RequestContext $requestContext = null,
-    ) {
+    public function __construct(private MaintenanceGate $gate)
+    {
     }
 
     public static function getSubscribedEvents(): array
@@ -48,18 +37,7 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $request = $event->getRequest();
-
-        // the profiler & debug toolbar (dev only)
-        if ($this->debug && str_starts_with($request->getPathInfo(), '/_')) {
-            return;
-        }
-
-        // routing hasn't run, so URLs would be generated for default_uri, not this request's
-        // host (eg the debug toolbar's, injected into the page)
-        $this->requestContext?->fromRequest($request);
-
-        $response = $this->gate->handle($request, $this->page->render(...));
+        $response = $this->gate->handle($event->getRequest());
         if (null !== $response) {
             $event->setResponse($response);
         }
