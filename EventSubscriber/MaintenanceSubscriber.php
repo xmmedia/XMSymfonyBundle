@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\RequestContext;
 use Twig\Environment;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
@@ -41,6 +42,7 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
         private Environment $twig,
         private bool $debug,
         private ?string $timeZone = null,
+        private ?RequestContext $requestContext = null,
     ) {
     }
 
@@ -74,6 +76,10 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
         if ($this->debug && str_starts_with($request->getPathInfo(), '/_')) {
             return;
         }
+
+        // routing hasn't run, so URLs would be generated for default_uri, not this request's
+        // host (eg the debug toolbar's, injected into the page)
+        $this->requestContext?->fromRequest($request);
 
         if ($this->wantsJson($request)) {
             $response = $this->jsonResponse($settings);

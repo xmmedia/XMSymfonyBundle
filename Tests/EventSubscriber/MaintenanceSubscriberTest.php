@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\RequestContext;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
@@ -89,6 +90,24 @@ class MaintenanceSubscriberTest extends BaseTestCase
         ))->onKernelRequest($event);
 
         $this->assertSame('page', $event->getResponse()->getContent());
+    }
+
+    public function testRequestContextSetFromRequest(): void
+    {
+        $requestContext = new RequestContext('', 'GET', 'default.example.com', 'https');
+        $event = $this->requestEvent(Request::create('http://site.example.com:8080/page'));
+
+        (new MaintenanceSubscriber(
+            $this->maintenanceMode(new MaintenanceSettings()),
+            new Environment(new ArrayLoader([MaintenanceSubscriber::TEMPLATE => 'page'])),
+            false,
+            null,
+            $requestContext,
+        ))->onKernelRequest($event);
+
+        $this->assertSame('site.example.com', $requestContext->getHost());
+        $this->assertSame('http', $requestContext->getScheme());
+        $this->assertSame(8080, $requestContext->getHttpPort());
     }
 
     public function testGraphQl(): void
