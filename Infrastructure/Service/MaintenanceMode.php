@@ -9,7 +9,10 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Maintenance mode is on while the maintenance file (xm_symfony.maintenance.file) exists. By
  * default it's in var/, which is shared between releases, so it can be turned on & off without
- * deploying – with app:maintenance, or a bare `touch` if the app won't boot.
+ * deploying – with app:maintenance, or a bare `touch` if the command won't run.
+ *
+ * The page is rendered to a file beside it (<file>.html), so it can be sent without booting the
+ * app (see MaintenanceGate).
  */
 class MaintenanceMode
 {
@@ -48,11 +51,31 @@ class MaintenanceMode
     }
 
     /**
-     * Turns it on, or updates the settings if it's already on. The file is replaced atomically,
-     * so a request never reads half of it.
+     * The rendered page, null if it hasn't been (the file was created by hand).
      */
-    public function enable(MaintenanceSettings $settings): void
+    public function page(): ?string
     {
+        $contents = @file_get_contents($this->pageFile());
+
+        if (false === $contents) {
+            return null;
+        }
+
+        return $contents;
+    }
+
+    /**
+     * Turns it on, or updates the settings if it's already on. The files are replaced atomically,
+     * so a request never reads half of one. The page first, so it's ready when it turns on.
+     */
+    public function enable(MaintenanceSettings $settings, ?string $page = null): void
+    {
+        if (null === $page) {
+            $this->filesystem->remove($this->pageFile());
+        } else {
+            $this->filesystem->dumpFile($this->pageFile(), $page);
+        }
+
         $this->filesystem->dumpFile(
             $this->file,
             json_encode($settings, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR),
@@ -64,12 +87,15 @@ class MaintenanceMode
      */
     public function disable(): bool
     {
-        if (!$this->isOn()) {
-            return false;
-        }
+        $wasOn = $this->isOn();
 
-        $this->filesystem->remove($this->file);
+        $this->filesystem->remove([$this->file, $this->pageFile()]);
 
-        return true;
+        return $wasOn;
+    }
+
+    private function pageFile(): string
+    {
+        return $this->file.'.html';
     }
 }

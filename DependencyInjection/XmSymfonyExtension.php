@@ -15,7 +15,9 @@ use Xm\SymfonyBundle\Command\MaintenanceCommand;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Security\SessionExpiry;
 
 class XmSymfonyExtension extends Extension
@@ -51,11 +53,17 @@ class XmSymfonyExtension extends Extension
         $container->register(MaintenanceMode::class)
             ->setArgument('$file', $config['file']);
 
+        $container->register(MaintenanceGate::class)
+            ->setAutowired(true);
+
+        $container->register(MaintenancePage::class)
+            ->setAutowired(true)
+            ->setArgument('$timeZone', $config['time_zone']);
+
         $container->register(MaintenanceSubscriber::class)
             ->setAutowired(true)
             ->setAutoconfigured(true)
-            ->setArgument('$debug', '%kernel.debug%')
-            ->setArgument('$timeZone', $config['time_zone']);
+            ->setArgument('$debug', '%kernel.debug%');
 
         $container->register(MaintenanceWorkerSubscriber::class)
             ->setAutowired(true)

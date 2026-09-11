@@ -13,7 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Routing\RequestContext;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
 
 #[AsCommand(
@@ -32,6 +35,7 @@ final class MaintenanceCommand extends Command
     private const string ALLOW_MY_IP = 'allow-my-ip';
     private const string REMOVE_IP = 'remove-ip';
     private const string RESET_IPS = 'reset-ips';
+    private const string NEW_KEY = 'new-key';
     private const array ON_OPTIONS = [
         self::MESSAGE,
         self::UNTIL,
@@ -39,11 +43,15 @@ final class MaintenanceCommand extends Command
         self::ALLOW_MY_IP,
         self::REMOVE_IP,
         self::RESET_IPS,
+        self::NEW_KEY,
     ];
 
     public function __construct(
         private readonly MaintenanceMode $maintenanceMode,
+        private readonly MaintenancePage $page,
         private readonly ?string $timeZone = null,
+        // for the key's URL: the site's, from framework.router.default_uri
+        private readonly ?RequestContext $requestContext = null,
     ) {
         parent::__construct();
     }
@@ -98,13 +106,23 @@ final class MaintenanceCommand extends Command
                 InputOption::VALUE_NONE,
                 'Remove all allowed IPs (before adding any given)',
             )
+            ->addOption(
+                self::NEW_KEY,
+                null,
+                InputOption::VALUE_NONE,
+                'Replace the key, so anyone using the current one is blocked',
+            )
             ->setHelp(
                 <<<'HELP'
-                    While it's on, everyone except the allowed IPs gets the maintenance page (or a 503
-                    for GraphQL requests) & messenger workers pause.
+                    While it's on, everyone except the allowed IPs & anyone with the key gets the
+                    maintenance page (or a 503 for GraphQL requests) & messenger workers pause.
+
+                    A new key is generated each time it's turned on. Opening the key's URL (or any URL
+                    with it added) sets a cookie that lets that browser use the site until it's
+                    closed. It can also be sent in the X-Maintenance-Key header.
 
                     Running <info>%command.name% on</info> while it's already on updates it, keeping
-                    anything not given.
+                    anything not given (including the key, unless --new-key).
                     HELP,
             );
     }
@@ -141,7 +159,11 @@ final class MaintenanceCommand extends Command
 
         $settings = $settings->withAllowedIps($this->allowedIps($input, $settings->allowedIps()));
 
-        $this->maintenanceMode->enable($settings);
+        if (null === $settings->key() || $input->getOption(self::NEW_KEY)) {
+            $settings = $settings->withKey(MaintenanceSettings::generateKey());
+        }
+
+        $this->maintenanceMode->enable($settings, $this->page->render($settings));
 
         if (null === $current) {
             $io->success('Maintenance mode is on.');
@@ -201,11 +223,36 @@ final class MaintenanceCommand extends Command
             $allowedIps = implode(', ', $settings->allowedIps());
         }
 
+        $key = 'none';
+        if (null !== $settings->key()) {
+            $key = $this->keyUrl($settings->key());
+        }
+
         $io->definitionList(
             ['Message' => $settings->message() ?? \sprintf('"%s" (default)', MaintenanceSettings::DEFAULT_MESSAGE)],
             ['Until' => $until],
             ['Allowed IPs' => $allowedIps],
+            ['Key URL' => $key],
         );
+    }
+
+    private function keyUrl(string $key): string
+    {
+        $path = '/?'.http_build_query([MaintenanceGate::KEY_PARAMETER => $key]);
+
+        $context = $this->requestContext;
+        if (null === $context) {
+            return $path;
+        }
+
+        $port = '';
+        if ('http' === $context->getScheme() && 80 !== $context->getHttpPort()) {
+            $port = ':'.$context->getHttpPort();
+        } elseif ('https' === $context->getScheme() && 443 !== $context->getHttpsPort()) {
+            $port = ':'.$context->getHttpsPort();
+        }
+
+        return $context->getScheme().'://'.$context->getHost().$port.$context->getBaseUrl().$path;
     }
 
     private function until(string $until): ?CarbonImmutable

@@ -9,8 +9,13 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Routing\RequestContext;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 use Xm\SymfonyBundle\Command\MaintenanceCommand;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 
@@ -68,6 +73,7 @@ class MaintenanceCommandTest extends BaseTestCase
         $this->assertSame($message, $settings->message());
         $this->assertEquals(CarbonImmutable::parse('2026-09-10 12:30', self::TIME_ZONE), $settings->until());
         $this->assertSame([$ip, '10.0.0.0/8'], $settings->allowedIps());
+        $this->assertSame('page: '.$message, $this->maintenanceMode->page());
     }
 
     public function testOnWithDefaults(): void
@@ -75,7 +81,52 @@ class MaintenanceCommandTest extends BaseTestCase
         $commandTester = $this->execute(['action' => 'on']);
 
         $this->assertStringContainsString('(default)', $commandTester->getDisplay());
-        $this->assertEquals(new MaintenanceSettings(), $this->maintenanceMode->settings());
+        $settings = $this->maintenanceMode->settings();
+        $this->assertEquals(new MaintenanceSettings(null, null, [], $settings->key()), $settings);
+    }
+
+    public function testOnGeneratesAKey(): void
+    {
+        $display = $this->execute(['action' => 'on'])->getDisplay();
+
+        $key = $this->maintenanceMode->settings()->key();
+        $this->assertMatchesRegularExpression('/^[0-9a-f]{32}$/', $key);
+        $this->assertStringContainsString(
+            'https://example.com:8443/?'.MaintenanceGate::KEY_PARAMETER.'='.$key,
+            $display,
+        );
+    }
+
+    public function testOnWhenOnKeepsTheKey(): void
+    {
+        $key = MaintenanceSettings::generateKey();
+        $this->maintenanceMode->enable(new MaintenanceSettings(null, null, [], $key));
+
+        $this->execute(['action' => 'on', '--message' => $this->faker()->sentence()]);
+
+        $this->assertSame($key, $this->maintenanceMode->settings()->key());
+    }
+
+    public function testNewKey(): void
+    {
+        $key = MaintenanceSettings::generateKey();
+        $this->maintenanceMode->enable(new MaintenanceSettings(null, null, [], $key));
+
+        $this->execute(['action' => 'on', '--new-key' => true]);
+
+        $this->assertNotSame($key, $this->maintenanceMode->settings()->key());
+        $this->assertNotNull($this->maintenanceMode->settings()->key());
+    }
+
+    public function testOnWhenTurnedOnByHandAddsAKey(): void
+    {
+        mkdir($this->dir);
+        touch($this->dir.'/maintenance');
+
+        $this->execute(['action' => 'on']);
+
+        $this->assertNotNull($this->maintenanceMode->settings()->key());
+        $this->assertNotNull($this->maintenanceMode->page());
     }
 
     public function testOnWhenOnUpdatesIt(): void
@@ -109,7 +160,10 @@ class MaintenanceCommandTest extends BaseTestCase
 
         $this->execute(['action' => 'on', '--message' => '', '--until' => '', '--reset-ips' => true]);
 
-        $this->assertEquals(new MaintenanceSettings(), $this->maintenanceMode->settings());
+        $settings = $this->maintenanceMode->settings();
+        $this->assertNull($settings->message());
+        $this->assertNull($settings->until());
+        $this->assertSame([], $settings->allowedIps());
     }
 
     public function testResetIpsBeforeAdding(): void
@@ -230,7 +284,12 @@ class MaintenanceCommandTest extends BaseTestCase
 
     private function execute(array $input): CommandTester
     {
-        $commandTester = new CommandTester(new MaintenanceCommand($this->maintenanceMode, self::TIME_ZONE));
+        $commandTester = new CommandTester(new MaintenanceCommand(
+            $this->maintenanceMode,
+            new MaintenancePage(new Environment(new ArrayLoader([MaintenancePage::TEMPLATE => 'page: {{ message }}']))),
+            self::TIME_ZONE,
+            new RequestContext('', 'GET', 'example.com', 'https', 80, 8443),
+        ));
         $commandTester->execute($input);
 
         return $commandTester;

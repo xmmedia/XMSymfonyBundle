@@ -17,6 +17,7 @@ class MaintenanceSettingsTest extends BaseTestCase
             $this->faker()->sentence(),
             CarbonImmutable::instance($this->faker()->dateTimeBetween('+1 hour', '+1 day'))->startOfSecond(),
             [$this->faker()->ipv4(), $this->faker()->ipv6()],
+            MaintenanceSettings::generateKey(),
         );
 
         $result = MaintenanceSettings::fromJson(json_encode($settings, \JSON_THROW_ON_ERROR));
@@ -24,6 +25,7 @@ class MaintenanceSettingsTest extends BaseTestCase
         $this->assertSame($settings->message(), $result->message());
         $this->assertEquals($settings->until(), $result->until());
         $this->assertSame($settings->allowedIps(), $result->allowedIps());
+        $this->assertSame($settings->key(), $result->key());
     }
 
     #[DataProvider('unreadableJson')]
@@ -34,6 +36,7 @@ class MaintenanceSettingsTest extends BaseTestCase
         $this->assertNull($settings->message());
         $this->assertNull($settings->until());
         $this->assertSame([], $settings->allowedIps());
+        $this->assertNull($settings->key());
         $this->assertSame(MaintenanceSettings::DEFAULT_MESSAGE, $settings->displayMessage());
     }
 
@@ -42,7 +45,8 @@ class MaintenanceSettingsTest extends BaseTestCase
         yield 'empty' => [''];
         yield 'not json' => ['on'];
         yield 'not an object' => ['"on"'];
-        yield 'wrong types' => ['{"message": 1, "until": "not a date", "allowedIps": "10.0.0.1"}'];
+        yield 'wrong types' => ['{"message": 1, "until": "not a date", "allowedIps": "10.0.0.1", "key": 1}'];
+        yield 'empty key' => ['{"key": ""}'];
         yield 'blank message' => ['{"message": "  "}'];
     }
 
@@ -81,14 +85,35 @@ class MaintenanceSettingsTest extends BaseTestCase
         $message = $this->faker()->sentence();
         $until = CarbonImmutable::now()->addHour();
         $ips = [$this->faker()->ipv4()];
+        $key = MaintenanceSettings::generateKey();
 
-        $settings = (new MaintenanceSettings($message, $until, $ips))
+        $settings = (new MaintenanceSettings($message, $until, $ips, $key))
             ->withUntil(null)
-            ->withUntil($until);
+            ->withUntil($until)
+            ->withMessage($message)
+            ->withAllowedIps($ips);
 
         $this->assertSame($message, $settings->message());
         $this->assertSame($until, $settings->until());
         $this->assertSame($ips, $settings->allowedIps());
+        $this->assertSame($key, $settings->key());
+    }
+
+    public function testAllowsKey(): void
+    {
+        $key = MaintenanceSettings::generateKey();
+        $settings = (new MaintenanceSettings())->withKey($key);
+
+        $this->assertTrue($settings->allowsKey($key));
+        $this->assertFalse($settings->allowsKey(MaintenanceSettings::generateKey()));
+        $this->assertFalse($settings->allowsKey(null));
+        $this->assertFalse((new MaintenanceSettings())->allowsKey(''));
+    }
+
+    public function testGenerateKey(): void
+    {
+        $this->assertMatchesRegularExpression('/^[0-9a-f]{32}$/', MaintenanceSettings::generateKey());
+        $this->assertNotSame(MaintenanceSettings::generateKey(), MaintenanceSettings::generateKey());
     }
 
     public function testAllows(): void

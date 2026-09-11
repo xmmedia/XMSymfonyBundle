@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\EventSubscriber;
 
-use Carbon\CarbonImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RequestContext;
-use Twig\Environment;
-use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
-use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 
 /**
- * While maintenance mode is on, answers every request with a 503, except from the allowed IPs.
- * Page loads get the maintenance page (@XmSymfony/maintenance.html.twig). GraphQL requests &
- * requests accepting JSON get a GraphQL style error with the MAINTENANCE code, so the frontend
- * can tell it from a failure.
+ * Runs MaintenanceGate, for front controllers that don't run it before the kernel's created, &
+ * so requests that are allowed through get MaintenanceGate::BYPASS_ATTRIBUTE.
  *
  * Runs after ValidateRequestListener (256), so the client IP has been checked against the
  * trusted proxies, but before the session (128), routing (32) & the firewall (8), so it doesn't
@@ -28,20 +21,16 @@ use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
  */
 final readonly class MaintenanceSubscriber implements EventSubscriberInterface
 {
-    // sent with every maintenance response, eg so a deploy can tell maintenance from a failure
-    public const string HEADER = 'X-Maintenance';
-    // set on requests from an allowed IP, eg to show them it's on
-    public const string BYPASS_ATTRIBUTE = '_maintenance_bypass';
-    public const string ERROR_CODE = 'MAINTENANCE';
-    public const string TEMPLATE = '@XmSymfony/maintenance.html.twig';
-
-    private const string GRAPHQL_PATH = '/graphql';
+    // kept for templates & code that used them here
+    public const string HEADER = MaintenanceGate::HEADER;
+    public const string BYPASS_ATTRIBUTE = MaintenanceGate::BYPASS_ATTRIBUTE;
+    public const string ERROR_CODE = MaintenanceGate::ERROR_CODE;
+    public const string TEMPLATE = MaintenancePage::TEMPLATE;
 
     public function __construct(
-        private MaintenanceMode $maintenanceMode,
-        private Environment $twig,
+        private MaintenanceGate $gate,
+        private MaintenancePage $page,
         private bool $debug,
-        private ?string $timeZone = null,
         private ?RequestContext $requestContext = null,
     ) {
     }
@@ -59,18 +48,7 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $settings = $this->maintenanceMode->settings();
-        if (null === $settings) {
-            return;
-        }
-
         $request = $event->getRequest();
-
-        if ($settings->allows($request->getClientIp())) {
-            $request->attributes->set(self::BYPASS_ATTRIBUTE, true);
-
-            return;
-        }
 
         // the profiler & debug toolbar (dev only)
         if ($this->debug && str_starts_with($request->getPathInfo(), '/_')) {
@@ -81,60 +59,9 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
         // host (eg the debug toolbar's, injected into the page)
         $this->requestContext?->fromRequest($request);
 
-        if ($this->wantsJson($request)) {
-            $response = $this->jsonResponse($settings);
-        } else {
-            $response = $this->htmlResponse($settings);
+        $response = $this->gate->handle($request, $this->page->render(...));
+        if (null !== $response) {
+            $event->setResponse($response);
         }
-
-        $response->headers->set(self::HEADER, '1');
-        $response->headers->set('Retry-After', (string) $settings->retryAfter(CarbonImmutable::now()));
-        $response->headers->set('Cache-Control', 'no-store');
-
-        $event->setResponse($response);
-    }
-
-    private function wantsJson(Request $request): bool
-    {
-        if (str_starts_with($request->getPathInfo(), self::GRAPHQL_PATH)) {
-            return true;
-        }
-
-        return 'json' === $request->getPreferredFormat();
-    }
-
-    private function jsonResponse(MaintenanceSettings $settings): JsonResponse
-    {
-        return new JsonResponse(
-            [
-                'errors' => [
-                    [
-                        'message'    => $settings->displayMessage(),
-                        'extensions' => [
-                            'code'  => self::ERROR_CODE,
-                            'until' => $settings->until()?->format(\DATE_ATOM),
-                        ],
-                    ],
-                ],
-            ],
-            Response::HTTP_SERVICE_UNAVAILABLE,
-        );
-    }
-
-    private function htmlResponse(MaintenanceSettings $settings): Response
-    {
-        $until = null;
-        if (null !== $settings->until()) {
-            $until = CarbonImmutable::instance($settings->until())
-                ->setTimezone($this->timeZone ?? date_default_timezone_get());
-        }
-
-        return new Response(
-            $this->twig->render(self::TEMPLATE, [
-                'message' => $settings->displayMessage(),
-                'until'   => $until,
-            ]),
-            Response::HTTP_SERVICE_UNAVAILABLE,
-        );
     }
 }

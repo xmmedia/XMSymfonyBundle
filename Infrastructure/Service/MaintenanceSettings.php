@@ -8,8 +8,9 @@ use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\IpUtils;
 
 /**
- * What's shown while the site's in maintenance mode & who can still use it. Stored as JSON in
- * the maintenance file (see MaintenanceMode).
+ * What's shown while the site's in maintenance mode & who can still use it: the allowed IPs &
+ * anyone with the key (see MaintenanceGate). Stored as JSON in the maintenance file (see
+ * MaintenanceMode).
  */
 final readonly class MaintenanceSettings implements \JsonSerializable
 {
@@ -24,7 +25,13 @@ final readonly class MaintenanceSettings implements \JsonSerializable
         private ?string $message = null,
         private ?\DateTimeImmutable $until = null,
         private array $allowedIps = [],
+        private ?string $key = null,
     ) {
+    }
+
+    public static function generateKey(): string
+    {
+        return bin2hex(random_bytes(16));
     }
 
     /**
@@ -56,7 +63,12 @@ final readonly class MaintenanceSettings implements \JsonSerializable
             $allowedIps = array_values(array_filter($data['allowedIps'], is_string(...)));
         }
 
-        return new self($message, $until, $allowedIps);
+        $key = null;
+        if (\is_string($data['key'] ?? null) && '' !== $data['key']) {
+            $key = $data['key'];
+        }
+
+        return new self($message, $until, $allowedIps, $key);
     }
 
     public function message(): ?string
@@ -82,18 +94,23 @@ final readonly class MaintenanceSettings implements \JsonSerializable
         return $this->allowedIps;
     }
 
+    public function key(): ?string
+    {
+        return $this->key;
+    }
+
     public function withMessage(?string $message): self
     {
         if (null !== $message && '' === trim($message)) {
             $message = null;
         }
 
-        return new self(null === $message ? null : trim($message), $this->until, $this->allowedIps);
+        return new self(null === $message ? null : trim($message), $this->until, $this->allowedIps, $this->key);
     }
 
     public function withUntil(?\DateTimeImmutable $until): self
     {
-        return new self($this->message, $until, $this->allowedIps);
+        return new self($this->message, $until, $this->allowedIps, $this->key);
     }
 
     /**
@@ -101,7 +118,12 @@ final readonly class MaintenanceSettings implements \JsonSerializable
      */
     public function withAllowedIps(array $allowedIps): self
     {
-        return new self($this->message, $this->until, array_values(array_unique($allowedIps)));
+        return new self($this->message, $this->until, array_values(array_unique($allowedIps)), $this->key);
+    }
+
+    public function withKey(?string $key): self
+    {
+        return new self($this->message, $this->until, $this->allowedIps, $key);
     }
 
     public function allows(?string $ip): bool
@@ -111,6 +133,15 @@ final readonly class MaintenanceSettings implements \JsonSerializable
         }
 
         return IpUtils::checkIp($ip, $this->allowedIps);
+    }
+
+    public function allowsKey(?string $key): bool
+    {
+        if (null === $this->key || null === $key) {
+            return false;
+        }
+
+        return hash_equals($this->key, $key);
     }
 
     /**
@@ -131,6 +162,7 @@ final readonly class MaintenanceSettings implements \JsonSerializable
             'message'    => $this->message,
             'until'      => $this->until?->format(\DATE_ATOM),
             'allowedIps' => $this->allowedIps,
+            'key'        => $this->key,
         ];
     }
 }

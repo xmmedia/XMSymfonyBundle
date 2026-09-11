@@ -10,7 +10,9 @@ use Xm\SymfonyBundle\DependencyInjection\XmSymfonyExtension;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Security\SessionExpiry;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 
@@ -52,7 +54,8 @@ class XmSymfonyExtensionTest extends BaseTestCase
 
         $subscriber = $container->getDefinition(MaintenanceSubscriber::class);
         $this->assertSame('%kernel.debug%', $subscriber->getArgument('$debug'));
-        $this->assertNull($subscriber->getArgument('$timeZone'));
+        $this->assertTrue($container->hasDefinition(MaintenanceGate::class));
+        $this->assertNull($container->getDefinition(MaintenancePage::class)->getArgument('$timeZone'));
     }
 
     public function testMaintenanceConfigured(): void
@@ -64,7 +67,7 @@ class XmSymfonyExtensionTest extends BaseTestCase
         $this->assertSame('/tmp/maintenance', $container->getDefinition(MaintenanceMode::class)->getArgument('$file'));
         $this->assertSame(
             'America/Edmonton',
-            $container->getDefinition(MaintenanceSubscriber::class)->getArgument('$timeZone'),
+            $container->getDefinition(MaintenancePage::class)->getArgument('$timeZone'),
         );
         $this->assertSame(
             'America/Edmonton',
@@ -78,6 +81,7 @@ class XmSymfonyExtensionTest extends BaseTestCase
 
         $this->assertFalse($container->hasDefinition(MaintenanceMode::class));
         $this->assertFalse($container->hasDefinition(MaintenanceSubscriber::class));
+        $this->assertFalse($container->hasDefinition(MaintenanceGate::class));
         $this->assertFalse($container->hasDefinition(MaintenanceWorkerSubscriber::class));
         $this->assertFalse($container->hasDefinition(MaintenanceCommand::class));
     }
