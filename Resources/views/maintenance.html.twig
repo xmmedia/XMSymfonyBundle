@@ -1,0 +1,85 @@
+{#
+    Shown by MaintenanceSubscriber. Standalone, with inline styles, so it doesn't need the
+    frontend build, the database or a session – maintenance may be because one of them isn't
+    available. Override it in templates/bundles/XmSymfonyBundle/maintenance.html.twig, extending
+    '@!XmSymfony/maintenance.html.twig' to keep the reload script & fill in the blocks.
+#}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Maintenance{% endblock %}</title>
+        {% block head %}{% endblock %}
+        <style>
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 1rem;
+                box-sizing: border-box;
+                background-color: #f3f4f6;
+                color: #111827;
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                line-height: 1.5;
+            }
+            main {
+                max-width: 32rem;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                background-color: #fff;
+                box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+                text-align: center;
+            }
+            h1 {
+                margin: 1.5rem 0 1rem;
+                font-size: 1.5rem;
+            }
+            p {
+                margin: 1rem 0;
+            }
+            .small {
+                color: #4b5563;
+                font-size: 0.875rem;
+            }
+            {% block styles %}{% endblock %}
+        </style>
+    </head>
+    <body>
+        <main>
+            {% block logo %}{% endblock %}
+
+            {% block content %}
+                <h1>We're doing some maintenance</h1>
+                <p>{{ message|nl2br }}</p>
+                {% if until %}
+                    <p>
+                        We expect to be back around
+                        {% if until|date('Y-m-d', false) == 'now'|date('Y-m-d', until.timezone) -%}
+                            {{ until|date('g:i a T', false) }}.
+                        {%- else -%}
+                            {{ until|date('M j \\a\\t g:i a T', false) }}.
+                        {%- endif %}
+                    </p>
+                {% endif %}
+                <p class="small">This page will reload once we're back.</p>
+            {% endblock %}
+        </main>
+
+        <script>
+            // location.replace() so a form that was posted isn't sent again
+            setInterval(async () => {
+                try {
+                    const response = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+                    if (!response.headers.has('{{ constant('Xm\\SymfonyBundle\\EventSubscriber\\MaintenanceSubscriber::HEADER') }}')) {
+                        window.location.replace(window.location.href);
+                    }
+                } catch (e) {
+                    // offline or the server's down: try again next time
+                }
+            }, 30000);
+        </script>
+    </body>
+</html>

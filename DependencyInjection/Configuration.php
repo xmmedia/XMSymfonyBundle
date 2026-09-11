@@ -23,6 +23,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->append($this->addRepositoriesSection())
                 ->append($this->addSessionExpirySection())
+                ->append($this->addMaintenanceSection())
             ->end();
 
         return $treeBuilder;
@@ -66,5 +67,31 @@ final class Configuration implements ConfigurationInterface
             ->canBeDisabled();
 
         return $sessionExpiryNode;
+    }
+
+    private function addMaintenanceSection(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('maintenance');
+        $maintenanceNode = $treeBuilder->getRootNode();
+
+        $maintenanceNode
+            ->info(
+                'While the file exists, everyone except the allowed IPs gets a 503 & messenger workers pause.'
+                .' Turned on & off with app:maintenance.',
+            )
+            ->canBeDisabled()
+            ->children()
+                ->scalarNode('file')
+                    ->info('Must survive deploys, eg in var/ when it\'s shared between releases.')
+                    ->defaultValue('%kernel.project_dir%/var/maintenance')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('time_zone')
+                    ->info('For reading & showing when it\'s expected to be over. Defaults to PHP\'s.')
+                    ->defaultNull()
+                ->end()
+            ->end();
+
+        return $maintenanceNode;
     }
 }

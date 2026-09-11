@@ -7,10 +7,15 @@ namespace Xm\SymfonyBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Xm\SymfonyBundle\Command\MaintenanceCommand;
+use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
+use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Security\SessionExpiry;
 
 class XmSymfonyExtension extends Extension
@@ -35,6 +40,36 @@ class XmSymfonyExtension extends Extension
         if ($config['session_expiry']['enabled']) {
             $this->loadSessionExpiry($container);
         }
+
+        if ($config['maintenance']['enabled']) {
+            $this->loadMaintenance($config['maintenance'], $container);
+        }
+    }
+
+    private function loadMaintenance(array $config, ContainerBuilder $container): void
+    {
+        $container->register(MaintenanceMode::class)
+            ->setArgument('$file', $config['file']);
+
+        $container->register(MaintenanceSubscriber::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setArgument('$debug', '%kernel.debug%')
+            ->setArgument('$timeZone', $config['time_zone']);
+
+        $container->register(MaintenanceWorkerSubscriber::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            // only exists when messenger is enabled
+            ->setArgument(
+                '$restartSignalCachePool',
+                new Reference('cache.messenger.restart_workers_signal', ContainerInterface::NULL_ON_INVALID_REFERENCE),
+            );
+
+        $container->register(MaintenanceCommand::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setArgument('$timeZone', $config['time_zone']);
     }
 
     private function loadSessionExpiry(ContainerBuilder $container): void
