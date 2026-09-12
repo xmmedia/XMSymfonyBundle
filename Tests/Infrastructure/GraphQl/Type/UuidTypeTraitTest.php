@@ -7,9 +7,11 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Type;
 use GraphQL\Error\Error;
 use GraphQL\Language\AST\IntValueNode;
 use GraphQL\Language\AST\StringValueNode;
+use GraphQL\Utils\Utils;
 use Ramsey\Uuid\Uuid;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\UuidTypeTrait;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Tests\FakeId;
 
 class UuidTypeTraitTest extends BaseTestCase
 {
@@ -18,10 +20,13 @@ class UuidTypeTraitTest extends BaseTestCase
         return new class {
             use UuidTypeTrait;
 
-            public function parseValue($value): ?string
+            public function parseValue($value): FakeId
             {
-                // Minimal implementation for testing
-                return \is_string($value) && Uuid::isValid($value) ? $value : null;
+                if (\is_string($value) && Uuid::isValid($value)) {
+                    return FakeId::fromString($value);
+                }
+
+                throw new Error('Cannot represent value as UUID: '.Utils::printSafe($value));
             }
         };
     }
@@ -95,18 +100,32 @@ class UuidTypeTraitTest extends BaseTestCase
         $trait = $this->createTraitInstance();
         $result = $trait->parseLiteral($node);
 
-        $this->assertEquals($fakeId->toString(), $result);
+        $this->assertInstanceOf(FakeId::class, $result);
+        $this->assertSameValueAs($fakeId, $result);
     }
 
-    public function testParseLiteralWithNonStringValueNode(): void
+    public function testParseLiteralWithInvalidStringThrowsError(): void
     {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessageIsOrContains('Cannot represent value as UUID');
+
+        $node = new StringValueNode([]);
+        $node->value = 'not-a-uuid';
+
+        $trait = $this->createTraitInstance();
+        $trait->parseLiteral($node);
+    }
+
+    public function testParseLiteralWithNonStringValueNodeThrowsError(): void
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessageIsOrContains('Cannot represent a non-string value as UUID: 123');
+
         $node = new IntValueNode([]);
         $node->value = '123';
 
         $trait = $this->createTraitInstance();
-        $result = $trait->parseLiteral($node);
-
-        $this->assertNull($result);
+        $trait->parseLiteral($node);
     }
 
     public function testParseLiteralWithVariables(): void
@@ -120,6 +139,7 @@ class UuidTypeTraitTest extends BaseTestCase
         $trait = $this->createTraitInstance();
         $result = $trait->parseLiteral($node, ['someVariable' => 'value']);
 
-        $this->assertEquals($fakeId->toString(), $result);
+        $this->assertInstanceOf(FakeId::class, $result);
+        $this->assertSameValueAs($fakeId, $result);
     }
 }

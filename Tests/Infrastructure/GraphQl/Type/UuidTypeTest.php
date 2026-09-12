@@ -105,9 +105,9 @@ class UuidTypeTest extends BaseTestCase
 
     public function testParseLiteralNotStringValueNode(): void
     {
-        $result = (new UuidType())->parseLiteral(new IntValueNode(['value' => '1']));
+        $this->expectException(Error::class);
 
-        $this->assertNull($result);
+        (new UuidType())->parseLiteral(new IntValueNode(['value' => '1']));
     }
 
     public function testAliases(): void
