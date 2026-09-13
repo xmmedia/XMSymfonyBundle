@@ -40,6 +40,13 @@
             p {
                 margin: 1rem 0;
             }
+            /* so the space inside the box is its padding, all around */
+            main > :first-child {
+                margin-top: 0;
+            }
+            main > :last-child {
+                margin-bottom: 0;
+            }
             .small {
                 color: #4b5563;
                 font-size: 0.875rem;
@@ -48,6 +55,8 @@
         </style>
     </head>
     <body>
+        {% block header %}{% endblock %}
+
         <main>
             {% block logo %}{% endblock %}
 
@@ -67,6 +76,8 @@
                 <p class="small">This page will reload once we're back.</p>
             {% endblock %}
         </main>
+
+        {% block footer %}{% endblock %}
 
         <script>
             // location.replace() so a form that was posted isn't sent again
