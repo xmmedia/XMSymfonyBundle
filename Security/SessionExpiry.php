@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Signs out users who've been idle for longer than the session's gc_maxlifetime.
+ * Uses framework.session.gc_maxlifetime, falling back to PHP's session.gc_maxlifetime ini setting.
+ * A lifetime of 0 or less means sessions don't expire.
  * PHP only removes a session when garbage collection happens to run, & doesn't check its age
  * when reading it, so without this an idle session can be used long after it should've expired.
  *
@@ -31,7 +33,7 @@ readonly class SessionExpiry
         // the firewalls' remember-me cookie names, set by SessionExpiryPass
         private array $rememberMeCookies = [],
     ) {
-        $this->lifetime = (int) $sessionOptions['gc_maxlifetime'];
+        $this->lifetime = (int) ($sessionOptions['gc_maxlifetime'] ?? \ini_get('session.gc_maxlifetime'));
     }
 
     /**
@@ -39,7 +41,7 @@ readonly class SessionExpiry
      */
     public function remaining(Request $request): ?int
     {
-        if (!$request->hasPreviousSession() || $this->hasRememberMeCookie($request)) {
+        if ($this->lifetime <= 0 || !$request->hasPreviousSession() || $this->hasRememberMeCookie($request)) {
             return null;
         }
 

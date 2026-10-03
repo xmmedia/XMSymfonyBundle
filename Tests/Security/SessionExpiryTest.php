@@ -83,6 +83,33 @@ class SessionExpiryTest extends BaseTestCase
         $this->assertTrue($sessionExpiry->isExpired($request));
     }
 
+    public function testRemainingLifetimeNotConfigured(): void
+    {
+        $iniLifetime = \ini_get('session.gc_maxlifetime');
+        ini_set('session.gc_maxlifetime', (string) self::LIFETIME);
+
+        try {
+            CarbonImmutable::setTestNow(CarbonImmutable::now());
+            $request = $this->requestWithSession(CarbonImmutable::now()->subSeconds(600)->getTimestamp());
+
+            $this->assertSame(3000, (new SessionExpiry([]))->remaining($request));
+        } finally {
+            ini_set('session.gc_maxlifetime', $iniLifetime);
+        }
+    }
+
+    public function testRemainingNoLifetime(): void
+    {
+        $request = $this->requestWithSession(
+            CarbonImmutable::now()->subSeconds(self::LIFETIME * 2)->getTimestamp(),
+        );
+
+        $sessionExpiry = new SessionExpiry(['gc_maxlifetime' => 0]);
+
+        $this->assertNull($sessionExpiry->remaining($request));
+        $this->assertFalse($sessionExpiry->isExpired($request));
+    }
+
     public function testExtend(): void
     {
         CarbonImmutable::setTestNow(CarbonImmutable::now());
