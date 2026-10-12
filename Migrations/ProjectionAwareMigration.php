@@ -32,6 +32,16 @@ trait ProjectionAwareMigration
 
     abstract public function write(string $message): void;
 
+    /**
+     * Running or rebuilding a projection creates/drops its tables, which in MySQL implicitly commits
+     * the migration's transaction & leaves the projection's own transactions with nothing to commit
+     * ("There is no active transaction"). Override to return true if the migration doesn't touch projections.
+     */
+    public function isTransactional(): bool
+    {
+        return false;
+    }
+
     protected function createEventStream(string $streamName): void
     {
         $this->write('Creating event stream: '.$streamName);
