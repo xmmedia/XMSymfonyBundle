@@ -25,7 +25,8 @@ abstract class FilterQueryBuilder
 
     public function reset(): static
     {
-        $ro = new \ReflectionClass(self::class);
+        // the defaults of the subclass, which may override them (eg $order)
+        $ro = new \ReflectionClass($this);
 
         $this->joins = $ro->getProperty('joins')->getDefaultValue();
         $this->whereClauses = $ro->getProperty('whereClauses')->getDefaultValue();

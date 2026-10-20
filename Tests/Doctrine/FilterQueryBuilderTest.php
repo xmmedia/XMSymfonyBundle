@@ -325,4 +325,31 @@ class FilterQueryBuilderTest extends BaseTestCase
         $this->assertEquals([], $resetResult['parameters']);
         $this->assertEquals('', $resetResult['order']);
     }
+
+    public function testResetRestoresSubclassDefaults(): void
+    {
+        $builder = new class extends FilterQueryBuilder {
+            protected string $order = 'name ASC';
+
+            public function queryParts(FiltersInterface $filters): array
+            {
+                $this->order = 'status DESC, '.$this->order;
+
+                return [
+                    'join'           => implode(' ', $this->joins),
+                    'where'          => implode(' AND ', $this->whereClauses),
+                    'order'          => $this->order,
+                    'parameters'     => $this->parameters,
+                    'parameterTypes' => $this->parameterTypes,
+                ];
+            }
+        };
+
+        $filters = \Mockery::mock(FiltersInterface::class);
+
+        $builder->queryParts($filters);
+        $builder->reset();
+
+        $this->assertEquals('status DESC, name ASC', $builder->queryParts($filters)['order']);
+    }
 }
