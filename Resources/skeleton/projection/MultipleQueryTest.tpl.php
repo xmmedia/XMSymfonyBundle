@@ -42,8 +42,8 @@ class <?= $class_name; ?> extends BaseTestCase
         $query = new <?= $query_multiple_class_short; ?>($finder);
 
         $result = $query([
-            'limit'  => 10,
-            'offset' => 5,
+            'q'      => $this->faker()->word(),
+            'offset' => $this->faker()->numberBetween(1, 100),
         ]);
 
         $this->assertSame([$entity], $result);

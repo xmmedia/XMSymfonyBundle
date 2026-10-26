@@ -12,9 +12,9 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
     {
         return new self(
             \sprintf(
-                'Tried to %s of <?= $model; ?> with ID "%s" that\'s deleted.',
-                $<?= $id_property; ?>,
+                'Tried to %s, but <?= $model; ?> with ID "%s" is deleted.',
                 $action,
+                $<?= $id_property; ?>,
             ),
         );
     }
@@ -23,7 +23,7 @@ final class <?= $class_name; ?> extends \InvalidArgumentException
     {
         return new self(
             \sprintf(
-                'Tried to delete an <?= $model; ?> with ID "%s" that\'s already deleted.',
+                'Tried to delete <?= $model; ?> with ID "%s" that\'s already deleted.',
                 $<?= $id_property; ?>,
             ),
         );

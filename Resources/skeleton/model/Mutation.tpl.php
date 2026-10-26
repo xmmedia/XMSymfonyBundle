@@ -28,7 +28,7 @@ final readonly class <?= $class_name; ?> implements MutationInterface
 
 <?php if (!$delete) { ?>
     /**
-     * @param array<string, mixed> $<?= $model_lower; ?>
+     * @param array<string, mixed> $<?= $model_lower; ?><?= "\n"; ?>
      *
      * @return array{<?= $entity; ?>: <?= $entity_class_short; ?>|null}
      */

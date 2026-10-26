@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * @extends ServiceEntityRepository<\<?php $entity_class; ?>>
+ * @extends ServiceEntityRepository<\<?= $entity_class; ?>>
  *
  * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?>|string $id, LockMode|int|null $lockMode = null, int|null $lockVersion = null)
  * @method <?= $entity_class_short; ?>|null findOneBy(array $criteria, array $orderBy = null)
