@@ -35,7 +35,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
     }
 
     public function send(
-        int|string $templateIdOrAlias,
+        int|string|\BackedEnum $templateIdOrAlias,
         Email|array $to,
         array $templateData,
         ?array $attachments = null,
@@ -44,6 +44,10 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         array $headers = [],
         array $options = [],
     ): EmailGatewayMessageId {
+        if ($templateIdOrAlias instanceof \BackedEnum) {
+            $templateIdOrAlias = $templateIdOrAlias->value;
+        }
+
         if (!\is_array($to)) {
             $to = [$to];
         }
