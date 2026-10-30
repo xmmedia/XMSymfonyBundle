@@ -15,7 +15,7 @@ use JetBrains\PhpStorm\ArrayShape;
 /**
  * @extends ServiceEntityRepository<\<?= $entity_class; ?>>
  *
- * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?>|string $id, LockMode|int|null $lockMode = null, int|null $lockVersion = null)
+ * @method <?= $entity_class_short; ?>|null find(<?= $id_class_short; ?> $id, LockMode|int|null $lockMode = null, int|null $lockVersion = null)
  * @method <?= $entity_class_short; ?>|null findOneBy(array $criteria, array $orderBy = null)
  * @method <?= $entity_class_short; ?>[] findAll()
  * @method <?= $entity_class_short; ?>[] findBy(array $criteria, array $orderBy = null, int|null $limit = null, int|null $offset = null)
@@ -27,7 +27,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
         parent::__construct($registry, <?= $entity_class_short; ?>::class);
     }
 
-    public function findOrThrow(<?= $id_class_short; ?>|string $id): <?= $entity_class_short; ?><?= "\n"; ?>
+    public function findOrThrow(<?= $id_class_short; ?> $id): <?= $entity_class_short; ?><?= "\n"; ?>
     {
         $<?= $entity ?> = $this->find($id);
         if (!$<?= $entity ?>) {
@@ -37,7 +37,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
         return $<?= $entity ?>;
     }
 
-    public function findRefreshed(<?= $id_class_short; ?>|string $id): ?<?= $entity_class_short; ?><?= "\n"; ?>
+    public function findRefreshed(<?= $id_class_short; ?> $id): ?<?= $entity_class_short; ?><?= "\n"; ?>
     {
         $<?= $entity ?> = $this->find($id);
 
