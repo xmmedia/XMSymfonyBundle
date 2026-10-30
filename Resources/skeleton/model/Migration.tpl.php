@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace <?= $migration_namespace; ?>;
 
-use App\Kernel;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Xm\SymfonyBundle\Migrations\ProjectionAwareMigration;
@@ -12,8 +11,6 @@ use Xm\SymfonyBundle\Migrations\ProjectionAwareMigration;
 final class Version<?= date('Ymd'); ?><?= $migration_number; ?> extends AbstractMigration
 {
     use ProjectionAwareMigration;
-
-    private Kernel $kernel;
 
     #[\Override]
     public function getDescription(): string
@@ -30,10 +27,5 @@ final class Version<?= date('Ymd'); ?><?= $migration_number; ?> extends Abstract
     {
         $this->createEventStream('<?= $stream_name; ?>');
         $this->runProjection('<?= $projection_name; ?>_projection');
-    }
-
-    public function setKernel(Kernel $kernel): void
-    {
-        $this->kernel = $kernel;
     }
 }

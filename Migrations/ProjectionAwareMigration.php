@@ -7,14 +7,15 @@ namespace Xm\SymfonyBundle\Migrations;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * Used for migrations that need to rebuild projections.
  *
  * Example usage:
- * final class Version20230201002 extends AbstractMigration implements ContainerAwareInterface
+ * final class Version20230201002 extends AbstractMigration
  * {
  *     use ProjectionAwareMigration;
  *     // ...
@@ -29,6 +30,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 trait ProjectionAwareMigration
 {
     private ContainerInterface $container;
+
+    /**
+     * Not $kernel: older migrations declare their own `private Kernel $kernel`, which would conflict.
+     */
+    private KernelInterface $projectionKernel;
 
     abstract public function write(string $message): void;
 
@@ -86,11 +92,10 @@ trait ProjectionAwareMigration
 
     private function runCommand(array $parameters, string $errorMessage): void
     {
-        if (!isset($this->kernel) && !isset($this->container)) {
-            throw new \RuntimeException(\sprintf('The migration %s must have a $kernel property (Symfony >=6.4) or implement %s (Symfony <6.4) to rebuild projections', self::class, ContainerAwareInterface::class));
+        $kernel = $this->kernel ?? $this->projectionKernel ?? ($this->container ?? null)?->get('kernel');
+        if (null === $kernel) {
+            throw new \RuntimeException(\sprintf('The kernel wasn\'t set on the migration %s. Make migrations services (enable_service_migrations) or call setKernel() from a custom migration factory.', self::class));
         }
-
-        $kernel = $this->kernel ?? $this->container->get('kernel');
 
         $application = new Application($kernel);
         $application->setAutoExit(false);
@@ -103,6 +108,15 @@ trait ProjectionAwareMigration
         if (0 !== $return) {
             throw new \RuntimeException($errorMessage);
         }
+    }
+
+    /**
+     * Autowired when migrations are services. Older projects call it from their own migration factory.
+     */
+    #[Required]
+    public function setKernel(KernelInterface $kernel): void
+    {
+        $this->projectionKernel = $kernel;
     }
 
     /**

@@ -597,21 +597,31 @@ class AggregateRootMaker extends AbstractMaker
             $variables,
         );
 
+        // projects from the current doctrine migrations recipe keep them in src/Migrations as services,
+        // older ones in migrations/ under the DoctrineMigrations namespace
         $rootDir = $generator->getRootDirectory();
+        if (is_dir($rootDir.'/src/Migrations')) {
+            $migrationDir = 'src/Migrations';
+            $migrationNamespace = $generator->getRootNamespace().'\\Migrations';
+        } else {
+            $migrationDir = 'migrations';
+            $migrationNamespace = 'DoctrineMigrations';
+        }
+
         $dateStr = date('Ymd');
         $migrationNumber = '001';
         for ($i = 1; $i <= 999; ++$i) {
             $num = str_pad((string) $i, 3, '0', \STR_PAD_LEFT);
-            if (!file_exists($rootDir.'/migrations/Version'.$dateStr.$num.'.php')) {
+            if (!file_exists($rootDir.'/'.$migrationDir.'/Version'.$dateStr.$num.'.php')) {
                 $migrationNumber = $num;
                 break;
             }
         }
 
         $generator->generateFile(
-            'migrations/Version'.$dateStr.$migrationNumber.'.php',
+            $migrationDir.'/Version'.$dateStr.$migrationNumber.'.php',
             $this->skeletonPath().'model/Migration.tpl.php',
-            [...$variables, 'migration_number' => $migrationNumber],
+            [...$variables, 'migration_number' => $migrationNumber, 'migration_namespace' => $migrationNamespace],
         );
 
         $generator->writeChanges();
