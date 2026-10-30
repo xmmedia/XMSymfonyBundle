@@ -44,6 +44,7 @@
     "wildbit/postmark-php": "^2.8 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0"
   },
   "require-dev": {
+    "doctrine/migrations": "^3.0",
     "ekino/phpstan-banned-code": "^3.0",
     "fakerphp/faker": "^1.8",
     "friendsofphp/php-cs-fixer": "^3.0",
