@@ -22,6 +22,17 @@ use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
 #[AsCommand(
     name: 'app:maintenance',
     description: 'Turn maintenance mode on or off, or show whether it\'s on.',
+    help: <<<'HELP'
+        While it's on, everyone except the allowed IPs & anyone with the key gets the
+        maintenance page (or a 503 for GraphQL requests) & messenger workers pause.
+
+        A new key is generated each time it's turned on. Opening the key's URL (or any URL
+        with it added) sets a cookie that lets that browser use the site until it's
+        closed. It can also be sent in the X-Maintenance-Key header.
+
+        Running <info>%command.name% on</info> while it's already on updates it, keeping
+        anything not given (including the key, unless --new-key).
+        HELP,
 )]
 final class MaintenanceCommand extends Command
 {
@@ -111,19 +122,6 @@ final class MaintenanceCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Replace the key, so anyone using the current one is blocked',
-            )
-            ->setHelp(
-                <<<'HELP'
-                    While it's on, everyone except the allowed IPs & anyone with the key gets the
-                    maintenance page (or a 503 for GraphQL requests) & messenger workers pause.
-
-                    A new key is generated each time it's turned on. Opening the key's URL (or any URL
-                    with it added) sets a cookie that lets that browser use the site until it's
-                    closed. It can also be sent in the X-Maintenance-Key header.
-
-                    Running <info>%command.name% on</info> while it's already on updates it, keeping
-                    anything not given (including the key, unless --new-key).
-                    HELP,
             );
     }
 

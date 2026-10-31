@@ -17,7 +17,7 @@ use Xm\SymfonyBundle\Tests\BaseTestCase;
 
 class ProjectionRunnerTest extends BaseTestCase
 {
-    private const PROJECTION = 'fake_projection';
+    private const string PROJECTION = 'fake_projection';
 
     public function testRun(): void
     {

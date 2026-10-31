@@ -28,7 +28,7 @@ class VersionComparatorTest extends BaseTestCase
                 'App\Migrations\Version20261029001',
                 'DoctrineMigrations\Version20261029002',
             ],
-            array_map('strval', $versions),
+            array_map(strval(...), $versions),
         );
     }
 

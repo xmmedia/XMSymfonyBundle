@@ -16,10 +16,10 @@ final class VersionComparator implements Comparator
 {
     public function compare(Version $a, Version $b): int
     {
-        return strcmp(self::className($a), self::className($b)) ?: strcmp((string) $a, (string) $b);
+        return strcmp($this->className($a), $this->className($b)) ?: strcmp((string) $a, (string) $b);
     }
 
-    private static function className(Version $version): string
+    private function className(Version $version): string
     {
         return substr((string) strrchr('\\'.$version, '\\'), 1);
     }

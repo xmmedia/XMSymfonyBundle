@@ -43,12 +43,10 @@ class MaintenancePageTest extends BaseTestCase
         $twig = \Mockery::mock(Environment::class);
         $twig->shouldReceive('render')
             ->once()
-            ->withArgs(static function (string $template, array $context) use ($message, $until): bool {
-                return MaintenancePage::TEMPLATE === $template
-                    && $message === $context['message']
-                    && $until->getTimestamp() === $context['until']->getTimestamp()
-                    && 'America/Halifax' === $context['until']->getTimezone()->getName();
-            })
+            ->withArgs(static fn (string $template, array $context): bool => MaintenancePage::TEMPLATE === $template
+                && $message === $context['message']
+                && $until->getTimestamp() === $context['until']->getTimestamp()
+                && 'America/Halifax' === $context['until']->getTimezone()->getName())
             ->andReturn('page');
 
         $page = (new MaintenancePage($twig, 'America/Halifax'))->render(new MaintenanceSettings($message, $until));

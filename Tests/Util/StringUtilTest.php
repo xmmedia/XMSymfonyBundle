@@ -10,7 +10,7 @@ use Xm\SymfonyBundle\Util\StringUtil;
 class StringUtilTest extends BaseTestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('dataProvider')]
-    public function test($input, string|int|array|float|\stdClass|\Closure|null $expected): void
+    public function test(string|int|float|\stdClass|\Closure|array|null $input, string|int|array|float|\stdClass|\Closure|null $expected): void
     {
         $this->assertSame($expected, StringUtil::trim($input));
     }

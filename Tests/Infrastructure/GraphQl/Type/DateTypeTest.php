@@ -20,7 +20,7 @@ class DateTypeTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('emptyProvider')]
-    public function testParseValueEmpty($empty): void
+    public function testParseValueEmpty(?string $empty): void
     {
         $type = new DateType();
         $this->assertNull($type->parseValue($empty));

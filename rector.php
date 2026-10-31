@@ -50,18 +50,16 @@ return RectorConfig::configure()
         Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class,
         Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector::class,
         // from set "codeQuality"
-        Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector::class,
-        // from set "typeDeclarations"
         // prefer a null check: a type check silently flips to false on another valid type
-        Rector\TypeDeclaration\Rector\BooleanAnd\BinaryOpNullableToInstanceofRector::class,
-        // from set "if"
-        Rector\CodeQuality\Rector\If_\ObjectExplicitBoolCompareRector::class,
+        Rector\CodeQuality\Rector\If_\ExplicitNullableObjectInstanceRector::class,
         // from set "deadCode"
         Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector::class,
-        // "@return static" is not duplicated by a native "self" return type:
-        // these classes are extended & the factories return "new static"
-        Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector::class,
         // temporarily disabled because it adds newlines between traits
         Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector::class,
+        // from set "symfony" (composer based, so it uses the installed version, not the lowest supported)
+        // keep subscribers: the tests check their priorities & projects register some without autoconfigure
+        Rector\Symfony\CodeQuality\Rector\Class_\EventSubscriberToAttributeRector::class,
+        // UserInterface requires eraseCredentials() before Symfony 8: remove when dropping Symfony 7
+        Rector\Symfony\Symfony80\Rector\Class_\RemoveEraseCredentialsRector::class,
     ])
 ;

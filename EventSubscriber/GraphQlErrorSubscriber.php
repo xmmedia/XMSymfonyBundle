@@ -19,7 +19,7 @@ readonly class GraphQlErrorSubscriber implements EventSubscriberInterface
 
     public function __construct(
         private Security $security,
-        #[Autowire('%kernel.debug%')]
+        #[Autowire(param: 'kernel.debug')]
         private bool $debug,
     ) {
     }

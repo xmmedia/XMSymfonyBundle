@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(
     name: 'event-store:event-stream:create',
     description: 'Create event_stream.',
+    help: 'This command creates the event_stream',
 )]
 final class CreateEventStreamCommand extends Command
 {
@@ -27,7 +28,6 @@ final class CreateEventStreamCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setHelp('This command creates the event_stream')
             ->addArgument(
                 'stream_name',
                 InputArgument::REQUIRED,
