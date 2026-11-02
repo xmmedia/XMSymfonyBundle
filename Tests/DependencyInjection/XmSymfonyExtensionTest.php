@@ -13,6 +13,7 @@ use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
+use Xm\SymfonyBundle\Maker\AggregateRootMaker;
 use Xm\SymfonyBundle\Security\SessionExpiry;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
 
@@ -82,6 +83,14 @@ class XmSymfonyExtensionTest extends BaseTestCase
         $this->assertFalse($container->hasDefinition(MaintenanceGate::class));
         $this->assertFalse($container->hasDefinition(MaintenanceWorkerSubscriber::class));
         $this->assertFalse($container->hasDefinition(MaintenanceCommand::class));
+    }
+
+    public function testAggregateRootMakerRegisteredWithMakerBundle(): void
+    {
+        $definition = $this->load([])->getDefinition(AggregateRootMaker::class);
+
+        $this->assertTrue($definition->isAutowired());
+        $this->assertTrue($definition->isAutoconfigured());
     }
 
     private function load(array $config): ContainerBuilder

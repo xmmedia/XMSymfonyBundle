@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\DependencyInjection;
 
 use Doctrine\Migrations\Version\Comparator;
+use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,6 +20,7 @@ use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
+use Xm\SymfonyBundle\Maker\AggregateRootMaker;
 use Xm\SymfonyBundle\Migrations\VersionComparator;
 use Xm\SymfonyBundle\Security\SessionExpiry;
 
@@ -47,6 +49,13 @@ class XmSymfonyExtension extends Extension
 
         if ($config['maintenance']['enabled']) {
             $this->loadMaintenance($config['maintenance'], $container);
+        }
+
+        // maker-bundle is usually a dev dependency, so it's missing from a --no-dev install
+        if (class_exists(MakerBundle::class)) {
+            $container->register(AggregateRootMaker::class)
+                ->setAutowired(true)
+                ->setAutoconfigured(true);
         }
 
         // for doctrine_migrations.services, so only when doctrine/migrations is installed

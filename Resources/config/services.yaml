@@ -44,8 +44,6 @@ services:
     Xm\SymfonyBundle\EventStore\MetadataIpAddressEnricher:
         tags: [ 'prooph_event_store.metadata_enricher' ]
 
-    Xm\SymfonyBundle\Maker\AggregateRootMaker: ~
-
     Xm\SymfonyBundle\Doctrine\PdoProvider: ~
 
     prooph_event_store.projection_factory:
