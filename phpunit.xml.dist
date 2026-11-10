@@ -16,6 +16,8 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="SHELL_VERBOSITY" value="-1" />
+        <!-- console output wraps to the terminal width, so fix it for consistent output -->
+        <env name="COLUMNS" value="120" force="true" />
     </php>
 
     <source>
