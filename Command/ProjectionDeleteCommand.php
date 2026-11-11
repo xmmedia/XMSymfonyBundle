@@ -19,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ProjectionDeleteCommand extends Command
 {
+    use ProjectionNameTrait;
+
     protected const ARGUMENT_PROJECTION_NAME = 'projection-name';
     protected const OPTION_WITH_EVENTS = 'with-emitted-events';
 
@@ -40,11 +42,7 @@ class ProjectionDeleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $projectionName = $input->getArgument(static::ARGUMENT_PROJECTION_NAME);
-        // append _projection if not present
-        if (!str_ends_with($projectionName, '_projection')) {
-            $projectionName .= '_projection';
-        }
+        $projectionName = self::projectionName($input->getArgument(static::ARGUMENT_PROJECTION_NAME));
 
         $withEvents = $input->getOption(self::OPTION_WITH_EVENTS);
 

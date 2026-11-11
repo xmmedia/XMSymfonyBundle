@@ -19,6 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class ProjectionRebuildCommand extends Command
 {
+    use ProjectionNameTrait;
+
     protected const string ARGUMENT_PROJECTION_NAME = 'projection-name';
 
     protected function configure(): void
@@ -34,11 +36,7 @@ final class ProjectionRebuildCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $projectionName = $input->getArgument(self::ARGUMENT_PROJECTION_NAME);
-        // append _projection if not present
-        if (!str_ends_with($projectionName, '_projection')) {
-            $projectionName .= '_projection';
-        }
+        $projectionName = self::projectionName($input->getArgument(self::ARGUMENT_PROJECTION_NAME));
 
         $io = new SymfonyStyle($input, $output);
         $io->title(\sprintf('Rebuilding Projection "%s"', OutputFormatter::escape($projectionName)));

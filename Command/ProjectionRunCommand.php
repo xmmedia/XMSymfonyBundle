@@ -23,6 +23,8 @@ use Xm\SymfonyBundle\Infrastructure\Service\ProjectionRunner;
 )]
 final class ProjectionRunCommand extends Command
 {
+    use ProjectionNameTrait;
+
     protected const string ARGUMENT_PROJECTION_NAME = 'projection-name';
     protected const string OPTION_RUN_ALL = 'run-all';
     protected const string OPTION_RUN_ONCE = 'run-once';
@@ -84,11 +86,7 @@ final class ProjectionRunCommand extends Command
         $runAll = $input->getOption(self::OPTION_RUN_ALL);
         $projectionName = $input->getArgument(self::ARGUMENT_PROJECTION_NAME);
         if (!$runAll && null !== $projectionName) {
-            $this->projectionName = $projectionName;
-            // append _projection if not present
-            if (!str_ends_with($this->projectionName, '_projection')) {
-                $this->projectionName .= '_projection';
-            }
+            $this->projectionName = self::projectionName($projectionName);
         }
         $keepRunning = !$input->getOption(self::OPTION_RUN_ONCE);
         $sleep = (int) $input->getOption(self::OPTION_SLEEP);
