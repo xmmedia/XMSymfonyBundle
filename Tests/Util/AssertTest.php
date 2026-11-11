@@ -149,4 +149,46 @@ class AssertTest extends BaseTestCase
 
         Assert::compromisedPassword($faker->password(), $httpClient);
     }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('allScalarRecursiveValidProvider')]
+    public function testAllScalarRecursiveValid(array $value): void
+    {
+        Assert::allScalarRecursive($value);
+
+        $this->addToAssertionCount(1);
+    }
+
+    public static function allScalarRecursiveValidProvider(): \Generator
+    {
+        yield 'empty'         => [[]];
+        yield 'scalars'       => [['a' => 'string', 'b' => 1, 'c' => 1.5, 'd' => true, 'e' => null]];
+        yield 'nested'        => [['a' => ['b' => 1, 'c' => ['d' => 'e', 'f' => null]]]];
+        yield 'nested empty'  => [['a' => []]];
+        yield 'list'          => [[1, 2, [3, 4]]];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('allScalarRecursiveInvalidProvider')]
+    public function testAllScalarRecursiveInvalid(array $value, string $message): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageIsOrContains($message);
+
+        Assert::allScalarRecursive($value);
+    }
+
+    public static function allScalarRecursiveInvalidProvider(): \Generator
+    {
+        yield 'object'             => [['a' => new \stdClass()], 'Expected a scalar. Got: stdClass for a'];
+        yield 'nested object'      => [['a' => ['b' => new \stdClass()]], 'Expected a scalar. Got: stdClass for b'];
+        yield 'deeply nested'      => [['a' => ['b' => ['c' => new \DateTimeImmutable()]]], 'for c'];
+        yield 'after valid values' => [['a' => 1, 'b' => [2, new \stdClass()]], 'for 1'];
+    }
+
+    public function testAllScalarRecursiveCustomMessage(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageIsOrContains('Template data must be scalars. Got stdClass');
+
+        Assert::allScalarRecursive(['a' => ['b' => new \stdClass()]], 'Template data must be scalars. Got %s');
+    }
 }

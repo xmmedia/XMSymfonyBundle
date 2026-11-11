@@ -88,18 +88,7 @@ class Assert extends \Webmozart\Assert\Assert
     {
         foreach ($value as $key => $_value) {
             if (\is_array($_value)) {
-                self::_allScalar($_value, $message);
-            } else {
-                self::nullOrScalar($_value, $message ?: 'Expected a scalar. Got: %s for '.$key);
-            }
-        }
-    }
-
-    private static function _allScalar(array $value, string $message = ''): void
-    {
-        foreach ($value as $key => $_value) {
-            if (\is_array($_value)) {
-                self::_allScalar($_value, $message);
+                self::allScalarRecursive($_value, $message);
             } else {
                 self::nullOrScalar($_value, $message ?: 'Expected a scalar. Got: %s for '.$key);
             }
