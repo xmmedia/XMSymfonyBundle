@@ -61,6 +61,7 @@
     "phpstan/phpstan-webmozart-assert": "^2.0",
     "phpunit/phpunit": "^13.0",
     "rector/rector": "^2.0",
+    "sentry/sentry": "^4.37",
     "symfony/debug-pack": "^1.0.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/phpunit-bridge": "^7.3 || ^8.0",

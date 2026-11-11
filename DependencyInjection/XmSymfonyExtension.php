@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\DependencyInjection;
 
 use Doctrine\Migrations\Version\Comparator;
+use Sentry\Event;
 use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -17,6 +18,7 @@ use Xm\SymfonyBundle\Command\MaintenanceCommand;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Infrastructure\Sentry\TokenScrubber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
@@ -49,6 +51,10 @@ class XmSymfonyExtension extends Extension
 
         if ($config['maintenance']['enabled']) {
             $this->loadMaintenance($config['maintenance'], $container);
+        }
+
+        if ($config['sentry_scrubber']['enabled']) {
+            $this->loadSentryScrubber($config['sentry_scrubber'], $container);
         }
 
         // maker-bundle is usually a dev dependency, so it's missing from a --no-dev install
@@ -93,6 +99,18 @@ class XmSymfonyExtension extends Extension
             ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setArgument('$timeZone', $config['time_zone']);
+    }
+
+    private function loadSentryScrubber(array $config, ContainerBuilder $container): void
+    {
+        if (!class_exists(Event::class)) {
+            throw new \LogicException(
+                'xm_symfony.sentry_scrubber needs sentry/sentry: composer require sentry/sentry.',
+            );
+        }
+
+        $container->register(TokenScrubber::class)
+            ->setArguments([$config['paths'], $config['query_params'], $config['patterns']]);
     }
 
     private function loadSessionExpiry(ContainerBuilder $container): void

@@ -10,6 +10,7 @@ use Xm\SymfonyBundle\DependencyInjection\XmSymfonyExtension;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
+use Xm\SymfonyBundle\Infrastructure\Sentry\TokenScrubber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
@@ -91,6 +92,26 @@ class XmSymfonyExtensionTest extends BaseTestCase
 
         $this->assertTrue($definition->isAutowired());
         $this->assertTrue($definition->isAutoconfigured());
+    }
+
+    public function testSentryScrubberNotRegisteredByDefault(): void
+    {
+        $this->assertFalse($this->load([])->hasDefinition(TokenScrubber::class));
+    }
+
+    public function testSentryScrubberRegistered(): void
+    {
+        $paths = ['activate' => ['prefix' => '/activate/']];
+        $queryParams = ['login_link' => ['path' => '/login-link', 'param' => 'hash']];
+
+        $container = $this->load(['sentry_scrubber' => ['paths' => $paths, 'query_params' => $queryParams]]);
+        $container->getDefinition(TokenScrubber::class)->setPublic(true);
+        $container->compile(true);
+
+        $scrubber = $container->get(TokenScrubber::class);
+        $this->assertInstanceOf(TokenScrubber::class, $scrubber);
+        $this->assertSame('/activate/[Filtered]', $scrubber->scrub('/activate/abc'));
+        $this->assertSame('/login-link?hash=[Filtered]', $scrubber->scrub('/login-link?hash=abc'));
     }
 
     private function load(array $config): ContainerBuilder

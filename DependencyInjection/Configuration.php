@@ -24,6 +24,7 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->addRepositoriesSection())
                 ->append($this->addSessionExpirySection())
                 ->append($this->addMaintenanceSection())
+                ->append($this->addSentryScrubberSection())
             ->end();
 
         return $treeBuilder;
@@ -93,5 +94,78 @@ final class Configuration implements ConfigurationInterface
             ->end();
 
         return $maintenanceNode;
+    }
+
+    private function addSentryScrubberSection(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('sentry_scrubber');
+        $scrubberNode = $treeBuilder->getRootNode();
+
+        $isInvalidRegex = static fn (?string $v): bool => null !== $v && false === @preg_match($v, '');
+        $isInvalidSegment = static fn (?string $v): bool => null !== $v && false === @preg_match('~'.$v.'~', '');
+
+        $scrubberNode
+            ->info(
+                'Replaces tokens in URLs in what\'s sent to Sentry. Set'
+                .' Xm\\SymfonyBundle\\Infrastructure\\Sentry\\TokenScrubber as sentry.options.before_send.',
+            )
+            ->canBeEnabled()
+            ->children()
+                ->arrayNode('paths')
+                    ->info('The path segment after the prefix, eg /activate/{token}.')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('prefix')
+                                ->info('Up to & including the slash before the token, eg "/activate/".')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                            ->scalarNode('segment')
+                                ->info(
+                                    'A regex (without delimiters) the token must match as the whole segment, so other'
+                                    .' values after the prefix are kept. Defaults to the whole segment.',
+                                )
+                                ->defaultNull()
+                                ->validate()
+                                    ->ifTrue($isInvalidSegment)
+                                    ->thenInvalid('The segment %s isn\'t a valid regex.')
+                                ->end()
+                            ->end()
+                            ->scalarNode('replacement')->defaultValue('[Filtered]')->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('query_params')
+                    ->info('A query param on one path, eg the "hash" of /login-link.')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('path')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('param')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('replacement')->defaultValue('[Filtered]')->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('patterns')
+                    ->info('Anything else: a regex (with delimiters) & its preg_replace() replacement.')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('regex')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->validate()
+                                    ->ifTrue($isInvalidRegex)
+                                    ->thenInvalid('The regex %s isn\'t valid.')
+                                ->end()
+                            ->end()
+                            ->scalarNode('replacement')->defaultValue('[Filtered]')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+
+        return $scrubberNode;
     }
 }
