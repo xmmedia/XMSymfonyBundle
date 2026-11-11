@@ -6,8 +6,8 @@ namespace Xm\SymfonyBundle\Exception;
 
 final class InvalidCountry extends \InvalidArgumentException
 {
-    public static function invalid(string $province): self
+    public static function invalid(string $country): self
     {
-        return new self(\sprintf('The country "%s" is invalid.', $province));
+        return new self(\sprintf('The country "%s" is invalid.', $country));
     }
 }
