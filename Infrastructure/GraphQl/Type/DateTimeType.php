@@ -7,6 +7,9 @@ namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Type;
 use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
+use Overblog\GraphQLBundle\Error\UserError;
+use Xm\SymfonyBundle\Util\StringUtil;
+use Xm\SymfonyBundle\Util\Utils;
 
 final class DateTimeType extends ScalarType implements AliasedInterface
 {
@@ -41,11 +44,28 @@ final class DateTimeType extends ScalarType implements AliasedInterface
      */
     public function parseValue($value): ?\DateTimeImmutable
     {
+        $value = StringUtil::trim($value);
+
         if (null === $value) {
             return null;
         }
 
-        return (new \DateTimeImmutable($value))->setTimezone(new \DateTimeZone('UTC'));
+        if (!\is_string($value)) {
+            throw $this->parseError($value);
+        }
+
+        try {
+            $dateTime = new \DateTimeImmutable($value);
+        } catch (\Exception) {
+            throw $this->parseError($value);
+        }
+
+        // impossible dates (2023-02-30) are rolled over with only a warning
+        if (false !== \DateTimeImmutable::getLastErrors()) {
+            throw $this->parseError($value);
+        }
+
+        return $dateTime->setTimezone(new \DateTimeZone('UTC'));
     }
 
     /**
@@ -63,5 +83,10 @@ final class DateTimeType extends ScalarType implements AliasedInterface
     public static function getAliases(): array
     {
         return [self::NAME];
+    }
+
+    private function parseError(mixed $value): UserError
+    {
+        return new UserError('Unable to parse DateTime. Received: "'.Utils::printSafe($value).'"');
     }
 }

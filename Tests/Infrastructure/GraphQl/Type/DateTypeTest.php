@@ -19,6 +19,25 @@ class DateTypeTest extends BaseTestCase
         $this->assertSame($date, $result->format('Y-m-d'));
     }
 
+    #[\PHPUnit\Framework\Attributes\DataProvider('nonStringProvider')]
+    public function testParseValueNonString(mixed $value): void
+    {
+        $this->expectException(\Overblog\GraphQLBundle\Error\UserError::class);
+        $this->expectExceptionMessageIsOrContains('The date is not in the format of YYYY-MM-DD.');
+
+        (new DateType())->parseValue($value);
+    }
+
+    public static function nonStringProvider(): \Generator
+    {
+        yield 'int'    => [20230115];
+        yield 'float'  => [1.5];
+        yield 'true'   => [true];
+        yield 'false'  => [false];
+        yield 'array'  => [['2023-01-15']];
+        yield 'object' => [new \stdClass()];
+    }
+
     #[\PHPUnit\Framework\Attributes\DataProvider('emptyProvider')]
     public function testParseValueEmpty(?string $empty): void
     {
@@ -145,21 +164,89 @@ class DateTypeTest extends BaseTestCase
     public static function invalidDateFormatProvider(): array
     {
         return [
-            'invalid month'        => ['2023-13-01'],
-            'invalid day'          => ['2023-01-32'],
-            'wrong format'         => ['01/15/2023'],
-            'invalid separator'    => ['2023.01.15'],
-            'missing leading zero' => ['2023-1-5'],
+            'invalid month'          => ['2023-13-01'],
+            'month 00'               => ['2023-00-15'],
+            'invalid day'            => ['2023-01-32'],
+            'day 00'                 => ['2023-01-00'],
+            'wrong format'           => ['01/15/2023'],
+            'day first'              => ['15-01-2023'],
+            'invalid separator'      => ['2023.01.15'],
+            'slashes'                => ['2023/01/15'],
+            'no separators'          => ['20230115'],
+            'missing leading zero'   => ['2023-1-5'],
+            'missing day zero'       => ['2023-01-5'],
+            'two digit year'         => ['23-01-15'],
+            'five digit year'        => ['12023-01-15'],
+            'negative year'          => ['-2023-01-15'],
+            'with time'              => ['2023-01-15 12:00:00'],
+            'ISO 8601 with time'     => ['2023-01-15T12:00:00Z'],
+            'with time zone'         => ['2023-01-15+00:00'],
+            'trailing characters'    => ['2023-01-15x'],
+            'trailing newline'       => ["2023-01-15\n2023-01-16"],
+            'month name'             => ['2023-Jan-15'],
+            'words'                  => ['January 15, 2023'],
+            'relative'               => ['tomorrow'],
+            'now'                    => ['now'],
+            'letters'                => ['abcd-ef-gh'],
+            'full width digits'      => ['２０２３-０１-１５'],
+            'timestamp'              => ['1673740800'],
         ];
     }
 
-    public function testParseValueWithInvalidDateThatPassesRegex(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('validDateProvider')]
+    public function testParseValueValidDates(string $value, string $expected): void
+    {
+        $type = new DateType();
+        $result = $type->parseValue($value);
+
+        $this->assertInstanceOf(\DateTimeImmutable::class, $result);
+        $this->assertSame($expected, $result->format('Y-m-d'));
+        $this->assertSame('00:00:00.000000', $result->format('H:i:s.u'));
+    }
+
+    public static function validDateProvider(): array
+    {
+        return [
+            'first day of year'           => ['2023-01-01', '2023-01-01'],
+            'last day of year'            => ['2023-12-31', '2023-12-31'],
+            '31 January'                  => ['2023-01-31', '2023-01-31'],
+            '28 February'                 => ['2023-02-28', '2023-02-28'],
+            '30 April'                    => ['2023-04-30', '2023-04-30'],
+            '31 July'                     => ['2023-07-31', '2023-07-31'],
+            '31 August'                   => ['2023-08-31', '2023-08-31'],
+            'leap day'                    => ['2024-02-29', '2024-02-29'],
+            'leap day, divisible by 400'  => ['2000-02-29', '2000-02-29'],
+            'year 0001'                   => ['0001-01-01', '0001-01-01'],
+            'year 9999'                   => ['9999-12-31', '9999-12-31'],
+            'leading & trailing spaces'   => [' 2023-06-20 ', '2023-06-20'],
+            'surrounding tab and newline' => ["\t2023-06-20\n", '2023-06-20'],
+        ];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('impossibleDateProvider')]
+    public function testParseValueWithImpossibleDate(string $impossibleDate): void
     {
         $type = new DateType();
 
-        // Note: DateTimeImmutable::createFromFormat silently accepts invalid dates like 2023-02-30
-        // and converts them to valid dates (2023-03-02). So we can't easily test this scenario.
-        // The regex validation is the primary defense against invalid formats.
-        $this->assertTrue(true);
+        $this->expectException(\Overblog\GraphQLBundle\Error\UserError::class);
+        $this->expectExceptionMessageIsOrContains('Unable to parse Date. Ensure format is Y-m-d. Received: "'.$impossibleDate.'"');
+
+        $type->parseValue($impossibleDate);
+    }
+
+    public static function impossibleDateProvider(): array
+    {
+        return [
+            '30 February'                       => ['2023-02-30'],
+            '31 February'                       => ['2023-02-31'],
+            '29 February, not leap'             => ['2023-02-29'],
+            '29 February, century not leap'     => ['1900-02-29'],
+            '30 February, leap year'            => ['2024-02-30'],
+            '31 April'                          => ['2023-04-31'],
+            '31 June'                           => ['2023-06-31'],
+            '31 September'                      => ['2023-09-31'],
+            '31 November'                       => ['2023-11-31'],
+            'year 0000'                         => ['0000-01-01'],
+        ];
     }
 }

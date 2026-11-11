@@ -51,13 +51,17 @@ final class DateType extends ScalarType implements AliasedInterface
             return null;
         }
 
-        if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $value)) {
+        if (!\is_string($value) || !preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $value)) {
             throw new UserError('The date is not in the format of YYYY-MM-DD. Received: "'.Utils::printSafe($value).'"');
         }
 
-        $date = \DateTimeImmutable::createFromFormat(self::FORMAT, $value);
+        // "!" sets the time to midnight instead of the current time.
+        // createFromFormat() rolls over impossible dates (2023-02-30 to 2023-03-02),
+        // so formatting it again must give back the same date.
+        // There's no year 0 & some databases don't accept it
+        $date = \DateTimeImmutable::createFromFormat('!'.self::FORMAT, $value);
 
-        if (!$date) {
+        if (!$date || $date->format(self::FORMAT) !== $value || str_starts_with($value, '0000-')) {
             throw new UserError('Unable to parse Date. Ensure format is '.self::FORMAT.'. Received: "'.Utils::printSafe($value).'"');
         }
 
