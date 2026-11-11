@@ -82,10 +82,9 @@ final class ProjectionRunCommand extends Command
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
 
         $runAll = $input->getOption(self::OPTION_RUN_ALL);
-        if (!$runAll) {
-            $this->projectionName = $input->getArgument(
-                self::ARGUMENT_PROJECTION_NAME,
-            );
+        $projectionName = $input->getArgument(self::ARGUMENT_PROJECTION_NAME);
+        if (!$runAll && null !== $projectionName) {
+            $this->projectionName = $projectionName;
             // append _projection if not present
             if (!str_ends_with($this->projectionName, '_projection')) {
                 $this->projectionName .= '_projection';
@@ -99,7 +98,7 @@ final class ProjectionRunCommand extends Command
         }
 
         if (!isset($this->projectionName) && !$runAll) {
-            throw new RuntimeException('A projection name or --all for run all projections are required.');
+            throw new RuntimeException('A projection name or --run-all to run all projections is required.');
         }
 
         if ($runAll) {

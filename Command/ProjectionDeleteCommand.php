@@ -32,8 +32,8 @@ class ProjectionDeleteCommand extends Command
         $this
             ->addArgument(
                 static::ARGUMENT_PROJECTION_NAME,
-                InputArgument::OPTIONAL,
-                'The name of the Projection',
+                InputArgument::REQUIRED,
+                'The name of the Projection, with or without "_projection" suffix',
             )
             ->addOption(static::OPTION_WITH_EVENTS, 'w', InputOption::VALUE_NONE, 'Delete with emitted events');
     }

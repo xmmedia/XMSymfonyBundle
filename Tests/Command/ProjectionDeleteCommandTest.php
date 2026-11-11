@@ -7,6 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Command;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prooph\EventStore\Projection\ProjectionManager;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 use Xm\SymfonyBundle\Command\ProjectionDeleteCommand;
 use Xm\SymfonyBundle\Tests\BaseTestCase;
@@ -67,5 +68,18 @@ class ProjectionDeleteCommandTest extends BaseTestCase
 
         $tester->assertCommandIsSuccessful();
         $this->assertStringContainsString('Deleting projection user</comment><error>_projection without emitted events', $tester->getDisplay());
+    }
+
+    public function testProjectionNameRequired(): void
+    {
+        $projectionManager = \Mockery::mock(ProjectionManager::class);
+        $projectionManager->shouldNotReceive('deleteProjection');
+
+        $tester = new CommandTester(new ProjectionDeleteCommand($projectionManager));
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageIsOrContains('Not enough arguments (missing: "projection-name").');
+
+        $tester->execute([]);
     }
 }
