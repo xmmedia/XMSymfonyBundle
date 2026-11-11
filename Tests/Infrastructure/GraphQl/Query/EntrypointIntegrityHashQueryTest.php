@@ -95,10 +95,53 @@ class EntrypointIntegrityHashQueryTest extends BaseTestCase
         $this->assertEquals($expectedHash, $result);
     }
 
-    public function testConstructorWithNullCollection(): void
+    public function testInvokeWithNullCollection(): void
     {
         $query = new EntrypointIntegrityHashQuery(null);
 
-        $this->assertInstanceOf(EntrypointIntegrityHashQuery::class, $query);
+        $this->assertNull($query('app'));
+    }
+
+    public function testInvokeWithoutCollection(): void
+    {
+        $query = new EntrypointIntegrityHashQuery();
+
+        $this->assertNull($query('app'));
+    }
+
+    public function testInvokeReturnsNullWhenNoJavaScriptFiles(): void
+    {
+        $lookup = \Mockery::mock(EntrypointLookupInterface::class);
+        $lookup->shouldReceive('getJavaScriptFiles')
+            ->once()
+            ->with('app')
+            ->andReturn([]);
+        $lookup->shouldNotReceive('getIntegrityData');
+
+        $this->assertNull($this->query($lookup)('app'));
+    }
+
+    public function testInvokeReturnsNullWhenFileNotInIntegrityData(): void
+    {
+        $lookup = \Mockery::mock(EntrypointLookupInterface::class);
+        $lookup->shouldReceive('getJavaScriptFiles')
+            ->once()
+            ->with('app')
+            ->andReturn(['/build/app.js']);
+        $lookup->shouldReceive('getIntegrityData')
+            ->once()
+            ->andReturn(['/build/other.js' => 'sha384-other']);
+
+        $this->assertNull($this->query($lookup)('app'));
+    }
+
+    private function query(EntrypointLookupInterface $lookup): EntrypointIntegrityHashQuery
+    {
+        $collection = \Mockery::mock(EntrypointLookupCollectionInterface::class);
+        $collection->shouldReceive('getEntrypointLookup')
+            ->once()
+            ->andReturn($lookup);
+
+        return new EntrypointIntegrityHashQuery($collection);
     }
 }

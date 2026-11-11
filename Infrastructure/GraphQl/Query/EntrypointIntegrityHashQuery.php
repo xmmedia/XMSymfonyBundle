@@ -10,24 +10,25 @@ use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class EntrypointIntegrityHashQuery implements QueryInterface
 {
-    private EntrypointLookupInterface $entrypointLookup;
+    private readonly ?EntrypointLookupInterface $entrypointLookup;
 
     public function __construct(?EntrypointLookupCollectionInterface $collection = null)
     {
-        if (null !== $collection) {
-            $this->entrypointLookup = $collection->getEntrypointLookup();
-        }
+        $this->entrypointLookup = $collection?->getEntrypointLookup();
     }
 
     public function __invoke(string $entrypoint): ?string
     {
-        $path = $this->entrypointLookup->getJavaScriptFiles($entrypoint)[0];
-        $hashes = $this->entrypointLookup->getIntegrityData();
-
-        if (empty($hashes)) {
+        if (null === $this->entrypointLookup) {
             return null;
         }
 
-        return $hashes[$path];
+        $path = $this->entrypointLookup->getJavaScriptFiles($entrypoint)[0] ?? null;
+
+        if (null === $path) {
+            return null;
+        }
+
+        return $this->entrypointLookup->getIntegrityData()[$path] ?? null;
     }
 }
