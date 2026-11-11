@@ -32,7 +32,9 @@ final class ProjectionRunCommand extends Command
     protected const string OPTION_LOAD_COUNT = 'load-count';
 
     private string $projectionName;
-    private ReadModelProjector $projector;
+    /** The projector that's running, so a signal can stop it. */
+    private ?ReadModelProjector $activeProjector = null;
+    private bool $stopRequested = false;
     private SymfonyStyle $io;
 
     public function __construct(private readonly ProjectionRunner $projectionRunner)
@@ -80,6 +82,8 @@ final class ProjectionRunCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
+        // the command can be run more than once in a process
+        $this->stopRequested = false;
         $this->io->title('Running Projection(s)');
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
 
@@ -110,7 +114,7 @@ final class ProjectionRunCommand extends Command
 
     private function runProjection(bool $keepRunning, int $sleep, ?int $loadCount): void
     {
-        $this->projector = $this->projectionRunner->configure(
+        $projector = $this->projectionRunner->configure(
             $this->projectionName,
             [
                 Projector::OPTION_SLEEP                   => $sleep,
@@ -143,39 +147,94 @@ final class ProjectionRunCommand extends Command
             \sprintf('Running with %s', null === $loadCount ? 'unlimited events' : $loadCount.' events'),
         );
 
-        $this->setupPcntl();
+        $previousSignalHandling = $this->setupPcntl();
+        $this->activeProjector = $projector;
 
-        $this->projector->run($keepRunning);
+        try {
+            $projector->run($keepRunning);
+        } finally {
+            $this->activeProjector = null;
+            $this->restorePcntl($previousSignalHandling);
+        }
 
         $this->io->text((new \DateTimeImmutable())->format('Y-m-d H:i:s'));
-        $this->io->success(
-            \sprintf('Projection %s completed.', $this->projectionName),
-        );
+        if (!$this->stopRequested) {
+            $this->io->success(
+                \sprintf('Projection %s completed.', $this->projectionName),
+            );
+        }
     }
 
     private function runAllProjections(): void
     {
         $projections = $this->projectionRunner->getAllProjectionNames();
         foreach ($projections as $projectionName) {
+            // a signal stopped the previous projection
+            if ($this->stopRequested) {
+                break;
+            }
+
             $this->projectionName = $projectionName;
 
             $this->runProjection(false, 1000000, null);
         }
     }
 
-    private function setupPcntl(): void
+    /**
+     * Signals are only handled where the projector calls pcntl_signal_dispatch():
+     * between events & before it checks its status, after it's loaded its positions.
+     * Handled asynchronously (which the console Application turns on), the projector
+     * could be stopped part way through an event, or before it's loaded its positions,
+     * saving them as empty so the next run handles every event again.
+     * pcntl is always available: the projector requires it for OPTION_PCNTL_DISPATCH.
+     *
+     * @return array{async: bool, handlers: array<int, callable|int>} the signal handling to restore
+     */
+    private function setupPcntl(): array
     {
-        pcntl_signal(\SIGTERM, $this->signalHandler(...));
-        pcntl_signal(\SIGHUP, $this->signalHandler(...));
-        pcntl_signal(\SIGINT, $this->signalHandler(...));
-        pcntl_signal(\SIGQUIT, $this->signalHandler(...));
+        $previous = [
+            'async'    => pcntl_async_signals(false),
+            'handlers' => [],
+        ];
+
+        foreach ([\SIGTERM, \SIGHUP, \SIGINT, \SIGQUIT] as $signal) {
+            $previous['handlers'][$signal] = pcntl_signal_get_handler($signal);
+            pcntl_signal($signal, $this->signalHandler(...));
+        }
+
+        return $previous;
+    }
+
+    /**
+     * @param array{async: bool, handlers: array<int, callable|int>} $previous
+     */
+    private function restorePcntl(array $previous): void
+    {
+        // handle a signal that came after the projector's last dispatch,
+        // so it stops the rest of --run-all instead of going to the previous handler
+        pcntl_signal_dispatch();
+
+        foreach ($previous['handlers'] as $signal => $handler) {
+            pcntl_signal($signal, $handler);
+        }
+
+        pcntl_async_signals($previous['async']);
     }
 
     public function signalHandler(): void
     {
+        // only the first signal stops the projector
+        $alreadyRequested = $this->stopRequested;
+        $this->stopRequested = true;
+
+        // nothing to stop once the projector's finished
+        if ($alreadyRequested || null === $this->activeProjector) {
+            return;
+        }
+
         $this->io->success(
             \sprintf('Projection %s stopped.', $this->projectionName),
         );
-        $this->projector->stop();
+        $this->activeProjector->stop();
     }
 }
