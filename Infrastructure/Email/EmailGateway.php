@@ -11,6 +11,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
 use Xm\SymfonyBundle\Util\Assert;
+use Xm\SymfonyBundle\Util\StringUtil;
 use Xm\SymfonyBundle\Util\Utils;
 
 class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
@@ -125,7 +126,13 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         }
 
         if ([] === $to) {
-            return [Email::fromString($this->devEmail)];
+            $devEmail = StringUtil::trim($this->devEmail);
+
+            if (null === $devEmail) {
+                throw new \RuntimeException('None of the recipients are in the email whitelist & no dev email is set to send it to instead. Set the dev email (usually DEV_EMAIL in .env.local) or add the recipient to the whitelist.');
+            }
+
+            return [Email::fromString($devEmail)];
         }
 
         return $to;
