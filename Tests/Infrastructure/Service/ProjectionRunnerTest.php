@@ -130,6 +130,65 @@ class ProjectionRunnerTest extends BaseTestCase
             ->run(self::PROJECTION);
     }
 
+    #[\PHPUnit\Framework\Attributes\DataProvider('allProjectionNamesProvider')]
+    public function testGetAllProjectionNames(int $count, ?int $limit, int $expectedCount): void
+    {
+        $names = array_map(static fn (int $i): string => \sprintf('projection_%03d', $i), 0 === $count ? [] : range(1, $count));
+
+        $result = $this->namesRunner($names, $limit ?? \PHP_INT_MAX)->getAllProjectionNames($limit);
+
+        $this->assertSame(\array_slice($names, 0, $expectedCount), $result);
+    }
+
+    public static function allProjectionNamesProvider(): \Generator
+    {
+        yield 'none'                 => [0, null, 0];
+        yield 'fewer than 20'        => [5, null, 5];
+        yield 'more than 20'         => [45, null, 45];
+        yield 'limit'                => [45, 10, 10];
+        yield 'limit over the count' => [5, 10, 5];
+    }
+
+    public function testGetAllProjectionNamesWithInMemoryManager(): void
+    {
+        $eventStore = new \Prooph\EventStore\InMemoryEventStore();
+        $manager = new \Prooph\EventStore\Projection\InMemoryProjectionManager($eventStore);
+
+        $names = [];
+        foreach (range(1, 25) as $i) {
+            $names[] = $name = \sprintf('projection_%03d', $i);
+            $manager->createReadModelProjection($name, \Mockery::mock(ReadModel::class));
+        }
+
+        $runner = new ProjectionRunner(
+            $manager,
+            \Mockery::mock(ContainerInterface::class),
+            \Mockery::mock(ContainerInterface::class),
+            \Mockery::mock(ContainerInterface::class),
+        );
+
+        $this->assertSame($names, $runner->getAllProjectionNames());
+    }
+
+    /**
+     * @param string[] $names
+     */
+    private function namesRunner(array $names, int $expectedLimit): ProjectionRunner
+    {
+        $projectionManager = \Mockery::mock(ProjectionManager::class);
+        $projectionManager->shouldReceive('fetchProjectionNames')
+            ->once()
+            ->with(null, $expectedLimit)
+            ->andReturnUsing(static fn (?string $filter, int $limit): array => \array_slice($names, 0, $limit));
+
+        return new ProjectionRunner(
+            $projectionManager,
+            \Mockery::mock(ContainerInterface::class),
+            \Mockery::mock(ContainerInterface::class),
+            \Mockery::mock(ContainerInterface::class),
+        );
+    }
+
     /**
      * @param array<ProjectionStatus|\Throwable> $statuses returned, in order, by fetchProjectionStatus()
      */

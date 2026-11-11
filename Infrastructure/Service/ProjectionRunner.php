@@ -133,8 +133,17 @@ class ProjectionRunner
         );
     }
 
-    public function getAllProjectionNames(int $limit = 20): array
+    /**
+     * The projection manager only returns up to the limit given (20 by default),
+     * so it's asked for all of them in one query: paging would run a
+     * projection twice or skip one if one's added or removed in between.
+     *
+     * @param int|null $limit null for all
+     *
+     * @return string[]
+     */
+    public function getAllProjectionNames(?int $limit = null): array
     {
-        return $this->projectionsManager->fetchProjectionNames(null, $limit);
+        return $this->projectionsManager->fetchProjectionNames(null, $limit ?? \PHP_INT_MAX);
     }
 }
