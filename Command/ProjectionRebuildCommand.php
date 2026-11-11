@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +41,7 @@ final class ProjectionRebuildCommand extends Command
         }
 
         $io = new SymfonyStyle($input, $output);
-        $io->title(\sprintf('Rebuilding Projection "%s"', $projectionName));
+        $io->title(\sprintf('Rebuilding Projection "%s"', OutputFormatter::escape($projectionName)));
 
         $this->getApplication()
             ->find('app:projection:delete')

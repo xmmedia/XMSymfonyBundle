@@ -7,6 +7,7 @@ namespace Xm\SymfonyBundle\Command;
 use Prooph\EventStore\Projection\ProjectionManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -48,8 +49,8 @@ class ProjectionDeleteCommand extends Command
         $withEvents = $input->getOption(self::OPTION_WITH_EVENTS);
 
         $message = \sprintf(
-            '<action>Deleting projection <highlight>%s</highlight>%s</action>',
-            $projectionName,
+            '<info>Deleting projection <comment>%s</comment>%s</info>',
+            OutputFormatter::escape($projectionName),
             $withEvents ? ' with emitted events' : ' without emitted events',
         );
         $output->writeln($message);
