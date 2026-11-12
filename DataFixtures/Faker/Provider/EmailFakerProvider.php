@@ -10,10 +10,10 @@ use Xm\SymfonyBundle\Model\Email;
 /**
  * @codeCoverageIgnore
  */
-class EmailFakerProvider extends Faker\Provider\Internet
+class EmailFakerProvider extends Faker\Provider\Base
 {
     public function emailVo(): Email
     {
-        return Email::fromString(static::email());
+        return Email::fromString($this->generator->email());
     }
 }

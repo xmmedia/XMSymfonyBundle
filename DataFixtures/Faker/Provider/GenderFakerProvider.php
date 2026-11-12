@@ -10,12 +10,10 @@ use Xm\SymfonyBundle\Model\Gender;
 /**
  * @codeCoverageIgnore
  */
-class GenderFakerProvider extends Faker\Provider\Person
+class GenderFakerProvider extends Faker\Provider\Base
 {
     public function gender(): string
     {
-        $faker = Faker\Factory::create();
-
-        return $faker->randomElement(Gender::getValues());
+        return static::randomElement(Gender::getValues());
     }
 }

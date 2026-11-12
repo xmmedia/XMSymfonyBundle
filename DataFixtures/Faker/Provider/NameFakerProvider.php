@@ -9,7 +9,7 @@ use Faker;
 /**
  * @codeCoverageIgnore
  */
-class NameFakerProvider extends Faker\Provider\Person
+class NameFakerProvider extends Faker\Provider\Base
 {
     public function name($gender = null): string
     {

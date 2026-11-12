@@ -303,9 +303,9 @@ class AddressTest extends BaseTestCase
             $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1().'<br>'.
-            $address->line2().'<br>'.
-            $address->city().', '.
+        $string = $this->escape($address->line1()).'<br>'.
+            $this->escape($address->line2()).'<br>'.
+            $this->escape($address->city()).', '.
             $address->province()->toString().' &nbsp;'.
             $address->postalCode()->toString().'<br>'.
             $address->country()->name();
@@ -325,8 +325,8 @@ class AddressTest extends BaseTestCase
             $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1().'<br>'.
-            $address->city().', '.
+        $string = $this->escape($address->line1()).'<br>'.
+            $this->escape($address->city()).', '.
             $address->province()->toString().' &nbsp;'.
             $address->postalCode()->toString().'<br>'.
             $address->country()->name();
@@ -366,9 +366,9 @@ class AddressTest extends BaseTestCase
             $this->postalCode(),
             $faker->randomElement(['CA', 'US']),
         );
-        $string = $address->line1().'<br>'.
-            $address->line2().'<br>'.
-            $address->city().', '.
+        $string = $this->escape($address->line1()).'<br>'.
+            $this->escape($address->line2()).'<br>'.
+            $this->escape($address->city()).', '.
             $address->province()->toString().' &nbsp;'.
             $address->postalCode()->toString();
 
@@ -382,7 +382,7 @@ class AddressTest extends BaseTestCase
 
         $line1 = $faker->streetAddress();
         $line2 = $faker->streetAddress();
-        $city = $faker->city();
+        $city = mb_substr($faker->city(), 0, 50 - mb_strlen($xss));
         $province = $faker->stateAbbr();
         $postalCode = 'T4D 84K';
 
@@ -395,10 +395,9 @@ class AddressTest extends BaseTestCase
             'CA',
         );
 
-        $escapedXss = htmlspecialchars($xss, \ENT_QUOTES | \ENT_SUBSTITUTE);
-        $string = $line1.$escapedXss.'<br>'.
-            $line2.$escapedXss.'<br>'.
-            $city.$escapedXss.', '.
+        $string = $this->escape($line1.$xss).'<br>'.
+            $this->escape($line2.$xss).'<br>'.
+            $this->escape($city.$xss).', '.
             $province.' &nbsp;'.
             $postalCode.'<br>'.
             'Canada';
@@ -436,5 +435,10 @@ class AddressTest extends BaseTestCase
     private static function postalCode(): string
     {
         return str_replace('-', ' ', self::faker()->postcode());
+    }
+
+    private function escape(string $value): string
+    {
+        return htmlspecialchars($value, \ENT_QUOTES | \ENT_SUBSTITUTE);
     }
 }
