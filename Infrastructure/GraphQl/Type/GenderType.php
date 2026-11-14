@@ -18,10 +18,7 @@ class GenderType extends EnumType implements AliasedInterface
     {
         $config = [
             'name'        => self::NAME,
-            'values'      => array_combine(
-                Gender::getNames(),
-                Gender::getValues(),
-            ),
+            'values'      => Gender::namesToValues(),
             'description' => 'Gender.',
         ];
 
@@ -34,7 +31,7 @@ class GenderType extends EnumType implements AliasedInterface
     public function serialize($value): string
     {
         if ($value instanceof Gender) {
-            return $value->getValue();
+            return $value->name;
         }
 
         throw new Error('Cannot serialize Gender value as enum: '.Utils::printSafe($value));

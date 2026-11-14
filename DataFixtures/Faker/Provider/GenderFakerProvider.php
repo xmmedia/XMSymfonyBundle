@@ -14,6 +14,6 @@ class GenderFakerProvider extends Faker\Provider\Base
 {
     public function gender(): string
     {
-        return static::randomElement(Gender::getValues());
+        return static::randomElement(Gender::values());
     }
 }

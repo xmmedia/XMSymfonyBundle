@@ -83,6 +83,11 @@ This bundle implements event sourcing using Prooph Event Store:
 
 **UUID Identifiers**: Model IDs extend `UuidId` and implement `UuidInterface`. They auto-generate UUIDs and provide type safety.
 
+**Enums**: Use native backed enums implementing `ValueObjectEnum` with `ValueObjectEnumTrait` (eg `Gender`), which
+provide `sameValueAs()`, `values()`, `names()` & `namesToValues()`. `Model\Enum` (built on `marc-mabe/php-enum`)
+remains only for the projects' existing enums that extend it — don't use it for new ones, & don't use it within the
+bundle.
+
 **Collections**: Use `ValueObjectCollection` for type-safe collections of value objects.
 
 **GraphQL Integration**:

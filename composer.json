@@ -51,7 +51,6 @@
     "fakerphp/faker": "^1.8",
     "friendsofphp/php-cs-fixer": "^3.0",
     "jetbrains/phpstorm-attributes": "^1.0",
-    "marc-mabe/php-enum-phpstan": "^3.0",
     "mockery/mockery": "^1.2",
     "pentatrion/vite-bundle": "^6.0 || ^7.0 || ^8.0",
     "phpstan/phpstan": "^2.0",

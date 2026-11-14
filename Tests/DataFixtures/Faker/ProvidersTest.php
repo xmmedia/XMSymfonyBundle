@@ -50,7 +50,7 @@ class ProvidersTest extends TestCase
 
     public function testGender(): void
     {
-        $this->assertContains($this->makeFaker('en_US')->gender(), Gender::getValues());
+        $this->assertContains($this->makeFaker('en_US')->gender(), Gender::values());
     }
 
     private function makeFaker(string $locale): Faker\Generator

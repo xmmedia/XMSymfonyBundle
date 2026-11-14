@@ -19,11 +19,20 @@ class GenderTypeTest extends TestCase
         $this->assertNotNull($type->description);
     }
 
+    public function testParseValue(): void
+    {
+        $type = new GenderType();
+
+        foreach (Gender::cases() as $gender) {
+            $this->assertSame($gender->value, $type->parseValue($gender->name));
+        }
+    }
+
     public function testSerialize(): void
     {
         $type = new GenderType();
 
-        $result = $type->serialize(Gender::byValue('MALE'));
+        $result = $type->serialize(Gender::MALE);
 
         $this->assertEquals('MALE', $result);
     }

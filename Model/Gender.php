@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Model;
 
-/**
- * @method static Gender FEMALE();
- * @method static Gender MALE();
- */
-class Gender extends Enum
+enum Gender: string implements ValueObjectEnum
 {
-    public const FEMALE = 'FEMALE';
-    public const MALE = 'MALE';
+    use ValueObjectEnumTrait;
+
+    case FEMALE = 'FEMALE';
+    case MALE = 'MALE';
 }
