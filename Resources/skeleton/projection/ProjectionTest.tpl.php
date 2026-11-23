@@ -8,7 +8,7 @@ use App\Model\<?= $model; ?>\Event;
 use <?= $projection_class; ?>;
 use App\Tests\BaseTestCase;
 use Prooph\EventStore\Projection\ReadModelProjector;
-use Xm\SymfonyBundle\Tests\ProjectionWhenArgs;
+use Xm\SymfonyBundle\Test\ProjectionWhenArgs;
 
 class <?= $class_name; ?> extends BaseTestCase
 {

@@ -10,9 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\TestUserEntity as User;
-use Xm\SymfonyBundle\Tests\UsesFaker;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\TestUserEntity as User;
+use Xm\SymfonyBundle\Test\UsesFaker;
 
 class IssuerProviderTest extends BaseTestCase
 {

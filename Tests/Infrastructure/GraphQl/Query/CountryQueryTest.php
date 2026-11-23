@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\CountryQuery;
 use Xm\SymfonyBundle\Model\Country;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class CountryQueryTest extends BaseTestCase
 {

@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\EventStore;
 
 use Symfony\Component\Messenger\MessageBusInterface;
 use Xm\SymfonyBundle\EventStore\EventStoreMessengerPlugin;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class EventStoreMessengerPluginTest extends BaseTestCase
 {

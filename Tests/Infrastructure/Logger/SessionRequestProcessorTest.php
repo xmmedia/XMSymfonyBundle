@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Xm\SymfonyBundle\Infrastructure\Logger\SessionRequestProcessor;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class SessionRequestProcessorTest extends BaseTestCase
 {

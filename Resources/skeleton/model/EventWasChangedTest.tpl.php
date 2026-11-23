@@ -7,7 +7,7 @@ namespace <?= $namespace; ?>;
 use <?= $event_class; ?>;
 use <?= $name_class; ?>;
 use App\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\CanCreateEventFromArray;
+use Xm\SymfonyBundle\Test\CanCreateEventFromArray;
 
 class <?= $class_name; ?> extends BaseTestCase
 {

@@ -35,6 +35,7 @@ return RectorConfig::configure()
         __DIR__.'/Model',
         __DIR__.'/Resources',
         __DIR__.'/Security',
+        __DIR__.'/Test',
         __DIR__.'/Tests',
         __DIR__.'/Util',
         __DIR__.'/XmSymfonyBundle.php',
@@ -42,6 +43,8 @@ return RectorConfig::configure()
     ->withSkip([
         // the skeleton files are templates, not valid PHP
         __DIR__.'/Resources/skeleton',
+        // the deprecated aliases for the old Tests\ names of the helpers in Test/ (removed in 3.0)
+        ...glob(__DIR__.'/Tests/*.php'),
         // we may not want the property to have a default value
         Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector::class,
         // from set "codingStyle"

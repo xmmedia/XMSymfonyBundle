@@ -4,43 +4,13 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+class_alias(\Xm\SymfonyBundle\Test\TestUserEntity::class, 'Xm\SymfonyBundle\Tests\TestUserEntity');
 
-class TestUserEntity implements UserInterface
-{
-    private $userId;
-
-    public function userId()
-    {
-        return $this->userId;
-    }
-
-    public function getRoles(): array
-    {
-        return [];
-    }
-
-    public function getPassword(): string
-    {
-        return '';
-    }
-
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->getUserIdentifier();
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return '';
-    }
-
-    public function eraseCredentials(): void
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\TestUserEntity instead
+     */
+    class TestUserEntity extends \Xm\SymfonyBundle\Test\TestUserEntity
     {
     }
 }

@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Symfony\Contracts\Service\ResetInterface;
 use Xm\SymfonyBundle\DataProvider\CausationProvider;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class CausationProviderTest extends BaseTestCase
 {

@@ -16,7 +16,7 @@ use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Maker\AggregateRootMaker;
 use Xm\SymfonyBundle\Security\SessionExpiry;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class XmSymfonyExtensionTest extends BaseTestCase
 {

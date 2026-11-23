@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Migrations;
 
 use Doctrine\Migrations\Version\Version;
 use Xm\SymfonyBundle\Migrations\VersionComparator;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class VersionComparatorTest extends BaseTestCase
 {

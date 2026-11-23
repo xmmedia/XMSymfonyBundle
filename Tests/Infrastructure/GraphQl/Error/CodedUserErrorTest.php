@@ -11,7 +11,7 @@ use Xm\SymfonyBundle\Infrastructure\GraphQl\Error\CodedUserError;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Error\LinkExpiredError;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Error\NotFoundError;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Error\TooManyRequestsError;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class CodedUserErrorTest extends BaseTestCase
 {

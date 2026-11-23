@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Tests\Doctrine;
 
 use Xm\SymfonyBundle\Doctrine\FilterQueryBuilder;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 use Xm\SymfonyBundle\Util\FiltersInterface;
 
 class FilterQueryBuilderTest extends BaseTestCase

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Xm\SymfonyBundle\Model\UuidId;
-use Xm\SymfonyBundle\Model\UuidInterface;
-use Xm\SymfonyBundle\Model\ValueObject;
+class_alias(\Xm\SymfonyBundle\Test\FakeId::class, 'Xm\SymfonyBundle\Tests\FakeId');
 
-class FakeId implements ValueObject, UuidInterface
-{
-    use UuidId;
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\FakeId instead
+     */
+    class FakeId extends \Xm\SymfonyBundle\Test\FakeId
+    {
+    }
 }

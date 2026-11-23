@@ -9,7 +9,7 @@ use Sentry\Breadcrumb;
 use Sentry\Event;
 use Sentry\ExceptionDataBag;
 use Xm\SymfonyBundle\Infrastructure\Sentry\TokenScrubber;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class TokenScrubberTest extends BaseTestCase
 {

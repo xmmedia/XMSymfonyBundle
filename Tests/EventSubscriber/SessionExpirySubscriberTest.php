@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Xm\SymfonyBundle\EventSubscriber\SessionExpirySubscriber;
 use Xm\SymfonyBundle\Security\SessionExpiry;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class SessionExpirySubscriberTest extends BaseTestCase
 {

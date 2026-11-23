@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\EventStore;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 use Xm\SymfonyBundle\EventStore\MetadataIpAddressEnricher;
 use Xm\SymfonyBundle\Infrastructure\Service\RequestInfoProvider;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MetadataIpAddressEnricherTest extends BaseTestCase
 {

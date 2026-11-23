@@ -4,25 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Xm\SymfonyBundle\Model\Date;
+class_alias(\Xm\SymfonyBundle\Test\SequentialDateTrait::class, 'Xm\SymfonyBundle\Tests\SequentialDateTrait');
 
-trait SequentialDateTrait
-{
-    private function startDate(): Date
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\SequentialDateTrait instead
+     */
+    trait SequentialDateTrait
     {
-        return Date::fromString(
-            $this->faker()
-                ->dateTimeBetween('-5 years', '-1 year')
-                ->format('Y-m-d'),
-        );
-    }
-
-    private function endDate(): Date
-    {
-        return Date::fromString(
-            $this->faker()
-                ->dateTimeBetween('-1 years', 'now')
-                ->format('Y-m-d'),
-        );
+        use \Xm\SymfonyBundle\Test\SequentialDateTrait;
     }
 }

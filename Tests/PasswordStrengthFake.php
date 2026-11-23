@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Xm\SymfonyBundle\Util\PasswordStrengthInterface;
+class_alias(\Xm\SymfonyBundle\Test\PasswordStrengthFake::class, 'Xm\SymfonyBundle\Tests\PasswordStrengthFake');
 
-class PasswordStrengthFake implements PasswordStrengthInterface
-{
-    public function __construct(private readonly int $score = 4)
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\PasswordStrengthFake instead
+     */
+    class PasswordStrengthFake extends \Xm\SymfonyBundle\Test\PasswordStrengthFake
     {
-    }
-
-    public function __invoke(string $password, array $userInputs = []): array
-    {
-        return [
-            'score'    => $this->score,
-            'password' => $password,
-        ];
     }
 }

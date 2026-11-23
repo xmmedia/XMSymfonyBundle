@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests\Util;
 
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 use Xm\SymfonyBundle\Util\Utils;
 
 class UtilsTest extends BaseTestCase

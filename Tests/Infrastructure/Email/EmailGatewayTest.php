@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Xm\SymfonyBundle\Infrastructure\Email\EmailGateway;
 use Xm\SymfonyBundle\Model\Email;
 use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class EmailGatewayTest extends BaseTestCase
 {

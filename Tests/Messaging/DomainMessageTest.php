@@ -7,9 +7,9 @@ namespace Xm\SymfonyBundle\Tests\Messaging;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\InvalidArgumentException;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeCommand;
-use Xm\SymfonyBundle\Tests\FakeEvent;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeCommand;
+use Xm\SymfonyBundle\Test\FakeEvent;
 
 class DomainMessageTest extends BaseTestCase
 {

@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\EmailSuppressionQuery;
 use Xm\SymfonyBundle\Infrastructure\Service\EmailSuppressionCheckerInterface;
 use Xm\SymfonyBundle\Model\Email;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class EmailSuppressionQueryTest extends BaseTestCase
 {

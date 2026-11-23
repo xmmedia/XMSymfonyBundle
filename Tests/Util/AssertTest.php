@@ -6,8 +6,8 @@ namespace Xm\SymfonyBundle\Tests\Util;
 
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\PasswordStrengthFake;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\PasswordStrengthFake;
 use Xm\SymfonyBundle\Util\Assert;
 
 class AssertTest extends BaseTestCase

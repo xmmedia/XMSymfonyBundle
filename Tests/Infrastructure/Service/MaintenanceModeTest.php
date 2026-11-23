@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\Service;
 
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenanceModeTest extends BaseTestCase
 {

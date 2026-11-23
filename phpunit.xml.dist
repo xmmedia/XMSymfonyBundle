@@ -26,6 +26,7 @@
         </include>
         <exclude>
             <directory>./Resources</directory>
+            <directory>./Test</directory>
             <directory>./Tests</directory>
             <directory>./vendor</directory>
         </exclude>

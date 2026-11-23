@@ -76,6 +76,7 @@
       "Xm\\SymfonyBundle\\": ""
     },
     "exclude-from-classmap": [
+      "/Test/",
       "/Tests/"
     ]
   },

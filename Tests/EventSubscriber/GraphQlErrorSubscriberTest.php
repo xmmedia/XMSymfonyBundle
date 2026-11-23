@@ -10,7 +10,7 @@ use Overblog\GraphQLBundle\Event\Events;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Xm\SymfonyBundle\EventSubscriber\GraphQlErrorSubscriber;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class GraphQlErrorSubscriberTest extends BaseTestCase
 {

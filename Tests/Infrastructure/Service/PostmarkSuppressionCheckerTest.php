@@ -11,7 +11,7 @@ use Postmark\Models\Suppressions\PostmarkSuppressionList;
 use Postmark\PostmarkClient;
 use Xm\SymfonyBundle\Infrastructure\Service\PostmarkSuppressionChecker;
 use Xm\SymfonyBundle\Model\Email;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class PostmarkSuppressionCheckerTest extends BaseTestCase
 {

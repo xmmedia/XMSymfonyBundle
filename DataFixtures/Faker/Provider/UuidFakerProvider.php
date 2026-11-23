@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\DataFixtures\Faker\Provider;
 
 use Faker;
 use Xm\SymfonyBundle\Model\EmailGatewayMessageId;
-use Xm\SymfonyBundle\Tests\FakeId;
+use Xm\SymfonyBundle\Test\FakeId;
 
 /**
  * @codeCoverageIgnore

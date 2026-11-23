@@ -9,8 +9,8 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Xm\SymfonyBundle\Infrastructure\Service\RequestInfoProvider;
 use Xm\SymfonyBundle\Messenger\CommandRecorderMiddleware;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeCommand;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeCommand;
 
 class CommandRecorderMiddlewareTest extends BaseTestCase
 {

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 use Xm\SymfonyBundle\Command\ProjectionRunCommand;
 use Xm\SymfonyBundle\Infrastructure\Service\ProjectionRunner;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 /**
  * The signal tests send real signals to this process, the way a supervisor would.

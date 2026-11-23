@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\AuthLastQuery;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class AuthLastQueryTest extends BaseTestCase
 {

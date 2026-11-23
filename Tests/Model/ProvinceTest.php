@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Xm\SymfonyBundle\Exception\InvalidProvince;
 use Xm\SymfonyBundle\Model\Country;
 use Xm\SymfonyBundle\Model\Province;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class ProvinceTest extends TestCase
 {

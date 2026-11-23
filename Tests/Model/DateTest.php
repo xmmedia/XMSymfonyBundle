@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xm\SymfonyBundle\Tests\Model;
 
 use Xm\SymfonyBundle\Model\Date;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class DateTest extends BaseTestCase
 {

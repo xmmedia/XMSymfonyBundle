@@ -10,8 +10,8 @@ use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Utils\Utils;
 use Ramsey\Uuid\Uuid;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\UuidTypeTrait;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeId;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeId;
 
 class UuidTypeTraitTest extends BaseTestCase
 {

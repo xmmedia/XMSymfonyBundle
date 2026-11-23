@@ -17,7 +17,7 @@ use Symfony\Component\Messenger\EventListener\StopWorkerOnRestartSignalListener;
 use Symfony\Component\Messenger\Worker;
 use Xm\SymfonyBundle\EventSubscriber\MaintenanceWorkerSubscriber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenanceWorkerSubscriberTest extends BaseTestCase
 {

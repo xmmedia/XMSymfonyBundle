@@ -75,7 +75,8 @@ This bundle implements event sourcing using Prooph Event Store:
 - `DataProvider/` - Data providers for issuer, causation metadata
 - `DataFixtures/` - Faker providers for test data
 - `Util/` - Utility classes (StringUtil, PasswordStrength)
-- `Tests/` - PHPUnit tests mirroring source structure
+- `Test/` - helpers for the projects' tests (`BaseTestCase`, `CanCreateEventFromArray`, `FakeAr`, `FakeVo`, `ProjectionWhenArgs`…), under `Xm\SymfonyBundle\Test\`. Shipped in the package
+- `Tests/` - the bundle's own PHPUnit tests, mirroring the source structure, left out of the package (`.gitattributes`). The `*.php` files directly in it are deprecated aliases for the old `Xm\SymfonyBundle\Tests\` names of the helpers (moved to `Test/` in 2.1): don't add files there. They're only `@deprecated` (for IDEs & PHPStan), without `trigger_deprecation()`, as most projects' PHPUnit configs have `failOnDeprecation`. Add the triggers once the projects use the `Test\` names, then remove the aliases in 3.0
 
 ### Key Patterns
 

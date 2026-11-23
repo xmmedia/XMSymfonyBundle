@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Command;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Xm\SymfonyBundle\Command\ProjectionNameTrait;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class ProjectionNameTraitTest extends BaseTestCase
 {

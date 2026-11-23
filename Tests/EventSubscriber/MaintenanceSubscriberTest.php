@@ -13,7 +13,7 @@ use Xm\SymfonyBundle\EventSubscriber\MaintenanceSubscriber;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceGate;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceMode;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenanceSubscriberTest extends BaseTestCase
 {

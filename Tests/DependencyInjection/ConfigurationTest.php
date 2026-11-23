@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Xm\SymfonyBundle\DependencyInjection\Configuration;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class ConfigurationTest extends BaseTestCase
 {

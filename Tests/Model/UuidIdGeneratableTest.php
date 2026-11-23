@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Model;
 use Xm\SymfonyBundle\Model\UuidId;
 use Xm\SymfonyBundle\Model\UuidIdGeneratable;
 use Xm\SymfonyBundle\Model\ValueObject;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class UuidIdGeneratableTest extends BaseTestCase
 {

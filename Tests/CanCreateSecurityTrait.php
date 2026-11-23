@@ -4,47 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+class_alias(\Xm\SymfonyBundle\Test\CanCreateSecurityTrait::class, 'Xm\SymfonyBundle\Tests\CanCreateSecurityTrait');
 
-trait CanCreateSecurityTrait
-{
+if (false) {
     /**
-     * $user: false = no token storage within container, null = no user.
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\CanCreateSecurityTrait instead
      */
-    private function createSecurity(UserInterface|bool|null $user): Security|\Mockery\MockInterface
+    trait CanCreateSecurityTrait
     {
-        $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
-
-        if (false !== $user) {
-            $token = \Mockery::mock(TokenInterface::class);
-            $token->shouldReceive('getUser')
-                ->andReturn($user);
-
-            $tokenStorage->shouldReceive('getToken')
-                ->andReturn($token);
-        }
-
-        $container = $this->createContainer('security.token_storage', $tokenStorage);
-
-        return new Security($container);
-    }
-
-    /**
-     * @return ContainerInterface&\Mockery\MockInterface
-     */
-    private function createContainer(
-        string $serviceId,
-        object $serviceObject,
-    ): ContainerInterface {
-        $container = \Mockery::mock(ContainerInterface::class);
-        $container->shouldReceive('get')
-            ->with($serviceId)
-            ->andReturn($serviceObject);
-
-        return $container;
+        use \Xm\SymfonyBundle\Test\CanCreateSecurityTrait;
     }
 }

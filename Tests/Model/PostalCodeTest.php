@@ -6,8 +6,8 @@ namespace Xm\SymfonyBundle\Tests\Model;
 
 use Xm\SymfonyBundle\Exception\InvalidPostalCode;
 use Xm\SymfonyBundle\Model\PostalCode;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class PostalCodeTest extends BaseTestCase
 {

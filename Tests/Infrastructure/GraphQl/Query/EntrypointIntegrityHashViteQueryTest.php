@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 use Pentatrion\ViteBundle\Service\EntrypointsLookup;
 use Pentatrion\ViteBundle\Service\EntrypointsLookupCollection;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\EntrypointIntegrityHashViteQuery;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class EntrypointIntegrityHashViteQueryTest extends BaseTestCase
 {

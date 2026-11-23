@@ -10,7 +10,7 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Xm\SymfonyBundle\DependencyInjection\Compiler\SessionExpiryPass;
 use Xm\SymfonyBundle\Security\SessionExpiry;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class SessionExpiryPassTest extends BaseTestCase
 {

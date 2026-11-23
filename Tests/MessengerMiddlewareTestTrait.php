@@ -4,22 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
-use Symfony\Component\Messenger\Middleware\StackInterface;
-use Symfony\Component\Messenger\Middleware\StackMiddleware;
+class_alias(\Xm\SymfonyBundle\Test\MessengerMiddlewareTestTrait::class, 'Xm\SymfonyBundle\Tests\MessengerMiddlewareTestTrait');
 
-trait MessengerMiddlewareTestTrait
-{
-    private function getStackMock(): StackInterface
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\MessengerMiddlewareTestTrait instead
+     */
+    trait MessengerMiddlewareTestTrait
     {
-        $nextMiddleware = \Mockery::mock(MiddlewareInterface::class);
-        $nextMiddleware->shouldReceive('handle')
-            ->once()
-            ->andReturnUsing(
-                static fn (Envelope $envelope, StackInterface $stack): Envelope => $envelope,
-            );
-
-        return new StackMiddleware($nextMiddleware);
+        use \Xm\SymfonyBundle\Test\MessengerMiddlewareTestTrait;
     }
 }

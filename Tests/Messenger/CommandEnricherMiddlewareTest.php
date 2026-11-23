@@ -8,8 +8,8 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\Messenger\CommandEnricherMiddleware;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeEvent;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeEvent;
 
 class CommandEnricherMiddlewareTest extends BaseTestCase
 {

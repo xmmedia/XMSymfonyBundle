@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\Service;
 use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenanceSettingsTest extends BaseTestCase
 {

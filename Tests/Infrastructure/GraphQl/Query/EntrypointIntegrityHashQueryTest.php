@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\EntrypointIntegrityHashQuery;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class EntrypointIntegrityHashQueryTest extends BaseTestCase
 {

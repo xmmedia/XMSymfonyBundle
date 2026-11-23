@@ -6,8 +6,8 @@ namespace Xm\SymfonyBundle\Tests\Model;
 
 use libphonenumber\PhoneNumberUtil;
 use Xm\SymfonyBundle\Model\PhoneNumber;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class PhoneNumberTest extends BaseTestCase
 {

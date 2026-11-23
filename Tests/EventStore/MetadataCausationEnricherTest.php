@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\EventStore;
 use Prooph\Common\Messaging\Message;
 use Xm\SymfonyBundle\DataProvider\CausationProvider;
 use Xm\SymfonyBundle\EventStore\MetadataCausationEnricher;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MetadataCausationEnricherTest extends BaseTestCase
 {

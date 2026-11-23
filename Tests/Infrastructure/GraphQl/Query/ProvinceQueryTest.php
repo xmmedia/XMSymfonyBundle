@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Infrastructure\GraphQl\Query;
 
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Query\ProvinceQuery;
 use Xm\SymfonyBundle\Model\Province;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class ProvinceQueryTest extends BaseTestCase
 {

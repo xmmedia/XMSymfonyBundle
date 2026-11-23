@@ -9,8 +9,8 @@ use Xm\SymfonyBundle\Model\Address;
 use Xm\SymfonyBundle\Model\Country;
 use Xm\SymfonyBundle\Model\PostalCode;
 use Xm\SymfonyBundle\Model\Province;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\BaseTestCase;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class AddressTest extends BaseTestCase
 {

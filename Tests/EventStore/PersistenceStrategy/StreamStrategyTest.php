@@ -8,7 +8,7 @@ use Prooph\EventStore\Pdo\DefaultMessageConverter;
 use Prooph\EventStore\StreamName;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 use Xm\SymfonyBundle\EventStore\PersistenceStrategy\StreamStrategy;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class StreamStrategyTest extends BaseTestCase
 {

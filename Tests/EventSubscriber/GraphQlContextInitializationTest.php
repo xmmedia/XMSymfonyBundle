@@ -8,7 +8,7 @@ use Overblog\GraphQLBundle\Event\Events;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Xm\SymfonyBundle\EventSubscriber\GraphQlContextInitialization;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class GraphQlContextInitializationTest extends BaseTestCase
 {

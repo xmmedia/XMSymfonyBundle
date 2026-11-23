@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\EventStore;
 use Xm\SymfonyBundle\DataProvider\IssuerProvider;
 use Xm\SymfonyBundle\EventSourcing\AggregateChanged;
 use Xm\SymfonyBundle\EventStore\MetadataIssuedByEnricher;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MetadataIssuedByEnricherTest extends BaseTestCase
 {

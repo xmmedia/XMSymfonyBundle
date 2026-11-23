@@ -6,3 +6,5 @@
 /phpstan.dist.neon export-ignore
 /phpunit.xml.dist export-ignore
 /rector.php export-ignore
+# the bundle's own tests: only the deprecated aliases directly in Tests/ are shipped
+/Tests/*/** export-ignore

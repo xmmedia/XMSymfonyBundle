@@ -11,7 +11,7 @@ use <?= $model_class; ?>;
 use <?= $id_class; ?>;
 use <?= $can_be_deleted_interface_class; ?>;
 use App\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeAr;
+use Xm\SymfonyBundle\Test\FakeAr;
 
 class <?= $class_name; ?> extends BaseTestCase
 {

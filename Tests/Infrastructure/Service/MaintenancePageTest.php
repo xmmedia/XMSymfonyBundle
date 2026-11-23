@@ -9,7 +9,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenancePage;
 use Xm\SymfonyBundle\Infrastructure\Service\MaintenanceSettings;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenancePageTest extends BaseTestCase
 {

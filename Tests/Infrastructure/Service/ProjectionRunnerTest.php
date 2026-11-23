@@ -13,7 +13,7 @@ use Prooph\EventStore\Projection\ReadModel;
 use Prooph\EventStore\Projection\ReadModelProjector;
 use Psr\Container\ContainerInterface;
 use Xm\SymfonyBundle\Infrastructure\Service\ProjectionRunner;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class ProjectionRunnerTest extends BaseTestCase
 {

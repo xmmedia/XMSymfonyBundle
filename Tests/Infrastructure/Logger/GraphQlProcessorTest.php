@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Xm\SymfonyBundle\Infrastructure\Logger\GraphQlProcessor;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class GraphQlProcessorTest extends BaseTestCase
 {

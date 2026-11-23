@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+class_alias(\Xm\SymfonyBundle\Test\VoterTestTrait::class, 'Xm\SymfonyBundle\Tests\VoterTestTrait');
 
-trait VoterTestTrait
-{
-    private function getLoggedInToken(): TokenInterface
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\VoterTestTrait instead
+     */
+    trait VoterTestTrait
     {
-        $token = \Mockery::mock(TokenInterface::class);
-        $token->shouldReceive('getUser')
-            ->andReturn(\Mockery::mock(UserInterface::class));
-
-        return $token;
+        use \Xm\SymfonyBundle\Test\VoterTestTrait;
     }
 }

@@ -7,7 +7,7 @@ namespace Xm\SymfonyBundle\Tests\Model;
 use PHPUnit\Framework\TestCase;
 use Xm\SymfonyBundle\Exception\InvalidCountry;
 use Xm\SymfonyBundle\Model\Country;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class CountryTest extends TestCase
 {

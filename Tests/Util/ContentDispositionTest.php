@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\HeaderUtils;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 use Xm\SymfonyBundle\Util\ContentDisposition;
 
 class ContentDispositionTest extends BaseTestCase

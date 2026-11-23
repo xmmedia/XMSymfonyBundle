@@ -6,7 +6,7 @@ namespace Xm\SymfonyBundle\Tests\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use Xm\SymfonyBundle\Doctrine\PdoProvider;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class PdoProviderTest extends BaseTestCase
 {

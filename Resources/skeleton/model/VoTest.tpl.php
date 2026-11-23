@@ -6,7 +6,7 @@ namespace <?= $namespace; ?>;
 
 use <?= $name_class; ?>;
 use App\Tests\BaseTestCase;
-use Xm\SymfonyBundle\Tests\FakeVo;
+use Xm\SymfonyBundle\Test\FakeVo;
 
 class <?= $class_name; ?> extends BaseTestCase
 {

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Xm\SymfonyBundle\Tests;
 
-use Xm\SymfonyBundle\Messaging\Command;
+class_alias(\Xm\SymfonyBundle\Test\FakeCommand::class, 'Xm\SymfonyBundle\Tests\FakeCommand');
 
-class FakeCommand extends Command
-{
-    public static function perform(): self
+if (false) {
+    /**
+     * @deprecated since xm/symfony-bundle 2.1, use \Xm\SymfonyBundle\Test\FakeCommand instead
+     */
+    class FakeCommand extends \Xm\SymfonyBundle\Test\FakeCommand
     {
-        return new self();
     }
 }

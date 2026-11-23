@@ -8,7 +8,7 @@ use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Stream;
 use Symfony\Component\Console\Tester\CommandTester;
 use Xm\SymfonyBundle\Command\CreateEventStreamCommand;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class CreateEventStreamCommandTest extends BaseTestCase
 {

@@ -22,7 +22,3 @@ parameters:
         non_ignorable: false
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
-        # the Faker provider intentionally uses the FakeId test helper
-        -
-            message: '#Should not use Xm\\SymfonyBundle\\Tests\\FakeId in the non-test file#'
-            path: DataFixtures/Faker/Provider/UuidFakerProvider.php

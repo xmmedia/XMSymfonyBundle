@@ -8,7 +8,7 @@ use GraphQL\Error\Error;
 use GraphQL\Language\AST\IntValueNode;
 use GraphQL\Language\AST\StringValueNode;
 use Xm\SymfonyBundle\Infrastructure\GraphQl\Type\UuidType;
-use Xm\SymfonyBundle\Tests\BaseTestCase;
+use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class UuidTypeTest extends BaseTestCase
 {
