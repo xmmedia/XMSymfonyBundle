@@ -29,6 +29,8 @@ use Prooph\EventStore\Util\Assertion;
 
 final class MySqlEventStore implements PdoEventStore
 {
+    private const int MAX_LOCK_NAME_LENGTH = 64;
+
     private readonly PersistenceStrategy $persistenceStrategy;
 
     private readonly int $loadBatchSize;
@@ -189,6 +191,26 @@ EOT;
         }
     }
 
+    /**
+     * MySQL's lock names are shared by every database on the server, so the name includes the database: otherwise
+     * every site (& every subscriber of a multi-tenant one) on a server takes turns writing to streams of the same
+     * name, & a lock left held by one blocks the others. Kept readable, as it shows in
+     * performance_schema.metadata_locks, eg `event_write:app.user`. MySQL rejects names over 64
+     * characters, so a longer one is cut short & ends with a hash of the full name, so two are very unlikely to match.
+     */
+    public static function writeLockName(?string $database, StreamName $streamName): string
+    {
+        $name = \sprintf('event_write:%s.%s', $database ?? '', $streamName->toString());
+
+        if (mb_strlen($name) <= self::MAX_LOCK_NAME_LENGTH) {
+            return $name;
+        }
+
+        $hash = '~'.substr(sha1($name), 0, 8);
+
+        return mb_substr($name, 0, self::MAX_LOCK_NAME_LENGTH - \strlen($hash)).$hash;
+    }
+
     public function appendTo(StreamName $streamName, \Iterator $streamEvents): void
     {
         $data = $this->persistenceStrategy->prepareData($streamEvents);
@@ -202,7 +224,10 @@ EOT;
 
         $tableName = $this->persistenceStrategy->generateTableName($streamName);
 
-        $lockName = '_'.$tableName.'_write_lock';
+        $lockName = self::writeLockName(
+            $this->connection->query('SELECT DATABASE()')->fetchColumn() ?: null,
+            $streamName,
+        );
         if (!$this->writeLockStrategy->getLock($lockName)) {
             throw ConcurrencyExceptionFactory::failedToAcquireLock();
         }
