@@ -24,7 +24,7 @@ final readonly class <?= $class_name; ?><?= "\n"; ?>
 <?php if ($edit) { ?>
         $<?= $model_lower; ?> = $this-><?= $repo_property; ?>->get($command-><?= $id_property; ?>());
 
-        if (!$<?= $model_lower; ?>) {
+        if (null === $<?= $model_lower; ?>) {
             throw <?= $model; ?>NotFound::with<?= $id_class_short; ?>($command-><?= $id_property; ?>());
         }
 

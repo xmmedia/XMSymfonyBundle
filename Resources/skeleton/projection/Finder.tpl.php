@@ -30,7 +30,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
     public function findOrThrow(<?= $id_class_short; ?> $id): <?= $entity_class_short; ?><?= "\n"; ?>
     {
         $<?= $entity ?> = $this->find($id);
-        if (!$<?= $entity ?>) {
+        if (null === $<?= $entity ?>) {
             throw <?= $not_found_class_short; ?>::with<?= $id_class_short; ?>($id);
         }
 
@@ -41,7 +41,7 @@ class <?= $class_name; ?> extends ServiceEntityRepository
     {
         $<?= $entity ?> = $this->find($id);
 
-        if (!$<?= $entity ?>) {
+        if (null === $<?= $entity ?>) {
             return null;
         }
 
