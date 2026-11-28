@@ -147,6 +147,45 @@ class EmailGatewayTest extends BaseTestCase
         );
     }
 
+    public function testSendTagLinksAndMetadata(): void
+    {
+        $client = $this->client(
+            tag: 'invoice',
+            trackLinks: 'HtmlAndText',
+            metadata: ['invoiceMessageId' => 'abc'],
+        );
+
+        $this->gateway($client)->send(
+            123,
+            Email::fromString('jane@example.org'),
+            [],
+            options: [
+                'tag'         => 'invoice',
+                'track_links' => 'HtmlAndText',
+                'metadata'    => ['invoiceMessageId' => 'abc'],
+            ],
+        );
+    }
+
+    #[DataProvider('invalidOptionsProvider')]
+    public function testSendInvalidOptions(array $options, string $message): void
+    {
+        $client = \Mockery::mock(PostmarkClient::class);
+        $client->shouldNotReceive('sendEmailWithTemplate');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageIsOrContains($message);
+
+        $this->gateway($client)->send(123, Email::fromString('jane@example.org'), [], options: $options);
+    }
+
+    public static function invalidOptionsProvider(): \Generator
+    {
+        yield 'track links'        => [['track_links' => 'Always'], 'The track_links option must be one of'];
+        yield 'metadata list'      => [['metadata' => ['abc']], 'The metadata option must be an array keyed by strings'];
+        yield 'metadata not string' => [['metadata' => ['id' => 1]], 'All of the metadata values must be strings'];
+    }
+
     public function testSendAttachments(): void
     {
         $attachments = [
@@ -333,6 +372,9 @@ class EmailGatewayTest extends BaseTestCase
         ?string $replyTo = null,
         array|\Closure $headers = [],
         ?array $attachments = null,
+        ?string $tag = null,
+        ?string $trackLinks = null,
+        ?array $metadata = null,
     ): PostmarkClient&MockInterface {
         $client = \Mockery::mock(PostmarkClient::class);
         $client->shouldReceive('sendEmailWithTemplate')
@@ -347,13 +389,15 @@ class EmailGatewayTest extends BaseTestCase
                     default                            => $templateModel,
                 },
                 true,
-                null,
+                $tag,
                 true,
                 $replyTo,
                 null,
                 null,
                 $headers instanceof \Closure ? \Mockery::on($headers) : $headers,
                 $attachments,
+                $trackLinks,
+                $metadata,
             )
             ->andReturn(new PostmarkResponse(['MessageID' => self::MESSAGE_ID]));
 

@@ -16,6 +16,9 @@ use Xm\SymfonyBundle\Util\Utils;
 
 class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
 {
+    /** Postmark's TrackLinks values. */
+    public const array TRACK_LINKS = ['None', 'HtmlAndText', 'HtmlOnly', 'TextOnly'];
+
     protected PostmarkClient $client;
     protected Email $from;
 
@@ -99,19 +102,34 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
             );
         }
 
+        $trackLinks = $options['track_links'] ?? null;
+        Assert::nullOrInArray(
+            $trackLinks,
+            self::TRACK_LINKS,
+            'The track_links option must be one of %2$s. Got %s',
+        );
+
+        $metadata = $options['metadata'] ?? null;
+        if (null !== $metadata) {
+            Assert::isMap($metadata, 'The metadata option must be an array keyed by strings. Got %s');
+            Assert::allString($metadata, 'All of the metadata values must be strings. Got %s');
+        }
+
         $result = $this->client->sendEmailWithTemplate(
             $fromString,
             $toString,
             $templateIdOrAlias,
             $templateData,
             true,
-            null,
+            $options['tag'] ?? null,
             true,
             $replyTo ? $replyTo->toString() : null,
             null,
             null,
             $headers,
             $attachments,
+            $trackLinks,
+            $metadata,
         );
 
         return EmailGatewayMessageId::fromString($result->getMessageID());
