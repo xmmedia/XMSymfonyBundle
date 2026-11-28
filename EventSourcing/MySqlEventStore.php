@@ -158,10 +158,11 @@ EOT;
     {
         $streamName = $stream->streamName();
 
+        $tableName = $this->persistenceStrategy->generateTableName($streamName);
+
         $this->addStreamToStreamsTable($stream);
 
         try {
-            $tableName = $this->persistenceStrategy->generateTableName($streamName);
             $this->createSchemaFor($tableName);
         } catch (RuntimeException $exception) {
             $this->connection->exec("DROP TABLE IF EXISTS `$tableName`;");
