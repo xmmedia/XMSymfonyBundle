@@ -35,10 +35,7 @@ final class MySqlEventStore implements PdoEventStore
 
     private readonly int $loadBatchSize;
 
-    /**
-     * @var bool
-     */
-    private $duringCreate = false;
+    private bool $duringCreate = false;
 
     private readonly ?WriteLockStrategy $writeLockStrategy;
 

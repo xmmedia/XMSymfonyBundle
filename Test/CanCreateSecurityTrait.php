@@ -15,7 +15,7 @@ trait CanCreateSecurityTrait
     /**
      * $user: false = no token storage within container, null = no user.
      */
-    private function createSecurity(UserInterface|bool|null $user): Security|\Mockery\MockInterface
+    private function createSecurity(UserInterface|bool|null $user): Security
     {
         $tokenStorage = \Mockery::mock(TokenStorageInterface::class);
 

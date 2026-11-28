@@ -151,11 +151,10 @@ class AssertTest extends BaseTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('allScalarRecursiveValidProvider')]
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
     public function testAllScalarRecursiveValid(array $value): void
     {
         Assert::allScalarRecursive($value);
-
-        $this->addToAssertionCount(1);
     }
 
     public static function allScalarRecursiveValidProvider(): \Generator

@@ -75,7 +75,6 @@ final class ProjectionRunCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'The number of events to load and process at once. Default is unlimited.',
-                null,
             )
         ;
     }

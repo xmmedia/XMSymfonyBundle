@@ -325,8 +325,6 @@ final class InMemoryEventStore implements TransactionalEventStore
         }
 
         $result = [];
-
-        $skipped = 0;
         $found = 0;
 
         $streams = $this->streams;

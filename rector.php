@@ -7,16 +7,27 @@ use Rector\Config\RectorConfig;
 return RectorConfig::configure()
     ->withParallel()
     ->withPreparedSets(
+        deadCode: true,
         codeQuality: true,
         codingStyle: true,
-        // no privatization, naming, instanceOf, and earlyReturn
-        // no deadCode and typeDeclarations as they're below
+        typeDeclarations: true,
+        phpunitMockToStub: true,
+        doctrineCodeQuality: true,
+        symfonyCodeQuality: true,
+        symfonyConfigs: true,
+        // no typeDeclarationDocblocks, privatization, naming, namedArgs, instanceOf, earlyReturn,
+        // rectorPreset, phpunitCodeQuality, and phpunitNarrowAsserts
     )
-    ->withAttributesSets(symfony: true, doctrine: true)
+    ->withAttributesSets(symfony: true, doctrine: true, phpunit: true)
     ->withComposerBased(doctrine: true, phpunit: true, symfony: true)
     ->withPhpSets()
-    ->withTypeCoverageLevel(29)
-    ->withDeadCodeLevel(40)
+    ->withImportNames(
+        importNames: false,
+        importDocBlockNames: false,
+        importShortClasses: false,
+        removeUnusedImports: true,
+    )
+    ->withRootFiles()
     ->withPaths([
         __DIR__.'/Command',
         __DIR__.'/DataFixtures',
@@ -38,7 +49,6 @@ return RectorConfig::configure()
         __DIR__.'/Test',
         __DIR__.'/Tests',
         __DIR__.'/Util',
-        __DIR__.'/XmSymfonyBundle.php',
     ])
     ->withSkip([
         // the skeleton files are templates, not valid PHP
@@ -48,7 +58,6 @@ return RectorConfig::configure()
         // we may not want the property to have a default value
         Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector::class,
         // from set "codingStyle"
-        Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector::class,
         Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector::class,
         Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class,
         Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector::class,
@@ -57,6 +66,10 @@ return RectorConfig::configure()
         Rector\CodeQuality\Rector\If_\ExplicitNullableObjectInstanceRector::class,
         // from set "deadCode"
         Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector::class,
+        // the tests pass null on purpose, to show what they're testing (eg testToAddressStringWithNullName)
+        Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector::class => [
+            __DIR__.'/Tests',
+        ],
         // temporarily disabled because it adds newlines between traits
         Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector::class,
         // from set "symfony" (composer based, so it uses the installed version, not the lowest supported)

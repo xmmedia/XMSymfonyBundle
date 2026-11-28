@@ -12,6 +12,6 @@ use Xm\SymfonyBundle\Model\Enum;
  */
 final class TestEnum extends Enum
 {
-    public const FEMALE = 'FEMALE';
-    public const MALE = 'MALE';
+    public const string FEMALE = 'FEMALE';
+    public const string MALE = 'MALE';
 }

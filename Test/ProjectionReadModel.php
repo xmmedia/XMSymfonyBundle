@@ -22,7 +22,7 @@ trait ProjectionReadModel
             ->andReturnSelf();
         $projector->shouldReceive('when')
             ->once()
-            ->andReturnUsing(function ($handlers) use ($event, $readModel, $projector) {
+            ->andReturnUsing(function (array $handlers) use ($event, $readModel, $projector) {
                 $this->assertArrayHasKey($event::class, $handlers);
                 $handler = $handlers[$event::class];
 
