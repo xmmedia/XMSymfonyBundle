@@ -75,6 +75,7 @@ final class MySqlEventStore implements PdoEventStore
         $this->writeLockStrategy = $writeLockStrategy;
     }
 
+    #[\Override]
     public function fetchStreamMetadata(StreamName $streamName): array
     {
         $sql = <<<EOT
@@ -102,6 +103,7 @@ EOT;
         return Json::decode($stream->metadata);
     }
 
+    #[\Override]
     public function updateStreamMetadata(StreamName $streamName, array $newMetadata): void
     {
         $eventStreamsTable = $this->eventStreamsTable;
@@ -131,6 +133,7 @@ EOT;
         }
     }
 
+    #[\Override]
     public function hasStream(StreamName $streamName): bool
     {
         $sql = <<<EOT
@@ -153,6 +156,7 @@ EOT;
         return 1 === (int) $statement->fetchColumn();
     }
 
+    #[\Override]
     public function create(Stream $stream): void
     {
         $streamName = $stream->streamName();
@@ -211,6 +215,7 @@ EOT;
         return mb_substr($name, 0, self::MAX_LOCK_NAME_LENGTH - \strlen($hash)).$hash;
     }
 
+    #[\Override]
     public function appendTo(StreamName $streamName, \Iterator $streamEvents): void
     {
         $data = $this->persistenceStrategy->prepareData($streamEvents);
@@ -291,6 +296,7 @@ EOT;
         $this->writeLockStrategy->releaseLock($lockName);
     }
 
+    #[\Override]
     public function load(
         StreamName $streamName,
         int $fromNumber = 1,
@@ -371,6 +377,7 @@ EOT;
         );
     }
 
+    #[\Override]
     public function loadReverse(
         StreamName $streamName,
         ?int $fromNumber = null,
@@ -455,6 +462,7 @@ EOT;
         );
     }
 
+    #[\Override]
     public function delete(StreamName $streamName): void
     {
         if (!$this->disableTransactionHandling && !$this->connection->inTransaction()) {
@@ -493,6 +501,7 @@ EOT;
         }
     }
 
+    #[\Override]
     public function fetchStreamNames(
         ?string $filter,
         ?MetadataMatcher $metadataMatcher,
@@ -547,6 +556,7 @@ SQL;
         return $streamNames;
     }
 
+    #[\Override]
     public function fetchStreamNamesRegex(
         string $filter,
         ?MetadataMatcher $metadataMatcher,
@@ -598,6 +608,7 @@ SQL;
         return $streamNames;
     }
 
+    #[\Override]
     public function fetchCategoryNames(?string $filter, int $limit = 20, int $offset = 0): array
     {
         $values = [];
@@ -645,6 +656,7 @@ SQL;
         return $categoryNames;
     }
 
+    #[\Override]
     public function fetchCategoryNamesRegex(string $filter, int $limit = 20, int $offset = 0): array
     {
         if (empty($filter) || false === @preg_match("/$filter/", '')) {
@@ -696,7 +708,7 @@ SQL;
         $where = [];
         $values = [];
 
-        if (!$metadataMatcher) {
+        if (null === $metadataMatcher) {
             return [
                 $where,
                 $values,

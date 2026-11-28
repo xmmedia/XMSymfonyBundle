@@ -25,7 +25,7 @@ class IssuerProvider
         /** @var \Symfony\Component\Security\Core\User\UserInterface $user */
         $user = $this->security->getUser();
 
-        if (!$user) {
+        if (null === $user) {
             return 'anonymous';
         }
 

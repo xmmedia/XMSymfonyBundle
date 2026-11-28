@@ -30,6 +30,7 @@ final class GraphQlDumpSchemaCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -47,6 +48,7 @@ final class GraphQlDumpSchemaCommand extends Command
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getArgument('user-email')) {
@@ -82,7 +84,7 @@ final class GraphQlDumpSchemaCommand extends Command
 
         $user = $userFinder->findOneByEmail(Email::fromString($userEmail));
 
-        if (!$user) {
+        if (null === $user) {
             throw new \InvalidArgumentException(\sprintf('The user with email "%s" cannot be found.', $userEmail));
         }
 
