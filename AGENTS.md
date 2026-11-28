@@ -126,7 +126,7 @@ The `AggregateRootMaker` (`Maker/AggregateRootMaker.php`) scaffolds a complete C
 - Projection and ReadModel
 - Doctrine Entity and Finder
 - GraphQL types, queries (single, multiple, count), and mutations
-- Complete test suite for all components
+- Complete test suite for all components, including the finder's `findOrThrow()` & `findRefreshed()`
 - GraphQL YAML configuration files
 
 **After running `make:model`**, you must manually:

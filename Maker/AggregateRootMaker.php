@@ -115,6 +115,10 @@ class AggregateRootMaker extends AbstractMaker
             $entityName.'Finder',
             'Projection\\'.$arName.'\\',
         );
+        $entityFinderTest = $generator->createClassNameDetails(
+            $entityName.'FinderTest',
+            'Tests\\Projection\\'.$arName.'\\',
+        );
 
         $nameVoClassDetails = $generator->createClassNameDetails(
             $arName.'Name',
@@ -535,6 +539,11 @@ class AggregateRootMaker extends AbstractMaker
         $generator->generateClass(
             $entityFinder->getFullName(),
             $this->skeletonPath().'projection/Finder.tpl.php',
+            $variables,
+        );
+        $generator->generateClass(
+            $entityFinderTest->getFullName(),
+            $this->skeletonPath().'projection/FinderTest.tpl.php',
             $variables,
         );
         $generator->generateClass(
