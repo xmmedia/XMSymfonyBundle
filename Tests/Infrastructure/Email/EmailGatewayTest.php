@@ -25,8 +25,8 @@ class EmailGatewayTest extends BaseTestCase
     public function testSend(): void
     {
         $client = $this->client(
-            from: 'From Name <from@example.com>',
-            to: 'Jane Doe <jane@example.org>, john@example.net',
+            from: '"From Name" <from@example.com>',
+            to: '"Jane Doe" <jane@example.org>, john@example.net',
             templateIdOrAlias: 123,
             templateModel: [
                 'supportEmail'   => 'from@example.com',
@@ -78,7 +78,7 @@ class EmailGatewayTest extends BaseTestCase
     public function testSendFromAndReplyTo(): void
     {
         $client = $this->client(
-            from: 'Other Sender <other@example.com>',
+            from: '"Other Sender" <other@example.com>',
             replyTo: 'reply@example.com',
         );
 
@@ -259,9 +259,9 @@ class EmailGatewayTest extends BaseTestCase
     public function testSendNotProductionRemovesNonWhitelisted(): void
     {
         $client = $this->client(
-            to: 'User <user@xmmedia.com>, allowed@example.org',
+            to: '"User" <user@xmmedia.com>, allowed@example.org',
             headers: [
-                'X-Original-To' => 'User <user@xmmedia.com>, Jane Doe <jane@example.org>, allowed@example.org',
+                'X-Original-To' => '"User" <user@xmmedia.com>, "Jane Doe" <jane@example.org>, allowed@example.org',
             ],
         );
 
@@ -295,7 +295,7 @@ class EmailGatewayTest extends BaseTestCase
     {
         $client = $this->client(
             to: 'dev@example.com',
-            headers: ['X-Original-To' => 'Jane Doe <jane@example.org>, john@example.net'],
+            headers: ['X-Original-To' => '"Jane Doe" <jane@example.org>, john@example.net'],
         );
 
         $this->gateway($client, 'dev', 'dev@example.com')->send(
@@ -365,7 +365,7 @@ class EmailGatewayTest extends BaseTestCase
      * A closure for templateModel or headers is used as a matcher.
      */
     private function client(
-        string $from = 'From Name <from@example.com>',
+        string $from = '"From Name" <from@example.com>',
         string $to = 'jane@example.org',
         int|string $templateIdOrAlias = 123,
         array|\Closure|null $templateModel = null,

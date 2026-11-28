@@ -85,6 +85,8 @@ final readonly class Email implements ValueObject, \Stringable
 
     /**
      * If the name is not empty, it will return an address strings like: "John Doe" <johndoe@examle.com>.
+     * The name is quoted (with any quotes or backslashes in it escaped), so commas & other punctuation in it are kept
+     * & it isn't read as more than one address.
      */
     public function toAddressString(): string
     {
@@ -92,7 +94,7 @@ final readonly class Email implements ValueObject, \Stringable
             return $this->email;
         }
 
-        return \sprintf('"%s" <%s>', $this->name, $this->email);
+        return \sprintf('"%s" <%s>', addcslashes($this->name, '"\\'), $this->email);
     }
 
     /**
@@ -107,16 +109,14 @@ final readonly class Email implements ValueObject, \Stringable
         ];
     }
 
+    /**
+     * The address with the name, for sending: the same as toAddressString(). The name isn't cut again: it's at most
+     * 100 characters (the constructor's limit), which keeps it within Postmark's limits. Its From must be 255
+     * characters at most, name & address together, & its To 5,000 for all the recipients.
+     */
     public function withName(): string
     {
-        if (null === $this->name) {
-            return $this->email;
-        }
-
-        // replace commas and semicolons with space because email services will assume it's multiple email addresses
-        $name = StringUtil::trim(substr(str_replace([',', ';'], ' ', $this->name), 0, 20));
-
-        return \sprintf('%s <%s>', $name, $this->email);
+        return $this->toAddressString();
     }
 
     /**

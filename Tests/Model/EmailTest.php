@@ -64,7 +64,7 @@ class EmailTest extends BaseTestCase
         $vo = Email::fromString($email, $name);
 
         $this->assertEquals(trim(mb_substr($name, 0, 99)).'…', $vo->name());
-        $this->assertEquals(trim(mb_substr($name, 0, 20)).' <'.$email.'>', $vo->withName());
+        $this->assertEquals('"'.trim(mb_substr($name, 0, 99)).'…" <'.$email.'>', $vo->withName());
     }
 
     public function testNullName(): void
@@ -105,7 +105,7 @@ class EmailTest extends BaseTestCase
     {
         $vo = Email::fromString('email@email.com', 'Name');
 
-        $this->assertEquals('Name <email@email.com>', $vo->withName());
+        $this->assertEquals('"Name" <email@email.com>', $vo->withName());
     }
 
     public function testFromStringsWithNameMethodWithoutName(): void
@@ -115,32 +115,48 @@ class EmailTest extends BaseTestCase
         $this->assertEquals('email@email.com', $vo->withName());
     }
 
-    public function testFromStringsWithNameMethodTooLong(): void
+    public function testFromStringsWithNameMethodKeepsTheWholeName(): void
     {
         $vo = Email::fromString('email@email.com', 'Name Name Name Name Name Name Name Name');
 
-        $this->assertEquals('Name Name Name Name <email@email.com>', $vo->withName());
+        $this->assertEquals('"Name Name Name Name Name Name Name Name" <email@email.com>', $vo->withName());
+    }
+
+    public function testFromStringsWithNameMethodDoesNotSplitACharacter(): void
+    {
+        // the 20th byte is in the middle of the ë
+        $vo = Email::fromString('email@email.com', 'Zoë Zoë Zoë Zoë Zoë Zoë');
+
+        $this->assertEquals('"Zoë Zoë Zoë Zoë Zoë Zoë" <email@email.com>', $vo->withName());
+        $this->assertTrue(mb_check_encoding($vo->withName(), 'UTF-8'));
+    }
+
+    public function testFromStringsWithNameMethodEscapesQuotes(): void
+    {
+        $vo = Email::fromString('email@email.com', 'Jane "JJ" O\\Doe');
+
+        $this->assertEquals('"Jane \\"JJ\\" O\\\\Doe" <email@email.com>', $vo->withName());
     }
 
     public function testFromStringsWithNameMethodWithComma(): void
     {
         $vo = Email::fromString('email@email.com', 'Name, Name');
 
-        $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
+        $this->assertEquals('"Name, Name" <email@email.com>', $vo->withName());
     }
 
     public function testFromStringsWithNameMethodWithSemicolon(): void
     {
         $vo = Email::fromString('email@email.com', 'Name; Name');
 
-        $this->assertEquals('Name  Name <email@email.com>', $vo->withName());
+        $this->assertEquals('"Name; Name" <email@email.com>', $vo->withName());
     }
 
     public function testFromStringsWithNameMethodWithCommaAndSemicolon(): void
     {
         $vo = Email::fromString('email@email.com', 'Name; Name, Name');
 
-        $this->assertEquals('Name  Name  Name <email@email.com>', $vo->withName());
+        $this->assertEquals('"Name; Name, Name" <email@email.com>', $vo->withName());
     }
 
     public function testObfuscated(): void
