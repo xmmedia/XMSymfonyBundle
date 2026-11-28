@@ -40,11 +40,13 @@ final readonly class <?= $class_name; ?> implements ValueObject, \Stringable
         return $this->name();
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();
     }
 
+    #[\Override]
     public function sameValueAs(ValueObject $other): bool
     {
         if (self::class !== $other::class) {

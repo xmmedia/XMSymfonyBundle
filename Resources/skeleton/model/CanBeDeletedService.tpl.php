@@ -8,6 +8,7 @@ use <?= $id_class; ?>;
 
 final readonly class <?= $class_name; ?> implements \<?= $can_be_deleted_interface_class; ?><?= "\n"; ?>
 {
+    #[\Override]
     public function __invoke(<?= $id_class_short; ?> $<?= $id_property; ?>): bool
     {
         return true;
