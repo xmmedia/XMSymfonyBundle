@@ -26,7 +26,7 @@
     "overblog/graphql-bundle": "^0.15.0 || ^1.0",
     "prooph/event-store-bus-bridge": "^3.3",
     "prooph/event-store-symfony-bundle": "^0.10.0 || ^0.11.0 || ^0.12.0",
-    "prooph/pdo-event-store": "^1.11",
+    "prooph/pdo-event-store": "^1.15",
     "ramsey/collection": "^2.0",
     "ramsey/uuid": "^4.0",
     "ramsey/uuid-doctrine": "^1.5 || ^2.0",
