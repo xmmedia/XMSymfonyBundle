@@ -21,12 +21,13 @@ This is a Symfony bundle (`xm/symfony-bundle`) that provides classes and service
 
 ### Static Analysis
 - Run PHPStan: `composer static`
-- Config: `phpstan.dist.neon`
+- Config: `phpstan.dist.neon` (level 1, with `checkMissingOverrideMethodAttribute`)
 
 ### Refactoring
 - Analyze with Rector (dry-run): `composer rector`
 - Apply Rector changes: `composer rector:fix`
 - Config: `rector.php`
+- Rector caches its results, so after changing `rector.php` or updating Rector, add `--clear-cache` (eg `composer rector -- --clear-cache`) or it may skip files it already checked
 
 ## Architecture
 
@@ -147,6 +148,10 @@ The `AggregateRootMaker` (`Maker/AggregateRootMaker.php`) scaffolds a complete C
 **Constructor Injection**: Services use constructor injection (readonly properties preferred for PHP 8.1+)
 
 **Array Alignment**: Binary operator `=>` is aligned in arrays (enforced by php-cs-fixer)
+
+**Overridden Methods**: Methods that override a parent's or implement an interface's have `#[\Override]` (enforced by PHPStan), in the bundle & the `make:model` templates. PHP makes it a fatal error when there's no parent method, so leave it off methods that only exist in some of the supported versions of a dependency (eg `eraseCredentials()`, which Symfony 8 removed from `UserInterface`).
+
+**Null Checks**: Check an object that can be null with `null === $x`, not `!$x`. Keep the falsy check for values that are `false` on failure (eg `fetch()`, `createFromFormat()`).
 
 **Testing**: PHPUnit 13 is used. Tests extend PHPUnit\Framework\TestCase and use Mockery for mocking. Test metadata uses attributes (e.g. `#[DataProvider]`), not doc-comment annotations, and data providers must be static.
 
