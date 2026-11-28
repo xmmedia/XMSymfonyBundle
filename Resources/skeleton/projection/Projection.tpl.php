@@ -13,6 +13,7 @@ use Prooph\EventStore\Projection\ReadModelProjector;
  */
 class <?= $class_name; ?> implements ReadModelProjection
 {
+    #[\Override]
     public function project(ReadModelProjector $projector): ReadModelProjector
     {
         $projector->fromStream('<?= $stream_name; ?>')

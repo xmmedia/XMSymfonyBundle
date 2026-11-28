@@ -11,11 +11,13 @@ use Xm\SymfonyBundle\EventSourcing\Aggregate\AggregateRepository;
 
 final class <?= $class_name; ?> extends AggregateRepository implements <?= $list_class_short; ?><?= "\n"; ?>
 {
+    #[\Override]
     public function save(<?= $model; ?> $<?= $model_lower; ?>): void
     {
         $this->saveAggregateRoot($<?= $model_lower; ?>);
     }
 
+    #[\Override]
     public function get(<?= $id_class_short; ?> $<?= $id_property; ?>): ?<?= $model; ?><?= "\n"; ?>
     {
         return $this->getAggregateRoot($<?= $id_property; ?>->toString());

@@ -69,6 +69,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
     /**
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function aggregateId(): string
     {
         return $this-><?= $id_property; ?>->toString();
@@ -100,6 +101,7 @@ class <?= $class_name; ?> extends AggregateRoot implements Entity
         return $this-><?= $name_property; ?>;
     }
 
+    #[\Override]
     public function sameIdentityAs(Entity $other): bool
     {
         return $other instanceof self

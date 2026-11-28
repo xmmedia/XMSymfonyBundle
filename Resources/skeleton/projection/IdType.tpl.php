@@ -26,6 +26,7 @@ class <?= $class_name; ?> extends ScalarType implements AliasedInterface
         ]);
     }
 
+    #[\Override]
     public function parseValue(mixed $value): <?= $id_class_short; ?><?= "\n"; ?>
     {
         if (\is_string($value) && Uuid::isValid($value)) {
@@ -35,6 +36,7 @@ class <?= $class_name; ?> extends ScalarType implements AliasedInterface
         throw new Error('Cannot represent value as UUID: '.Utils::printSafe($value));
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

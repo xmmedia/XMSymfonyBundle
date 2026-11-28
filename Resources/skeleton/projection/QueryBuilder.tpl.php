@@ -11,6 +11,7 @@ class <?= $class_name; ?> extends FilterQueryBuilder
 {
     protected string $order = '<?= $projection_name_first_letter; ?>.<?= $name_field; ?> ASC';
 
+    #[\Override]
     public function queryParts(<?= $filters_class_short; ?>|FiltersInterface $filters): array
     {
         if ($filters->applied(<?= $filters_class_short; ?>::Q)) {

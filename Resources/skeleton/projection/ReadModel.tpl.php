@@ -13,6 +13,7 @@ final class <?= $class_name; ?> extends AbstractReadModel
 
     private const array TYPES = [];
 
+    #[\Override]
     public function init(): void
     {
         $tableName = self::TABLE;
