@@ -8,6 +8,7 @@ use ZxcvbnPhp\Zxcvbn;
 
 class PasswordStrength implements PasswordStrengthInterface
 {
+    #[\Override]
     public function __invoke(string $password, array $userInputs = []): array
     {
         return (new Zxcvbn())->passwordStrength($password, array_values($userInputs));

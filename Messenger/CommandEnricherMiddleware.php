@@ -17,6 +17,7 @@ class CommandEnricherMiddleware implements MiddlewareInterface
     {
     }
 
+    #[\Override]
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         /** @var DomainEvent|DomainMessage $message */

@@ -15,6 +15,7 @@ abstract class Filters implements FiltersInterface
     /**
      * @return static
      */
+    #[\Override]
     public static function fromArray(?array $filters): self
     {
         return new static($filters ?? []);
@@ -47,11 +48,13 @@ abstract class Filters implements FiltersInterface
         $this->filters = $filters;
     }
 
+    #[\Override]
     public function applied(string $field): bool
     {
         return \array_key_exists($field, $this->filters);
     }
 
+    #[\Override]
     public function get(string $field): mixed
     {
         return $this->filters[$field] ?? null;
@@ -72,11 +75,13 @@ abstract class Filters implements FiltersInterface
         return new static($filters);
     }
 
+    #[\Override]
     public function toArray(): array
     {
         return $this->filters;
     }
 
+    #[\Override]
     public function isTrue($value): bool
     {
         return true === $value || 'true' === $value;

@@ -12,6 +12,7 @@ class PasswordStrengthFake implements PasswordStrengthInterface
     {
     }
 
+    #[\Override]
     public function __invoke(string $password, array $userInputs = []): array
     {
         return [

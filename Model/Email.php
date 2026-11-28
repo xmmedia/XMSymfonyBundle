@@ -77,6 +77,7 @@ final readonly class Email implements ValueObject, \Stringable
         return $this->email;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();
@@ -131,6 +132,7 @@ final readonly class Email implements ValueObject, \Stringable
         );
     }
 
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         if (self::class !== $other::class) {

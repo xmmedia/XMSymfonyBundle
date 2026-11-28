@@ -9,6 +9,7 @@ namespace Xm\SymfonyBundle\Messaging;
  */
 abstract class DomainEvent extends DomainMessage
 {
+    #[\Override]
     public function messageType(): string
     {
         return self::TYPE_EVENT;

@@ -26,12 +26,14 @@ class MaintenanceCommandTest extends BaseTestCase
     private string $dir;
     private MaintenanceMode $maintenanceMode;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->dir = sys_get_temp_dir().'/maintenance_'.bin2hex(random_bytes(8));
         $this->maintenanceMode = new MaintenanceMode($this->dir.'/maintenance');
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         $this->maintenanceMode->disable();

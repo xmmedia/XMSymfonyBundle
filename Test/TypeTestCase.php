@@ -21,6 +21,7 @@ class TypeTestCase extends \Symfony\Component\Form\Test\TypeTestCase
 
     protected ?Container $validatorContainer = null;
 
+    #[\Override]
     protected function getExtensions(): array
     {
         $extensions = parent::getExtensions();

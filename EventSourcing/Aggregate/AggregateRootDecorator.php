@@ -45,11 +45,13 @@ class AggregateRootDecorator extends AggregateRoot
         $aggregateRoot->replay($events);
     }
 
+    #[\Override]
     protected function aggregateId(): string
     {
         throw new \BadMethodCallException('The AggregateRootDecorator does not have an id');
     }
 
+    #[\Override]
     protected function apply(AggregateChanged $e): void
     {
     }

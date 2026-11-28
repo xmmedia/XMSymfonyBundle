@@ -23,6 +23,7 @@ final class ProjectionRebuildCommand extends Command
 
     protected const string ARGUMENT_PROJECTION_NAME = 'projection-name';
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -34,6 +35,7 @@ final class ProjectionRebuildCommand extends Command
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectionName = self::projectionName($input->getArgument(self::ARGUMENT_PROJECTION_NAME));

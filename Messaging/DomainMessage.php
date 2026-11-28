@@ -39,8 +39,10 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
     /**
      * @param array<string, mixed> $payload
      */
+    #[\Override]
     abstract protected function setPayload(array $payload): void;
 
+    #[\Override]
     public static function fromArray(array $messageData): BaseDomainMessage
     {
         MessageDataAssertion::assert($messageData);
@@ -59,6 +61,7 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
         return $message;
     }
 
+    #[\Override]
     protected function init(): void
     {
         if (null === $this->uuid) {
@@ -74,21 +77,25 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
         }
     }
 
+    #[\Override]
     public function uuid(): UuidInterface
     {
         return $this->uuid;
     }
 
+    #[\Override]
     public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    #[\Override]
     public function metadata(): array
     {
         return $this->metadata;
     }
 
+    #[\Override]
     public function toArray(): array
     {
         return [
@@ -100,11 +107,13 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
         ];
     }
 
+    #[\Override]
     public function messageName(): string
     {
         return $this->messageName;
     }
 
+    #[\Override]
     public function withMetadata(array $metadata): BaseMessage
     {
         $message = clone $this;
@@ -119,6 +128,7 @@ abstract class DomainMessage extends BaseDomainMessage implements Message
      *
      * Given value must have a scalar type.
      */
+    #[\Override]
     public function withAddedMetadata(string $key, $value): BaseMessage
     {
         Assert::notEmpty($key, 'Invalid key');

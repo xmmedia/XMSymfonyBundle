@@ -13,6 +13,7 @@ class FilterQueryBuilderTest extends BaseTestCase
     private function createConcreteFilterQueryBuilder(): FilterQueryBuilder
     {
         return new class extends FilterQueryBuilder {
+            #[\Override]
             public function queryParts(FiltersInterface $filters): array
             {
                 if ($filters->applied('name')) {
@@ -212,6 +213,7 @@ class FilterQueryBuilderTest extends BaseTestCase
     public function testQueryPartsWithJoins(): void
     {
         $builder = new class extends FilterQueryBuilder {
+            #[\Override]
             public function queryParts(FiltersInterface $filters): array
             {
                 $this->joins[] = 'JOIN user_profile up ON up.user_id = u.id';
@@ -331,6 +333,7 @@ class FilterQueryBuilderTest extends BaseTestCase
         $builder = new class extends FilterQueryBuilder {
             protected string $order = 'name ASC';
 
+            #[\Override]
             public function queryParts(FiltersInterface $filters): array
             {
                 $this->order = 'status DESC, '.$this->order;

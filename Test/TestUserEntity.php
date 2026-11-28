@@ -15,6 +15,7 @@ class TestUserEntity implements UserInterface
         return $this->userId;
     }
 
+    #[\Override]
     public function getRoles(): array
     {
         return [];
@@ -35,6 +36,7 @@ class TestUserEntity implements UserInterface
         return $this->getUserIdentifier();
     }
 
+    #[\Override]
     public function getUserIdentifier(): string
     {
         return '';

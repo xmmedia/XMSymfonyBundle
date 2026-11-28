@@ -28,6 +28,7 @@ final class InMemoryEventStore implements TransactionalEventStore
 
     private bool $inTransaction = false;
 
+    #[\Override]
     public function create(Stream $stream): void
     {
         $streamName = $stream->streamName();
@@ -48,6 +49,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         }
     }
 
+    #[\Override]
     public function appendTo(StreamName $streamName, \Iterator $streamEvents): void
     {
         $streamNameString = $streamName->toString();
@@ -73,6 +75,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         }
     }
 
+    #[\Override]
     public function load(
         StreamName $streamName,
         int $fromNumber = 1,
@@ -113,6 +116,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return new InMemoryStreamIterator($streamEvents);
     }
 
+    #[\Override]
     public function loadReverse(
         StreamName $streamName,
         ?int $fromNumber = null,
@@ -155,6 +159,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return new InMemoryStreamIterator($streamEvents);
     }
 
+    #[\Override]
     public function delete(StreamName $streamName): void
     {
         $streamNameString = $streamName->toString();
@@ -166,11 +171,13 @@ final class InMemoryEventStore implements TransactionalEventStore
         }
     }
 
+    #[\Override]
     public function hasStream(StreamName $streamName): bool
     {
         return isset($this->streams[$streamName->toString()]);
     }
 
+    #[\Override]
     public function fetchStreamMetadata(StreamName $streamName): array
     {
         if (!isset($this->streams[$streamName->toString()])) {
@@ -180,6 +187,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return $this->streams[$streamName->toString()]['metadata'];
     }
 
+    #[\Override]
     public function updateStreamMetadata(StreamName $streamName, array $newMetadata): void
     {
         if (!isset($this->streams[$streamName->toString()])) {
@@ -189,6 +197,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $this->streams[$streamName->toString()]['metadata'] = $newMetadata;
     }
 
+    #[\Override]
     public function beginTransaction(): void
     {
         if ($this->inTransaction) {
@@ -198,6 +207,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $this->inTransaction = true;
     }
 
+    #[\Override]
     public function commit(): void
     {
         if (!$this->inTransaction) {
@@ -218,6 +228,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $this->inTransaction = false;
     }
 
+    #[\Override]
     public function rollback(): void
     {
         if (!$this->inTransaction) {
@@ -228,6 +239,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         $this->inTransaction = false;
     }
 
+    #[\Override]
     public function inTransaction(): bool
     {
         return $this->inTransaction;
@@ -236,6 +248,7 @@ final class InMemoryEventStore implements TransactionalEventStore
     /**
      * @throws \Exception
      */
+    #[\Override]
     public function transactional(callable $callable)
     {
         $this->beginTransaction();
@@ -251,6 +264,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return $result ?: true;
     }
 
+    #[\Override]
     public function fetchStreamNames(
         ?string $filter,
         ?MetadataMatcher $metadataMatcher,
@@ -299,6 +313,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return $result;
     }
 
+    #[\Override]
     public function fetchStreamNamesRegex(
         string $filter,
         ?MetadataMatcher $metadataMatcher,
@@ -337,6 +352,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return $result;
     }
 
+    #[\Override]
     public function fetchCategoryNames(?string $filter, int $limit = 20, int $offset = 0): array
     {
         $result = [];
@@ -381,6 +397,7 @@ final class InMemoryEventStore implements TransactionalEventStore
         return $result;
     }
 
+    #[\Override]
     public function fetchCategoryNamesRegex(string $filter, int $limit = 20, int $offset = 0): array
     {
         if (false === @preg_match("/$filter/", '')) {

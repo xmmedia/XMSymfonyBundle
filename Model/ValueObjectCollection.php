@@ -16,6 +16,7 @@ abstract class ValueObjectCollection extends Collection
     /**
      * @param ValueObject $element
      */
+    #[\Override]
     public function contains(mixed $element, bool $strict = true): bool
     {
         foreach ($this->data as $item) {
@@ -30,6 +31,7 @@ abstract class ValueObjectCollection extends Collection
     /**
      * @param ValueObject $element
      */
+    #[\Override]
     public function remove(mixed $element): bool
     {
         foreach ($this->data as $i => $item) {

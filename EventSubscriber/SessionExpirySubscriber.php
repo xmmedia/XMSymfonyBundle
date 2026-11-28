@@ -17,6 +17,7 @@ readonly class SessionExpirySubscriber implements EventSubscriberInterface
     {
     }
 
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return [

@@ -14,6 +14,7 @@ class MetadataIssuedByEnricher implements MetadataEnricher
     {
     }
 
+    #[\Override]
     public function enrich(Message $message): Message
     {
         return $message->withAddedMetadata(

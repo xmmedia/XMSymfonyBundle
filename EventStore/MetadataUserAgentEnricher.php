@@ -14,6 +14,7 @@ class MetadataUserAgentEnricher implements MetadataEnricher
     {
     }
 
+    #[\Override]
     public function enrich(Message $message): Message
     {
         $userAgent = $this->requestInfoProvider->userAgent();

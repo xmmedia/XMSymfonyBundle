@@ -12,6 +12,7 @@ abstract class Command extends DomainMessage
     use IssuedByTrait;
     use PayloadTrait;
 
+    #[\Override]
     public function messageType(): string
     {
         return self::TYPE_COMMAND;

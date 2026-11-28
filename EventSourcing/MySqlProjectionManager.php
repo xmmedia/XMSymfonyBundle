@@ -37,6 +37,7 @@ final class MySqlProjectionManager implements ProjectionManager
         }
     }
 
+    #[\Override]
     public function createQuery(array $options = []): Query
     {
         return new PdoEventStoreQuery(
@@ -47,6 +48,7 @@ final class MySqlProjectionManager implements ProjectionManager
         );
     }
 
+    #[\Override]
     public function createProjection(
         string $name,
         array $options = [],
@@ -68,6 +70,7 @@ final class MySqlProjectionManager implements ProjectionManager
         );
     }
 
+    #[\Override]
     public function createReadModelProjection(
         string $name,
         ReadModel $readModel,
@@ -90,6 +93,7 @@ final class MySqlProjectionManager implements ProjectionManager
         );
     }
 
+    #[\Override]
     public function deleteProjection(string $name, bool $deleteEmittedEvents): void
     {
         $sql = <<<EOT
@@ -137,6 +141,7 @@ EOT;
         }
     }
 
+    #[\Override]
     public function resetProjection(string $name): void
     {
         $sql = <<<EOT
@@ -178,6 +183,7 @@ EOT;
         }
     }
 
+    #[\Override]
     public function stopProjection(string $name): void
     {
         $sql = <<<EOT
@@ -219,6 +225,7 @@ EOT;
         }
     }
 
+    #[\Override]
     public function fetchProjectionNames(?string $filter, int $limit = 20, int $offset = 0): array
     {
         if (1 > $limit) {
@@ -277,6 +284,7 @@ SQL;
         return $projectionNames;
     }
 
+    #[\Override]
     public function fetchProjectionNamesRegex(string $filter, int $limit = 20, int $offset = 0): array
     {
         if (1 > $limit) {
@@ -336,6 +344,7 @@ SQL;
         return $projectionNames;
     }
 
+    #[\Override]
     public function fetchProjectionStatus(string $name): ProjectionStatus
     {
         $query = <<<SQL
@@ -365,6 +374,7 @@ SQL;
         return ProjectionStatus::byValue($result->status);
     }
 
+    #[\Override]
     public function fetchProjectionStreamPositions(string $name): array
     {
         $query = <<<SQL
@@ -394,6 +404,7 @@ SQL;
         return Json::decode($result->position);
     }
 
+    #[\Override]
     public function fetchProjectionState(string $name): array
     {
         $query = <<<SQL

@@ -14,6 +14,7 @@ class MetadataCausationEnricher implements MetadataEnricher
     {
     }
 
+    #[\Override]
     public function enrich(Message $message): Message
     {
         if (null === $this->causationProvider->retrieveCausationId()) {

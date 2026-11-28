@@ -13,12 +13,14 @@ class MaintenanceModeTest extends BaseTestCase
     private string $dir;
     private string $file;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->dir = sys_get_temp_dir().'/maintenance_'.bin2hex(random_bytes(8));
         $this->file = $this->dir.'/maintenance';
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         foreach ([$this->file, $this->file.'.html'] as $file) {

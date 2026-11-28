@@ -13,6 +13,7 @@ class FakeAr implements Entity
         return new self();
     }
 
+    #[\Override]
     public function sameIdentityAs(Entity $other): bool
     {
         return false;

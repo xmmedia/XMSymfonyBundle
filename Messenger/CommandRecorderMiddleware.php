@@ -20,6 +20,7 @@ class CommandRecorderMiddleware implements MiddlewareInterface
     ) {
     }
 
+    #[\Override]
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         if (null !== $envelope->last(ReceivedStamp::class)) {

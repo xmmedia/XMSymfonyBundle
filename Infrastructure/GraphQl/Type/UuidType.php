@@ -28,6 +28,7 @@ final class UuidType extends ScalarType implements AliasedInterface
     /**
      * @param string|mixed $value
      */
+    #[\Override]
     public function parseValue($value): string
     {
         if (\is_string($value) && Uuid::isValid($value)) {
@@ -41,6 +42,7 @@ final class UuidType extends ScalarType implements AliasedInterface
         throw new Error('Cannot represent value as UUID: '.Utils::printSafe($value));
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

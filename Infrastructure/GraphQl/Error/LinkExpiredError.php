@@ -6,6 +6,7 @@ namespace Xm\SymfonyBundle\Infrastructure\GraphQl\Error;
 
 class LinkExpiredError extends CodedUserError
 {
+    #[\Override]
     public function errorCode(): string
     {
         return 'LINK_EXPIRED';

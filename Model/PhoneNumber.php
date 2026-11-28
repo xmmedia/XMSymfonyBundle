@@ -99,11 +99,13 @@ class PhoneNumber implements ValueObject, \Stringable
         ];
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->e164();
     }
 
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {

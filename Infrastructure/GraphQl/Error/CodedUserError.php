@@ -19,6 +19,7 @@ abstract class CodedUserError extends UserError implements ProvidesExtensions
 
     abstract public function errorCode(): string;
 
+    #[\Override]
     public function getExtensions(): array
     {
         return ['code' => $this->errorCode()];

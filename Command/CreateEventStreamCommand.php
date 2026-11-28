@@ -25,6 +25,7 @@ final class CreateEventStreamCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -36,6 +37,7 @@ final class CreateEventStreamCommand extends Command
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $streamName = $input->getArgument('stream_name');

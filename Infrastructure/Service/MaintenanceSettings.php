@@ -156,6 +156,7 @@ final readonly class MaintenanceSettings implements \JsonSerializable
         return $this->until->getTimestamp() - $now->getTimestamp();
     }
 
+    #[\Override]
     public function jsonSerialize(): array
     {
         return [

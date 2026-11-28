@@ -24,6 +24,7 @@ final readonly class MaintenanceSubscriber implements EventSubscriberInterface
     {
     }
 
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return [

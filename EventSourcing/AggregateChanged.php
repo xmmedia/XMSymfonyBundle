@@ -41,6 +41,7 @@ class AggregateChanged extends DomainEvent
      * The payload is normally passed to json_encode to persist the message or
      * push it into a message queue.
      */
+    #[\Override]
     public function payload(): array
     {
         return $this->payload;
@@ -74,6 +75,7 @@ class AggregateChanged extends DomainEvent
     /**
      * This method is called when message is instantiated named constructor fromArray.
      */
+    #[\Override]
     protected function setPayload(array $payload): void
     {
         $this->payload = $payload;

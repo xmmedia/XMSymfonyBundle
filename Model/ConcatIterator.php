@@ -44,6 +44,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * Countable.
      */
+    #[\Override]
     public function count(): int
     {
         return $this->count;
@@ -52,11 +53,13 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * ArrayAccess.
      */
+    #[\Override]
     public function offsetExists($offset): bool
     {
         return $offset >= 0 && $offset < $this->count;
     }
 
+    #[\Override]
     public function offsetGet($offset): mixed
     {
         if ($this->offsetExists($offset)) {
@@ -67,12 +70,14 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
         throw new \RuntimeException(self::INVALID_INDEX);
     }
 
+    #[\Override]
     public function offsetSet($offset, $value): void
     {
         [$it, $idx] = $this->getIteratorByIndex($offset);
         $it->offsetSet($idx, $value);
     }
 
+    #[\Override]
     public function offsetUnset($offset): void
     {
         [$it, $idx] = $this->getIteratorByIndex($offset);
@@ -82,6 +87,7 @@ class ConcatIterator extends \AppendIterator implements \ArrayAccess, \Countable
     /**
      * JsonSerializable.
      */
+    #[\Override]
     public function jsonSerialize(): mixed
     {
         return $this->toArray();

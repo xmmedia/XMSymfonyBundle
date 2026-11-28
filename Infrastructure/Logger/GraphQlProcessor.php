@@ -24,6 +24,7 @@ class GraphQlProcessor implements ProcessorInterface, EventSubscriberInterface, 
 {
     private ?string $query = null;
 
+    #[\Override]
     public function __invoke(LogRecord $record): LogRecord
     {
         if (null !== $this->query) {
@@ -46,11 +47,13 @@ class GraphQlProcessor implements ProcessorInterface, EventSubscriberInterface, 
         }
     }
 
+    #[\Override]
     public function reset(): void
     {
         $this->query = null;
     }
 
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return [

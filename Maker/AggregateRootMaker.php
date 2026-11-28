@@ -27,6 +27,7 @@ use Xm\SymfonyBundle\Model\ValueObject;
 
 class AggregateRootMaker extends AbstractMaker
 {
+    #[\Override]
     public static function getCommandName(): string
     {
         return 'make:model';
@@ -37,6 +38,7 @@ class AggregateRootMaker extends AbstractMaker
         return 'Creates a new model with aggregate root.';
     }
 
+    #[\Override]
     public function configureCommand(
         Command $command,
         InputConfiguration $inputConfig,
@@ -69,6 +71,7 @@ class AggregateRootMaker extends AbstractMaker
         ;
     }
 
+    #[\Override]
     public function generate(
         InputInterface $input,
         ConsoleStyle $io,
@@ -711,6 +714,7 @@ class AggregateRootMaker extends AbstractMaker
         ]);
     }
 
+    #[\Override]
     public function configureDependencies(DependencyBuilder $dependencies): void
     {
         // @todo update

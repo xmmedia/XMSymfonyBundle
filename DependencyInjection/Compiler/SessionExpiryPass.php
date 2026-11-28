@@ -19,6 +19,7 @@ class SessionExpiryPass implements CompilerPassInterface
     public const string HANDLER_TAG = 'security.remember_me_handler';
     public const int HANDLER_OPTIONS_ARGUMENT = 3;
 
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition(SessionExpiry::class)) {

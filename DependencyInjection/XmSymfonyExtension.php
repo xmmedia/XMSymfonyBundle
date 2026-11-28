@@ -28,6 +28,7 @@ use Xm\SymfonyBundle\Security\SessionExpiry;
 
 class XmSymfonyExtension extends Extension
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(

@@ -14,6 +14,7 @@ use Doctrine\Migrations\Version\Version;
  */
 final class VersionComparator implements Comparator
 {
+    #[\Override]
     public function compare(Version $a, Version $b): int
     {
         return strcmp($this->className($a), $this->className($b)) ?: strcmp((string) $a, (string) $b);

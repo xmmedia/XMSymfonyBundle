@@ -13,6 +13,7 @@ use Xm\SymfonyBundle\Test\BaseTestCase;
 
 class MaintenancePageTest extends BaseTestCase
 {
+    #[\Override]
     protected function tearDown(): void
     {
         CarbonImmutable::setTestNow();

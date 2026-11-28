@@ -23,6 +23,7 @@ class SessionExpirySubscriberTest extends BaseTestCase
 {
     private const int LIFETIME = 3600;
 
+    #[\Override]
     protected function tearDown(): void
     {
         CarbonImmutable::setTestNow();

@@ -26,6 +26,7 @@ class CausationProvider implements ResetInterface
         return $this->causationId;
     }
 
+    #[\Override]
     public function reset(): void
     {
         $this->causationId = null;

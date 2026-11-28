@@ -157,6 +157,7 @@ class Address implements ValueObject, \Stringable
         return $str;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();
@@ -174,6 +175,7 @@ class Address implements ValueObject, \Stringable
         ];
     }
 
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {

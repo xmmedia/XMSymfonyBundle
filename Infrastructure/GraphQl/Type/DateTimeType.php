@@ -26,6 +26,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
     /**
      * @param \DateTimeInterface $value
      */
+    #[\Override]
     public function serialize($value): ?string
     {
         if (null === $value) {
@@ -42,6 +43,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
     /**
      * @param string $value
      */
+    #[\Override]
     public function parseValue($value): ?\DateTimeImmutable
     {
         $value = StringUtil::trim($value);
@@ -71,6 +73,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
     /**
      * @param StringValueNode $valueNode
      */
+    #[\Override]
     public function parseLiteral($valueNode, ?array $variables = null): ?\DateTimeImmutable
     {
         if (!$valueNode instanceof StringValueNode) {
@@ -80,6 +83,7 @@ final class DateTimeType extends ScalarType implements AliasedInterface
         return $this->parseValue($valueNode->value);
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

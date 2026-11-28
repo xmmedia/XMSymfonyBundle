@@ -75,6 +75,7 @@ class ValueObjectEnumTest extends TestCase
     public function testSameValueAsOtherValueObject(): void
     {
         $other = new class implements ValueObject {
+            #[\Override]
             public function sameValueAs(ValueObject $other): bool
             {
                 return $this === $other;

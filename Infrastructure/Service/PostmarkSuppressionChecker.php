@@ -34,6 +34,7 @@ final class PostmarkSuppressionChecker implements EmailSuppressionCheckerInterfa
         'dateAdded'   => CarbonImmutable::class.'|null',
         'espUrl'      => 'null|string',
     ])]
+    #[\Override]
     public function check(Email $email): array
     {
         $this->createClient();

@@ -82,11 +82,13 @@ class PostalCode implements ValueObject, \Stringable
         return $this->postalCode;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();
     }
 
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {

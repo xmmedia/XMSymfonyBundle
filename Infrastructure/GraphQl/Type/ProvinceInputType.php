@@ -28,6 +28,7 @@ class ProvinceInputType extends EnumType implements AliasedInterface
     /**
      * @param Province $value
      */
+    #[\Override]
     public function serialize($value): string
     {
         if ($value instanceof Province) {
@@ -37,6 +38,7 @@ class ProvinceInputType extends EnumType implements AliasedInterface
         throw new Error('Cannot serialize Province value as enum: '.Utils::printSafe($value));
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

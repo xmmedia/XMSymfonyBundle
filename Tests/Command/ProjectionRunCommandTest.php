@@ -20,6 +20,7 @@ class ProjectionRunCommandTest extends BaseTestCase
     /** @var \Closure the handler in place before the command runs, which stops a stray signal killing the tests */
     private \Closure $previousHandler;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,6 +35,7 @@ class ProjectionRunCommandTest extends BaseTestCase
         pcntl_async_signals(true);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         if (\function_exists('pcntl_signal')) {

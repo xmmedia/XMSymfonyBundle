@@ -11,16 +11,19 @@ final class AggregateTranslator implements EventStoreAggregateTranslator
 {
     private AggregateRootDecorator $aggregateRootDecorator;
 
+    #[\Override]
     public function extractAggregateVersion(AggregateRoot $eventSourcedAggregateRoot): int
     {
         return $this->getAggregateRootDecorator()->extractAggregateVersion($eventSourcedAggregateRoot);
     }
 
+    #[\Override]
     public function extractAggregateId(AggregateRoot $eventSourcedAggregateRoot): string
     {
         return $this->getAggregateRootDecorator()->extractAggregateId($eventSourcedAggregateRoot);
     }
 
+    #[\Override]
     public function reconstituteAggregateFromHistory(
         AggregateType $aggregateType,
         \Iterator $historyEvents,
@@ -36,11 +39,13 @@ final class AggregateTranslator implements EventStoreAggregateTranslator
     /**
      * @return Message[]
      */
+    #[\Override]
     public function extractPendingStreamEvents(AggregateRoot $anEventSourcedAggregateRoot): array
     {
         return $this->getAggregateRootDecorator()->extractRecordedEvents($anEventSourcedAggregateRoot);
     }
 
+    #[\Override]
     public function replayStreamEvents(AggregateRoot $anEventSourcedAggregateRoot, \Iterator $events): void
     {
         $this->getAggregateRootDecorator()->replayStreamEvents($anEventSourcedAggregateRoot, $events);

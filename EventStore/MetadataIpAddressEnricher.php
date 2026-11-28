@@ -14,6 +14,7 @@ class MetadataIpAddressEnricher implements MetadataEnricher
     {
     }
 
+    #[\Override]
     public function enrich(Message $message): Message
     {
         $ipAddress = $this->requestInfoProvider->ipAddress();

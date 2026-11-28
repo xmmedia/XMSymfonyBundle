@@ -11,6 +11,7 @@ use Xm\SymfonyBundle\DependencyInjection\Compiler\SessionExpiryPass;
 
 class XmSymfonyBundle extends Bundle
 {
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

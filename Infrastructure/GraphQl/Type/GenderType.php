@@ -28,6 +28,7 @@ class GenderType extends EnumType implements AliasedInterface
     /**
      * @param Gender $value
      */
+    #[\Override]
     public function serialize($value): string
     {
         if ($value instanceof Gender) {
@@ -37,6 +38,7 @@ class GenderType extends EnumType implements AliasedInterface
         throw new Error('Cannot serialize Gender value as enum: '.Utils::printSafe($value));
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

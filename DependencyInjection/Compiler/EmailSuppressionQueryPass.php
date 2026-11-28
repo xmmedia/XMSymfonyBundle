@@ -11,6 +11,7 @@ use Xm\SymfonyBundle\Infrastructure\Service\EmailSuppressionCheckerInterface;
 
 class EmailSuppressionQueryPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (!$container->has(EmailSuppressionQuery::class)) {

@@ -27,6 +27,7 @@ class CountryInputType extends EnumType implements AliasedInterface
     /**
      * @param Country $value
      */
+    #[\Override]
     public function serialize($value): string
     {
         if ($value instanceof Country) {
@@ -36,6 +37,7 @@ class CountryInputType extends EnumType implements AliasedInterface
         throw new Error('Cannot serialize Country value as enum: '.Utils::printSafe($value));
     }
 
+    #[\Override]
     public static function getAliases(): array
     {
         return [self::NAME];

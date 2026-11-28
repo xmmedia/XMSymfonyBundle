@@ -87,6 +87,7 @@ class AggregateType implements \Stringable
         return [] === $this->mapping ? $this->aggregateType : key($this->mapping);
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();

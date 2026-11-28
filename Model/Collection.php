@@ -35,6 +35,7 @@ abstract class Collection extends \Ramsey\Collection\Collection implements \Json
         return 0 === $this->diff($other)->count();
     }
 
+    #[\Override]
     public function jsonSerialize(): array
     {
         return $this->toArray();

@@ -15,6 +15,7 @@ final class EventStoreMessengerPlugin extends AbstractPlugin
     {
     }
 
+    #[\Override]
     public function attachToEventStore(ActionEventEmitterEventStore $eventStore): void
     {
         $this->listenerHandlers[] = $eventStore->attach(

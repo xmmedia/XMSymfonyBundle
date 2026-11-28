@@ -14,6 +14,7 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
  */
 class FailureCatcherMiddleware implements MiddlewareInterface
 {
+    #[\Override]
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         try {

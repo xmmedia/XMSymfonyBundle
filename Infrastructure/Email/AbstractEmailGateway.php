@@ -12,6 +12,7 @@ abstract class AbstractEmailGateway implements EmailGatewayInterface
     /**
      * Generates a unique reference email address.
      */
+    #[\Override]
     public function getReferencesEmail(Email $emailFrom): string
     {
         $email = $emailFrom->toString();

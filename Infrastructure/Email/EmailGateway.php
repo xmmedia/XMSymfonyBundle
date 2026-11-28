@@ -38,6 +38,7 @@ class EmailGateway extends AbstractEmailGateway implements EmailGatewayInterface
         $this->from = Email::fromString($emailFrom, $emailFromName);
     }
 
+    #[\Override]
     public function send(
         int|string|\BackedEnum $templateIdOrAlias,
         Email|array $to,

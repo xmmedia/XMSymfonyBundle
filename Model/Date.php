@@ -63,6 +63,7 @@ class Date implements ValueObject, \Stringable
         return $this->format(self::STRING_FORMAT);
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->toString();
@@ -71,6 +72,7 @@ class Date implements ValueObject, \Stringable
     /**
      * Compares up to milliseconds. Ignores microseconds.
      */
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         if (static::class !== $other::class) {

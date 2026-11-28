@@ -68,6 +68,7 @@ class UtilsTest extends BaseTestCase
 
 class ClassWithToString implements \Stringable
 {
+    #[\Override]
     public function __toString(): string
     {
         return 'string';

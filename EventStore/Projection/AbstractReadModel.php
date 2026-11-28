@@ -34,6 +34,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
         $this->tables ??= null !== static::TABLE ? [static::TABLE] : [];
     }
 
+    #[\Override]
     public function stack(string $operation, ...$args): void
     {
         $this->stack[] = [$operation, $args];
@@ -49,6 +50,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
      * this read model instance is shared by every projection run in the same
      * process and leftover operations would poison the next run.
      */
+    #[\Override]
     public function persist(): void
     {
         try {
@@ -62,6 +64,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
         }
     }
 
+    #[\Override]
     public function isInitialized(): bool
     {
         foreach ($this->tables as $table) {
@@ -77,6 +80,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
         return true;
     }
 
+    #[\Override]
     public function reset(): void
     {
         foreach ($this->tables as $table) {
@@ -86,6 +90,7 @@ abstract class AbstractReadModel extends \Prooph\EventStore\Projection\AbstractR
         }
     }
 
+    #[\Override]
     public function delete(): void
     {
         foreach ($this->tables as $table) {

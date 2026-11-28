@@ -13,6 +13,7 @@ class FakeVo implements ValueObject
         return new self();
     }
 
+    #[\Override]
     public function sameValueAs(self|ValueObject $other): bool
     {
         return false;

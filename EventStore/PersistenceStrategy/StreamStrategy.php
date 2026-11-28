@@ -30,6 +30,7 @@ readonly class StreamStrategy implements MySqlPersistenceStrategy
     /**
      * @return string[]
      */
+    #[\Override]
     public function createSchema(string $tableName): array
     {
         $index = $this->indexName();
@@ -55,6 +56,7 @@ EOT;
         return [$statement];
     }
 
+    #[\Override]
     public function columnNames(): array
     {
         return [
@@ -66,6 +68,7 @@ EOT;
         ];
     }
 
+    #[\Override]
     public function prepareData(\Iterator $streamEvents): array
     {
         $data = [];
@@ -83,6 +86,7 @@ EOT;
         return $data;
     }
 
+    #[\Override]
     public function generateTableName(StreamName $streamName): string
     {
         return $streamName->toString().'_event_stream';

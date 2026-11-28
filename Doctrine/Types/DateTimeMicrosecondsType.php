@@ -23,6 +23,7 @@ class DateTimeMicrosecondsType extends Type
         return self::TYPENAME;
     }
 
+    #[\Override]
     public function getSQLDeclaration(
         array $column,
         AbstractPlatform $platform,
@@ -30,6 +31,7 @@ class DateTimeMicrosecondsType extends Type
         return $platform->getDateTimeTypeDeclarationSQL($column).'(6)';
     }
 
+    #[\Override]
     public function convertToDatabaseValue(
         $value,
         AbstractPlatform $platform,
@@ -55,6 +57,7 @@ class DateTimeMicrosecondsType extends Type
         );
     }
 
+    #[\Override]
     public function convertToPHPValue(
         $value,
         AbstractPlatform $platform,

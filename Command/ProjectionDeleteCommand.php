@@ -29,6 +29,7 @@ class ProjectionDeleteCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -40,6 +41,7 @@ class ProjectionDeleteCommand extends Command
             ->addOption(static::OPTION_WITH_EVENTS, 'w', InputOption::VALUE_NONE, 'Delete with emitted events');
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectionName = self::projectionName($input->getArgument(static::ARGUMENT_PROJECTION_NAME));
