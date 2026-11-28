@@ -27,7 +27,7 @@
     "prooph/event-store-bus-bridge": "^3.3",
     "prooph/event-store-symfony-bundle": "^0.10.0 || ^0.11.0 || ^0.12.0",
     "prooph/pdo-event-store": "^1.11",
-    "ramsey/collection": "^1.1 || ^2.0",
+    "ramsey/collection": "^2.0",
     "ramsey/uuid": "^4.0",
     "ramsey/uuid-doctrine": "^1.5 || ^2.0",
     "symfony/clock": "^7.3 || ^8.0",
@@ -43,7 +43,7 @@
     "twig/twig": "^3.0",
     "webmozart/assert": "^1.9.1 || ^2.0",
     "webonyx/graphql-php": "^15.0",
-    "wildbit/postmark-php": "^2.8 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0"
+    "wildbit/postmark-php": "^6.0 || ^7.0"
   },
   "require-dev": {
     "doctrine/migrations": "^3.0",
@@ -51,6 +51,7 @@
     "fakerphp/faker": "^1.8",
     "friendsofphp/php-cs-fixer": "^3.0",
     "jetbrains/phpstorm-attributes": "^1.0",
+    "marc-mabe/php-enum-phpstan": "^3.0",
     "mockery/mockery": "^1.2",
     "pentatrion/vite-bundle": "^6.0 || ^7.0 || ^8.0",
     "phpstan/phpstan": "^2.0",
@@ -67,6 +68,9 @@
     "symfony/phpunit-bridge": "^7.3 || ^8.0",
     "symfony/webpack-encore-bundle": "^2.0",
     "symfony/yaml": "^7.3 || ^8.0"
+  },
+  "conflict": {
+    "monolog/monolog": "<3.0"
   },
   "config": {
     "sort-packages": true
