@@ -129,6 +129,8 @@ The `AggregateRootMaker` (`Maker/AggregateRootMaker.php`) scaffolds a complete C
 - Complete test suite for all components, including the finder's `findOrThrow()` & `findRefreshed()`
 - GraphQL YAML configuration files
 
+**Event getters** build the VO from the payload once & cache it with `??=` (`$this->name ??= Name::fromString($this->payload['name']);`). For a field that can be null, return early first, so `??=` isn't left re-reading the payload: `if (!isset($this->payload['name'])) { return null; }`, then the same `??=`. A field added after events were recorded is read the same way, as older events don't have it.
+
 **After running `make:model`**, you must manually:
 1. Add repository config to `config/packages/event_sourcing.yaml`
 2. Add projection config to `config/packages/prooph_event_store.yaml`
